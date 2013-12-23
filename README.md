@@ -1,4 +1,4 @@
-YATM (Yet Another Tasklist Manager, for Android).
+Yet Another Tasklist Manager, for Android.
 =========
 For a school project we were asked to build a simple Android application, this application should be made in two versions, one representing an example of how code should be written. This app will adhere to several guidelines. Including, but not limited to : 
 
