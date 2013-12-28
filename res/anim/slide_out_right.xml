@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <!--
+  ~ Copyright (c) 2013. "EnterpriseCoding"
+  ~ ("EnterpriseCoding" constitutes; Nick Meessen, Jasper Burgers, Ferry Wienholts, Breunie Ploeg & Sjors Roelofs).
+  ~
+  ~ This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
+  -->
+
+<set xmlns:android="http://schemas.android.com/apk/res/android">
+        <translate android:fromXDelta="0" android:toXDelta="100%p"
+                   android:duration="@android:integer/config_mediumAnimTime"/>
+        </set>

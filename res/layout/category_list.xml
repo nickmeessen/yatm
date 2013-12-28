@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2013. "EnterpriseCoding"
+  ~ ("EnterpriseCoding" constitutes; Nick Meessen, Jasper Burgers, Ferry Wienholts, Breunie Ploeg & Sjors Roelofs).
+  ~
+  ~ This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical">
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/head_bg"
+            android:orientation="horizontal"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            >
+
+        <Button
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:id="@+id/catColorButton"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/cat_color_button"
+                android:layout_margin="5dp"/>
+
+        <ImageView
+                android:id="@+id/catAddButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_cat_new"
+                android:scaleType="centerInside"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:clickable="false"
+                android:contentDescription="@string/visibility"/>
+
+        <EditText
+                android:id="@+id/newCategory"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/new_cat"
+                android:typeface="sans"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                android:textColor="#222"
+                android:clickable="false"
+                android:maxLines="1"
+
+                android:paddingTop="25dp"
+                android:paddingBottom="25dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:layout_centerVertical="true"
+                android:nextFocusUp="@+id/catText"
+                android:nextFocusLeft="@+id/catText"
+                android:lines="1"
+                android:singleLine="true"
+                android:layout_toEndOf="@id/catColorButton"
+                android:inputType="textCapSentences|textAutoCorrect"
+                android:layout_toRightOf="@id/catColorButton"
+                android:layout_toLeftOf="@id/catAddButton" />
+
+    </RelativeLayout>
+    <ListView
+            android:id="@+id/cat_list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:choiceMode="singleChoice"
+            android:divider="@color/head_bg"
+            android:dividerHeight="0.5dp"
+            android:background="@color/list_bg1"/>
+    </LinearLayout>

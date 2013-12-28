@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2013. "EnterpriseCoding"
+  ~ ("EnterpriseCoding" constitutes; Nick Meessen, Jasper Burgers, Ferry Wienholts, Breunie Ploeg & Sjors Roelofs).
+  ~
+  ~ This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
+  -->
+
+<resources>
+    <color name="blue">#33B5E5</color>
+    <color name="blue_border">#0099CC</color>
+
+    <color name="purple">#AA66CC</color>
+    <color name="purple_border">#9933CC</color>
+
+    <color name="green">#99CC00</color>
+    <color name="green_border">#669900</color>
+
+    <color name="orange">#FFBB33</color>
+    <color name="orange_border">#FF8800</color>
+
+    <color name="red">#FF4444</color>
+    <color name="red_border">#CC0000</color>
+
+    <color name="cat_text">#F3F3F3</color>
+    <color name="list_bg1">#EBEAEA</color>
+    <color name="list_bg2">#E2E2E2</color>
+    <color name="head_bg">#D2D2D2</color>
+    <color name="list_text">#777777</color>
+    <color name="action_bg">#222</color>
+
+</resources>

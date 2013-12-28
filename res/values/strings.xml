@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2013. "EnterpriseCoding"
+  ~ ("EnterpriseCoding" constitutes; Nick Meessen, Jasper Burgers, Ferry Wienholts, Breunie Ploeg & Sjors Roelofs).
+  ~
+  ~ This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
+  -->
+
+<resources>
+    <string name="app_name">YATM (Sufficient)</string>
+
+    <string name="title_tasks">Tasks</string>
+
+    <string name="action_add">Add Task</string>
+    <string name="action_edit">Edit Task</string>
+    <string name="action_delete">Delete Task</string>
+    <string name="action_categories">Categories</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_discard">Discard</string>
+    <string name="action_change_date">Change Date</string>
+    <string name="action_edit_category">Edit Category</string>
+    <string name="action_delete_category">Delete Category</string>
+    <string name="action_delete_all_tasks">Delete all tasks</string>
+    <string name="action_save_task">save task</string>
+    <string name="action_save_category">save category</string>
+
+    <string name="drawer_open">draw_open</string>
+    <string name="drawer_close">draw_close</string>
+
+    <string name="task_title_label">Title</string>
+    <string name="task_category_label">Category</string>
+    <string name="task_important">Important?</string>
+    <string name="task_date_label">Date</string>
+
+    <string name="category_title_label">Title</string>
+    <string name="category_colour_label">Colour</string>
+
+    <string name="toast_invalid_data">Please check all fields</string>
+    <string name="toast_error">Oops, something went wrong..</string>
+    <string name="toast_no_category">You need to add a category first</string>
+
+    <string name="new_cat">New Category</string>
+    <string name="visibility">Visibility</string>
+    <string name="task_done_icon">TaskDoneIcon</string>
+    <string name="delete_category_text">Move tasks to category:</string>
+
+    <string name="standard_category_name_error">Please choose a different name</string>
+    <string name="toast_category_exists">This category already exists</string>
+    <string name="category_exists_error">Category successfully added</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="upcoming">Upcoming</string>
+</resources>
