@@ -15,18 +15,19 @@ import android.util.Log;
 import android.view.KeyEvent;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
-import nl.enterprisecoding.android.sufficient.models.Category;
 
 /**
  * MainActivity Class
- *
+ * <p/>
  * This class is used to manage the menu anim_in the application and call several controllers.
+ *
+ * @author Nick Meessen
  */
 
 public class MainActivity extends Activity {
 
-    TaskManager mTaskManager;
-    ActionBar mActionBar;
+    protected TaskManager mTaskManager;
+    protected ActionBar mActionBar;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +41,6 @@ public class MainActivity extends Activity {
 
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 
-        // @todo (Nick) don't trigger when already in category.
         if ((keyCode == KeyEvent.KEYCODE_MENU)) {
 
             startActivity(new Intent(this, CategoryActivity.class));

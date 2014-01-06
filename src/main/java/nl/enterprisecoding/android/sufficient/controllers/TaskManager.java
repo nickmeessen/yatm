@@ -40,7 +40,7 @@ public class TaskManager extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "yatm.db";
     private static final int DATABASE_VERSION = 1;
 
-    private TaskListAdapter taskListAdapter;
+    private TaskListAdapter mTaskListAdapter;
     private CategoryListAdapter mCategoryListAdapter;
 
     private SimpleDateFormat simpleDateFormat;
@@ -84,7 +84,7 @@ public class TaskManager extends SQLiteOpenHelper {
     /**
      * Constructs a new TaskManager
      *
-     * @param activity the activity called from.
+     * @param activity   the activity called from.
      * @param categoryID the current CategoryID.
      */
     public TaskManager(MainActivity activity, Long categoryID) {
@@ -92,6 +92,7 @@ public class TaskManager extends SQLiteOpenHelper {
         super(activity, DATABASE_NAME, null, DATABASE_VERSION);
 
         mActivity = activity;
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         Category allCats = new Category();
 
@@ -105,7 +106,7 @@ public class TaskManager extends SQLiteOpenHelper {
         catList = retrieveAllCategories();
 
         mCategoryListAdapter = new CategoryListAdapter(activity, this);
-        mCategoryListAdapter.addItem(allCats);
+//        mCategoryListAdapter.addItem(allCats); @todo (Nick) fixme
 
         // @todo remove try/catch hack
         try {
@@ -121,15 +122,13 @@ public class TaskManager extends SQLiteOpenHelper {
         }
         retrieveAllTasks();
 
-        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-        taskListAdapter = new TaskListAdapter(activity, this, categoryID);
+        mTaskListAdapter = new TaskListAdapter(activity, this, categoryID);
 
         // @todo remove try/catch hack
         try {
             ExpandableListView lv2 = (ExpandableListView) activity.findViewById(R.id.taskList);
-            lv2.setAdapter(taskListAdapter);
-            lv2.setOnChildClickListener(taskListAdapter);
+            lv2.setAdapter(mTaskListAdapter);
+            lv2.setOnChildClickListener(mTaskListAdapter);
             lv2.expandGroup(0, true);
             lv2.expandGroup(1, true);
             lv2.expandGroup(2, true);
@@ -150,15 +149,11 @@ public class TaskManager extends SQLiteOpenHelper {
      * @return task the created task
      */
     public Task createTask(String title, long categoryId, Calendar date, boolean important) {
-        int mIsImportant = 0;
-        if (important) {
-            mIsImportant = 1;
-        }
 
         ContentValues values = new ContentValues();
 
         values.put(TCOLUMN_COMPLETED, 0);
-        values.put(TCOLUMN_IMPORTANT, mIsImportant);
+        values.put(TCOLUMN_IMPORTANT, important ? 1 : 0);
         values.put(TCOLUMN_CATID, categoryId);
         values.put(TCOLUMN_TASK, title);
         values.put(TCOLUMN_DATE, simpleDateFormat.format(date.getTimeInMillis()));
@@ -169,9 +164,8 @@ public class TaskManager extends SQLiteOpenHelper {
         Task newTask = cursorToTask(cursor);
         cursor.close();
 
-        taskListAdapter.addItem(newTask);
-
-        getItemById(newTask.getCatId()).addTask(newTask);
+        catList.get(categoryId).addTask(newTask);
+        mTaskListAdapter.notifyDataSetChanged();
 
         return newTask;
     }
@@ -184,8 +178,7 @@ public class TaskManager extends SQLiteOpenHelper {
     public void deleteTask(Task task) {
         long id = task.getId();
         database.delete(TASKS_TABLE, TCOLUMN_ID + " = " + id, null);
-        taskListAdapter.deleteItem(task);
-        taskListAdapter.notifyDataSetChanged();
+        mTaskListAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -199,7 +192,7 @@ public class TaskManager extends SQLiteOpenHelper {
         while (!cursor.isAfterLast()) {
             Task task = cursorToTask(cursor);
 
-            getItemById(task.getCatId()).addTask(task);
+            catList.get(task.getCatId()).addTask(task);
 
             cursor.moveToNext();
         }
@@ -420,7 +413,7 @@ public class TaskManager extends SQLiteOpenHelper {
         }
 
         if (!catExist) {
-            mCategoryListAdapter.addItem(createCategory(title, colour));
+//            mCategoryListAdapter.addItem(createCategory(title, colour)); // @todo (Nick) fixme
             Toast.makeText(mActivity.getApplicationContext(), R.string.category_exists_error, Toast.LENGTH_SHORT).show();
         }
     }
@@ -447,16 +440,10 @@ public class TaskManager extends SQLiteOpenHelper {
         return newCategory;
     }
 
-    public Category getItemById(long id) {
-        return mCategoryListAdapter.getItemById(id);
-    }
-
-
     public void editCategory(String title, int colour, Long selectedCategory) {
         ContentValues values = new ContentValues();
         values.put(CTITLE_COLUMN, title);
         values.put(CCOLOUR_COLUMN, colour);
-
         database.update(CATEGORIES_TABLE, values, CID_COLUMN + " = " + selectedCategory, null);
     }
 
@@ -472,7 +459,6 @@ public class TaskManager extends SQLiteOpenHelper {
                 mVisibleCategories.add(cat);
             }
         }
-
         return mVisibleCategories;
     }
 
@@ -527,7 +513,14 @@ public class TaskManager extends SQLiteOpenHelper {
         return mNewVisibility;
     }
 
+    // @todo (Nick) temporary methods to prevent breaking functionality.
+    public Category getCategoryById(long id) {
+        return mCategoryListAdapter.getItemById(id);
+    }
+
+    // @todo (Nick) temporary methods to prevent breaking functionality.
     public void notifyDataSetChanged() {
         mCategoryListAdapter.notifyDataSetChanged();
+        mTaskListAdapter.notifyDataSetChanged();
     }
 }

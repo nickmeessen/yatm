@@ -11,7 +11,7 @@ import java.util.Calendar;
 
 /**
  * Task Class
- *
+ * <p/>
  * Represents a Task Object.
  */
 public class Task {

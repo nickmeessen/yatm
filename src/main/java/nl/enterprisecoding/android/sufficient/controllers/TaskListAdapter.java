@@ -28,13 +28,12 @@ import java.util.List;
 
 /**
  * TaskListAdapter
- *
+ * <p/>
  * An adapter class for managing the custom list views.
  */
 public class TaskListAdapter extends BaseExpandableListAdapter implements ExpandableListView.OnChildClickListener {
 
     private Activity mActivity;
-    private List<Task> mData;
 
     private List<String> mGroupTitles;
     private SparseArray<List<Task>> mGroups;
@@ -70,7 +69,23 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         mGroups.put(1, mTomorrowList);
         mGroups.put(2, mUpcomingList);
         mGroups.put(3, mCompletedList);
-        mData = new ArrayList<Task>();
+
+        updateList();
+
+    }
+
+    private void updateList() {
+
+        if (mCategoryId == 0) {
+            for (Category cat : mTaskManager.getVisibleCategories()) {
+                fillList(cat.getTasks());
+            }
+        } else {
+            fillList(mTaskManager.getCategoryById(mCategoryId).getTasks());
+        }
+    }
+
+    public void fillList(List<Task> tasks) {
 
         Calendar today = Calendar.getInstance();
         Calendar tomorrow = Calendar.getInstance();
@@ -86,398 +101,55 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         tomorrow.set(Calendar.SECOND, 0);
         tomorrow.set(Calendar.MILLISECOND, 0);
 
-        //@TODO No loop in a loop.
-        if (mCategoryId == 0) {
+        List<Task> important = new ArrayList<Task>();
+        List<Task> normal = new ArrayList<Task>();
+        List<Task> restList = new ArrayList<Task>();
 
-            for (Category cat : mTaskManager.getVisibleCategories()) {
+        for (Task task : tasks) {
 
-                ArrayList<Task> restList = new ArrayList<Task>();
-
-                List<Task> important = new ArrayList<Task>();
-                List<Task> normal = new ArrayList<Task>();
-                List<Task> done = new ArrayList<Task>();
-
-
-                for (Task task : cat.getTasks()) {
-
-                    if (task.isImportant() && !task.isCompleted()) {
-                        important.add(task);
-                    }
-                    if (!task.isImportant() && !task.isCompleted()) {
-                        normal.add(task);
-                    }
-                    if (task.isCompleted()) {
-                        done.add(task);
-                    }
-                }
-
-                for (Task task : important) {
-
-                    if (task.getDate().compareTo(today) == 0) {
-                        mTodayList.add(task);
-                    } else if (task.getDate().compareTo(tomorrow) == 0) {
-                        mTomorrowList.add(task);
-                    } else if (task.getDate().after(tomorrow)) {
-                        mUpcomingList.add(task);
-                    } else {
-                        restList.add(task);
-                    }
-
-                }
-
-                for (Task task : normal) {
-
-                    if (task.getDate().compareTo(today) == 0) {
-                        mTodayList.add(task);
-                    } else if (task.getDate().compareTo(tomorrow) == 0) {
-                        mTomorrowList.add(task);
-                    } else if (task.getDate().after(tomorrow)) {
-                        mUpcomingList.add(task);
-                    } else {
-                        restList.add(task);
-                    }
-                }
-
-                for (Task task : done) {
-
-                    if (task.getDate().compareTo(today) == 0) {
-                        mTodayList.add(task);
-                    } else if (task.getDate().compareTo(tomorrow) == 0) {
-                        mTomorrowList.add(task);
-                    } else if (task.getDate().after(tomorrow)) {
-                        mUpcomingList.add(task);
-                    } else {
-                        restList.add(task);
-                    }
-                }
-
-                for (Task task : restList) {
-                    task.setImportant(true);
-                    mTodayList.add(task);
-                }
+            if (task.isCompleted()) {
+                mCompletedList.add(task);
+            } else if (task.isImportant()) {
+                important.add(task);
+            } else {
+                normal.add(task);
             }
 
-        } else {
+        }
 
-            mData = mTaskManager.getItemById(mCategoryId).getTasks();
+        for (Task task : important) {
 
-            List<Task> important = new ArrayList<Task>();
-            List<Task> normal = new ArrayList<Task>();
-            List<Task> done = new ArrayList<Task>();
-
-            ArrayList<Task> restList = new ArrayList<Task>();
-
-            for (Task task : mData) {
-
-                if (task.isImportant() && !task.isCompleted()) {
-                    important.add(task);
-                }
-                if (!task.isImportant() && !task.isCompleted()) {
-                    normal.add(task);
-                }
-                if (task.isCompleted()) {
-                    done.add(task);
-                }
-            }
-
-            for (Task task : important) {
-
-                if (task.getDate().compareTo(today) == 0) {
-                    mTodayList.add(task);
-                } else if (task.getDate().compareTo(tomorrow) == 0) {
-                    mTomorrowList.add(task);
-                } else if (task.getDate().after(tomorrow)) {
-                    mUpcomingList.add(task);
-                } else {
-                    restList.add(task);
-                }
-
-            }
-
-            for (Task task : normal) {
-
-                if (task.getDate().compareTo(today) == 0) {
-                    mTodayList.add(task);
-                } else if (task.getDate().compareTo(tomorrow) == 0) {
-                    mTomorrowList.add(task);
-                } else if (task.getDate().after(tomorrow)) {
-                    mUpcomingList.add(task);
-                } else {
-                    restList.add(task);
-                }
-            }
-
-            for (Task task : done) {
-
-                if (task.getDate().compareTo(today) == 0) {
-                    mTodayList.add(task);
-                } else if (task.getDate().compareTo(tomorrow) == 0) {
-                    mTomorrowList.add(task);
-                } else if (task.getDate().after(tomorrow)) {
-                    mUpcomingList.add(task);
-                } else {
-                    restList.add(task);
-                }
-            }
-
-            for (Task task : restList) {
-                task.setImportant(true);
+            if (task.getDate().compareTo(today) == 0) {
                 mTodayList.add(task);
+            } else if (task.getDate().compareTo(tomorrow) == 0) {
+                mTomorrowList.add(task);
+            } else if (task.getDate().after(tomorrow)) {
+                mUpcomingList.add(task);
+            } else {
+                restList.add(task);
             }
 
         }
-    }
 
-    // @todo remove/refactor.
-    private void sortTasks() {
-        mGroupTitles = new ArrayList<String>();
-        mGroups = new SparseArray<List<Task>>();
+        for (Task task : normal) {
 
-        mTomorrowList = new ArrayList<Task>();
-        mUpcomingList = new ArrayList<Task>();
-
-        mGroupTitles.add(0, mActivity.getString(R.string.today));
-        mGroupTitles.add(1, mActivity.getString(R.string.tomorrow));
-        mGroupTitles.add(2, mActivity.getString(R.string.upcoming));
-        mGroupTitles.add(3, mActivity.getString(R.string.completed));
-
-        mTodayList = new ArrayList<Task>();
-        mTomorrowList = new ArrayList<Task>();
-        mUpcomingList = new ArrayList<Task>();
-        mCompletedList = new ArrayList<Task>();
-
-
-        mGroups.put(0, mTodayList);
-        mGroups.put(1, mTomorrowList);
-        mGroups.put(2, mUpcomingList);
-        mGroups.put(3, mCompletedList);
-
-        mData = new ArrayList<Task>();
-
-
-        Calendar today = Calendar.getInstance();
-        Calendar tomorrow = Calendar.getInstance();
-        tomorrow.add(Calendar.DAY_OF_YEAR, 1);
-
-        today.set(Calendar.HOUR_OF_DAY, 0);
-        today.set(Calendar.MINUTE, 0);
-        today.set(Calendar.SECOND, 0);
-        today.set(Calendar.MILLISECOND, 0);
-
-        tomorrow.set(Calendar.HOUR_OF_DAY, 0);
-        tomorrow.set(Calendar.MINUTE, 0);
-        tomorrow.set(Calendar.SECOND, 0);
-        tomorrow.set(Calendar.MILLISECOND, 0);
-
-        //@TODO no loop in a loop
-        if (mCategoryId == 0) {
-
-            for (Category cat : mTaskManager.getVisibleCategories()) {
-
-                ArrayList<Task> restList = new ArrayList<Task>();
-
-                List<Task> important = new ArrayList<Task>();
-                List<Task> normal = new ArrayList<Task>();
-                List<Task> done = new ArrayList<Task>();
-
-
-                for (Task task : cat.getTasks()) {
-
-                    if (task.isImportant() && !task.isCompleted()) {
-                        important.add(task);
-                    }
-                    if (!task.isImportant() && !task.isCompleted()) {
-                        normal.add(task);
-                    }
-                    if (task.isCompleted()) {
-                        done.add(task);
-                    }
-                }
-
-                for (Task task : important) {
-
-                    if (task.getDate().compareTo(today) == 0) {
-                        mTodayList.add(task);
-                    } else if (task.getDate().compareTo(tomorrow) == 0) {
-                        mTomorrowList.add(task);
-                    } else if (task.getDate().after(tomorrow)) {
-                        mUpcomingList.add(task);
-                    } else {
-                        restList.add(task);
-                    }
-
-                }
-
-                for (Task task : normal) {
-
-                    if (task.getDate().compareTo(today) == 0) {
-                        mTodayList.add(task);
-                    } else if (task.getDate().compareTo(tomorrow) == 0) {
-                        mTomorrowList.add(task);
-                    } else if (task.getDate().after(tomorrow)) {
-                        mUpcomingList.add(task);
-                    } else {
-                        restList.add(task);
-                    }
-
-
-                }
-
-                for (Task task : done) {
-
-
-                    if (task.getDate().compareTo(today) == 0) {
-                        mTodayList.add(task);
-                    } else if (task.getDate().compareTo(tomorrow) == 0) {
-                        mTomorrowList.add(task);
-                    } else if (task.getDate().after(tomorrow)) {
-                        mUpcomingList.add(task);
-                    } else {
-                        restList.add(task);
-                    }
-                }
-
-                for (Task task : restList) {
-                    task.setImportant(true);
-                    mTodayList.add(task);
-                }
-            }
-
-        } else {
-
-            mData = mTaskManager.getItemById(mCategoryId).getTasks();
-
-            List<Task> important = new ArrayList<Task>();
-            List<Task> normal = new ArrayList<Task>();
-            List<Task> done = new ArrayList<Task>();
-
-            ArrayList<Task> restList = new ArrayList<Task>();
-
-            for (Task task : mData) {
-
-                if (task.isImportant() && !task.isCompleted()) {
-                    important.add(task);
-                }
-                if (!task.isImportant() && !task.isCompleted()) {
-                    normal.add(task);
-                }
-                if (task.isCompleted()) {
-                    done.add(task);
-                }
-            }
-
-            for (Task task : important) {
-
-                if (task.getDate().compareTo(today) == 0) {
-                    mTodayList.add(task);
-                } else if (task.getDate().compareTo(tomorrow) == 0) {
-                    mTomorrowList.add(task);
-                } else if (task.getDate().after(tomorrow)) {
-                    mUpcomingList.add(task);
-                } else {
-                    restList.add(task);
-                }
-
-            }
-
-            for (Task task : normal) {
-
-                if (task.getDate().compareTo(today) == 0) {
-                    mTodayList.add(task);
-                } else if (task.getDate().compareTo(tomorrow) == 0) {
-                    mTomorrowList.add(task);
-                } else if (task.getDate().after(tomorrow)) {
-                    mUpcomingList.add(task);
-                } else {
-                    restList.add(task);
-                }
-
-            }
-
-            for (Task task : done) {
-
-                if (task.getDate().compareTo(today) == 0) {
-                    mTodayList.add(task);
-                } else if (task.getDate().compareTo(tomorrow) == 0) {
-                    mTomorrowList.add(task);
-                } else if (task.getDate().after(tomorrow)) {
-                    mUpcomingList.add(task);
-                } else {
-                    restList.add(task);
-                }
-
-            }
-
-            for (Task task : restList) {
-                task.setImportant(true);
+            if (task.getDate().compareTo(today) == 0) {
                 mTodayList.add(task);
-            }
-
-        }
-    }
-
-    public void addItem(Task newTask) {
-
-        Calendar today = Calendar.getInstance();
-        Calendar tomorrow = Calendar.getInstance();
-        tomorrow.add(Calendar.DATE, 1);
-
-        if (newTask.getDate().equals(today)) {
-            mTodayList.add(newTask);
-        } else if (newTask.getDate().equals(tomorrow)) {
-            mTomorrowList.add(newTask);
-        } else {
-            mUpcomingList.add(newTask);
-        }
-
-        notifyDataSetChanged();
-    }
-
-    public void deleteItem(Task taskToDelete) {
-
-        Task taskToRemove = null;
-
-        // @todo delete task the proper way.
-        for (Task task : mTodayList) {
-
-            if (task.getId() == taskToDelete.getId()) {
-                taskToRemove = task;
-                break;
+            } else if (task.getDate().compareTo(tomorrow) == 0) {
+                mTomorrowList.add(task);
+            } else if (task.getDate().after(tomorrow)) {
+                mUpcomingList.add(task);
+            } else {
+                restList.add(task);
             }
 
         }
 
-        for (Task task : mTomorrowList) {
-
-            if (task.getId() == taskToDelete.getId()) {
-                taskToRemove = task;
-                break;
-            }
-
-        }
-
-        for (Task task : mUpcomingList) {
-
-            if (task.getId() == taskToDelete.getId()) {
-                taskToRemove = task;
-                break;
-            }
-
-        }
-
-
-        mData.remove(taskToRemove);
-        mTodayList.remove(taskToRemove);
-        mTomorrowList.remove(taskToRemove);
-        mUpcomingList.remove(taskToRemove);
-
-
-        notifyDataSetChanged();
     }
 
     @Override
     public void notifyDataSetChanged() {
-        sortTasks();
+        updateList();
         super.notifyDataSetChanged();
     }
 
@@ -675,7 +347,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         }
 
         Button catColor = (Button) view.findViewById(R.id.taskCatColor);
-        catColor.setBackgroundColor(mTaskManager.getItemById(getChild(groupPosition, childPosition).getCatId()).getColour());
+        catColor.setBackgroundColor(mTaskManager.getCategoryById(getChild(groupPosition, childPosition).getCatId()).getColour());
 
         if (getChild(groupPosition, childPosition).isImportant() && (getChild(groupPosition, childPosition).isCompleted())) {
             taskTitle.setTypeface(taskTitle.getTypeface(), Typeface.BOLD_ITALIC);

@@ -18,10 +18,14 @@ import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Task;
 
+import java.util.Calendar;
+
 /**
  * TaskActivity class
- *
+ * <p/>
  * From here a user could execute various actions on tasks.
+ *
+ * @author Nick Meessen
  */
 public class TaskActivity extends MainActivity {
 
@@ -53,8 +57,8 @@ public class TaskActivity extends MainActivity {
         mTaskManager = new TaskManager(this, mCategoryID);
 
         if (mCategoryID != 0) {
-            mActionBar.setTitle(mTaskManager.getItemById(mCategoryID).getTitle());
-            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getItemById(mCategoryID).getColour()));
+            mActionBar.setTitle(mTaskManager.getCategoryById(mCategoryID).getTitle());
+            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mCategoryID).getColour()));
         }
 
 
@@ -91,7 +95,6 @@ public class TaskActivity extends MainActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.actionbar, menu);
         return super.onCreateOptionsMenu(menu);
@@ -101,21 +104,29 @@ public class TaskActivity extends MainActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                startAddTaskActivity();
+                startEditTaskActivity();
                 return true;
             case R.id.action_categories:
-                startActivity(new Intent(this, CategoryActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                startCategoryActivity();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    void startAddTaskActivity() {
-        Intent mAddTaskActivity = new Intent(this, AddTaskActivity.class);
-        mAddTaskActivity.putExtra("categoryID", mCategoryID);
-        startActivity(mAddTaskActivity);
+    private void startEditTaskActivity() {
+
+        // @todo (Nick) instead of Category 0, get the first available category, otherwise redirect to category view.
+        Task task = mTaskManager.createTask("New Task", 0, Calendar.getInstance(), false);
+
+        Intent intent = new Intent(this, EditTaskActivity.class);
+        intent.putExtra(TASK_ID, task.getId());
+        startActivity(intent);
+    }
+
+    private void startCategoryActivity() {
+        startActivity(new Intent(this, CategoryActivity.class));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     @Override

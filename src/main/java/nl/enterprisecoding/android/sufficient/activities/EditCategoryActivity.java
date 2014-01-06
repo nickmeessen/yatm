@@ -22,9 +22,12 @@ import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Category;
 
+/**
+ * @author Breunie Ploeg
+ */
 public class EditCategoryActivity extends MainActivity {
 
-    private final Activity mActivity = this;
+    private Activity mActivity = this;
     private Dialog mColorDialog;
     private int mCategoryColour;
     private EditText mCategoryTitleInput;
@@ -40,10 +43,10 @@ public class EditCategoryActivity extends MainActivity {
 
         mSelectedCategory = getIntent().getExtras().getLong("CategoryID", 0);
 
-        Category mCategory = mTaskManager.getItemById(mSelectedCategory);
+        Category mCategory = mTaskManager.getCategoryById(mSelectedCategory);
 
         mTaskManager = new TaskManager(this, (long) 0);
-        getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getItemById(mSelectedCategory).getColour()));
+        getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedCategory).getColour()));
 
         mCategoryTitleInput = (EditText) findViewById(R.id.category_title);
         mCategoryTitleInput.setText(mCategory.getTitle());
@@ -99,9 +102,9 @@ public class EditCategoryActivity extends MainActivity {
     /**
      * Create a button with a predefined color.
      *
-     * @param bgShape the shape.
+     * @param bgShape  the shape.
      * @param buttonId the button ID.
-     * @param color the colour, can be 0 then a random colour will be generated.
+     * @param color    the colour, can be 0 then a random colour will be generated.
      */
     private void createColorButton(final GradientDrawable bgShape, int buttonId, int color) {
 

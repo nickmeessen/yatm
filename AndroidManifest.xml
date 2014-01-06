@@ -39,11 +39,6 @@
                   android:screenOrientation="portrait"
                   android:theme="@style/ECTheme" />
 
-        <activity android:name="nl.enterprisecoding.android.sufficient.activities.AddTaskActivity"
-                  android:label="@string/action_add"
-                  android:screenOrientation="portrait"
-                  android:theme="@style/ECTheme" />
-
         <activity android:name="nl.enterprisecoding.android.sufficient.activities.EditTaskActivity"
                   android:label="@string/action_edit"
                   android:screenOrientation="portrait"

@@ -23,35 +23,20 @@ import nl.enterprisecoding.android.sufficient.activities.TaskActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * CategoryListAdapter
- *
+ * <p/>
  * An adapter class for managing the custom list views.
  */
 class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
 
     private Activity mActivity;
     private TaskManager mTaskManager;
-    private Map<Long, Category> mCatList;
 
     public CategoryListAdapter(Activity activity, TaskManager taskManager) {
         mActivity = activity;
         mTaskManager = taskManager;
-        mCatList = taskManager.retrieveAllCategories();
-
-
-    }
-
-    /**
-     * Adds a new category.
-     *
-     * @param category the category to add to this adapter.
-     */
-    public void addItem(Category category) {
-        mCatList.put(category.getID(), category);
-        notifyDataSetChanged();
     }
 
     /**
@@ -60,7 +45,7 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
      * @return the size of this adapter.
      */
     public int getCount() {
-        return new ArrayList<Category>(mCatList.values()).size();
+        return new ArrayList<Category>(mTaskManager.retrieveAllCategories().values()).size();
     }
 
     /**
@@ -70,7 +55,7 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
      * @return the category object position at the given position.
      */
     public Category getItem(int position) {
-        return new ArrayList<Category>(mCatList.values()).get(position);
+        return new ArrayList<Category>(mTaskManager.retrieveAllCategories().values()).get(position);
     }
 
     /**
@@ -84,7 +69,7 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
     }
 
     public Category getItemById(long id) {
-        return mCatList.get(id);
+        return mTaskManager.retrieveAllCategories().get(id);
     }
 
     /**
@@ -139,7 +124,7 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        mActivity.getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getItemById(id).getColour()));
+        mActivity.getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(id).getColour()));
 
         Intent intent = new Intent(mActivity, TaskActivity.class);
 

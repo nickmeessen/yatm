@@ -27,14 +27,16 @@ import java.util.List;
 
 /**
  * CategoryActivity class
- *
+ * <p/>
  * From here a user could execute various actions on categories.
+ *
+ * @author Breunie Ploeg
  */
 public class CategoryActivity extends MainActivity {
 
     public static final String colourFormat = "#%02x%02x%02x";
 
-    private final Activity mActivity = this;
+    private Activity mActivity = this;
     private Dialog mColorDialog;
     private int mChosenColour = 0;
     private int mCategoryColour;
@@ -107,7 +109,7 @@ public class CategoryActivity extends MainActivity {
                         mCategoryColour = Color.parseColor(String.format(colourFormat, r, g, b));
                     }
 
-                    // @TODO Params aren't checked.
+                    // @TODO (Breunie) Params aren't checked.
                     if (categoryName.equals(standardText)) {
                         Toast.makeText(mActivity.getApplicationContext(), getString(R.string.ChooseDiffName), Toast.LENGTH_SHORT).show();
                     } else {
@@ -132,7 +134,7 @@ public class CategoryActivity extends MainActivity {
                     mCategoryColour = Color.parseColor(String.format(colourFormat, r, g, b));
                 }
 
-                // @TODO Params aren't checked.
+                // @TODO (Breunie) Params aren't checked.
                 if (categoryName.equals(standardText)) {
                     Toast.makeText(mActivity.getApplicationContext(), getString(R.string.ChooseDiffName), Toast.LENGTH_SHORT).show();
                 } else {
@@ -181,6 +183,7 @@ public class CategoryActivity extends MainActivity {
      *
      * @param bgShape  the shape that shows the color on screen.
      * @param buttonId the id of the button to create.
+     * @todo (Breunie) merge with above method to avoid duplicate code.
      */
     private void createRandomColorButton(final GradientDrawable bgShape, int buttonId) {
         final EditText editText = (EditText) findViewById(R.id.newCategory);
@@ -246,7 +249,7 @@ public class CategoryActivity extends MainActivity {
 
             alert.setPositiveButton(getResources().getString(R.string.action_confirm), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int whichButton) {
-                    Category originCategory = mTaskManager.getItemById(mSelectedCategoryId);
+                    Category originCategory = mTaskManager.getCategoryById(mSelectedCategoryId);
 
                     String destinationCategory = mSpringerArray[catInput.getSelectedItemPosition()];
                     if (destinationCategory.equals(getResources().getString(R.string.action_delete_all_tasks))) {

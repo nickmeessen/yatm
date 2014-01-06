@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class EditTaskActivity extends MainActivity {
 
-    private final Activity mActivity = this;
+    private Activity mActivity = this;
     private EditText mTaskTitleInput;
     private Spinner mTaskCategorySpinner;
     private Button mTaskSetDateButton;
@@ -54,7 +54,7 @@ public class EditTaskActivity extends MainActivity {
 
         mTaskManager = new TaskManager(this, (long) 0);
         mTask = mTaskManager.getTask(mSelectedTask);
-        mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getItemById(mTask.getCatId()).getColour()));
+        mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mTask.getCatId()).getColour()));
 
         mDateToday = Calendar.getInstance();
         mTaskDate = Calendar.getInstance();
@@ -112,15 +112,24 @@ public class EditTaskActivity extends MainActivity {
                 }
 
                 int mSelectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
-                long mSelectedCategoryId = mCategoriesArray.get(mSelectedCategoryIndex).getID();
 
-                if (mDataIsValidated) {
-                    mTaskManager.editTask(mTaskTitle, mSelectedCategoryId, mTaskDate, mTaskImportantCheckBox.isChecked(), mTask.isCompleted(), mSelectedTask);
-                    showTaskActivity();
+                if (mSelectedCategoryIndex < 0) {
+                    Toast.makeText(getApplicationContext(), R.string.toast_no_category, Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(mActivity, CategoryActivity.class);
+                    mActivity.startActivity(intent);
                 } else {
-                    Toast mInvalidDataToast = Toast.makeText(getApplicationContext(), R.string.toast_invalid_data, Toast.LENGTH_SHORT);
-                    mInvalidDataToast.show();
+                    long mSelectedCategoryId = mCategoriesArray.get(mSelectedCategoryIndex).getID();
+
+                    if (mDataIsValidated) {
+                        mTaskManager.createTask(mTaskTitle, mSelectedCategoryId, mTaskDate, mTaskImportantCheckBox.isChecked());
+                        showTaskActivity(mSelectedCategoryId);
+                    } else {
+                        Toast mInvalidDataToast = Toast.makeText(getApplicationContext(), R.string.toast_invalid_data, Toast.LENGTH_SHORT);
+                        mInvalidDataToast.show();
+                    }
                 }
+
             }
         });
 
@@ -176,8 +185,10 @@ public class EditTaskActivity extends MainActivity {
         mTaskSetDateButton.setText(mTaskDate.get(Calendar.DAY_OF_MONTH) + "/" + (mTaskDate.get(Calendar.MONTH) + 1) + "/" + mTaskDate.get(Calendar.YEAR));
     }
 
-    private void showTaskActivity() {
+    private void showTaskActivity(long catId) {
         Intent intent = new Intent(mActivity, TaskActivity.class);
+
+        intent.putExtra("categoryID", catId);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
