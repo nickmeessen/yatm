@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * TaskListAdapter
- * <p/>
+ *
  * An adapter class for managing the custom list views.
  */
 public class TaskListAdapter extends BaseExpandableListAdapter implements ExpandableListView.OnChildClickListener {
@@ -38,14 +38,11 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
 
     private List<String> mGroupTitles;
     private SparseArray<List<Task>> mGroups;
-    private List<Task> mTodayList;
-    private List<Task> mTomorrowList;
-    private List<Task> mUpcomingList;
+    private List<Task> mTodayList, mTomorrowList, mUpcomingList, mCompletedList;
     private long mCategoryId;
 
     private TaskManager mTaskManager;
 
-    //  @TODO #TEST-282 & #TEST-268 (DONE) // Kwaliteit Eis #16 & #2; TE Lange methode.
     public TaskListAdapter(Activity activity, TaskManager taskManager, Long categoryId) {
 
         mActivity = activity;
@@ -59,13 +56,20 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         mTomorrowList = new ArrayList<Task>();
         mUpcomingList = new ArrayList<Task>();
 
-        mGroupTitles.add(0, activity.getString(R.string.today));
-        mGroupTitles.add(1, activity.getString(R.string.tomorrow));
-        mGroupTitles.add(2, activity.getString(R.string.upcoming));
+        mGroupTitles.add(0, mActivity.getString(R.string.today));
+        mGroupTitles.add(1, mActivity.getString(R.string.tomorrow));
+        mGroupTitles.add(2, mActivity.getString(R.string.upcoming));
+        mGroupTitles.add(3, mActivity.getString(R.string.completed));
 
-        mGroups.put(0, mTodayList = new ArrayList<Task>());
-        mGroups.put(1, mTomorrowList = new ArrayList<Task>());
-        mGroups.put(2, mUpcomingList = new ArrayList<Task>());
+        mTodayList = new ArrayList<Task>();
+        mTomorrowList = new ArrayList<Task>();
+        mUpcomingList = new ArrayList<Task>();
+        mCompletedList = new ArrayList<Task>();
+
+        mGroups.put(0, mTodayList);
+        mGroups.put(1, mTomorrowList);
+        mGroups.put(2, mUpcomingList);
+        mGroups.put(3, mCompletedList);
         mData = new ArrayList<Task>();
 
         Calendar today = Calendar.getInstance();
@@ -82,7 +86,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         tomorrow.set(Calendar.SECOND, 0);
         tomorrow.set(Calendar.MILLISECOND, 0);
 
-        //@TODO #TEST-290 (DONE) // Kwaliteit Eis #37 ; Geen loop in een loop.
+        //@TODO No loop in a loop.
         if (mCategoryId == 0) {
 
             for (Category cat : mTaskManager.getVisibleCategories()) {
@@ -224,6 +228,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         }
     }
 
+    // @todo remove/refactor.
     private void sortTasks() {
         mGroupTitles = new ArrayList<String>();
         mGroups = new SparseArray<List<Task>>();
@@ -231,13 +236,22 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         mTomorrowList = new ArrayList<Task>();
         mUpcomingList = new ArrayList<Task>();
 
-        mGroupTitles.add(0, "Today");
-        mGroupTitles.add(1, "Tomorrow");
-        mGroupTitles.add(2, "Upcoming");
+        mGroupTitles.add(0, mActivity.getString(R.string.today));
+        mGroupTitles.add(1, mActivity.getString(R.string.tomorrow));
+        mGroupTitles.add(2, mActivity.getString(R.string.upcoming));
+        mGroupTitles.add(3, mActivity.getString(R.string.completed));
 
-        mGroups.put(0, mTodayList = new ArrayList<Task>());
-        mGroups.put(1, mTomorrowList = new ArrayList<Task>());
-        mGroups.put(2, mUpcomingList = new ArrayList<Task>());
+        mTodayList = new ArrayList<Task>();
+        mTomorrowList = new ArrayList<Task>();
+        mUpcomingList = new ArrayList<Task>();
+        mCompletedList = new ArrayList<Task>();
+
+
+        mGroups.put(0, mTodayList);
+        mGroups.put(1, mTomorrowList);
+        mGroups.put(2, mUpcomingList);
+        mGroups.put(3, mCompletedList);
+
         mData = new ArrayList<Task>();
 
 
@@ -255,7 +269,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         tomorrow.set(Calendar.SECOND, 0);
         tomorrow.set(Calendar.MILLISECOND, 0);
 
-        //@TODO #TEST-290 (DONE) // Kwaliteit Eis #37 ; Geen loop in een loop.
+        //@TODO no loop in a loop
         if (mCategoryId == 0) {
 
             for (Category cat : mTaskManager.getVisibleCategories()) {
@@ -423,7 +437,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
 
         Task taskToRemove = null;
 
-        // @todo zorgen dat hier task fatsoenlijk verwijderd wordt.
+        // @todo delete task the proper way.
         for (Task task : mTodayList) {
 
             if (task.getId() == taskToDelete.getId()) {
@@ -614,8 +628,6 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
 
         LayoutInflater layoutInflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-//        * @TODO #TEST-270 (DONE) // Kwaliteit Eis #4 ; In een methode/functie mogen maximaal 10 vergelijkingen staan.
-
         if (convertView == null) {
             view = layoutInflater.inflate(R.layout.task_item, null);
         }
@@ -626,8 +638,9 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
             view.setBackgroundResource(R.color.list_bg2);
         }
 
-        //@TODO #TEST-285 (DONE) // Kwaliteit Eis #19 ; Een regel code mag niet meer dan 100 tekens bevatten.
-        ((TextView) view.findViewById(R.id.taskText)).setText(getChild(groupPosition, childPosition).getTitle());
+        String title = getChild(groupPosition, childPosition).getTitle();
+
+        ((TextView) view.findViewById(R.id.taskText)).setText(title);
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         String currentDate = formatter.format(getChild(groupPosition, childPosition).getDate().getTime());
@@ -664,26 +677,22 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         Button catColor = (Button) view.findViewById(R.id.taskCatColor);
         catColor.setBackgroundColor(mTaskManager.getItemById(getChild(groupPosition, childPosition).getCatId()).getColour());
 
-        if (getChild(groupPosition, childPosition).isImportant()) {
-            if (getChild(groupPosition, childPosition).isCompleted()) {
-                taskTitle.setTypeface(taskTitle.getTypeface(), Typeface.BOLD_ITALIC);
-            }
+        if (getChild(groupPosition, childPosition).isImportant() && (getChild(groupPosition, childPosition).isCompleted())) {
+            taskTitle.setTypeface(taskTitle.getTypeface(), Typeface.BOLD_ITALIC);
         }
-        if (getChild(groupPosition, childPosition).isImportant()) {
-            if (!getChild(groupPosition, childPosition).isCompleted()) {
-                taskTitle.setTypeface(taskTitle.getTypeface(), Typeface.BOLD);
-            }
+
+        if (getChild(groupPosition, childPosition).isImportant() && (!getChild(groupPosition, childPosition).isCompleted())) {
+            taskTitle.setTypeface(taskTitle.getTypeface(), Typeface.BOLD);
         }
-        if (!getChild(groupPosition, childPosition).isImportant()) {
-            if (!getChild(groupPosition, childPosition).isCompleted()) {
-                taskTitle.setTypeface(taskTitle.getTypeface(), Typeface.NORMAL);
-            }
+
+        if (!getChild(groupPosition, childPosition).isImportant() && (!getChild(groupPosition, childPosition).isCompleted())) {
+            taskTitle.setTypeface(taskTitle.getTypeface(), Typeface.NORMAL);
         }
-        if (!getChild(groupPosition, childPosition).isImportant()) {
-            if (getChild(groupPosition, childPosition).isCompleted()) {
-                taskTitle.setTypeface(taskTitle.getTypeface(), Typeface.ITALIC);
-            }
+
+        if (!getChild(groupPosition, childPosition).isImportant() && (getChild(groupPosition, childPosition).isCompleted())) {
+            taskTitle.setTypeface(taskTitle.getTypeface(), Typeface.ITALIC);
         }
+
 
         return view;
 

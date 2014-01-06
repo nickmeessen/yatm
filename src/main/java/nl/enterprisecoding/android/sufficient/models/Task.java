@@ -11,7 +11,7 @@ import java.util.Calendar;
 
 /**
  * Task Class
- * <p/>
+ *
  * Represents a Task Object.
  */
 public class Task {
@@ -133,6 +133,11 @@ public class Task {
         this.mCompleted = completed;
     }
 
+    /**
+     * Returns a String representing this task.
+     *
+     * @return a string representing this task.
+     */
     @Override
     public String toString() {
         return mTitle;

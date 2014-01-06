@@ -27,10 +27,12 @@ import java.util.List;
 
 /**
  * CategoryActivity class
- * <p/>
+ *
  * From here a user could execute various actions on categories.
  */
 public class CategoryActivity extends MainActivity {
+
+    public static final String colourFormat = "#%02x%02x%02x";
 
     private final Activity mActivity = this;
     private Dialog mColorDialog;
@@ -102,12 +104,12 @@ public class CategoryActivity extends MainActivity {
                         int r = Color.red(mChosenColour);
                         int g = Color.green(mChosenColour);
                         int b = Color.blue(mChosenColour);
-                        mCategoryColour = Color.parseColor(String.format("#%02x%02x%02x", r, g, b));
+                        mCategoryColour = Color.parseColor(String.format(colourFormat, r, g, b));
                     }
 
-                    // @TODO #TEST-301 (DONE) // Kwaliteit Eis #25 ; Geen parameters die niet gechecked worden.
+                    // @TODO Params aren't checked.
                     if (categoryName.equals(standardText)) {
-                        Toast.makeText(mActivity.getApplicationContext(), "Please choose a different name", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity.getApplicationContext(), getString(R.string.ChooseDiffName), Toast.LENGTH_SHORT).show();
                     } else {
                         mTaskManager.checkExistingCategory(categoryName, mCategoryColour);
                         editText.setText("");
@@ -127,12 +129,12 @@ public class CategoryActivity extends MainActivity {
                     int r = Color.red(mChosenColour);
                     int g = Color.green(mChosenColour);
                     int b = Color.blue(mChosenColour);
-                    mCategoryColour = Color.parseColor(String.format("#%02x%02x%02x", r, g, b));
+                    mCategoryColour = Color.parseColor(String.format(colourFormat, r, g, b));
                 }
 
-                // @TODO #TEST-301 (DONE) // Kwaliteit Eis #25 ; Geen parameters die niet gechecked worden.
+                // @TODO Params aren't checked.
                 if (categoryName.equals(standardText)) {
-                    Toast.makeText(mActivity.getApplicationContext(), "Please choose a different name", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity.getApplicationContext(), getString(R.string.ChooseDiffName), Toast.LENGTH_SHORT).show();
                 } else {
                     mTaskManager.checkExistingCategory(categoryName, mCategoryColour);
                     editText.setText("");
@@ -166,7 +168,7 @@ public class CategoryActivity extends MainActivity {
                 int r = Color.red(mChosenColour);
                 int g = Color.green(mChosenColour);
                 int b = Color.blue(mChosenColour);
-                mCategoryColour = Color.parseColor(String.format("#%02x%02x%02x", r, g, b));
+                mCategoryColour = Color.parseColor(String.format(colourFormat, r, g, b));
                 mColorDialog.dismiss();
                 editText.requestFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -190,7 +192,7 @@ public class CategoryActivity extends MainActivity {
             @Override
             public void onClick(View v) {
                 bgShape.setColor(color[0]);
-                mCategoryColour = Color.parseColor(String.format("#%02x%02x%02x", color[1], color[2], color[3]));
+                mCategoryColour = Color.parseColor(String.format(colourFormat, color[1], color[2], color[3]));
                 mColorDialog.dismiss();
                 editText.requestFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -252,6 +254,13 @@ public class CategoryActivity extends MainActivity {
                     } else {
                         mTaskManager.deleteCategoryAndMoveTasks(originCategory, mTaskManager.getCategory(destinationCategory));
                     }
+
+                    Intent intent = new Intent(mActivity, CategoryActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                    startActivity(intent);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+
                 }
             });
 

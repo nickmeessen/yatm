@@ -50,4 +50,6 @@
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="upcoming">Upcoming</string>
+    <string name="ChooseDiffName">Please choose a different name</string>
+    <string name="completed">Completed</string>
 </resources>

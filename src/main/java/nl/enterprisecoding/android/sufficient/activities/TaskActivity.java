@@ -20,7 +20,7 @@ import nl.enterprisecoding.android.sufficient.models.Task;
 
 /**
  * TaskActivity class
- * <p/>
+ *
  * From here a user could execute various actions on tasks.
  */
 public class TaskActivity extends MainActivity {

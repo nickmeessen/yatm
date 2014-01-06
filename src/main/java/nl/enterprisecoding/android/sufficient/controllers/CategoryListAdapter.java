@@ -25,6 +25,11 @@ import nl.enterprisecoding.android.sufficient.models.Category;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * CategoryListAdapter
+ *
+ * An adapter class for managing the custom list views.
+ */
 class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
 
     private Activity mActivity;
@@ -39,6 +44,11 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
 
     }
 
+    /**
+     * Adds a new category.
+     *
+     * @param category the category to add to this adapter.
+     */
     public void addItem(Category category) {
         mCatList.put(category.getID(), category);
         notifyDataSetChanged();

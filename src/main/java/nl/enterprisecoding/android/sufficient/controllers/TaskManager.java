@@ -85,6 +85,7 @@ public class TaskManager extends SQLiteOpenHelper {
      * Constructs a new TaskManager
      *
      * @param activity the activity called from.
+     * @param categoryID the current CategoryID.
      */
     public TaskManager(MainActivity activity, Long categoryID) {
 
@@ -106,7 +107,7 @@ public class TaskManager extends SQLiteOpenHelper {
         mCategoryListAdapter = new CategoryListAdapter(activity, this);
         mCategoryListAdapter.addItem(allCats);
 
-        // @todo try/catch hack eruit halen
+        // @todo remove try/catch hack
         try {
             ListView lv = (ListView) activity.findViewById(R.id.cat_list);
 
@@ -124,7 +125,7 @@ public class TaskManager extends SQLiteOpenHelper {
 
         taskListAdapter = new TaskListAdapter(activity, this, categoryID);
 
-        // @todo try/catch hack eruit halen
+        // @todo remove try/catch hack
         try {
             ExpandableListView lv2 = (ExpandableListView) activity.findViewById(R.id.taskList);
             lv2.setAdapter(taskListAdapter);
@@ -133,7 +134,7 @@ public class TaskManager extends SQLiteOpenHelper {
             lv2.expandGroup(1, true);
             lv2.expandGroup(2, true);
         } catch (Exception ex) {
-               Log.e("ECA", ex.getMessage(), ex);
+            Log.e("ECA", ex.getMessage(), ex);
         }
 
 
@@ -255,9 +256,6 @@ public class TaskManager extends SQLiteOpenHelper {
                 break;
             case 12:
                 cal.set(Integer.parseInt(taskDateString[0]), Calendar.DECEMBER, Integer.parseInt(taskDateString[2]));
-                break;
-            default:
-                cal.set(Integer.parseInt(taskDateString[0]), Integer.parseInt(taskDateString[1]), Integer.parseInt(taskDateString[2]));
                 break;
         }
 
