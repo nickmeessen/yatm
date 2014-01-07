@@ -129,7 +129,7 @@ public class EditCategoryActivity extends MainActivity {
                 int r = Color.red(chosenColour);
                 int g = Color.green(chosenColour);
                 int b = Color.blue(chosenColour);
-                mCategoryColour = Color.parseColor(String.format(CategoryActivity.colourFormat, r, g, b));
+                mCategoryColour = Color.parseColor(String.format(CategoryActivity.COLOUR_FORMAT, r, g, b));
                 mColorDialog.dismiss();
             }
         });

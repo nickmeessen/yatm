@@ -95,7 +95,7 @@ public class CategoryActivity extends MainActivity {
                         int r = Color.red(mChosenColour);
                         int g = Color.green(mChosenColour);
                         int b = Color.blue(mChosenColour);
-                        mCategoryColour = Color.parseColor(String.format(colourFormat, r, g, b));
+                        mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, r, g, b));
                     }
 
                     // @TODO (Breunie) Params aren't checked.
@@ -120,7 +120,7 @@ public class CategoryActivity extends MainActivity {
                     int r = Color.red(mChosenColour);
                     int g = Color.green(mChosenColour);
                     int b = Color.blue(mChosenColour);
-                    mCategoryColour = Color.parseColor(String.format(colourFormat, r, g, b));
+                    mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, r, g, b));
                 }
 
                 // @TODO (Breunie) Params aren't checked.
@@ -159,7 +159,7 @@ public class CategoryActivity extends MainActivity {
                 int r = Color.red(mChosenColour);
                 int g = Color.green(mChosenColour);
                 int b = Color.blue(mChosenColour);
-                mCategoryColour = Color.parseColor(String.format(colourFormat, r, g, b));
+                mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, r, g, b));
                 mColorDialog.dismiss();
                 editText.requestFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -184,7 +184,7 @@ public class CategoryActivity extends MainActivity {
             @Override
             public void onClick(View v) {
                 bgShape.setColor(color[0]);
-                mCategoryColour = Color.parseColor(String.format(colourFormat, color[1], color[2], color[3]));
+                mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, color[1], color[2], color[3]));
                 mColorDialog.dismiss();
                 editText.requestFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
