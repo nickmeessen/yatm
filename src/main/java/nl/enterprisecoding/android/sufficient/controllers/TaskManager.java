@@ -16,7 +16,6 @@ import android.graphics.Color;
 import android.util.Log;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
@@ -79,8 +78,6 @@ public class TaskManager extends SQLiteOpenHelper {
             + " text not null," + CCOLOUR_COLUMN + " integer not null,"
             + CVISIBILITY + " integer not null);";
 
-    private MainActivity mActivity;
-
     /**
      * Constructs a new TaskManager
      *
@@ -91,7 +88,6 @@ public class TaskManager extends SQLiteOpenHelper {
 
         super(activity, DATABASE_NAME, null, DATABASE_VERSION);
 
-        mActivity = activity;
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         Category allCats = new Category();
@@ -492,7 +488,6 @@ public class TaskManager extends SQLiteOpenHelper {
         return mCategoryListAdapter.getItemById(id);
     }
 
-    // @todo (Nick) temporary methods to prevent breaking functionality.
     public void notifyDataSetChanged() {
         mCategoryListAdapter.notifyDataSetChanged();
         mTaskListAdapter.notifyDataSetChanged();

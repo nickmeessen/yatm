@@ -88,7 +88,6 @@ public class CategoryActivity extends MainActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    String categoryName = editText.getText().toString();
                     if (mCategoryColour == 0) {
                         mChosenColour = randomColor[0];
                         int r = Color.red(mChosenColour);
@@ -116,9 +115,9 @@ public class CategoryActivity extends MainActivity {
 
                 if (categoryName.equals(standardText)) {
                     makeToast(getString(R.string.ChooseDiffName), false);
-                } else if(categoryName.trim().isEmpty()) {
+                } else if (categoryName.trim().isEmpty()) {
                     makeToast(getResources().getString(R.string.category_name_empty_error), false);
-                } else if(mTaskManager.getCategoryByTitle(categoryName) != null) {
+                } else if (mTaskManager.getCategoryByTitle(categoryName) != null) {
                     makeToast(getResources().getString(R.string.toast_category_exists), false);
                 } else {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -290,7 +289,7 @@ public class CategoryActivity extends MainActivity {
     /**
      * Shows a Toast
      *
-     * @param content The String that defines the text of the Toast
+     * @param content      The String that defines the text of the Toast
      * @param showDuration The duration the Toast will be shown: true = long, false = short
      */
     private void makeToast(String content, boolean showDuration) {

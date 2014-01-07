@@ -145,6 +145,11 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
 
         }
 
+        for (Task task : restList) {
+            task.setImportant(true);
+            mTodayList.add(task);
+        }
+
     }
 
     @Override
