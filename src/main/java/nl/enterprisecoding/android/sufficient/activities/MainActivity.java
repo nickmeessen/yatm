@@ -41,10 +41,16 @@ public class MainActivity extends Activity {
 
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 
-        if ((keyCode == KeyEvent.KEYCODE_MENU)) {
+        if ((keyCode == KeyEvent.KEYCODE_MENU) && (!this.getClass().getSimpleName().equals("CategoryActivity"))) {
 
             startActivity(new Intent(this, CategoryActivity.class));
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+
+            return true;
+        } else if (this.getClass().getSimpleName().equals("CategoryActivity")) {
+
+            startActivity(new Intent(this, TaskActivity.class));
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 
             return true;
         }

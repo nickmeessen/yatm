@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.*;
@@ -84,18 +85,6 @@ public class CategoryActivity extends MainActivity {
         });
 
         final EditText editText = (EditText) findViewById(R.id.newCategory);
-        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (editText.getText().toString().equals(standardText)) {
-                    editText.setText("");
-                } else if (editText.getText().length() == 0) {
-                    editText.setText(standardText);
-                }
-            }
-
-        });
-
         editText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
