@@ -64,7 +64,7 @@ public class TaskManager extends SQLiteOpenHelper {
             + ");";
 
 
-    private Map<Long, Category> catList;
+    private Map<Long, Category> mCategoryList;
 
     private static final String CID_COLUMN = "_id";
     private static final String CTITLE_COLUMN = "title";
@@ -98,15 +98,17 @@ public class TaskManager extends SQLiteOpenHelper {
 
         open();
 
-        catList = new TreeMap<Long, Category>();
-        catList = retrieveAllCategories();
+        mCategoryList = new TreeMap<Long, Category>();
+
+        retrieveAllCategories();
 
         mCategoryListAdapter = new CategoryListAdapter(activity, this);
 //        @todo (Nick) fix, all cats shouldn't be in database so it's added at runtime, maybe it should go in DB after all?
-        catList.put(allCats.getID(), allCats);
+        mCategoryList.put(allCats.getID(), allCats);
 
         // @todo remove try/catch hack
         try {
+
             ListView lv = (ListView) activity.findViewById(R.id.cat_list);
 
             lv.setAdapter(mCategoryListAdapter);
@@ -124,6 +126,7 @@ public class TaskManager extends SQLiteOpenHelper {
             lv2.expandGroup(0, true);
             lv2.expandGroup(1, true);
             lv2.expandGroup(2, true);
+            lv2.expandGroup(3, true);
 
         } catch (Exception ex) {
             Log.e("ECA", ex.getMessage(), ex);
@@ -157,7 +160,7 @@ public class TaskManager extends SQLiteOpenHelper {
         Task newTask = cursorToTask(cursor);
         cursor.close();
 
-        catList.get(categoryId).addTask(newTask);
+        mCategoryList.get(categoryId).addTask(newTask);
         mTaskListAdapter.notifyDataSetChanged();
 
         return newTask.getId();
@@ -185,7 +188,7 @@ public class TaskManager extends SQLiteOpenHelper {
         while (!cursor.isAfterLast()) {
             Task task = cursorToTask(cursor);
 
-            catList.get(task.getCatId()).addTask(task);
+            mCategoryList.get(task.getCatId()).addTask(task);
 
             cursor.moveToNext();
         }
@@ -362,22 +365,24 @@ public class TaskManager extends SQLiteOpenHelper {
 
     /**
      * Retrieve all categories.
-     *
-     * @return a list of all categories.
      */
-    private Map<Long, Category> retrieveAllCategories() {
+    private void retrieveAllCategories() {
 
         Cursor cursor = database.query(CATEGORIES_TABLE, CALL_COLUMNS, null, null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Category cat = cursorToCategory(cursor);
-            catList.put(cat.getID(), cat);
+            mCategoryList.put(cat.getID(), cat);
             cursor.moveToNext();
         }
         cursor.close();
 
-        return catList;
+
+    }
+
+    public Map<Long, Category> getAllCategories() {
+        return mCategoryList;
     }
 
     /**
@@ -420,7 +425,7 @@ public class TaskManager extends SQLiteOpenHelper {
 
         Category newCategory = cursorToCategory(cursor);
 
-        catList.put(newCategory.getID(), newCategory);
+        mCategoryList.put(newCategory.getID(), newCategory);
 
         cursor.close();
     }
@@ -446,7 +451,7 @@ public class TaskManager extends SQLiteOpenHelper {
      * @return a list of all categories.
      */
     public List<Category> getCategories() {
-        return new ArrayList<Category>(catList.values());
+        return new ArrayList<Category>(mCategoryList.values());
     }
 
     /**
@@ -456,7 +461,7 @@ public class TaskManager extends SQLiteOpenHelper {
      */
     public List<Category> getVisibleCategories() {
         ArrayList<Category> mVisibleCategories = new ArrayList<Category>();
-        for (Category cat : catList.values()) {
+        for (Category cat : mCategoryList.values()) {
             if (cat.isVisible()) {
                 mVisibleCategories.add(cat);
             }
@@ -471,7 +476,7 @@ public class TaskManager extends SQLiteOpenHelper {
      * @return the found category, or null when not found.
      */
     public Category getCategoryByTitle(String categoryTitle) {
-        for (Category c : catList.values()) {
+        for (Category c : mCategoryList.values()) {
             if (c.getTitle().equals(categoryTitle)) {
                 return c;
             }
@@ -502,7 +507,7 @@ public class TaskManager extends SQLiteOpenHelper {
         database.delete(TASKS_TABLE, TCOLUMN_CATID + " = " + id, null);
         database.delete(CATEGORIES_TABLE, CID_COLUMN + " = " + id, null);
 
-        catList.remove(category.getID());
+        mCategoryList.remove(category.getID());
 
         mCategoryListAdapter.notifyDataSetChanged();
     }
