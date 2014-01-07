@@ -54,7 +54,7 @@
                 android:textColor="#222"
                 android:clickable="false"
                 android:maxLines="1"
-                android:hint="@string/new_cat"
+                android:hint="@string/new_category"
                 android:paddingTop="25dp"
                 android:paddingBottom="25dp"
                 android:paddingLeft="10dp"
