@@ -156,7 +156,7 @@ public class TaskActivity extends MainActivity {
 
         List<Category> catList = mTaskManager.getCategories();
 
-        if (mTaskManager.getCategories().size() == 0) {
+        if (mTaskManager.getCategories().size() == 1) {
             Toast.makeText(this, R.string.toast_no_category, Toast.LENGTH_SHORT).show();
 
             Intent intent = new Intent(this, CategoryActivity.class);
