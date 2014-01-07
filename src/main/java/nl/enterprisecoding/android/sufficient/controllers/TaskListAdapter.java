@@ -369,8 +369,8 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
             taskTitle.setPaintFlags(taskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
         }
 
-        Button catColor = (Button) view.findViewById(R.id.taskCatColor);
-        catColor.setBackgroundColor(mTaskManager.getCategoryById(getChild(groupPosition, childPosition).getCatId()).getColour());
+        Button catColour = (Button) view.findViewById(R.id.task_category_colour);
+        catColour.setBackgroundColor(mTaskManager.getCategoryById(getChild(groupPosition, childPosition).getCatId()).getColour());
 
         if (getChild(groupPosition, childPosition).isImportant() && (getChild(groupPosition, childPosition).isCompleted())) {
             taskTitle.setTypeface(taskTitle.getTypeface(), Typeface.BOLD_ITALIC);
