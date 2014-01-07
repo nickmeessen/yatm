@@ -97,14 +97,6 @@ public class CategoryActivity extends MainActivity {
                         int b = Color.blue(mChosenColour);
                         mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, r, g, b));
                     }
-
-                    // @TODO (Breunie) Params aren't checked.
-                    if (categoryName.equals(standardText)) {
-                        Toast.makeText(mActivity, getString(R.string.ChooseDiffName), Toast.LENGTH_SHORT).show();
-                    } else {
-                        mTaskManager.checkExistingCategory(categoryName, mCategoryColour);
-                        editText.setText("");
-                    }
                 }
                 return false;
             }
@@ -123,19 +115,19 @@ public class CategoryActivity extends MainActivity {
                     mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, r, g, b));
                 }
 
-                // @TODO (Breunie) Params aren't checked.
                 if (categoryName.equals(standardText)) {
                     makeToast(getString(R.string.ChooseDiffName), false);
                 } else if(categoryName.trim().isEmpty()) {
                     makeToast(getResources().getString(R.string.category_name_empty_error), false);
+                } else if(mTaskManager.getCategoryByTitle(categoryName) != null) {
+                    makeToast(getResources().getString(R.string.toast_category_exists), false);
                 } else {
-                    mTaskManager.checkExistingCategory(categoryName, mCategoryColour);
-
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 
+                    mTaskManager.createCategory(categoryName, mCategoryColour);
                     mTaskManager.notifyDataSetChanged();
-                    mActivity.startActivity(getIntent());
+                    makeToast(getResources().getString(R.string.category_added), false);
                 }
             }
         });
