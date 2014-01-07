@@ -288,7 +288,7 @@ public class CategoryActivity extends MainActivity {
     /**
      * Shows a Toast
      *
-     * @param content The String that defines the text of the Toast
+     * @param content      The String that defines the text of the Toast
      * @param showDuration The duration the Toast will be shown: true = long, false = short
      */
     private void makeToast(String content, boolean showDuration) {

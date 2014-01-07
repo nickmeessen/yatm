@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
     protected TaskManager mTaskManager;
     protected ActionBar mActionBar;
 
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -38,9 +39,10 @@ public class MainActivity extends Activity {
 
     }
 
+    @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 
-       if (keyCode == KeyEvent.KEYCODE_MENU) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
 
             startActivity(new Intent(this, CategoryActivity.class));
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
