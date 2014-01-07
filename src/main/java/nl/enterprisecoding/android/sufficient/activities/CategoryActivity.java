@@ -302,7 +302,7 @@ public class CategoryActivity extends MainActivity {
             return true;
         }
 
-        return false;
+        return super.onKeyUp(keyCode, event);
     }
 
     /**

@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
             return true;
         }
 
-        return false;
+        return super.onKeyUp(keyCode, event);
 
     }
 
