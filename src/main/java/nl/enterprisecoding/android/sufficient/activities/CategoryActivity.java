@@ -78,7 +78,6 @@ public class CategoryActivity extends MainActivity {
                 createColorButton(bgShape, R.id.color_random2_button, 0);
                 createColorButton(bgShape, R.id.color_random3_button, 0);
                 createColorButton(bgShape, R.id.color_random4_button, 0);
-
                 mColorDialog.show();
             }
         });

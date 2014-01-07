@@ -96,15 +96,13 @@ public class EditTaskActivity extends MainActivity {
         updateTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 boolean mDataIsValidated = true;
+                int mSelectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
+                long mSelectedCategoryId = mCategoriesArray.get(mSelectedCategoryIndex).getID();
                 if (mTaskTitleInput.getText().toString().isEmpty()) {
                     mDataIsValidated = false;
                     mTaskTitleInput.setBackgroundColor(getResources().getColor(R.color.red));
                 }
-
-                int mSelectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
-                long mSelectedCategoryId = mCategoriesArray.get(mSelectedCategoryIndex).getID();
 
                 if (mDataIsValidated) {
                     mTaskManager.createTask(mTaskTitleInput.getText().toString(), mSelectedCategoryId, mTaskDate, mTaskImportantCheckBox.isChecked());
@@ -112,7 +110,6 @@ public class EditTaskActivity extends MainActivity {
                 } else {
                     Toast.makeText(mActivity, R.string.toast_invalid_data, Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
