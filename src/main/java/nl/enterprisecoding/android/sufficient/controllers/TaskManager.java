@@ -340,7 +340,7 @@ public class TaskManager extends SQLiteOpenHelper {
         values.put(CCOLOUR_COLUMN, Color.BLACK);
         values.put(CVISIBILITY, 1);
 
-        database.insert(CATEGORIES_TABLE, null, values);
+        db.insert(CATEGORIES_TABLE, null, values);
     }
 
     /**
