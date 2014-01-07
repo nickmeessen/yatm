@@ -102,9 +102,9 @@ public class EditCategoryActivity extends MainActivity {
     /**
      * Create a button with a predefined inputColour.
      *
-     * @param bgShape  the shape.
-     * @param buttonId the button ID.
-     * @param inputColour   the inputColour, can be 0 then a random inputColour will be generated.
+     * @param bgShape     the shape.
+     * @param buttonId    the button ID.
+     * @param inputColour the inputColour, can be 0 then a random inputColour will be generated.
      */
     private void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour) {
         final Button colourButton = (Button) mColourDialog.findViewById(buttonId);

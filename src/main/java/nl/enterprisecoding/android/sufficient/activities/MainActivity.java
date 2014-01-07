@@ -8,7 +8,6 @@
 package nl.enterprisecoding.android.sufficient.activities;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -20,7 +19,7 @@ import roboguice.activity.RoboActivity;
 
 /**
  * MainActivity Class
- *
+ * <p/>
  * This class is used to manage the menu anim_in the application and call several controllers.
  *
  * @author Nick Meessen

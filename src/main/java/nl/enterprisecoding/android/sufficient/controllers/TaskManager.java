@@ -100,7 +100,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         ListView categoryView = (ListView) activity.findViewById(R.id.cat_list);
         ExpandableListView tasklistView = (ExpandableListView) activity.findViewById(R.id.taskList);
 
-        if(categoryView != null) {
+        if (categoryView != null) {
             categoryView.setAdapter(mCategoryListAdapter);
             categoryView.setOnItemClickListener(mCategoryListAdapter);
 

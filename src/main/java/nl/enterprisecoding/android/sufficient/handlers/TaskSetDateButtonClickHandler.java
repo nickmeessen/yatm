@@ -8,11 +8,12 @@ public class TaskSetDateButtonClickHandler implements IButtonClickHandler {
 
     private EditTaskActivity mActivity;
 
-    public TaskSetDateButtonClickHandler() {}
+    public TaskSetDateButtonClickHandler() {
+    }
 
     @Override
     public void setActivity(MainActivity activity) {
-        mActivity = (EditTaskActivity)activity;
+        mActivity = (EditTaskActivity) activity;
     }
 
     @Override

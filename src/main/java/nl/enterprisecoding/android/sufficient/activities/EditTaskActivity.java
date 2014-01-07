@@ -7,7 +7,6 @@
 
 package nl.enterprisecoding.android.sufficient.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -23,12 +22,12 @@ import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateButtonClickHan
 import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateDialogButtonClickHandler;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
+import roboguice.inject.ContentView;
+import roboguice.inject.InjectView;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
-import roboguice.inject.ContentView;
-import roboguice.inject.InjectView;
 
 
 /**
@@ -41,15 +40,20 @@ import roboguice.inject.InjectView;
 @ContentView(R.layout.edit_task_item)
 public class EditTaskActivity extends MainActivity {
 
-    private final Activity mActivity = this;
 
-    @InjectView(R.id.task_title) EditText mTaskTitleInput;
-    @InjectView(R.id.task_category) Spinner mTaskCategorySpinner;
-    @InjectView(R.id.task_set_date_button) Button mTaskSetDateButton;
-    @InjectView(R.id.task_important) CheckBox mTaskImportantCheckBox;
+    @InjectView(R.id.task_title)
+    EditText mTaskTitleInput;
+    @InjectView(R.id.task_category)
+    Spinner mTaskCategorySpinner;
+    @InjectView(R.id.task_set_date_button)
+    Button mTaskSetDateButton;
+    @InjectView(R.id.task_important)
+    CheckBox mTaskImportantCheckBox;
 
-    @Inject TaskSetDateButtonClickHandler mTaskSetDateButtonClickHandler;
-    @Inject TaskSetDateDialogButtonClickHandler mTaskSetDateDialogButtonClickHandler;
+    @Inject
+    TaskSetDateButtonClickHandler mTaskSetDateButtonClickHandler;
+    @Inject
+    TaskSetDateDialogButtonClickHandler mTaskSetDateDialogButtonClickHandler;
 
     private Calendar mDateToday;
     private Calendar mTaskDate;
@@ -69,7 +73,7 @@ public class EditTaskActivity extends MainActivity {
 
         long selectedTaskID = getIntent().getExtras().getLong(TaskActivity.TASK_ID, 0);
 
-        if(selectedTaskID > 0) {
+        if (selectedTaskID > 0) {
 
             mActionBar.setTitle(R.string.action_edit);
 
@@ -128,8 +132,8 @@ public class EditTaskActivity extends MainActivity {
      * Creates a DatePicker dialog.
      */
     private void createDatePickerDialog() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(mActivity);
-        final DatePicker datePicker = new DatePicker(mActivity);
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        final DatePicker datePicker = new DatePicker(this);
 
         datePicker.setCalendarViewShown(false);
         datePicker.init(mTaskDate.get(Calendar.YEAR), mTaskDate.get(Calendar.MONTH), mTaskDate.get(Calendar.DAY_OF_MONTH), null);
@@ -167,7 +171,7 @@ public class EditTaskActivity extends MainActivity {
             mTaskManager.createTask(mTaskTitleInput.getText().toString(), mSelectedCategoryId, mTaskDate, mTaskImportantCheckBox.isChecked());
             startTaskActivity(mSelectedCategoryId);
         } else {
-            Toast.makeText(mActivity, R.string.toast_invalid_data, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toast_invalid_data, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -236,15 +240,15 @@ public class EditTaskActivity extends MainActivity {
      * @param catId The id of the category which TaskActivity you are trying to start
      */
     private void startTaskActivity(long catId) {
-        Intent intent = new Intent(mActivity, TaskActivity.class);
+        Intent intent = new Intent(this, TaskActivity.class);
 
         intent.putExtra("categoryID", catId);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        mActivity.startActivity(intent);
-        mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     public void showTaskSetDateDialog() {

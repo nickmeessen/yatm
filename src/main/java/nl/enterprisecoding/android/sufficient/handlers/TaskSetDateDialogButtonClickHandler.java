@@ -9,16 +9,19 @@ public class TaskSetDateDialogButtonClickHandler implements IDialogButtonClickHa
 
     private EditTaskActivity mActivity;
 
-    public TaskSetDateDialogButtonClickHandler() {}
+    public TaskSetDateDialogButtonClickHandler() {
+    }
 
     @Override
     public void setActivity(MainActivity activity) {
-        mActivity = (EditTaskActivity)activity;
+        mActivity = (EditTaskActivity) activity;
     }
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
-        if (which == DialogInterface.BUTTON_POSITIVE) mActivity.setTaskDateFromDialog((DatePickerDialog)dialog);
+        if (which == DialogInterface.BUTTON_POSITIVE) {
+            mActivity.setTaskDateFromDialog((DatePickerDialog) dialog);
+        }
     }
 
 }
