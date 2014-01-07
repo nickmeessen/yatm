@@ -41,6 +41,14 @@ public class EditTaskActivity extends MainActivity {
     private Calendar mTaskDate;
     private List<Category> mCategoriesArray = new ArrayList<Category>();
 
+    /**
+     * Called when the activity is starting.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.
+     *                           <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,7 +116,7 @@ public class EditTaskActivity extends MainActivity {
 
                 if (mDataIsValidated) {
                     mTaskManager.createTask(mTaskTitleInput.getText().toString(), mSelectedCategoryId, mTaskDate, mTaskImportantCheckBox.isChecked());
-                    showTaskActivity(mSelectedCategoryId);
+                    startTaskActivity(mSelectedCategoryId);
                 } else {
                     Toast.makeText(mActivity, R.string.toast_invalid_data, Toast.LENGTH_SHORT).show();
                 }
@@ -168,7 +176,7 @@ public class EditTaskActivity extends MainActivity {
         mTaskSetDateButton.setText(mTaskDate.get(Calendar.DAY_OF_MONTH) + "/" + (mTaskDate.get(Calendar.MONTH) + 1) + "/" + mTaskDate.get(Calendar.YEAR));
     }
 
-    private void showTaskActivity(long catId) {
+    private void startTaskActivity(long catId) {
         Intent intent = new Intent(mActivity, TaskActivity.class);
 
         intent.putExtra("categoryID", catId);

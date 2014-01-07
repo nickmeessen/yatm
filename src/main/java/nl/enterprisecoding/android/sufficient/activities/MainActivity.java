@@ -28,6 +28,14 @@ public class MainActivity extends Activity {
     protected TaskManager mTaskManager;
     protected ActionBar mActionBar;
 
+    /**
+     * Called when the activity is starting.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.
+     *                           <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +47,14 @@ public class MainActivity extends Activity {
 
     }
 
+    /**
+     * Called when a key was released and not handled by any of the views
+     * inside of the activity.
+     *
+     * @return Return <code>true</code> to prevent this event from being propagated
+     * further, or <code>false</code> to indicate that you have not handled
+     * this event and it should continue to be propagated.
+     */
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 

@@ -42,6 +42,13 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
 
     private TaskManager mTaskManager;
 
+    /**
+     * Constructs the adapter.
+     *
+     * @param activity    the calling activity.
+     * @param taskManager a taskmanager.
+     * @param categoryId  the current categoryid.
+     */
     public TaskListAdapter(Activity activity, TaskManager taskManager, Long categoryId) {
 
         mActivity = activity;
@@ -74,6 +81,9 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
 
     }
 
+    /**
+     * Updates the list.
+     */
     private void updateList() {
 
         if (mCategoryId == 0) {
@@ -85,6 +95,11 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         }
     }
 
+    /**
+     * Fill the list with a list of Tasks, split the tasks into several sublists.
+     *
+     * @param tasks the list of tasks to split.
+     */
     public void fillList(List<Task> tasks) {
 
         Calendar today = Calendar.getInstance();
@@ -152,6 +167,9 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
 
     }
 
+    /**
+     * Intercepts notifyDataSetChanged() to re-sort the list.
+     */
     @Override
     public void notifyDataSetChanged() {
         updateList();

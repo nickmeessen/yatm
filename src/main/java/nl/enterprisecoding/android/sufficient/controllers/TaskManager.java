@@ -272,6 +272,12 @@ public class TaskManager extends SQLiteOpenHelper {
         return task;
     }
 
+    /**
+     * Gets a task by it's ID.
+     *
+     * @param taskId the id of the task to retrieve.
+     * @return the task corresponding to the given ID.
+     */
     public Task getTask(long taskId) {
 
         Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, TCOLUMN_ID + " = " + taskId, null, null, null, null);
@@ -283,7 +289,17 @@ public class TaskManager extends SQLiteOpenHelper {
         return task;
     }
 
-    public void editTask(String title, long categoryId, Calendar date, boolean important, boolean c, long selectedTask) {
+    /**
+     * Updates a task.
+     *
+     * @param title      the new title of the task to update.
+     * @param categoryId the new categoryID of the task to update.
+     * @param date       the new date of the task to update.
+     * @param important  wether the task is marked as important or not
+     * @param completed  wether the task is marked as completed or not.
+     * @param taskID     the id of the task to update
+     */
+    public void editTask(String title, long categoryId, Calendar date, boolean important, boolean completed, long taskID) {
         int mIsImportant, taskIsCompleted;
         if (important) {
             mIsImportant = 1;
@@ -291,7 +307,7 @@ public class TaskManager extends SQLiteOpenHelper {
             mIsImportant = 0;
         }
 
-        if (c) {
+        if (completed) {
             taskIsCompleted = 1;
         } else {
             taskIsCompleted = 0;
@@ -305,7 +321,7 @@ public class TaskManager extends SQLiteOpenHelper {
         values.put(TCOLUMN_TASK, title);
         values.put(TCOLUMN_DATE, simpleDateFormat.format(date.getTimeInMillis()));
 
-        database.update(TASKS_TABLE, values, TCOLUMN_ID + " = " + selectedTask, null);
+        database.update(TASKS_TABLE, values, TCOLUMN_ID + " = " + taskID, null);
     }
 
     /**
@@ -410,18 +426,35 @@ public class TaskManager extends SQLiteOpenHelper {
         cursor.close();
     }
 
-    public void editCategory(String title, int colour, Long selectedCategory) {
+    /**
+     * Updates a category.
+     *
+     * @param title      the new category title
+     * @param colour     the new category colour.
+     * @param categoryID the ID of the category to update
+     */
+    public void editCategory(String title, int colour, Long categoryID) {
         ContentValues values = new ContentValues();
         values.put(CTITLE_COLUMN, title);
         values.put(CCOLOUR_COLUMN, colour);
-        database.update(CATEGORIES_TABLE, values, CID_COLUMN + " = " + selectedCategory, null);
+        database.update(CATEGORIES_TABLE, values, CID_COLUMN + " = " + categoryID, null);
     }
 
 
+    /**
+     * Get all categories.
+     *
+     * @return a list of all categories.
+     */
     public List<Category> getCategories() {
         return new ArrayList<Category>(catList.values());
     }
 
+    /**
+     * Gets all visible categories.
+     *
+     * @return a list of all categories that are currently visible.
+     */
     public List<Category> getVisibleCategories() {
         ArrayList<Category> mVisibleCategories = new ArrayList<Category>();
         for (Category cat : catList.values()) {
@@ -432,6 +465,12 @@ public class TaskManager extends SQLiteOpenHelper {
         return mVisibleCategories;
     }
 
+    /**
+     * Retrieves a Category by it's Title.
+     *
+     * @param categoryTitle the category title to search for
+     * @return the found category, or null when not found.
+     */
     public Category getCategoryByTitle(String categoryTitle) {
         for (Category c : catList.values()) {
             if (c.getTitle().equals(categoryTitle)) {
@@ -442,11 +481,22 @@ public class TaskManager extends SQLiteOpenHelper {
         return null;
     }
 
+    /**
+     * Delete given category and move tasks to given destination category.
+     *
+     * @param origin      the origin category
+     * @param destination the destination category
+     */
     public void deleteCategoryAndMoveTasks(Category origin, Category destination) {
         moveTasks(origin, destination);
         deleteCategory(origin);
     }
 
+    /**
+     * Deletes the given category and linked tasks.
+     *
+     * @param category the category to delete.
+     */
     public void deleteCategory(Category category) {
         long id = category.getID();
 
@@ -458,6 +508,12 @@ public class TaskManager extends SQLiteOpenHelper {
         mCategoryListAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Moves tasks from one category to another category.
+     *
+     * @param origin      the origin category
+     * @param destination the destination category
+     */
     private void moveTasks(Category origin, Category destination) {
         List<Task> tasks = origin.getTasks();
         for (Task t : tasks) {
@@ -468,6 +524,12 @@ public class TaskManager extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Switches visibility of the given category.
+     *
+     * @param category the category to update.
+     * @return the new visibility setting.
+     */
     public boolean switchCategoryVisibility(Category category) {
         boolean mNewVisibility = true;
         if (category.isVisible()) {

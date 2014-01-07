@@ -34,6 +34,12 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
     private Activity mActivity;
     private TaskManager mTaskManager;
 
+    /**
+     * Constructs the adapter
+     *
+     * @param activity    the calling activity
+     * @param taskManager a taskmanager.
+     */
     public CategoryListAdapter(Activity activity, TaskManager taskManager) {
         mActivity = activity;
         mTaskManager = taskManager;
@@ -68,6 +74,12 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
         return getItem(position).getID();
     }
 
+    /**
+     * Fetches a category by ID.
+     *
+     * @param id the id of the category to fetch.
+     * @return the category corresponding to the given ID.
+     */
     public Category getItemById(long id) {
         return mTaskManager.retrieveAllCategories().get(id);
     }
@@ -113,6 +125,12 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
         return view;
     }
 
+    /**
+     * Changes visibility button.
+     *
+     * @param button  the button to change
+     * @param visible boolean if category is visible.
+     */
     private void updateCategoryVisibilityButton(ImageView button, boolean visible) {
         if (visible) {
             button.setImageResource(R.drawable.visible);
@@ -121,7 +139,14 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
         }
     }
 
-
+    /**
+     * Click listener for the Category items.
+     *
+     * @param parent   parent view
+     * @param view     the clicked view
+     * @param position the position of the item.
+     * @param id       the id of the item
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mActivity.getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(id).getColour()));

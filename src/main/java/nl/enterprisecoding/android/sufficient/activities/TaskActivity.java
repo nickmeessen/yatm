@@ -36,6 +36,14 @@ public class TaskActivity extends MainActivity {
     public static final String TASK_ID = "taskID";
     public static final String CATEGORY_ID = "categoryID";
 
+    /**
+     * Called when the activity is starting.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.
+     *                           <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +75,9 @@ public class TaskActivity extends MainActivity {
 
     }
 
+    /**
+     * Called when a context menu for the {@code view} is about to be shown.
+     */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
@@ -79,6 +90,13 @@ public class TaskActivity extends MainActivity {
         }
     }
 
+    /**
+     * This hook is called whenever an item in a context menu is selected.
+     *
+     * @param item The context menu item that was selected.
+     * @return boolean Return false to allow normal context menu processing to
+     * proceed, true to consume it here.
+     */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getTitle().equals(getResources().getString(R.string.action_edit))) {
@@ -96,6 +114,14 @@ public class TaskActivity extends MainActivity {
         return true;
     }
 
+    /**
+     * Initialize the contents of the Activity's standard options menu.  You
+     * should place your menu items in to <var>menu</var>.
+     *
+     * @param menu The options menu in which you place your items.
+     * @return You must return true for the menu to be displayed;
+     * if you return false it will not be shown.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -103,6 +129,13 @@ public class TaskActivity extends MainActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * This hook is called whenever an item in your options menu is selected.
+     *
+     * @param item The menu item that was selected.
+     * @return boolean Return false to allow normal menu processing to
+     * proceed, true to consume it here.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -117,6 +150,9 @@ public class TaskActivity extends MainActivity {
         }
     }
 
+    /**
+     * Starts the "Edit Task" activity.
+     */
     private void startEditTaskActivity() {
 
         List<Category> catList = mTaskManager.getCategories();
@@ -136,11 +172,18 @@ public class TaskActivity extends MainActivity {
         }
     }
 
+    /**
+     * Starts the "Categories" activity.
+     */
     private void startCategoryActivity() {
         startActivity(new Intent(this, CategoryActivity.class));
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
+    /**
+     * Called when the activity has detected the user's press of the back
+     * key.
+     */
     @Override
     public void onBackPressed() {
         if (mCategoryID != 0) {

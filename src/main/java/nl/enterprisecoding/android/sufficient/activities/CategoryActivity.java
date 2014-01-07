@@ -44,6 +44,14 @@ public class CategoryActivity extends MainActivity {
     private Spinner catInput;
     private long mSelectedCategoryId;
 
+    /**
+     * Called when the activity is starting.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.
+     *                           <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -191,6 +199,9 @@ public class CategoryActivity extends MainActivity {
         return new int[]{color, r, g, b};
     }
 
+    /**
+     * Called when a context menu for the {@code view} is about to be shown.
+     */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
@@ -203,6 +214,13 @@ public class CategoryActivity extends MainActivity {
         }
     }
 
+    /**
+     * This hook is called whenever an item in a context menu is selected.
+     *
+     * @param item The context menu item that was selected.
+     * @return boolean Return false to allow normal context menu processing to
+     * proceed, true to consume it here.
+     */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -273,6 +291,14 @@ public class CategoryActivity extends MainActivity {
         return result;
     }
 
+    /**
+     * Called when a key was released and not handled by any of the views
+     * inside of the activity.
+     *
+     * @return Return <code>true</code> to prevent this event from being propagated
+     * further, or <code>false</code> to indicate that you have not handled
+     * this event and it should continue to be propagated.
+     */
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_MENU) {
