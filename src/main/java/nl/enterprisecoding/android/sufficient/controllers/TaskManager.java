@@ -32,7 +32,7 @@ import static java.util.Calendar.*;
  * <p/>
  * Manages several Task Models.
  */
-public class TaskManager extends SQLiteOpenHelper {
+public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
 
     private SQLiteDatabase database;
     private static final String CATEGORIES_TABLE = "categories", TASKS_TABLE = "tasks";
@@ -106,34 +106,41 @@ public class TaskManager extends SQLiteOpenHelper {
         mCategoryListAdapter = new CategoryListAdapter(activity, this);
         mCategoryListAdapter.addItem(allCats);
 
-        // @todo try/catch hack eruit halen
-        try {
-            ListView lv = (ListView) activity.findViewById(R.id.cat_list);
+        // @TODO onderstaande sh#t wegwerken (Wanneer TaskManager wordt aangeroepen vanuit bijvoorbeeld EditTaskActivity, dan is er geen catList, dus null pointer, maar zonder crash)
+        ListView lv = (ListView) activity.findViewById(R.id.cat_list);
+        if(lv != null) {
+            // @todo try/catch hack eruit halen
+            try {
+                lv.setAdapter(mCategoryListAdapter);
+                lv.setOnItemClickListener(mCategoryListAdapter);
 
-            lv.setAdapter(mCategoryListAdapter);
-            lv.setOnItemClickListener(mCategoryListAdapter);
-
-            activity.registerForContextMenu(lv);
-        } catch (Exception ex) {
-            Log.e("ECA", ex.getMessage(), ex);
-
+                activity.registerForContextMenu(lv);
+            } catch (Exception ex) {
+                Log.e("ECA", ex.getMessage(), ex);
+            }
         }
+
         retrieveAllTasks();
 
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         taskListAdapter = new TaskListAdapter(activity, this, categoryID);
 
-        // @todo try/catch hack eruit halen
-        try {
-            ExpandableListView lv2 = (ExpandableListView) activity.findViewById(R.id.taskList);
-            lv2.setAdapter(taskListAdapter);
-            lv2.setOnChildClickListener(taskListAdapter);
-            lv2.expandGroup(0, true);
-            lv2.expandGroup(1, true);
-            lv2.expandGroup(2, true);
-        } catch (Exception ex) {
-               Log.e("ECA", ex.getMessage(), ex);
+
+        // @TODO onderstaande sh#t wegwerken (Wanneer TaskManager wordt aangeroepen vanuit bijvoorbeeld EditTaskActivity, dan is er geen taskList, dus null pointer, maar zonder crash)
+        ExpandableListView lv2 = (ExpandableListView) activity.findViewById(R.id.taskList);
+        if(lv2 != null) {
+            // @todo try/catch hack eruit halen
+            try {
+
+                lv2.setAdapter(taskListAdapter);
+                lv2.setOnChildClickListener(taskListAdapter);
+                lv2.expandGroup(0, true);
+                lv2.expandGroup(1, true);
+                lv2.expandGroup(2, true);
+            } catch (Exception ex) {
+                Log.e("ECA", ex.getMessage(), ex);
+            }
         }
 
 
@@ -433,7 +440,7 @@ public class TaskManager extends SQLiteOpenHelper {
      * @param title  the title of the category to be created.
      * @param colour the colour for the new category.
      */
-    Category createCategory(String title, int colour) {
+    public Category createCategory(String title, int colour) {
         ContentValues values = new ContentValues();
         values.put(CTITLE_COLUMN, title);
         values.put(CCOLOUR_COLUMN, colour);

@@ -11,6 +11,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
+import roboguice.activity.RoboActivity;
 
 /**
  * MainActivity Class
@@ -18,7 +19,7 @@ import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
  * This class is used to manage the menu anim_in the application and call several controllers.
  */
 
-public class MainActivity extends Activity {
+public class MainActivity extends RoboActivity {
 
     TaskManager mTaskManager;
     ActionBar mActionBar;

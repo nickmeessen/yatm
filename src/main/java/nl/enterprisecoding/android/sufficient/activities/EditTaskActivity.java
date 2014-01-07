@@ -9,20 +9,27 @@ package nl.enterprisecoding.android.sufficient.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
+import com.google.inject.Inject;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
+import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateButtonClickHandler;
+import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateDialogButtonClickHandler;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import roboguice.inject.ContentView;
+import roboguice.inject.InjectView;
+
 
 /**
  * EditTaskActivity class
@@ -30,13 +37,20 @@ import java.util.List;
  *
  * @author Sjors Roelofs & Ferry Wienholts
  */
+
+@ContentView(R.layout.edit_task_item)
 public class EditTaskActivity extends MainActivity {
 
     private final Activity mActivity = this;
-    private EditText mTaskTitleInput;
-    private Spinner mTaskCategorySpinner;
-    private Button mTaskSetDateButton;
-    private CheckBox mTaskImportantCheckBox;
+
+    @InjectView(R.id.task_title) EditText mTaskTitleInput;
+    @InjectView(R.id.task_category) Spinner mTaskCategorySpinner;
+    @InjectView(R.id.task_set_date_button) Button mTaskSetDateButton;
+    @InjectView(R.id.task_important) CheckBox mTaskImportantCheckBox;
+
+    @Inject TaskSetDateButtonClickHandler mTaskSetDateButtonClickHandler;
+    @Inject TaskSetDateDialogButtonClickHandler mTaskSetDateDialogButtonClickHandler;
+
     private Calendar mDateToday;
     private Calendar mTaskDate;
     private List<Category> mCategoriesArray = new ArrayList<Category>();
@@ -46,83 +60,59 @@ public class EditTaskActivity extends MainActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_task_item);
 
         mSelectedTask = getIntent().getExtras().getLong(TaskActivity.TASK_ID, 0);
 
-        mActionBar.setTitle(R.string.action_edit);
+        if(mSelectedTask > 0) {
 
-        mTaskManager = new TaskManager(this, (long) 0);
-        mTask = mTaskManager.getTask(mSelectedTask);
-        mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getItemById(mTask.getCatId()).getColour()));
+            mActionBar.setTitle(R.string.action_edit);
 
-        mDateToday = Calendar.getInstance();
-        mTaskDate = Calendar.getInstance();
-        mTaskDate.set(mTask.getDate().get(Calendar.YEAR), mTask.getDate().get(Calendar.MONTH), mTask.getDate().get(Calendar.DAY_OF_MONTH));
+            mTaskManager = new TaskManager(this, (long) 0);
+            mTask = mTaskManager.getTask(mSelectedTask);
+            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getItemById(mTask.getCatId()).getColour()));
 
-        mTaskTitleInput = (EditText) findViewById(R.id.task_title);
-        mTaskTitleInput.setText(mTask.getTitle());
+            mDateToday = Calendar.getInstance();
+            mTaskDate = Calendar.getInstance();
+            mTaskDate.set(mTask.getDate().get(Calendar.YEAR), mTask.getDate().get(Calendar.MONTH), mTask.getDate().get(Calendar.DAY_OF_MONTH));
 
-        mTaskCategorySpinner = (Spinner) findViewById(R.id.task_category);
-        initTaskCategorySpinner(mTaskCategorySpinner);
+            mTaskSetDateButtonClickHandler.setActivity(this);
+            mTaskSetDateButton.setOnClickListener(mTaskSetDateButtonClickHandler);
+            updateDateButtonText();
 
-        mTaskCategorySpinner.setSelection(findIndexByCategoryId(mTask.getCatId()));
+            mTaskTitleInput.setText(mTask.getTitle());
 
-        mTaskSetDateButton = (Button) findViewById(R.id.task_set_date_button);
-        updateDateButtonText();
+            initTaskCategorySpinner(mTaskCategorySpinner);
 
-        mTaskSetDateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(mActivity);
-                final DatePicker datePicker = new DatePicker(mActivity);
+            mTaskCategorySpinner.setSelection(findIndexByCategoryId(mTask.getCatId()));
 
-                datePicker.setCalendarViewShown(false);
+            mTaskImportantCheckBox.setChecked(mTask.isImportant());
 
-                datePicker.init(mTaskDate.get(Calendar.YEAR), mTaskDate.get(Calendar.MONTH), mTaskDate.get(Calendar.DAY_OF_MONTH), null);
-                datePicker.setMinDate(mDateToday.getTime().getTime());
+            Button mAddTaskButton = (Button) findViewById(R.id.add_task_button);
+            mAddTaskButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String mTaskTitle = mTaskTitleInput.getText().toString();
 
-                alert.setView(datePicker);
-
-                alert.setPositiveButton(R.string.action_change_date, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        setTaskDate(datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
+                    boolean mDataIsValidated = true;
+                    if (mTaskTitle.isEmpty()) {
+                        mDataIsValidated = false;
+                        mTaskTitleInput.setBackgroundColor(getResources().getColor(R.color.red));
                     }
-                });
 
-                alert.setNegativeButton(R.string.action_discard, null);
-                alert.show();
-            }
-        });
+                    int mSelectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
+                    long mSelectedCategoryId = mCategoriesArray.get(mSelectedCategoryIndex).getID();
 
-
-        mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
-        mTaskImportantCheckBox.setChecked(mTask.isImportant());
-
-        Button mAddTaskButton = (Button) findViewById(R.id.add_task_button);
-        mAddTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String mTaskTitle = mTaskTitleInput.getText().toString();
-
-                boolean mDataIsValidated = true;
-                if (mTaskTitle.isEmpty()) {
-                    mDataIsValidated = false;
-                    mTaskTitleInput.setBackgroundColor(getResources().getColor(R.color.red));
+                    if (mDataIsValidated) {
+                        mTaskManager.editTask(mTaskTitle, mSelectedCategoryId, mTaskDate, mTaskImportantCheckBox.isChecked(), mTask.isCompleted(), mSelectedTask);
+                        showTaskActivity();
+                    } else {
+                        Toast mInvalidDataToast = Toast.makeText(getApplicationContext(), R.string.toast_invalid_data, Toast.LENGTH_SHORT);
+                        mInvalidDataToast.show();
+                    }
                 }
+            });
 
-                int mSelectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
-                long mSelectedCategoryId = mCategoriesArray.get(mSelectedCategoryIndex).getID();
-
-                if (mDataIsValidated) {
-                    mTaskManager.editTask(mTaskTitle, mSelectedCategoryId, mTaskDate, mTaskImportantCheckBox.isChecked(), mTask.isCompleted(), mSelectedTask);
-                    showTaskActivity();
-                } else {
-                    Toast mInvalidDataToast = Toast.makeText(getApplicationContext(), R.string.toast_invalid_data, Toast.LENGTH_SHORT);
-                    mInvalidDataToast.show();
-                }
-            }
-        });
+        }
 
     }
 
@@ -167,7 +157,7 @@ public class EditTaskActivity extends MainActivity {
         return index;
     }
 
-    private void setTaskDate(int dayOfMonth, int month, int year) {
+    public void setTaskDate(int dayOfMonth, int month, int year) {
         mTaskDate.set(year, month, dayOfMonth);
         updateDateButtonText();
     }
@@ -184,6 +174,22 @@ public class EditTaskActivity extends MainActivity {
 
         mActivity.startActivity(intent);
         mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    public void showTaskSetDateDialog() {
+        mTaskSetDateDialogButtonClickHandler.setActivity(this);
+
+        DatePickerDialog alert = new DatePickerDialog(this, null, mTaskDate.get(Calendar.YEAR), mTaskDate.get(Calendar.MONTH), mTaskDate.get(Calendar.DAY_OF_MONTH));
+        alert.getDatePicker().setMinDate(mDateToday.getTime().getTime());
+
+        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.action_change_date), mTaskSetDateDialogButtonClickHandler);
+        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.action_discard), mTaskSetDateDialogButtonClickHandler);
+
+        alert.show();
+    }
+
+    public void setTaskDateFromDialog(DatePickerDialog dialog) {
+        setTaskDate(dialog.getDatePicker().getDayOfMonth(), dialog.getDatePicker().getMonth(), dialog.getDatePicker().getYear());
     }
 
 }
