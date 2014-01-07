@@ -13,10 +13,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
-import android.util.Log;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
-import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
@@ -40,7 +38,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
     private static final String DATABASE_NAME = "yatm.db";
     private static final int DATABASE_VERSION = 1;
 
-    private TaskListAdapter taskListAdapter;
+    private TaskListAdapter mTaskListAdapter;
     private CategoryListAdapter mCategoryListAdapter;
 
     private SimpleDateFormat simpleDateFormat;
@@ -65,7 +63,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
             + ");";
 
 
-    private Map<Long, Category> catList;
+    private Map<Long, Category> mCategoryList;
 
     private static final String CID_COLUMN = "_id";
     private static final String CTITLE_COLUMN = "title";
@@ -79,71 +77,48 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
             + " text not null," + CCOLOUR_COLUMN + " integer not null,"
             + CVISIBILITY + " integer not null);";
 
-    private MainActivity mActivity;
-
     /**
      * Constructs a new TaskManager
      *
-     * @param activity the activity called from.
+     * @param activity   the activity called from.
+     * @param categoryID the current CategoryID.
      */
     public TaskManager(MainActivity activity, Long categoryID) {
 
         super(activity, DATABASE_NAME, null, DATABASE_VERSION);
 
-        mActivity = activity;
-
-        Category allCats = new Category();
-
-        allCats.setID(0);
-        allCats.setTitle("All Categories");
-        allCats.setColour(Color.parseColor("#222222"));
+        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         open();
 
-        catList = new TreeMap<Long, Category>();
-        catList = retrieveAllCategories();
+        mCategoryList = new TreeMap<Long, Category>();
+
+        retrieveAllCategories();
 
         mCategoryListAdapter = new CategoryListAdapter(activity, this);
-        mCategoryListAdapter.addItem(allCats);
 
-        // @TODO onderstaande sh#t wegwerken (Wanneer TaskManager wordt aangeroepen vanuit bijvoorbeeld EditTaskActivity, dan is er geen catList, dus null pointer, maar zonder crash)
-        ListView lv = (ListView) activity.findViewById(R.id.cat_list);
-        if(lv != null) {
-            // @todo try/catch hack eruit halen
-            try {
-                lv.setAdapter(mCategoryListAdapter);
-                lv.setOnItemClickListener(mCategoryListAdapter);
+        ListView categoryView = (ListView) activity.findViewById(R.id.cat_list);
+        ExpandableListView tasklistView = (ExpandableListView) activity.findViewById(R.id.taskList);
 
-                activity.registerForContextMenu(lv);
-            } catch (Exception ex) {
-                Log.e("ECA", ex.getMessage(), ex);
-            }
+        if(categoryView != null) {
+            categoryView.setAdapter(mCategoryListAdapter);
+            categoryView.setOnItemClickListener(mCategoryListAdapter);
+
+            activity.registerForContextMenu(categoryView);
         }
 
         retrieveAllTasks();
 
-        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        mTaskListAdapter = new TaskListAdapter(activity, this, categoryID);
 
-        taskListAdapter = new TaskListAdapter(activity, this, categoryID);
-
-
-        // @TODO onderstaande sh#t wegwerken (Wanneer TaskManager wordt aangeroepen vanuit bijvoorbeeld EditTaskActivity, dan is er geen taskList, dus null pointer, maar zonder crash)
-        ExpandableListView lv2 = (ExpandableListView) activity.findViewById(R.id.taskList);
-        if(lv2 != null) {
-            // @todo try/catch hack eruit halen
-            try {
-
-                lv2.setAdapter(taskListAdapter);
-                lv2.setOnChildClickListener(taskListAdapter);
-                lv2.expandGroup(0, true);
-                lv2.expandGroup(1, true);
-                lv2.expandGroup(2, true);
-            } catch (Exception ex) {
-                Log.e("ECA", ex.getMessage(), ex);
-            }
+        if (tasklistView != null) {
+            tasklistView.setAdapter(mTaskListAdapter);
+            tasklistView.setOnChildClickListener(mTaskListAdapter);
+            tasklistView.expandGroup(0, true);
+            tasklistView.expandGroup(1, true);
+            tasklistView.expandGroup(2, true);
+            tasklistView.expandGroup(3, true);
         }
-
-
     }
 
     /**
@@ -155,16 +130,11 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
      * @param important  task important?
      * @return task the created task
      */
-    public Task createTask(String title, long categoryId, Calendar date, boolean important) {
-        int mIsImportant = 0;
-        if (important) {
-            mIsImportant = 1;
-        }
-
+    public long createTask(String title, long categoryId, Calendar date, boolean important) {
         ContentValues values = new ContentValues();
 
         values.put(TCOLUMN_COMPLETED, 0);
-        values.put(TCOLUMN_IMPORTANT, mIsImportant);
+        values.put(TCOLUMN_IMPORTANT, important ? 1 : 0);
         values.put(TCOLUMN_CATID, categoryId);
         values.put(TCOLUMN_TASK, title);
         values.put(TCOLUMN_DATE, simpleDateFormat.format(date.getTimeInMillis()));
@@ -175,11 +145,10 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         Task newTask = cursorToTask(cursor);
         cursor.close();
 
-        taskListAdapter.addItem(newTask);
+        mCategoryList.get(categoryId).addTask(newTask);
+        mTaskListAdapter.notifyDataSetChanged();
 
-        getItemById(newTask.getCatId()).addTask(newTask);
-
-        return newTask;
+        return newTask.getId();
     }
 
     /**
@@ -190,8 +159,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
     public void deleteTask(Task task) {
         long id = task.getId();
         database.delete(TASKS_TABLE, TCOLUMN_ID + " = " + id, null);
-        taskListAdapter.deleteItem(task);
-        taskListAdapter.notifyDataSetChanged();
+        mTaskListAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -205,7 +173,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         while (!cursor.isAfterLast()) {
             Task task = cursorToTask(cursor);
 
-            getItemById(task.getCatId()).addTask(task);
+            mCategoryList.get(task.getCatId()).addTask(task);
 
             cursor.moveToNext();
         }
@@ -231,16 +199,16 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
                 cal.set(Integer.parseInt(taskDateString[0]), JANUARY, Integer.parseInt(taskDateString[2]));
                 break;
             case 2:
-                cal.set(Integer.parseInt(taskDateString[0]), Calendar.FEBRUARY, Integer.parseInt(taskDateString[2]));
+                cal.set(Integer.parseInt(taskDateString[0]), FEBRUARY, Integer.parseInt(taskDateString[2]));
                 break;
             case 3:
                 cal.set(Integer.parseInt(taskDateString[0]), MARCH, Integer.parseInt(taskDateString[2]));
                 break;
             case 4:
-                cal.set(Integer.parseInt(taskDateString[0]), Calendar.APRIL, Integer.parseInt(taskDateString[2]));
+                cal.set(Integer.parseInt(taskDateString[0]), APRIL, Integer.parseInt(taskDateString[2]));
                 break;
             case 5:
-                cal.set(Integer.parseInt(taskDateString[0]), Calendar.MAY, Integer.parseInt(taskDateString[2]));
+                cal.set(Integer.parseInt(taskDateString[0]), MAY, Integer.parseInt(taskDateString[2]));
                 break;
             case 6:
                 cal.set(Integer.parseInt(taskDateString[0]), JUNE, Integer.parseInt(taskDateString[2]));
@@ -252,20 +220,19 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
                 cal.set(Integer.parseInt(taskDateString[0]), AUGUST, Integer.parseInt(taskDateString[2]));
                 break;
             case 9:
-                cal.set(Integer.parseInt(taskDateString[0]), Calendar.SEPTEMBER, Integer.parseInt(taskDateString[2]));
+                cal.set(Integer.parseInt(taskDateString[0]), SEPTEMBER, Integer.parseInt(taskDateString[2]));
                 break;
             case 10:
-                cal.set(Integer.parseInt(taskDateString[0]), Calendar.OCTOBER, Integer.parseInt(taskDateString[2]));
+                cal.set(Integer.parseInt(taskDateString[0]), OCTOBER, Integer.parseInt(taskDateString[2]));
                 break;
             case 11:
-                cal.set(Integer.parseInt(taskDateString[0]), Calendar.NOVEMBER, Integer.parseInt(taskDateString[2]));
+                cal.set(Integer.parseInt(taskDateString[0]), NOVEMBER, Integer.parseInt(taskDateString[2]));
                 break;
             case 12:
-                cal.set(Integer.parseInt(taskDateString[0]), Calendar.DECEMBER, Integer.parseInt(taskDateString[2]));
+                cal.set(Integer.parseInt(taskDateString[0]), DECEMBER, Integer.parseInt(taskDateString[2]));
                 break;
             default:
-                cal.set(Integer.parseInt(taskDateString[0]), Integer.parseInt(taskDateString[1]), Integer.parseInt(taskDateString[2]));
-                break;
+                throw new IllegalArgumentException("Unable to parse month.");
         }
 
         cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -277,7 +244,6 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         task.setCatId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_CATID)));
         task.setTitle(cursor.getString(cursor.getColumnIndex(TCOLUMN_TASK)));
         task.setDate(cal);
-
 
         if (cursor.getInt(cursor.getColumnIndex(TCOLUMN_IMPORTANT)) == 1) {
             task.setImportant(true);
@@ -291,10 +257,15 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
             task.setCompleted(false);
         }
 
-
         return task;
     }
 
+    /**
+     * Gets a task by it's ID.
+     *
+     * @param taskId the id of the task to retrieve.
+     * @return the task corresponding to the given ID.
+     */
     public Task getTask(long taskId) {
 
         Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, TCOLUMN_ID + " = " + taskId, null, null, null, null);
@@ -306,7 +277,17 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         return task;
     }
 
-    public void editTask(String title, long categoryId, Calendar date, boolean important, boolean c, long selectedTask) {
+    /**
+     * Updates a task.
+     *
+     * @param title      the new title of the task to update.
+     * @param categoryId the new categoryID of the task to update.
+     * @param date       the new date of the task to update.
+     * @param important  wether the task is marked as important or not
+     * @param completed  wether the task is marked as completed or not.
+     * @param taskID     the id of the task to update
+     */
+    public void editTask(String title, long categoryId, Calendar date, boolean important, boolean completed, long taskID) {
         int mIsImportant, taskIsCompleted;
         if (important) {
             mIsImportant = 1;
@@ -314,7 +295,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
             mIsImportant = 0;
         }
 
-        if (c) {
+        if (completed) {
             taskIsCompleted = 1;
         } else {
             taskIsCompleted = 0;
@@ -328,7 +309,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         values.put(TCOLUMN_TASK, title);
         values.put(TCOLUMN_DATE, simpleDateFormat.format(date.getTimeInMillis()));
 
-        database.update(TASKS_TABLE, values, TCOLUMN_ID + " = " + selectedTask, null);
+        database.update(TASKS_TABLE, values, TCOLUMN_ID + " = " + taskID, null);
     }
 
     /**
@@ -350,6 +331,14 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TASKS_STATEMENT);
         db.execSQL(CREATE_CATEGORIES_STATEMENT);
+
+        ContentValues values = new ContentValues();
+        values.put(CID_COLUMN, 0);
+        values.put(CTITLE_COLUMN, "All Categories");
+        values.put(CCOLOUR_COLUMN, Color.BLACK);
+        values.put(CVISIBILITY, 1);
+
+        db.insert(CATEGORIES_TABLE, null, values);
     }
 
     /**
@@ -361,7 +350,6 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(TaskManager.class.getName(), "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
         db.execSQL("DROP TABLE IF EXISTS " + CATEGORIES_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + TASKS_TABLE);
         onCreate(db);
@@ -369,23 +357,28 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
 
     /**
      * Retrieve all categories.
-     *
-     * @return a list of all categories.
      */
-
-    Map<Long, Category> retrieveAllCategories() {
+    private void retrieveAllCategories() {
 
         Cursor cursor = database.query(CATEGORIES_TABLE, CALL_COLUMNS, null, null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Category cat = cursorToCategory(cursor);
-            catList.put(cat.getID(), cat);
+            mCategoryList.put(cat.getID(), cat);
             cursor.moveToNext();
         }
         cursor.close();
 
-        return catList;
+    }
+
+    /**
+     * Returns all categories.
+     *
+     * @return a map containing all categories, mapped by CategoryID.
+     */
+    public Map<Long, Category> getAllCategories() {
+        return mCategoryList;
     }
 
     /**
@@ -411,36 +404,12 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
     }
 
     /**
-     * Checks whether a category exists and if not calls a method to create a category.
-     *
-     * @param title  the title of the category to be created.
-     * @param colour the colour for the new category.
-     */
-    public void checkExistingCategory(String title, int colour) {
-        ArrayList<Category> catArray = new ArrayList<Category>(catList.values());
-        boolean catExist = false;
-
-        for (Category aCatArray : catArray) {
-            if (aCatArray.getTitle().equals(title)) {
-                catExist = true;
-                Toast.makeText(mActivity.getApplicationContext(), R.string.toast_category_exists, Toast.LENGTH_SHORT).show();
-                break;
-            }
-        }
-
-        if (!catExist) {
-            mCategoryListAdapter.addItem(createCategory(title, colour));
-            Toast.makeText(mActivity.getApplicationContext(), R.string.category_exists_error, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
      * Creates a new Category and adds it to the database.
      *
      * @param title  the title of the category to be created.
      * @param colour the colour for the new category.
      */
-    public Category createCategory(String title, int colour) {
+    public void createCategory(String title, int colour) {
         ContentValues values = new ContentValues();
         values.put(CTITLE_COLUMN, title);
         values.put(CCOLOUR_COLUMN, colour);
@@ -451,42 +420,61 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         cursor.moveToFirst();
 
         Category newCategory = cursorToCategory(cursor);
+
+        mCategoryList.put(newCategory.getID(), newCategory);
+
         cursor.close();
 
-        return newCategory;
+        mCategoryListAdapter.notifyDataSetChanged();
     }
 
-    public Category getItemById(long id) {
-        return mCategoryListAdapter.getItemById(id);
-    }
-
-
-    public void editCategory(String title, int colour, Long selectedCategory) {
+    /**
+     * Updates a category.
+     *
+     * @param title      the new category title
+     * @param colour     the new category colour.
+     * @param categoryID the ID of the category to update
+     */
+    public void editCategory(String title, int colour, Long categoryID) {
         ContentValues values = new ContentValues();
         values.put(CTITLE_COLUMN, title);
         values.put(CCOLOUR_COLUMN, colour);
-
-        database.update(CATEGORIES_TABLE, values, CID_COLUMN + " = " + selectedCategory, null);
+        database.update(CATEGORIES_TABLE, values, CID_COLUMN + " = " + categoryID, null);
     }
 
 
+    /**
+     * Get all categories.
+     *
+     * @return a list of all categories.
+     */
     public List<Category> getCategories() {
-        return new ArrayList<Category>(catList.values());
+        return new ArrayList<Category>(mCategoryList.values());
     }
 
+    /**
+     * Gets all visible categories.
+     *
+     * @return a list of all categories that are currently visible.
+     */
     public List<Category> getVisibleCategories() {
         ArrayList<Category> mVisibleCategories = new ArrayList<Category>();
-        for (Category cat : catList.values()) {
+        for (Category cat : mCategoryList.values()) {
             if (cat.isVisible()) {
                 mVisibleCategories.add(cat);
             }
         }
-
         return mVisibleCategories;
     }
 
-    public Category getCategory(String categoryTitle) {
-        for (Category c : catList.values()) {
+    /**
+     * Retrieves a Category by it's Title.
+     *
+     * @param categoryTitle the category title to search for
+     * @return the found category, or null when not found.
+     */
+    public Category getCategoryByTitle(String categoryTitle) {
+        for (Category c : mCategoryList.values()) {
             if (c.getTitle().equals(categoryTitle)) {
                 return c;
             }
@@ -495,22 +483,39 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         return null;
     }
 
+    /**
+     * Delete given category and move tasks to given destination category.
+     *
+     * @param origin      the origin category
+     * @param destination the destination category
+     */
     public void deleteCategoryAndMoveTasks(Category origin, Category destination) {
         moveTasks(origin, destination);
         deleteCategory(origin);
     }
 
+    /**
+     * Deletes the given category and linked tasks.
+     *
+     * @param category the category to delete.
+     */
     public void deleteCategory(Category category) {
         long id = category.getID();
 
         database.delete(TASKS_TABLE, TCOLUMN_CATID + " = " + id, null);
         database.delete(CATEGORIES_TABLE, CID_COLUMN + " = " + id, null);
 
-        catList.remove(category.getID());
+        mCategoryList.remove(category.getID());
 
         mCategoryListAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Moves tasks from one category to another category.
+     *
+     * @param origin      the origin category
+     * @param destination the destination category
+     */
     private void moveTasks(Category origin, Category destination) {
         List<Task> tasks = origin.getTasks();
         for (Task t : tasks) {
@@ -521,6 +526,12 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         }
     }
 
+    /**
+     * Switches visibility of the given category.
+     *
+     * @param category the category to update.
+     * @return the new visibility setting.
+     */
     public boolean switchCategoryVisibility(Category category) {
         boolean mNewVisibility = true;
         if (category.isVisible()) {
@@ -536,7 +547,13 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         return mNewVisibility;
     }
 
-    public void notifyDataSetChanged() {
-        mCategoryListAdapter.notifyDataSetChanged();
+    /**
+     * Gets a Category by it's ID.
+     *
+     * @param id the id of the category to get.
+     * @return the category coressponding to the ID.
+     */
+    public Category getCategoryById(long id) {
+        return mCategoryListAdapter.getItemById(id);
     }
 }

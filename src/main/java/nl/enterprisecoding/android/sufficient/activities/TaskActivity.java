@@ -16,12 +16,18 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
+import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
+
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * TaskActivity class
  * <p/>
  * From here a user could execute various actions on tasks.
+ *
+ * @author Nick Meessen
  */
 public class TaskActivity extends MainActivity {
 
@@ -30,13 +36,21 @@ public class TaskActivity extends MainActivity {
     public static final String TASK_ID = "taskID";
     public static final String CATEGORY_ID = "categoryID";
 
+    /**
+     * Called when the activity is starting.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after
+     *                           previously being shut down then this Bundle contains the data it most
+     *                           recently supplied in {@link #onSaveInstanceState}.
+     *                           <b><i>Note: Otherwise it is null.</i></b>
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_list);
 
-        final ExpandableListView mTaskListView = (ExpandableListView) findViewById(R.id.taskList);
-        mTaskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        final ExpandableListView taskListView = (ExpandableListView) findViewById(R.id.taskList);
+        taskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 mSelectedTaskId = ((Task) parent.getItemAtPosition(position)).getId();
@@ -44,7 +58,7 @@ public class TaskActivity extends MainActivity {
             }
         });
 
-        registerForContextMenu(mTaskListView);
+        registerForContextMenu(taskListView);
 
         mActionBar.setTitle(R.string.title_tasks);
 
@@ -53,13 +67,16 @@ public class TaskActivity extends MainActivity {
         mTaskManager = new TaskManager(this, mCategoryID);
 
         if (mCategoryID != 0) {
-            mActionBar.setTitle(mTaskManager.getItemById(mCategoryID).getTitle());
-            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getItemById(mCategoryID).getColour()));
+            mActionBar.setTitle(mTaskManager.getCategoryById(mCategoryID).getTitle());
+            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mCategoryID).getColour()));
         }
 
 
     }
 
+    /**
+     * Called when a context menu for the {@code view} is about to be shown.
+     */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
@@ -72,11 +89,18 @@ public class TaskActivity extends MainActivity {
         }
     }
 
+    /**
+     * This hook is called whenever an item in a context menu is selected.
+     *
+     * @param item The context menu item that was selected.
+     * @return boolean Return false to allow normal context menu processing to
+     * proceed, true to consume it here.
+     */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getTitle().equals(getResources().getString(R.string.action_edit))) {
             if (mSelectedTaskId == 0) {
-                Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.toast_error, Toast.LENGTH_SHORT).show();
             } else {
                 Intent mEditTaskActivity = new Intent(this, EditTaskActivity.class);
                 mEditTaskActivity.putExtra(TASK_ID, mSelectedTaskId);
@@ -89,35 +113,76 @@ public class TaskActivity extends MainActivity {
         return true;
     }
 
+    /**
+     * Initialize the contents of the Activity's standard options menu.  You
+     * should place your menu items in to <var>menu</var>.
+     *
+     * @param menu The options menu in which you place your items.
+     * @return You must return true for the menu to be displayed;
+     * if you return false it will not be shown.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.actionbar, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * This hook is called whenever an item in your options menu is selected.
+     *
+     * @param item The menu item that was selected.
+     * @return boolean Return false to allow normal menu processing to
+     * proceed, true to consume it here.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                startAddTaskActivity();
+                startEditTaskActivity();
                 return true;
             case R.id.action_categories:
-                startActivity(new Intent(this, CategoryActivity.class));
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                startCategoryActivity();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    void startAddTaskActivity() {
-        Intent mAddTaskActivity = new Intent(this, AddTaskActivity.class);
-        mAddTaskActivity.putExtra("categoryID", mCategoryID);
-        startActivity(mAddTaskActivity);
+    /**
+     * Starts the "Edit Task" activity.
+     */
+    private void startEditTaskActivity() {
+
+        List<Category> catList = mTaskManager.getCategories();
+
+        if (mTaskManager.getCategories().size() == 0) {
+            Toast.makeText(this, R.string.toast_no_category, Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(this, CategoryActivity.class);
+            startActivity(intent);
+        } else {
+
+            long newTaskID = mTaskManager.createTask("New Task", catList.get(0).getID(), Calendar.getInstance(), false);
+
+            Intent intent = new Intent(this, EditTaskActivity.class);
+            intent.putExtra(TASK_ID, newTaskID);
+            startActivity(intent);
+        }
     }
 
+    /**
+     * Starts the "Categories" activity.
+     */
+    private void startCategoryActivity() {
+        startActivity(new Intent(this, CategoryActivity.class));
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
+    /**
+     * Called when the activity has detected the user's press of the back
+     * key.
+     */
     @Override
     public void onBackPressed() {
         if (mCategoryID != 0) {

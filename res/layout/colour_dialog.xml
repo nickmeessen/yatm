@@ -28,34 +28,29 @@
                   android:layout_gravity="top|center"
                   android:layout_weight="1">
 
-        <Button android:id="@+id/color_purple_button"
+        <Button android:id="@+id/colour_purple_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/purple"
                 android:layout_weight="1"/>
 
-        <Button android:id="@+id/color_blue_button"
+        <Button android:id="@+id/colour_blue_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/blue"
                 android:layout_weight="1"/>
 
-        <Button android:id="@+id/color_green_button"
+        <Button android:id="@+id/colour_green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/green"
                 android:layout_weight="1"/>
 
-        <Button android:id="@+id/color_orange_button"
+        <Button android:id="@+id/colour_orange_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/orange"
                 android:layout_weight="1"/>
 
         <Button android:id="@+id/color_red_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/red"
                 android:layout_weight="1"/>
 
     </LinearLayout>
@@ -75,27 +70,27 @@
                   android:layout_gravity="bottom|center"
                   android:layout_weight="1">
 
-        <Button android:id="@+id/color_random0_button"
+        <Button android:id="@+id/colour_random0_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
-        <Button android:id="@+id/color_random1_button"
+        <Button android:id="@+id/colour_random1_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
-        <Button android:id="@+id/color_random2_button"
+        <Button android:id="@+id/colour_random2_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
-        <Button android:id="@+id/color_random3_button"
+        <Button android:id="@+id/colour_random3_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
-        <Button android:id="@+id/color_random4_button"
+        <Button android:id="@+id/colour_random4_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>

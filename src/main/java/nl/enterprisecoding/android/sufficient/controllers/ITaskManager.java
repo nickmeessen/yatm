@@ -7,8 +7,8 @@ import java.util.Calendar;
 
 public interface ITaskManager  {
 
-    public Category createCategory(String title, int colour);
+    public void createCategory(String title, int colour);
 
-    public Task createTask(String title, long categoryId, Calendar date, boolean important);
+    public long createTask(String title, long categoryId, Calendar date, boolean important);
 
 }

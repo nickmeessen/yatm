@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Category Class
  * <p/>
- * Holds several mTasks, a mTitle and a mColour to represent the category.
+ * Holds several Tasks, a Title and a Colour to represent the category.
  */
 public class Category {
 
@@ -94,10 +94,20 @@ public class Category {
         mTasks.add(task);
     }
 
+    /**
+     * Gets visibility of this category.
+     *
+     * @return boolean based on if this category is visible.
+     */
     public boolean isVisible() {
         return mVisible;
     }
 
+    /**
+     * Sets the visibility of this category.
+     *
+     * @param b the visible boolean
+     */
     public void setVisible(boolean b) {
         mVisible = b;
     }
@@ -111,6 +121,11 @@ public class Category {
         return mTasks;
     }
 
+    /**
+     * Returns a String representing this category.
+     *
+     * @return a string representing this category.
+     */
     @Override
     public String toString() {
         return "[" + getID() + "]";
