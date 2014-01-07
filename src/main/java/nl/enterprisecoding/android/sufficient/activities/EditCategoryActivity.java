@@ -81,7 +81,7 @@ public class EditCategoryActivity extends MainActivity {
 
                 mColorDialog = new Dialog(EditCategoryActivity.this);
                 mColorDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                mColorDialog.setContentView(R.layout.color_dialog);
+                mColorDialog.setContentView(R.layout.colour_dialog);
 
                 createColorButton(bgShape, R.id.color_blue_button, R.color.blue);
                 createColorButton(bgShape, R.id.color_purple_button, R.color.purple);
