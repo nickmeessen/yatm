@@ -204,26 +204,6 @@ public class CategoryActivity extends MainActivity {
     }
 
     /**
-     * Generates a random colour
-     *
-     * @return returns the random colour
-     */
-    int[] generateRandomColour() {
-        int r = (int) (255 * Math.random());
-        int g = (int) (255 * Math.random());
-        int b = (int) (255 * Math.random());
-        int maxColorValue = 100;
-
-        if (r > maxColorValue || g > maxColorValue || b > maxColorValue) {
-            generateRandomColour();
-        }
-
-        int color = Color.rgb(r, g, b);
-
-        return new int[]{color, r, g, b};
-    }
-
-    /**
      * Called when a context menu for the {@code view} is about to be shown.
      */
     @Override
