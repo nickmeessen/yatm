@@ -17,9 +17,9 @@ import static org.junit.Assert.assertTrue;
 @RunWith(RobolectricTestRunner.class)
 public class MainActivityTest {
 
-    @org.junit.Test
-    public void test_testSomething() throws Exception {
-        Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
-        assertTrue(activity != null);
-    }
+//    @org.junit.Test
+//    public void test_testSomething() throws Exception {
+//        Activity activity = Robolectric.buildActivity(MainActivity.class).create().get();
+//        assertTrue(activity != null);
+//    }
 }

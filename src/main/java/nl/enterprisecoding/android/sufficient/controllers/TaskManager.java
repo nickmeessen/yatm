@@ -30,7 +30,7 @@ import static java.util.Calendar.*;
  * <p/>
  * Manages several Task Models.
  */
-public class TaskManager extends SQLiteOpenHelper {
+public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
 
     private SQLiteDatabase database;
     private static final String CATEGORIES_TABLE = "categories", TASKS_TABLE = "tasks";
@@ -100,8 +100,7 @@ public class TaskManager extends SQLiteOpenHelper {
         ListView categoryView = (ListView) activity.findViewById(R.id.cat_list);
         ExpandableListView tasklistView = (ExpandableListView) activity.findViewById(R.id.taskList);
 
-        if (categoryView != null) {
-
+        if(categoryView != null) {
             categoryView.setAdapter(mCategoryListAdapter);
             categoryView.setOnItemClickListener(mCategoryListAdapter);
 
@@ -132,7 +131,6 @@ public class TaskManager extends SQLiteOpenHelper {
      * @return task the created task
      */
     public long createTask(String title, long categoryId, Calendar date, boolean important) {
-
         ContentValues values = new ContentValues();
 
         values.put(TCOLUMN_COMPLETED, 0);

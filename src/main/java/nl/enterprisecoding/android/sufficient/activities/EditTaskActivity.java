@@ -9,20 +9,27 @@ package nl.enterprisecoding.android.sufficient.activities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
+import com.google.inject.Inject;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
+import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateButtonClickHandler;
+import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateDialogButtonClickHandler;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import roboguice.inject.ContentView;
+import roboguice.inject.InjectView;
+
 
 /**
  * EditTaskActivity class
@@ -30,13 +37,20 @@ import java.util.List;
  *
  * @author Sjors Roelofs & Ferry Wienholts
  */
+
+@ContentView(R.layout.edit_task_item)
 public class EditTaskActivity extends MainActivity {
 
-    private Activity mActivity = this;
-    private EditText mTaskTitleInput;
-    private Spinner mTaskCategorySpinner;
-    private Button mTaskSetDateButton;
-    private CheckBox mTaskImportantCheckBox;
+    private final Activity mActivity = this;
+
+    @InjectView(R.id.task_title) EditText mTaskTitleInput;
+    @InjectView(R.id.task_category) Spinner mTaskCategorySpinner;
+    @InjectView(R.id.task_set_date_button) Button mTaskSetDateButton;
+    @InjectView(R.id.task_important) CheckBox mTaskImportantCheckBox;
+
+    @Inject TaskSetDateButtonClickHandler mTaskSetDateButtonClickHandler;
+    @Inject TaskSetDateDialogButtonClickHandler mTaskSetDateDialogButtonClickHandler;
+
     private Calendar mDateToday;
     private Calendar mTaskDate;
     private List<Category> mCategoriesArray = new ArrayList<Category>();
@@ -52,58 +66,62 @@ public class EditTaskActivity extends MainActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_task_item);
 
         long selectedTaskID = getIntent().getExtras().getLong(TaskActivity.TASK_ID, 0);
 
-        mActionBar.setTitle(R.string.action_edit);
+        if(selectedTaskID > 0) {
 
-        mTaskManager = new TaskManager(this, (long) 0);
-        Task selectedTask = mTaskManager.getTask(selectedTaskID);
-        mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(selectedTask.getCatId()).getColour()));
+            mActionBar.setTitle(R.string.action_edit);
 
-        mDateToday = Calendar.getInstance();
-        mTaskDate = selectedTask.getDate();
+            mTaskManager = new TaskManager(this, (long) 0);
+            Task selectedTask = mTaskManager.getTask(selectedTaskID);
+            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(selectedTask.getCatId()).getColour()));
 
-        mTaskTitleInput = (EditText) findViewById(R.id.task_title);
-        mTaskTitleInput.setText(selectedTask.getTitle());
+            mDateToday = Calendar.getInstance();
+            mTaskDate = selectedTask.getDate();
 
-        mTaskCategorySpinner = (Spinner) findViewById(R.id.task_category);
-        initTaskCategorySpinner(mTaskCategorySpinner);
+            mTaskTitleInput = (EditText) findViewById(R.id.task_title);
+            mTaskTitleInput.setText(selectedTask.getTitle());
 
-        mTaskCategorySpinner.setSelection(findIndexByCategoryId(selectedTask.getCatId()));
+            mTaskSetDateButtonClickHandler.setActivity(this);
+            mTaskSetDateButton.setOnClickListener(mTaskSetDateButtonClickHandler);
+            updateDateButtonText();
 
-        mTaskSetDateButton = (Button) findViewById(R.id.task_set_date_button);
-        updateDateButtonText();
+            initTaskCategorySpinner(mTaskCategorySpinner);
 
-        mTaskSetDateButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Handles the click for the mTaskSetDateButton
-             *
-             * @param v The view in which the click takes place
-             */
-            @Override
-            public void onClick(View v) {
-                createDatePickerDialog();
-            }
-        });
+            mTaskCategorySpinner.setSelection(findIndexByCategoryId(selectedTask.getCatId()));
 
-        mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
-        mTaskImportantCheckBox.setChecked(selectedTask.isImportant());
+            mTaskSetDateButton = (Button) findViewById(R.id.task_set_date_button);
+            updateDateButtonText();
 
-        Button saveTaskButton = (Button) findViewById(R.id.save_task_button);
-        saveTaskButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Handles the click for the saveTaskButton
-             *
-             * @param v The view in which the click takes place
-             */
-            @Override
-            public void onClick(View v) {
-                saveTask();
-            }
-        });
+            mTaskSetDateButton.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * Handles the click for the mTaskSetDateButton
+                 *
+                 * @param v The view in which the click takes place
+                 */
+                @Override
+                public void onClick(View v) {
+                    createDatePickerDialog();
+                }
+            });
 
+            mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
+            mTaskImportantCheckBox.setChecked(selectedTask.isImportant());
+
+            Button saveTaskButton = (Button) findViewById(R.id.save_task_button);
+            saveTaskButton.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * Handles the click for the saveTaskButton
+                 *
+                 * @param v The view in which the click takes place
+                 */
+                @Override
+                public void onClick(View v) {
+                    saveTask();
+                }
+            });
+        }
     }
 
     /**
@@ -227,6 +245,22 @@ public class EditTaskActivity extends MainActivity {
 
         mActivity.startActivity(intent);
         mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    public void showTaskSetDateDialog() {
+        mTaskSetDateDialogButtonClickHandler.setActivity(this);
+
+        DatePickerDialog alert = new DatePickerDialog(this, null, mTaskDate.get(Calendar.YEAR), mTaskDate.get(Calendar.MONTH), mTaskDate.get(Calendar.DAY_OF_MONTH));
+        alert.getDatePicker().setMinDate(mDateToday.getTime().getTime());
+
+        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.action_change_date), mTaskSetDateDialogButtonClickHandler);
+        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.action_discard), mTaskSetDateDialogButtonClickHandler);
+
+        alert.show();
+    }
+
+    public void setTaskDateFromDialog(DatePickerDialog dialog) {
+        setTaskDate(dialog.getDatePicker().getDayOfMonth(), dialog.getDatePicker().getMonth(), dialog.getDatePicker().getYear());
     }
 
     /**

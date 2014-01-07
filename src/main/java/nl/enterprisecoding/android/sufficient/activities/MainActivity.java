@@ -16,16 +16,17 @@ import android.view.KeyEvent;
 import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
+import roboguice.activity.RoboActivity;
 
 /**
  * MainActivity Class
- * <p/>
+ *
  * This class is used to manage the menu anim_in the application and call several controllers.
  *
  * @author Nick Meessen
  */
 
-public class MainActivity extends Activity {
+public class MainActivity extends RoboActivity {
 
     protected TaskManager mTaskManager;
     protected ActionBar mActionBar;
