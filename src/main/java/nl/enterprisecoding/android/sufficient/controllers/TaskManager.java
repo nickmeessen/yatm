@@ -103,7 +103,6 @@ public class TaskManager extends SQLiteOpenHelper {
         retrieveAllCategories();
 
         mCategoryListAdapter = new CategoryListAdapter(activity, this);
-//        @todo (Nick) fix, all cats shouldn't be in database so it's added at runtime, maybe it should go in DB after all?
         mCategoryList.put(allCats.getID(), allCats);
 
         // @todo remove try/catch hack
@@ -246,6 +245,8 @@ public class TaskManager extends SQLiteOpenHelper {
             case 12:
                 cal.set(Integer.parseInt(taskDateString[0]), DECEMBER, Integer.parseInt(taskDateString[2]));
                 break;
+            default:
+                throw new IllegalArgumentException("Unable to parse month.");
         }
 
         cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -258,7 +259,6 @@ public class TaskManager extends SQLiteOpenHelper {
         task.setTitle(cursor.getString(cursor.getColumnIndex(TCOLUMN_TASK)));
         task.setDate(cal);
 
-
         if (cursor.getInt(cursor.getColumnIndex(TCOLUMN_IMPORTANT)) == 1) {
             task.setImportant(true);
         } else {
@@ -270,7 +270,6 @@ public class TaskManager extends SQLiteOpenHelper {
         } else {
             task.setCompleted(false);
         }
-
 
         return task;
     }
@@ -346,6 +345,8 @@ public class TaskManager extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TASKS_STATEMENT);
         db.execSQL(CREATE_CATEGORIES_STATEMENT);
+
+        createCategory("All Categories", Color.BLACK);
     }
 
     /**

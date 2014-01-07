@@ -14,6 +14,9 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
+import nl.enterprisecoding.android.sufficient.models.Category;
+
+import java.util.List;
 
 /**
  * MainActivity Class
@@ -70,4 +73,17 @@ public class MainActivity extends Activity {
 
     }
 
+    protected String[] convertCategoryListToStringArray(List<Category> categoryList) {
+        String[] result = new String[categoryList.size()];
+
+        int count = 0;
+        for (Category cat : categoryList) {
+            result[count] = cat.getTitle();
+            count++;
+        }
+
+        result[0] = getResources().getString(R.string.action_delete_all_tasks);
+
+        return result;
+    }
 }
