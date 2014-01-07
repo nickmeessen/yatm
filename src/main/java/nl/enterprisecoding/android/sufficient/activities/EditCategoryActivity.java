@@ -44,15 +44,11 @@ public class EditCategoryActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.edit_category_list);
-
         mActionBar.setTitle(R.string.action_edit_category);
-
         mSelectedCategory = getIntent().getExtras().getLong("CategoryID", 0);
 
         Category mCategory = mTaskManager.getCategoryById(mSelectedCategory);
-
         mTaskManager = new TaskManager(this, (long) 0);
         getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedCategory).getColour()));
 

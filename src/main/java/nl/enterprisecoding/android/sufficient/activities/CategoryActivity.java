@@ -86,7 +86,6 @@ public class CategoryActivity extends MainActivity {
                 createColorButton(bgShape, R.id.color_random2_button, 0);
                 createColorButton(bgShape, R.id.color_random3_button, 0);
                 createColorButton(bgShape, R.id.color_random4_button, 0);
-
                 mColorDialog.show();
             }
         });
@@ -96,13 +95,7 @@ public class CategoryActivity extends MainActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    if (mCategoryColour == 0) {
-                        mChosenColour = randomColor[0];
-                        int r = Color.red(mChosenColour);
-                        int g = Color.green(mChosenColour);
-                        int b = Color.blue(mChosenColour);
-                        mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, r, g, b));
-                    }
+                    addCategory(randomColor);
                 }
                 return false;
             }
@@ -112,32 +105,37 @@ public class CategoryActivity extends MainActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String categoryName = editText.getText().toString();
-                if (mCategoryColour == 0) {
-                    mChosenColour = randomColor[0];
-                    int r = Color.red(mChosenColour);
-                    int g = Color.green(mChosenColour);
-                    int b = Color.blue(mChosenColour);
-                    mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, r, g, b));
-                }
-
-                if (categoryName.equals(standardText)) {
-                    makeToast(getString(R.string.ChooseDiffName), false);
-                } else if (categoryName.trim().isEmpty()) {
-                    makeToast(getResources().getString(R.string.category_name_empty_error), false);
-                } else if (mTaskManager.getCategoryByTitle(categoryName) != null) {
-                    makeToast(getResources().getString(R.string.toast_category_exists), false);
-                } else {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-
-                    mTaskManager.createCategory(categoryName, mCategoryColour);
-                    mTaskManager.notifyDataSetChanged();
-                    makeToast(getResources().getString(R.string.category_added), false);
-                }
+                addCategory(randomColor);
             }
         });
 
+    }
+
+    /**
+     * Adds a new category and checks for cases in which it isn't allowed to add a category
+     *
+     * @param color The color that the category will use
+     */
+    private void addCategory(int[] color) {
+        final EditText editText = (EditText) findViewById(R.id.newCategory);
+        int[] randomColor = color;
+        String categoryName = editText.getText().toString();
+        if (mCategoryColour == 0) {
+            mChosenColour = randomColor[0];
+            mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, randomColor[1], randomColor[2], randomColor[3]));
+        }
+
+        if(categoryName.trim().isEmpty()) {
+            makeToast(getResources().getString(R.string.category_name_empty_error), false);
+        } else if(mTaskManager.getCategoryByTitle(categoryName) != null) {
+            makeToast(getResources().getString(R.string.toast_category_exists), false);
+        } else {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+            mTaskManager.createCategory(categoryName, mCategoryColour);
+            mTaskManager.notifyDataSetChanged();
+            makeToast(getResources().getString(R.string.category_added), false);
+        }
     }
 
     /**
