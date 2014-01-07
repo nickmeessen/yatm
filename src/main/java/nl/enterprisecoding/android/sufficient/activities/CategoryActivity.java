@@ -99,7 +99,7 @@ public class CategoryActivity extends MainActivity {
 
                     // @TODO (Breunie) Params aren't checked.
                     if (categoryName.equals(standardText)) {
-                        Toast.makeText(mActivity.getApplicationContext(), getString(R.string.ChooseDiffName), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, getString(R.string.ChooseDiffName), Toast.LENGTH_SHORT).show();
                     } else {
                         mTaskManager.checkExistingCategory(categoryName, mCategoryColour);
                         editText.setText("");
@@ -124,7 +124,7 @@ public class CategoryActivity extends MainActivity {
 
                 // @TODO (Breunie) Params aren't checked.
                 if (categoryName.equals(standardText)) {
-                    Toast.makeText(mActivity.getApplicationContext(), getString(R.string.ChooseDiffName), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, getString(R.string.ChooseDiffName), Toast.LENGTH_SHORT).show();
                 } else {
                     mTaskManager.checkExistingCategory(categoryName, mCategoryColour);
                     editText.setText("");

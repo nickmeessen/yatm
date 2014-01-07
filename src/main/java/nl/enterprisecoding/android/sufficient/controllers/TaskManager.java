@@ -145,7 +145,7 @@ public class TaskManager extends SQLiteOpenHelper {
      * @param important  task important?
      * @return task the created task
      */
-    public Task createTask(String title, long categoryId, Calendar date, boolean important) {
+    public long createTask(String title, long categoryId, Calendar date, boolean important) {
 
         ContentValues values = new ContentValues();
 
@@ -164,7 +164,7 @@ public class TaskManager extends SQLiteOpenHelper {
         catList.get(categoryId).addTask(newTask);
         mTaskListAdapter.notifyDataSetChanged();
 
-        return newTask;
+        return newTask.getId();
     }
 
     /**

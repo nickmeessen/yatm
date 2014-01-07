@@ -127,10 +127,10 @@ public class TaskActivity extends MainActivity {
             startActivity(intent);
         } else {
 
-            Task task = mTaskManager.createTask("New Task", catList.get(0).getID(), Calendar.getInstance(), false);
+            long newTaskID = mTaskManager.createTask("New Task", catList.get(0).getID(), Calendar.getInstance(), false);
 
             Intent intent = new Intent(this, EditTaskActivity.class);
-            intent.putExtra(TASK_ID, task.getId());
+            intent.putExtra(TASK_ID, newTaskID);
             startActivity(intent);
         }
     }
