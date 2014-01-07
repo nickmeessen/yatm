@@ -34,7 +34,7 @@ import java.util.List;
  */
 public class CategoryActivity extends MainActivity {
 
-    public static final String colourFormat = "#%02x%02x%02x";
+    public static final String COLOUR_FORMAT = "#%02x%02x%02x";
 
     private Activity mActivity = this;
     private Dialog mColorDialog;

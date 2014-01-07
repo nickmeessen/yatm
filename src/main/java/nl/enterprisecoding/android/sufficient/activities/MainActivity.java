@@ -11,7 +11,6 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
@@ -41,7 +40,7 @@ public class MainActivity extends Activity {
 
     public boolean onKeyUp(int keyCode, KeyEvent event) {
 
-        if ((keyCode == KeyEvent.KEYCODE_MENU)) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
 
             startActivity(new Intent(this, CategoryActivity.class));
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
