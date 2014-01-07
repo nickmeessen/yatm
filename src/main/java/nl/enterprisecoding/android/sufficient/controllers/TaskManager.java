@@ -107,7 +107,7 @@ public class TaskManager extends SQLiteOpenHelper {
 
         mCategoryListAdapter = new CategoryListAdapter(activity, this);
 //        @todo (Nick) fix, all cats shouldn't be in database so it's added at runtime, maybe it should go in DB after all?
-//        mCategoryListAdapter.addItem(allCats);
+        catList.put(allCats.getID(), allCats);
 
         // @todo remove try/catch hack
         try {
@@ -117,22 +117,18 @@ public class TaskManager extends SQLiteOpenHelper {
             lv.setOnItemClickListener(mCategoryListAdapter);
 
             activity.registerForContextMenu(lv);
-        } catch (Exception ex) {
-            Log.e("ECA", ex.getMessage(), ex);
 
-        }
-        retrieveAllTasks();
+            retrieveAllTasks();
 
-        mTaskListAdapter = new TaskListAdapter(activity, this, categoryID);
+            mTaskListAdapter = new TaskListAdapter(activity, this, categoryID);
 
-        // @todo remove try/catch hack
-        try {
             ExpandableListView lv2 = (ExpandableListView) activity.findViewById(R.id.taskList);
             lv2.setAdapter(mTaskListAdapter);
             lv2.setOnChildClickListener(mTaskListAdapter);
             lv2.expandGroup(0, true);
             lv2.expandGroup(1, true);
             lv2.expandGroup(2, true);
+
         } catch (Exception ex) {
             Log.e("ECA", ex.getMessage(), ex);
         }
@@ -426,7 +422,7 @@ public class TaskManager extends SQLiteOpenHelper {
      * @param title  the title of the category to be created.
      * @param colour the colour for the new category.
      */
-    Category createCategory(String title, int colour) {
+    private void createCategory(String title, int colour) {
         ContentValues values = new ContentValues();
         values.put(CTITLE_COLUMN, title);
         values.put(CCOLOUR_COLUMN, colour);
@@ -437,9 +433,10 @@ public class TaskManager extends SQLiteOpenHelper {
         cursor.moveToFirst();
 
         Category newCategory = cursorToCategory(cursor);
-        cursor.close();
 
-        return newCategory;
+        catList.put(newCategory.getID(), newCategory);
+
+        cursor.close();
     }
 
     public void editCategory(String title, int colour, Long selectedCategory) {
@@ -464,7 +461,7 @@ public class TaskManager extends SQLiteOpenHelper {
         return mVisibleCategories;
     }
 
-    public Category getCategory(String categoryTitle) {
+    public Category getCategoryByTitle(String categoryTitle) {
         for (Category c : catList.values()) {
             if (c.getTitle().equals(categoryTitle)) {
                 return c;

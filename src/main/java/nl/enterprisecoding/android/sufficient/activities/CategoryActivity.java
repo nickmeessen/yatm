@@ -14,7 +14,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.*;
@@ -244,7 +243,7 @@ public class CategoryActivity extends MainActivity {
                     if (destinationCategory.equals(getResources().getString(R.string.action_delete_all_tasks))) {
                         mTaskManager.deleteCategory(originCategory);
                     } else {
-                        mTaskManager.deleteCategoryAndMoveTasks(originCategory, mTaskManager.getCategory(destinationCategory));
+                        mTaskManager.deleteCategoryAndMoveTasks(originCategory, mTaskManager.getCategoryByTitle(destinationCategory));
                     }
 
                     Intent intent = new Intent(mActivity, CategoryActivity.class);
