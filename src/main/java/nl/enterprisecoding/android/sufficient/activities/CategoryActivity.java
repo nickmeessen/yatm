@@ -100,7 +100,7 @@ public class CategoryActivity extends MainActivity {
 
                     // @TODO (Breunie) Params aren't checked.
                     if (categoryName.equals(standardText)) {
-                        Toast.makeText(mActivity.getApplicationContext(), getString(R.string.ChooseDiffName), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mActivity, getString(R.string.ChooseDiffName), Toast.LENGTH_SHORT).show();
                     } else {
                         mTaskManager.checkExistingCategory(categoryName, mCategoryColour);
                         editText.setText("");
@@ -125,7 +125,7 @@ public class CategoryActivity extends MainActivity {
 
                 // @TODO (Breunie) Params aren't checked.
                 if (categoryName.equals(standardText)) {
-                    Toast.makeText(mActivity.getApplicationContext(), getString(R.string.ChooseDiffName), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mActivity, getString(R.string.ChooseDiffName), Toast.LENGTH_SHORT).show();
                 } else {
                     mTaskManager.checkExistingCategory(categoryName, mCategoryColour);
                     editText.setText("");
@@ -144,8 +144,8 @@ public class CategoryActivity extends MainActivity {
     /**
      * Creates a button with a certain colour within the colour choosing dialog.
      *
-     * @param bgShape The shape that is clicked
-     * @param buttonId The id of the button that shows the colour
+     * @param bgShape     The shape that is clicked
+     * @param buttonId    The id of the button that shows the colour
      * @param inputColour The colour the button will have, 0 is a random colour
      */
     private void createColorButton(final GradientDrawable bgShape, int buttonId, final int inputColour) {
@@ -237,7 +237,7 @@ public class CategoryActivity extends MainActivity {
                     if (destinationCategory.equals(getResources().getString(R.string.action_delete_all_tasks))) {
                         mTaskManager.deleteCategory(originCategory);
                     } else {
-                        mTaskManager.deleteCategoryAndMoveTasks(originCategory, mTaskManager.getCategory(destinationCategory));
+                        mTaskManager.deleteCategoryAndMoveTasks(originCategory, mTaskManager.getCategoryByTitle(destinationCategory));
                     }
 
                     Intent intent = new Intent(mActivity, CategoryActivity.class);
