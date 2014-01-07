@@ -380,6 +380,11 @@ public class TaskManager extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Returns all categories.
+     *
+     * @return a map containing all categories, mapped by CategoryID.
+     */
     public Map<Long, Category> getAllCategories() {
         return mCategoryList;
     }
@@ -427,6 +432,8 @@ public class TaskManager extends SQLiteOpenHelper {
         mCategoryList.put(newCategory.getID(), newCategory);
 
         cursor.close();
+
+        mCategoryListAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -548,13 +555,15 @@ public class TaskManager extends SQLiteOpenHelper {
         return mNewVisibility;
     }
 
-    // @todo (Nick) temporary methods to prevent breaking functionality.
+    /**
+     * Gets a Category by it's ID.
+     *
+     * @param id the id of the category to get.
+     * @return the category coressponding to the ID.
+     *
+     * // @todo (Nick) temporary methods to prevent breaking functionality.
+     */
     public Category getCategoryById(long id) {
         return mCategoryListAdapter.getItemById(id);
-    }
-
-    public void notifyDataSetChanged() {
-        mCategoryListAdapter.notifyDataSetChanged();
-        mTaskListAdapter.notifyDataSetChanged();
     }
 }
