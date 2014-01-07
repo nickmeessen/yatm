@@ -131,7 +131,6 @@ public class CategoryActivity extends MainActivity {
             mTaskManager.createCategory(categoryName, mCategoryColour);
             mTaskManager.notifyDataSetChanged();
             editText.setText("");
-            editText.setHint(R.string.new_cat);
             makeToast(getResources().getString(R.string.category_added), false);
         }
     }
