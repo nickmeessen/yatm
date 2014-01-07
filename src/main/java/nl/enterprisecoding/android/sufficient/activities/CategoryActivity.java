@@ -143,8 +143,8 @@ public class CategoryActivity extends MainActivity {
     /**
      * Creates a button with a certain colour within the colour choosing dialog.
      *
-     * @param bgShape The shape that is clicked
-     * @param buttonId The id of the button that shows the colour
+     * @param bgShape     The shape that is clicked
+     * @param buttonId    The id of the button that shows the colour
      * @param inputColour The colour the button will have, 0 is a random colour
      */
     private void createColorButton(final GradientDrawable bgShape, int buttonId, final int inputColour) {
