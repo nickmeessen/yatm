@@ -153,24 +153,6 @@ public class EditTaskActivity extends MainActivity {
     }
 
     /**
-     * Converts the List with categories to a List with category names with the type String
-     *
-     * @param categoryList The List which holds the categories
-     * @return The String array which holds the categorie names
-     */
-    private String[] convertCategoryListToStringArray(List<Category> categoryList) {
-        String[] result = new String[categoryList.size()];
-
-        int count = 0;
-        for (Category cat : categoryList) {
-            result[count] = cat.getTitle();
-            count++;
-        }
-
-        return result;
-    }
-
-    /**
      * Find the index position for the category you request by inputting an id
      *
      * @param categoryId The id of the category you are trying to find
@@ -195,8 +177,8 @@ public class EditTaskActivity extends MainActivity {
      * Sets the date for the task
      *
      * @param dayOfMonth The day in the wanted month
-     * @param month The wanted month
-     * @param year The wanted year
+     * @param month      The wanted month
+     * @param year       The wanted year
      */
     private void setTaskDate(int dayOfMonth, int month, int year) {
         mTaskDate.set(year, month, dayOfMonth);

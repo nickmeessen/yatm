@@ -23,8 +23,6 @@ import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Category;
 
-import java.util.List;
-
 /**
  * CategoryActivity class
  *
@@ -139,9 +137,9 @@ public class CategoryActivity extends MainActivity {
             mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, randomColor[1], randomColor[2], randomColor[3]));
         }
 
-        if(categoryName.trim().isEmpty()) {
+        if (categoryName.trim().isEmpty()) {
             makeToast(getResources().getString(R.string.category_name_empty_error), false);
-        } else if(mTaskManager.getCategoryByTitle(categoryName) != null) {
+        } else if (mTaskManager.getCategoryByTitle(categoryName) != null) {
             makeToast(getResources().getString(R.string.toast_category_exists), false);
         } else {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -290,43 +288,6 @@ public class CategoryActivity extends MainActivity {
     }
 
     /**
-     * Initialises the spinner which will display the available categories
-     *
-     * @param spinner The spinner which displays the categories
-     */
-    private void initTaskCategorySpinner(Spinner spinner) {
-        mSpringerArray = convertCategoryListToStringArray(mTaskManager.getCategories());
-        ArrayAdapter<String> mSpinnerArrayAdapter = new ArrayAdapter<String>(
-                this,
-                android.R.layout.simple_spinner_item,
-                mSpringerArray
-        );
-
-        mSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(mSpinnerArrayAdapter);
-    }
-
-    /**
-     * Converts the category List to a List with category names of the type String
-     *
-     * @param categoryList The categoryList that needs to be converted
-     * @return
-     */
-    private String[] convertCategoryListToStringArray(List<Category> categoryList) {
-        String[] result = new String[categoryList.size()];
-
-        int count = 0;
-        for (Category cat : categoryList) {
-            result[count] = cat.getTitle();
-            count++;
-        }
-
-        result[0] = getResources().getString(R.string.action_delete_all_tasks);
-
-        return result;
-    }
-
-    /**
      * Called when a key was released and not handled by any of the views
      * inside of the activity.
      *
@@ -346,6 +307,24 @@ public class CategoryActivity extends MainActivity {
 
         return false;
     }
+
+    /**
+     * Initialises the spinner which will display the available categories
+     *
+     * @param spinner The spinner which displays the categories
+     */
+    private void initTaskCategorySpinner(Spinner spinner) {
+        mSpringerArray = convertCategoryListToStringArray(mTaskManager.getCategories());
+        ArrayAdapter<String> mSpinnerArrayAdapter = new ArrayAdapter<String>(
+                this,
+                android.R.layout.simple_spinner_item,
+                mSpringerArray
+        );
+
+        mSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(mSpinnerArrayAdapter);
+    }
+
 
     /**
      * Shows a Toast
