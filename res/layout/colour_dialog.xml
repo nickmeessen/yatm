@@ -20,7 +20,7 @@
             android:paddingBottom="2dp"
             android:gravity="center_horizontal"
             android:text="Standard Colors"
-            android:textColor="@color/cat_text" />
+            android:textColor="@color/category_text" />
 
     <LinearLayout android:orientation="horizontal"
                   android:layout_width="match_parent"
@@ -62,7 +62,7 @@
             android:paddingBottom="2dp"
             android:gravity="center_horizontal"
             android:text="Random Colors"
-            android:textColor="@color/cat_text" />
+            android:textColor="@color/category_text" />
 
     <LinearLayout android:orientation="horizontal"
                   android:layout_width="match_parent"

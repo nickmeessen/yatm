@@ -22,7 +22,7 @@
             android:typeface="sans"
             android:textSize="18sp"
             android:textStyle="normal"
-            android:textColor="@color/cat_text"
+            android:textColor="@color/category_text"
             android:clickable="false"
             android:maxLines="1"
             android:paddingTop="25dp"

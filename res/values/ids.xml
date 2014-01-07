@@ -8,5 +8,4 @@
 
 <resources>
     <item name="listView" type="id">listView</item>
-    <item name="cats" type="id">meow</item>
 </resources>
