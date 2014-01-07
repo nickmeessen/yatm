@@ -40,33 +40,31 @@ public class EditTaskActivity extends MainActivity {
     private Calendar mDateToday;
     private Calendar mTaskDate;
     private List<Category> mCategoriesArray = new ArrayList<Category>();
-    private Task mTask;
-    private long mSelectedTask;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_task_item);
 
-        mSelectedTask = getIntent().getExtras().getLong(TaskActivity.TASK_ID, 0);
+        long selectedTaskID = getIntent().getExtras().getLong(TaskActivity.TASK_ID, 0);
 
         mActionBar.setTitle(R.string.action_edit);
 
         mTaskManager = new TaskManager(this, (long) 0);
-        mTask = mTaskManager.getTask(mSelectedTask);
-        mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mTask.getCatId()).getColour()));
+        Task selectedTask = mTaskManager.getTask(selectedTaskID);
+        mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(selectedTask.getCatId()).getColour()));
 
         mDateToday = Calendar.getInstance();
         mTaskDate = Calendar.getInstance();
-        mTaskDate.set(mTask.getDate().get(Calendar.YEAR), mTask.getDate().get(Calendar.MONTH), mTask.getDate().get(Calendar.DAY_OF_MONTH));
+        mTaskDate.set(selectedTask.getDate().get(Calendar.YEAR), selectedTask.getDate().get(Calendar.MONTH), selectedTask.getDate().get(Calendar.DAY_OF_MONTH));
 
         mTaskTitleInput = (EditText) findViewById(R.id.task_title);
-        mTaskTitleInput.setText(mTask.getTitle());
+        mTaskTitleInput.setText(selectedTask.getTitle());
 
         mTaskCategorySpinner = (Spinner) findViewById(R.id.task_category);
         initTaskCategorySpinner(mTaskCategorySpinner);
 
-        mTaskCategorySpinner.setSelection(findIndexByCategoryId(mTask.getCatId()));
+        mTaskCategorySpinner.setSelection(findIndexByCategoryId(selectedTask.getCatId()));
 
         mTaskSetDateButton = (Button) findViewById(R.id.task_set_date_button);
         updateDateButtonText();
@@ -97,7 +95,7 @@ public class EditTaskActivity extends MainActivity {
 
 
         mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
-        mTaskImportantCheckBox.setChecked(mTask.isImportant());
+        mTaskImportantCheckBox.setChecked(selectedTask.isImportant());
 
         Button mAddTaskButton = (Button) findViewById(R.id.add_task_button);
         mAddTaskButton.setOnClickListener(new View.OnClickListener() {
