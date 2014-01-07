@@ -106,6 +106,9 @@ public class EditTaskActivity extends MainActivity {
 
     }
 
+    /**
+     * Creates a DatePicker dialog.
+     */
     private void createDatePickerDialog() {
         AlertDialog.Builder alert = new AlertDialog.Builder(mActivity);
         final DatePicker datePicker = new DatePicker(mActivity);
@@ -130,6 +133,9 @@ public class EditTaskActivity extends MainActivity {
         alert.show();
     }
 
+    /**
+     * Saves a task.
+     */
     private void saveTask() {
         boolean mDataIsValidated = true;
         int mSelectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
@@ -221,6 +227,24 @@ public class EditTaskActivity extends MainActivity {
 
         mActivity.startActivity(intent);
         mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+    }
+
+    /**
+     * Converts a list of categories to a string array.
+     *
+     * @param categoryList the list to convert
+     * @return an array of strings containing the category titles.
+     */
+    protected String[] convertCategoryListToStringArray(List<Category> categoryList) {
+        String[] result = new String[categoryList.size()];
+
+        int count = 0;
+        for (Category cat : categoryList) {
+            result[count] = cat.getTitle();
+            count++;
+        }
+
+        return result;
     }
 
 }

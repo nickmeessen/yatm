@@ -23,6 +23,8 @@ import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Category;
 
+import java.util.List;
+
 /**
  * CategoryActivity class
  *
@@ -74,17 +76,7 @@ public class CategoryActivity extends MainActivity {
                 mColourDialog = new Dialog(CategoryActivity.this);
                 mColourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 mColourDialog.setContentView(R.layout.colour_dialog);
-
-                createColourButton(bgShape, R.id.colour_purple_button, R.color.purple);
-                createColourButton(bgShape, R.id.colour_blue_button, R.color.blue);
-                createColourButton(bgShape, R.id.colour_green_button, R.color.green);
-                createColourButton(bgShape, R.id.colour_orange_button, R.color.orange);
-                createColourButton(bgShape, R.id.color_red_button, R.color.red);
-                createColourButton(bgShape, R.id.colour_random0_button, 0);
-                createColourButton(bgShape, R.id.colour_random1_button, 0);
-                createColourButton(bgShape, R.id.colour_random2_button, 0);
-                createColourButton(bgShape, R.id.colour_random3_button, 0);
-                createColourButton(bgShape, R.id.colour_random4_button, 0);
+                addColourButtons(bgShape);
                 mColourDialog.show();
             }
         });
@@ -121,6 +113,24 @@ public class CategoryActivity extends MainActivity {
             }
         });
 
+    }
+
+    /**
+     * Adds the colour buttons to the given shape.
+     *
+     * @param bgShape the shape to use.
+     */
+    private void addColourButtons(GradientDrawable bgShape) {
+        createColourButton(bgShape, R.id.colour_purple_button, R.color.purple);
+        createColourButton(bgShape, R.id.colour_blue_button, R.color.blue);
+        createColourButton(bgShape, R.id.colour_green_button, R.color.green);
+        createColourButton(bgShape, R.id.colour_orange_button, R.color.orange);
+        createColourButton(bgShape, R.id.color_red_button, R.color.red);
+        createColourButton(bgShape, R.id.colour_random0_button, 0);
+        createColourButton(bgShape, R.id.colour_random1_button, 0);
+        createColourButton(bgShape, R.id.colour_random2_button, 0);
+        createColourButton(bgShape, R.id.colour_random3_button, 0);
+        createColourButton(bgShape, R.id.colour_random4_button, 0);
     }
 
     /**
@@ -249,10 +259,8 @@ public class CategoryActivity extends MainActivity {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             catInput = new Spinner(this);
             initTaskCategorySpinner(catInput);
-
             alert.setMessage(getResources().getString(R.string.delete_category_text));
             alert.setView(catInput);
-
             alert.setPositiveButton(getResources().getString(R.string.action_confirm), new DialogInterface.OnClickListener() {
                 /**
                  * Handles the click for the positive button of the context menu
@@ -262,23 +270,14 @@ public class CategoryActivity extends MainActivity {
                  */
                 public void onClick(DialogInterface dialog, int whichButton) {
                     Category originCategory = mTaskManager.getCategoryById(mSelectedCategoryId);
-
                     String destinationCategory = mSpringerArray[catInput.getSelectedItemPosition()];
                     if (destinationCategory.equals(getResources().getString(R.string.action_delete_all_tasks))) {
                         mTaskManager.deleteCategory(originCategory);
                     } else {
                         mTaskManager.deleteCategoryAndMoveTasks(originCategory, mTaskManager.getCategoryByTitle(destinationCategory));
                     }
-
-                    Intent intent = new Intent(mActivity, CategoryActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-
-                    startActivity(intent);
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
                 }
             });
-
             alert.setNegativeButton(getResources().getString(R.string.action_discard), null);
             alert.show();
         }
@@ -324,20 +323,23 @@ public class CategoryActivity extends MainActivity {
         spinner.setAdapter(mSpinnerArrayAdapter);
     }
 
-
     /**
-     * Shows a Toast
+     * Converts a list of categories to a string array.
      *
-     * @param content      The String that defines the text of the Toast
-     * @param showDuration The duration the Toast will be shown: true = long, false = short
+     * @param categoryList the list to convert
+     * @return an array of strings containing the category titles.
      */
-    private void makeToast(String content, boolean showDuration) {
-        int duration;
-        if (showDuration) {
-            duration = Toast.LENGTH_LONG;
-        } else {
-            duration = Toast.LENGTH_SHORT;
+    protected String[] convertCategoryListToStringArray(List<Category> categoryList) {
+        String[] result = new String[categoryList.size()];
+
+        int count = 0;
+        for (Category cat : categoryList) {
+            result[count] = cat.getTitle();
+            count++;
         }
-        Toast.makeText(mActivity, content, duration).show();
+
+        result[0] = getResources().getString(R.string.action_delete_all_tasks);
+
+        return result;
     }
 }

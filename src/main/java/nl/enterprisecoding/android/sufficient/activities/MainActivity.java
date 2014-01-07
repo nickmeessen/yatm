@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Category;
@@ -73,17 +74,19 @@ public class MainActivity extends Activity {
 
     }
 
-    protected String[] convertCategoryListToStringArray(List<Category> categoryList) {
-        String[] result = new String[categoryList.size()];
-
-        int count = 0;
-        for (Category cat : categoryList) {
-            result[count] = cat.getTitle();
-            count++;
+    /**
+     * Shows a Toast
+     *
+     * @param content      The String that defines the text of the Toast
+     * @param showDuration The duration the Toast will be shown: true = long, false = short
+     */
+    protected void makeToast(String content, boolean showDuration) {
+        int duration;
+        if (showDuration) {
+            duration = Toast.LENGTH_LONG;
+        } else {
+            duration = Toast.LENGTH_SHORT;
         }
-
-        result[0] = getResources().getString(R.string.action_delete_all_tasks);
-
-        return result;
+        Toast.makeText(this, content, duration).show();
     }
 }
