@@ -89,12 +89,6 @@ public class TaskManager extends SQLiteOpenHelper {
 
         simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-        Category allCats = new Category();
-
-        allCats.setID(0);
-        allCats.setTitle("All Categories");
-        allCats.setColour(Color.parseColor("#222222"));
-
         open();
 
         mCategoryList = new TreeMap<Long, Category>();
@@ -102,7 +96,6 @@ public class TaskManager extends SQLiteOpenHelper {
         retrieveAllCategories();
 
         mCategoryListAdapter = new CategoryListAdapter(activity, this);
-        mCategoryList.put(allCats.getID(), allCats);
 
         ListView categoryView = (ListView) activity.findViewById(R.id.cat_list);
         ExpandableListView tasklistView = (ExpandableListView) activity.findViewById(R.id.taskList);
@@ -341,7 +334,13 @@ public class TaskManager extends SQLiteOpenHelper {
         db.execSQL(CREATE_TASKS_STATEMENT);
         db.execSQL(CREATE_CATEGORIES_STATEMENT);
 
-        createCategory("All Categories", Color.BLACK);
+        ContentValues values = new ContentValues();
+        values.put(CID_COLUMN, 0);
+        values.put(CTITLE_COLUMN, "All Categories");
+        values.put(CCOLOUR_COLUMN, Color.BLACK);
+        values.put(CVISIBILITY, 1);
+
+        database.insert(CATEGORIES_TABLE, null, values);
     }
 
     /**
