@@ -55,8 +55,7 @@ public class EditTaskActivity extends MainActivity {
         mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(selectedTask.getCatId()).getColour()));
 
         mDateToday = Calendar.getInstance();
-        mTaskDate = Calendar.getInstance();
-        mTaskDate.set(selectedTask.getDate().get(Calendar.YEAR), selectedTask.getDate().get(Calendar.MONTH), selectedTask.getDate().get(Calendar.DAY_OF_MONTH));
+        mTaskDate = selectedTask.getDate();
 
         mTaskTitleInput = (EditText) findViewById(R.id.task_title);
         mTaskTitleInput.setText(selectedTask.getTitle());
@@ -76,49 +75,42 @@ public class EditTaskActivity extends MainActivity {
                 final DatePicker datePicker = new DatePicker(mActivity);
 
                 datePicker.setCalendarViewShown(false);
-
                 datePicker.init(mTaskDate.get(Calendar.YEAR), mTaskDate.get(Calendar.MONTH), mTaskDate.get(Calendar.DAY_OF_MONTH), null);
                 datePicker.setMinDate(mDateToday.getTime().getTime());
 
                 alert.setView(datePicker);
-
                 alert.setPositiveButton(R.string.action_change_date, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         setTaskDate(datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
                     }
                 });
-
                 alert.setNegativeButton(R.string.action_discard, null);
                 alert.show();
             }
         });
 
-
         mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
         mTaskImportantCheckBox.setChecked(selectedTask.isImportant());
 
-        Button mUpdateTaskButton = (Button) findViewById(R.id.update_task_button);
-        mUpdateTaskButton.setOnClickListener(new View.OnClickListener() {
+        Button updateTaskButton = (Button) findViewById(R.id.update_task_button);
+        updateTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String mTaskTitle = mTaskTitleInput.getText().toString();
 
                 boolean mDataIsValidated = true;
-                if (mTaskTitle.isEmpty()) {
+                if (mTaskTitleInput.getText().toString().isEmpty()) {
                     mDataIsValidated = false;
                     mTaskTitleInput.setBackgroundColor(getResources().getColor(R.color.red));
                 }
 
                 int mSelectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
-
                 long mSelectedCategoryId = mCategoriesArray.get(mSelectedCategoryIndex).getID();
 
                 if (mDataIsValidated) {
-                    mTaskManager.createTask(mTaskTitle, mSelectedCategoryId, mTaskDate, mTaskImportantCheckBox.isChecked());
+                    mTaskManager.createTask(mTaskTitleInput.getText().toString(), mSelectedCategoryId, mTaskDate, mTaskImportantCheckBox.isChecked());
                     showTaskActivity(mSelectedCategoryId);
                 } else {
-                    Toast mInvalidDataToast = Toast.makeText(getApplicationContext(), R.string.toast_invalid_data, Toast.LENGTH_SHORT);
-                    mInvalidDataToast.show();
+                    Toast.makeText(mActivity, R.string.toast_invalid_data, Toast.LENGTH_SHORT).show();
                 }
 
             }

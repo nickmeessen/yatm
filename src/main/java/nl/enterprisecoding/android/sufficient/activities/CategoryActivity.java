@@ -96,14 +96,6 @@ public class CategoryActivity extends MainActivity {
                         int b = Color.blue(mChosenColour);
                         mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, r, g, b));
                     }
-
-                    // @TODO (Breunie) Params aren't checked.
-                    if (categoryName.equals(standardText)) {
-                        Toast.makeText(mActivity, getString(R.string.ChooseDiffName), Toast.LENGTH_SHORT).show();
-                    } else {
-                        mTaskManager.checkExistingCategory(categoryName, mCategoryColour);
-                        editText.setText("");
-                    }
                 }
                 return false;
             }
@@ -122,18 +114,19 @@ public class CategoryActivity extends MainActivity {
                     mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, r, g, b));
                 }
 
-                // @TODO (Breunie) Params aren't checked.
                 if (categoryName.equals(standardText)) {
-                    Toast.makeText(mActivity, getString(R.string.ChooseDiffName), Toast.LENGTH_SHORT).show();
+                    makeToast(getString(R.string.ChooseDiffName), false);
+                } else if(categoryName.trim().isEmpty()) {
+                    makeToast(getResources().getString(R.string.category_name_empty_error), false);
+                } else if(mTaskManager.getCategoryByTitle(categoryName) != null) {
+                    makeToast(getResources().getString(R.string.toast_category_exists), false);
                 } else {
-                    mTaskManager.checkExistingCategory(categoryName, mCategoryColour);
-                    editText.setText("");
-
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 
+                    mTaskManager.createCategory(categoryName, mCategoryColour);
                     mTaskManager.notifyDataSetChanged();
-                    mActivity.startActivity(getIntent());
+                    makeToast(getResources().getString(R.string.category_added), false);
                 }
             }
         });
@@ -152,7 +145,9 @@ public class CategoryActivity extends MainActivity {
         final Button colourButton = (Button) mColorDialog.findViewById(buttonId);
         final int[] randColour = generateRandomColor();
 
-        if (inputColour == 0) {
+        if (inputColour != 0) {
+            colourButton.setBackgroundColor(getResources().getColor(inputColour));
+        } else {
             colourButton.setBackgroundColor(randColour[0]);
         }
 
@@ -165,7 +160,7 @@ public class CategoryActivity extends MainActivity {
                     int g = Color.green(mChosenColour);
                     int b = Color.blue(mChosenColour);
                     mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, r, g, b));
-                    bgShape.setColor(inputColour);
+                    bgShape.setColor(getResources().getColor(inputColour));
                 } else {
                     mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, randColour[1], randColour[2], randColour[3]));
                     bgShape.setColor(randColour[0]);
@@ -290,5 +285,21 @@ public class CategoryActivity extends MainActivity {
         }
 
         return false;
+    }
+
+    /**
+     * Shows a Toast
+     *
+     * @param content The String that defines the text of the Toast
+     * @param showDuration The duration the Toast will be shown: true = long, false = short
+     */
+    private void makeToast(String content, boolean showDuration) {
+        int duration;
+        if (showDuration) {
+            duration = Toast.LENGTH_LONG;
+        } else {
+            duration = Toast.LENGTH_SHORT;
+        }
+        Toast.makeText(mActivity, content, duration).show();
     }
 }

@@ -392,37 +392,12 @@ public class TaskManager extends SQLiteOpenHelper {
     }
 
     /**
-     * Checks whether a category exists and if not calls a method to create a category.
-     *
-     * @param title  the title of the category to be created.
-     * @param colour the colour for the new category.
-     */
-    public void checkExistingCategory(String title, int colour) {
-        ArrayList<Category> catArray = new ArrayList<Category>(catList.values());
-        boolean catExist = false;
-
-        for (Category aCatArray : catArray) {
-            if (aCatArray.getTitle().equals(title)) {
-                catExist = true;
-                Toast.makeText(mActivity, R.string.toast_category_exists, Toast.LENGTH_SHORT).show();
-                break;
-            }
-        }
-
-        if (!catExist) {
-            createCategory(title, colour);
-            mCategoryListAdapter.notifyDataSetChanged();
-            Toast.makeText(mActivity, R.string.category_exists_error, Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    /**
      * Creates a new Category and adds it to the database.
      *
      * @param title  the title of the category to be created.
      * @param colour the colour for the new category.
      */
-    private void createCategory(String title, int colour) {
+    public void createCategory(String title, int colour) {
         ContentValues values = new ContentValues();
         values.put(CTITLE_COLUMN, title);
         values.put(CCOLOUR_COLUMN, colour);
