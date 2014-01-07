@@ -48,8 +48,8 @@ public class EditCategoryActivity extends MainActivity {
         mActionBar.setTitle(R.string.action_edit_category);
         mSelectedCategory = getIntent().getExtras().getLong("CategoryID", 0);
 
-        Category mCategory = mTaskManager.getCategoryById(mSelectedCategory);
         mTaskManager = new TaskManager(this, (long) 0);
+        Category mCategory = mTaskManager.getCategoryById(mSelectedCategory);
         getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedCategory).getColour()));
 
         mCategoryTitleInput = (EditText) findViewById(R.id.category_title);
@@ -100,36 +100,36 @@ public class EditCategoryActivity extends MainActivity {
     }
 
     /**
-     * Create a button with a predefined colour.
+     * Create a button with a predefined inputColour.
      *
      * @param bgShape  the shape.
      * @param buttonId the button ID.
-     * @param colour   the colour, can be 0 then a random colour will be generated.
+     * @param inputColour   the inputColour, can be 0 then a random inputColour will be generated.
      */
-    private void createColourButton(final GradientDrawable bgShape, int buttonId, int colour) {
-
-        if (colour == 0) {
-            final int r = (int) (255 * Math.random());
-            final int g = (int) (255 * Math.random());
-            final int b = (int) (255 * Math.random());
-
-            colour = Color.rgb(r, g, b);
-        }
-
+    private void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour) {
         final Button colourButton = (Button) mColourDialog.findViewById(buttonId);
-        final int finalColour = colour;
+        final int[] randColour = generateRandomColour();
 
-        colourButton.setBackgroundColor(finalColour);
+        if (inputColour != 0) {
+            colourButton.setBackgroundColor(getResources().getColor(inputColour));
+        } else {
+            colourButton.setBackgroundColor(randColour[0]);
+        }
 
         colourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bgShape.setColor(getResources().getColor(finalColour));
-                int chosenColour = getResources().getColor(finalColour);
-                int r = Color.red(chosenColour);
-                int g = Color.green(chosenColour);
-                int b = Color.blue(chosenColour);
-                mCategoryColour = Color.parseColor(String.format(CategoryActivity.COLOUR_FORMAT, r, g, b));
+                if (inputColour != 0) {
+                    int chosenColour = getResources().getColor(inputColour);
+                    int r = Color.red(chosenColour);
+                    int g = Color.green(chosenColour);
+                    int b = Color.blue(chosenColour);
+                    mCategoryColour = Color.parseColor(String.format(CategoryActivity.COLOUR_FORMAT, r, g, b));
+                    bgShape.setColor(getResources().getColor(inputColour));
+                } else {
+                    mCategoryColour = Color.parseColor(String.format(CategoryActivity.COLOUR_FORMAT, randColour[1], randColour[2], randColour[3]));
+                    bgShape.setColor(randColour[0]);
+                }
                 mColourDialog.dismiss();
             }
         });

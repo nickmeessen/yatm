@@ -10,6 +10,7 @@ package nl.enterprisecoding.android.sufficient.activities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.widget.Toast;
@@ -68,7 +69,7 @@ public class MainActivity extends RoboActivity {
             return true;
         }
 
-        return false;
+        return super.onKeyUp(keyCode, event);
 
     }
 
@@ -86,5 +87,25 @@ public class MainActivity extends RoboActivity {
             duration = Toast.LENGTH_SHORT;
         }
         Toast.makeText(this, content, duration).show();
+    }
+
+    /**
+     * Generates a random colour
+     *
+     * @return returns the random colour
+     */
+    protected int[] generateRandomColour() {
+        int r = (int) (255 * Math.random());
+        int g = (int) (255 * Math.random());
+        int b = (int) (255 * Math.random());
+        int maxColorValue = 100;
+
+        if (r > maxColorValue || g > maxColorValue || b > maxColorValue) {
+            generateRandomColour();
+        }
+
+        int color = Color.rgb(r, g, b);
+
+        return new int[]{color, r, g, b};
     }
 }
