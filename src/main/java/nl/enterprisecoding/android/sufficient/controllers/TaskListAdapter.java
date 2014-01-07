@@ -64,16 +64,6 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         mGroupTitles.add(2, mActivity.getString(R.string.upcoming));
         mGroupTitles.add(3, mActivity.getString(R.string.completed));
 
-        mTodayList = new ArrayList<Task>();
-        mTomorrowList = new ArrayList<Task>();
-        mUpcomingList = new ArrayList<Task>();
-        mCompletedList = new ArrayList<Task>();
-
-        mGroups.put(0, mTodayList);
-        mGroups.put(1, mTomorrowList);
-        mGroups.put(2, mUpcomingList);
-        mGroups.put(3, mCompletedList);
-
         updateList();
 
     }
@@ -87,6 +77,11 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         mTomorrowList = new ArrayList<Task>();
         mUpcomingList = new ArrayList<Task>();
         mCompletedList = new ArrayList<Task>();
+
+        mGroups.put(0, mTodayList);
+        mGroups.put(1, mTomorrowList);
+        mGroups.put(2, mUpcomingList);
+        mGroups.put(3, mCompletedList);
 
         if (mCategoryId == 0) {
             for (Category cat : mTaskManager.getVisibleCategories()) {
