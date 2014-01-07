@@ -7,7 +7,6 @@
 
 package nl.enterprisecoding.android.sufficient.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -27,7 +26,7 @@ import java.util.List;
 
 /**
  * CategoryActivity class
- *
+ * <p/>
  * From here a user could execute various actions on categories.
  *
  * @author Breunie Ploeg
@@ -36,7 +35,6 @@ public class CategoryActivity extends MainActivity {
 
     public static final String COLOUR_FORMAT = "#%02x%02x%02x";
 
-    private Activity mActivity = this;
     private Dialog mColourDialog;
     private int mChosenColour = 0;
     private int mCategoryColour;
@@ -66,6 +64,7 @@ public class CategoryActivity extends MainActivity {
         bgShape.setColor(randomColour[0]);
 
         colourButton.setOnClickListener(new View.OnClickListener() {
+
             /**
              * Handles the click for the colorButton
              *

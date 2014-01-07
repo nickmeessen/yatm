@@ -15,9 +15,6 @@ import android.view.KeyEvent;
 import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
-import nl.enterprisecoding.android.sufficient.models.Category;
-
-import java.util.List;
 
 /**
  * MainActivity Class

@@ -49,9 +49,8 @@ public class TaskActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_list);
 
-        final ExpandableListView mTaskListView = (ExpandableListView) findViewById(R.id.taskList);
-        // @todo why?
-        mTaskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        final ExpandableListView taskListView = (ExpandableListView) findViewById(R.id.taskList);
+        taskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 mSelectedTaskId = ((Task) parent.getItemAtPosition(position)).getId();
@@ -59,7 +58,7 @@ public class TaskActivity extends MainActivity {
             }
         });
 
-        registerForContextMenu(mTaskListView);
+        registerForContextMenu(taskListView);
 
         mActionBar.setTitle(R.string.title_tasks);
 

@@ -8,13 +8,11 @@
 package nl.enterprisecoding.android.sufficient.controllers;
 
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
-import android.util.Log;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import nl.enterprisecoding.android.sufficient.R;
@@ -106,33 +104,29 @@ public class TaskManager extends SQLiteOpenHelper {
         mCategoryListAdapter = new CategoryListAdapter(activity, this);
         mCategoryList.put(allCats.getID(), allCats);
 
-        // @todo remove try/catch hack
-        try {
+        ListView categoryView = (ListView) activity.findViewById(R.id.cat_list);
+        ExpandableListView tasklistView = (ExpandableListView) activity.findViewById(R.id.taskList);
 
-            ListView lv = (ListView) activity.findViewById(R.id.cat_list);
+        if (categoryView != null) {
 
-            lv.setAdapter(mCategoryListAdapter);
-            lv.setOnItemClickListener(mCategoryListAdapter);
+            categoryView.setAdapter(mCategoryListAdapter);
+            categoryView.setOnItemClickListener(mCategoryListAdapter);
 
-            activity.registerForContextMenu(lv);
-
-            retrieveAllTasks();
-
-            mTaskListAdapter = new TaskListAdapter(activity, this, categoryID);
-
-            ExpandableListView lv2 = (ExpandableListView) activity.findViewById(R.id.taskList);
-            lv2.setAdapter(mTaskListAdapter);
-            lv2.setOnChildClickListener(mTaskListAdapter);
-            lv2.expandGroup(0, true);
-            lv2.expandGroup(1, true);
-            lv2.expandGroup(2, true);
-            lv2.expandGroup(3, true);
-
-        } catch (Exception ex) {
-            Log.e("ECA", ex.getMessage(), ex);
+            activity.registerForContextMenu(categoryView);
         }
 
+        retrieveAllTasks();
 
+        mTaskListAdapter = new TaskListAdapter(activity, this, categoryID);
+
+        if (tasklistView != null) {
+            tasklistView.setAdapter(mTaskListAdapter);
+            tasklistView.setOnChildClickListener(mTaskListAdapter);
+            tasklistView.expandGroup(0, true);
+            tasklistView.expandGroup(1, true);
+            tasklistView.expandGroup(2, true);
+            tasklistView.expandGroup(3, true);
+        }
     }
 
     /**
@@ -561,8 +555,6 @@ public class TaskManager extends SQLiteOpenHelper {
      *
      * @param id the id of the category to get.
      * @return the category coressponding to the ID.
-     *
-     * // @todo (Nick) temporary methods to prevent breaking functionality.
      */
     public Category getCategoryById(long id) {
         return mCategoryListAdapter.getItemById(id);

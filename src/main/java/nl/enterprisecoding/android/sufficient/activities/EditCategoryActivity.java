@@ -104,7 +104,7 @@ public class EditCategoryActivity extends MainActivity {
      *
      * @param bgShape  the shape.
      * @param buttonId the button ID.
-     * @param colour    the colour, can be 0 then a random colour will be generated.
+     * @param colour   the colour, can be 0 then a random colour will be generated.
      */
     private void createColourButton(final GradientDrawable bgShape, int buttonId, int colour) {
 
