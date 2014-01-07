@@ -42,7 +42,8 @@ public class TaskActivity extends MainActivity {
         setContentView(R.layout.task_list);
 
         final ExpandableListView mTaskListView = (ExpandableListView) findViewById(R.id.taskList);
-        mTaskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() { // @todo why?
+        // @todo why?
+        mTaskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 mSelectedTaskId = ((Task) parent.getItemAtPosition(position)).getId();
