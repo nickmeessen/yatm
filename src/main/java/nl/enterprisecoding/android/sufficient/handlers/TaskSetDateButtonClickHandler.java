@@ -4,6 +4,9 @@ import android.view.View;
 import nl.enterprisecoding.android.sufficient.activities.EditTaskActivity;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 
+/**
+ * ClickHandler for the TaskSetDateButton.
+ */
 public class TaskSetDateButtonClickHandler implements IButtonClickHandler {
 
     private EditTaskActivity mActivity;

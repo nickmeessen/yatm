@@ -179,17 +179,13 @@ public class CategoryActivity extends MainActivity {
         colourButton.setOnClickListener(new View.OnClickListener() {
             /**
              * Handles the click for the colourButton
-             *
              * @param v The view in which the click takes place
              */
             @Override
             public void onClick(View v) {
                 if (inputColour != 0) {
                     mChosenColour = getResources().getColor(inputColour);
-                    int r = Color.red(mChosenColour);
-                    int g = Color.green(mChosenColour);
-                    int b = Color.blue(mChosenColour);
-                    mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, r, g, b));
+                    mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, Color.red(mChosenColour), Color.green(mChosenColour), Color.blue(mChosenColour)));
                     bgShape.setColor(getResources().getColor(inputColour));
                 } else {
                     mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, randColour[1], randColour[2], randColour[3]));
