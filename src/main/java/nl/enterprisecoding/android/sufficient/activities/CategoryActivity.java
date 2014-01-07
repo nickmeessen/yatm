@@ -55,12 +55,8 @@ public class CategoryActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.category_list);
-
         mActionBar.hide();
-
-        final String standardText = getResources().getString(R.string.new_cat);
 
         mTaskManager = new TaskManager(this, (long) 0);
 

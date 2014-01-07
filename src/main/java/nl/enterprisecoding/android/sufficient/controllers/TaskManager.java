@@ -365,8 +365,7 @@ public class TaskManager extends SQLiteOpenHelper {
      *
      * @return a list of all categories.
      */
-
-    Map<Long, Category> retrieveAllCategories() {
+    private Map<Long, Category> retrieveAllCategories() {
 
         Cursor cursor = database.query(CATEGORIES_TABLE, CALL_COLUMNS, null, null, null, null, null);
 

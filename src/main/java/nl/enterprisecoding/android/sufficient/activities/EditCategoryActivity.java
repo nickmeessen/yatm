@@ -79,14 +79,11 @@ public class EditCategoryActivity extends MainActivity {
         bgShape.setColor(mCategory.getColour());
 
         colorButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-
                 mColorDialog = new Dialog(EditCategoryActivity.this);
                 mColorDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 mColorDialog.setContentView(R.layout.colour_dialog);
-
                 createColorButton(bgShape, R.id.color_blue_button, R.color.blue);
                 createColorButton(bgShape, R.id.color_purple_button, R.color.purple);
                 createColorButton(bgShape, R.id.color_green_button, R.color.green);
@@ -97,7 +94,6 @@ public class EditCategoryActivity extends MainActivity {
                 createColorButton(bgShape, R.id.color_random2_button, 0);
                 createColorButton(bgShape, R.id.color_random3_button, 0);
                 createColorButton(bgShape, R.id.color_random4_button, 0);
-
                 mColorDialog.show();
             }
         });

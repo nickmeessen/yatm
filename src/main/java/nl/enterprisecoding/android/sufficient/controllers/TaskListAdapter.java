@@ -100,7 +100,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
      *
      * @param tasks the list of tasks to split.
      */
-    public void fillList(List<Task> tasks) {
+    private void fillList(List<Task> tasks) {
 
         Calendar today = Calendar.getInstance();
         Calendar tomorrow = Calendar.getInstance();
