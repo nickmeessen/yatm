@@ -77,6 +77,11 @@ public class EditTaskActivity extends MainActivity {
         updateDateButtonText();
 
         mTaskSetDateButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Handles the click for the mTaskSetDateButton
+             *
+             * @param v The view in which the click takes place
+             */
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(mActivity);
@@ -102,6 +107,11 @@ public class EditTaskActivity extends MainActivity {
 
         Button updateTaskButton = (Button) findViewById(R.id.update_task_button);
         updateTaskButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Handles the click for the updateTaskButton
+             *
+             * @param v The view in which the click takes place
+             */
             @Override
             public void onClick(View v) {
                 boolean mDataIsValidated = true;

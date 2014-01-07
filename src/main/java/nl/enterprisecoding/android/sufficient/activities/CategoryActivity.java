@@ -27,7 +27,7 @@ import java.util.List;
 
 /**
  * CategoryActivity class
- * <p/>
+ *
  * From here a user could execute various actions on categories.
  *
  * @author Breunie Ploeg
@@ -66,6 +66,11 @@ public class CategoryActivity extends MainActivity {
         bgShape.setColor(randomColor[0]);
 
         colorButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Handles the click for the colorButton
+             *
+             * @param v The view in which the click should perform it's action
+             */
             @Override
             public void onClick(View v) {
                 mColorDialog = new Dialog(CategoryActivity.this);
@@ -88,6 +93,14 @@ public class CategoryActivity extends MainActivity {
 
         final EditText editText = (EditText) findViewById(R.id.newCategory);
         editText.setOnKeyListener(new View.OnKeyListener() {
+            /**
+             * Handles the enter button for adding a category
+             *
+             * @param v The view in which the action is performed
+             * @param keyCode The keycode for the key that is pressed
+             * @param event The event that contains the action
+             * @return Always returns false
+             */
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
@@ -99,6 +112,11 @@ public class CategoryActivity extends MainActivity {
 
         final View addButton = findViewById(R.id.catAddButton);
         addButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Handles the click for the addButton
+             *
+             * @param v The view in which the click takes place
+             */
             @Override
             public void onClick(View v) {
                 addCategory(randomColor);
@@ -154,6 +172,11 @@ public class CategoryActivity extends MainActivity {
         }
 
         colourButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Handles the click for the colourButton
+             *
+             * @param v The view in which the click takes place
+             */
             @Override
             public void onClick(View v) {
                 if (inputColour != 0) {
@@ -234,6 +257,12 @@ public class CategoryActivity extends MainActivity {
             alert.setView(catInput);
 
             alert.setPositiveButton(getResources().getString(R.string.action_confirm), new DialogInterface.OnClickListener() {
+                /**
+                 * Handles the click for the positive button of the context menu
+                 *
+                 * @param dialog The dialog in which the click takes place
+                 * @param whichButton The button which is clicked
+                 */
                 public void onClick(DialogInterface dialog, int whichButton) {
                     Category originCategory = mTaskManager.getCategoryById(mSelectedCategoryId);
 
@@ -277,7 +306,12 @@ public class CategoryActivity extends MainActivity {
         spinner.setAdapter(mSpinnerArrayAdapter);
     }
 
-    
+    /**
+     * Converts the category List to a List with category names of the type String
+     *
+     * @param categoryList The categoryList that needs to be converted
+     * @return
+     */
     private String[] convertCategoryListToStringArray(List<Category> categoryList) {
         String[] result = new String[categoryList.size()];
 
