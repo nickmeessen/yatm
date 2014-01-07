@@ -357,7 +357,6 @@ public class TaskManager extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(TaskManager.class.getName(), "Upgrading database from version " + oldVersion + " to " + newVersion + ", which will destroy all old data");
         db.execSQL("DROP TABLE IF EXISTS " + CATEGORIES_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + TASKS_TABLE);
         onCreate(db);
@@ -377,7 +376,6 @@ public class TaskManager extends SQLiteOpenHelper {
             cursor.moveToNext();
         }
         cursor.close();
-
 
     }
 

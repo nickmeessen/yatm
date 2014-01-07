@@ -130,6 +130,7 @@ public class CategoryActivity extends MainActivity {
             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
             mTaskManager.createCategory(categoryName, mCategoryColour);
             mTaskManager.notifyDataSetChanged();
+            editText.setText("");
             makeToast(getResources().getString(R.string.category_added), false);
         }
     }
