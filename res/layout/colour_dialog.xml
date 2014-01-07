@@ -31,31 +31,26 @@
         <Button android:id="@+id/color_purple_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/purple"
                 android:layout_weight="1"/>
 
         <Button android:id="@+id/color_blue_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/blue"
                 android:layout_weight="1"/>
 
         <Button android:id="@+id/color_green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/green"
                 android:layout_weight="1"/>
 
         <Button android:id="@+id/color_orange_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/orange"
                 android:layout_weight="1"/>
 
         <Button android:id="@+id/color_red_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/red"
                 android:layout_weight="1"/>
 
     </LinearLayout>

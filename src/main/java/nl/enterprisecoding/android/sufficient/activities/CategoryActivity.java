@@ -16,6 +16,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
@@ -152,7 +153,9 @@ public class CategoryActivity extends MainActivity {
         final Button colourButton = (Button) mColorDialog.findViewById(buttonId);
         final int[] randColour = generateRandomColor();
 
-        if (inputColour == 0) {
+        if (inputColour != 0) {
+            colourButton.setBackgroundColor(getResources().getColor(inputColour));
+        } else {
             colourButton.setBackgroundColor(randColour[0]);
         }
 
