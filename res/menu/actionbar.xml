@@ -7,12 +7,14 @@
   -->
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_add"
-          android:icon="@drawable/ic_action_content_new"
-          android:title="@string/action_add"
-          android:showAsAction="always" />
-    <item android:id="@+id/action_categories"
-          android:icon="@drawable/ic_action_collections_sort_by_size"
-          android:title="@string/action_categories"
-          android:showAsAction="always" />
+    <item
+            android:id="@+id/action_add"
+            android:icon="@drawable/ic_action_content_new"
+            android:title="@string/action_add"
+            android:showAsAction="always"/>
+    <item
+            android:id="@+id/action_categories"
+            android:icon="@drawable/ic_action_collections_sort_by_size"
+            android:title="@string/action_categories"
+            android:showAsAction="always"/>
 </menu>

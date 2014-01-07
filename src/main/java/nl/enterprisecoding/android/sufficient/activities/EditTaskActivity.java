@@ -40,20 +40,19 @@ import java.util.List;
 @ContentView(R.layout.edit_task_item)
 public class EditTaskActivity extends MainActivity {
 
-
     @InjectView(R.id.task_title)
-    EditText mTaskTitleInput;
+    private EditText mTaskTitleInput;
     @InjectView(R.id.task_category)
-    Spinner mTaskCategorySpinner;
+    private Spinner mTaskCategorySpinner;
     @InjectView(R.id.task_set_date_button)
-    Button mTaskSetDateButton;
+    private Button mTaskSetDateButton;
     @InjectView(R.id.task_important)
-    CheckBox mTaskImportantCheckBox;
+    private CheckBox mTaskImportantCheckBox;
 
     @Inject
-    TaskSetDateButtonClickHandler mTaskSetDateButtonClickHandler;
+    private TaskSetDateButtonClickHandler mTaskSetDateButtonClickHandler;
     @Inject
-    TaskSetDateDialogButtonClickHandler mTaskSetDateDialogButtonClickHandler;
+    private TaskSetDateDialogButtonClickHandler mTaskSetDateDialogButtonClickHandler;
 
     private Calendar mDateToday;
     private Calendar mTaskDate;
@@ -251,6 +250,9 @@ public class EditTaskActivity extends MainActivity {
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
+    /**
+     * Shows DatePicker Dialog.
+     */
     public void showTaskSetDateDialog() {
         mTaskSetDateDialogButtonClickHandler.setActivity(this);
 
@@ -263,6 +265,11 @@ public class EditTaskActivity extends MainActivity {
         alert.show();
     }
 
+    /**
+     * Sets the Task date according to the date picked with the dialog.
+     *
+     * @param dialog the dialog providing the date.
+     */
     public void setTaskDateFromDialog(DatePickerDialog dialog) {
         setTaskDate(dialog.getDatePicker().getDayOfMonth(), dialog.getDatePicker().getMonth(), dialog.getDatePicker().getYear());
     }
@@ -273,7 +280,7 @@ public class EditTaskActivity extends MainActivity {
      * @param categoryList the list to convert
      * @return an array of strings containing the category titles.
      */
-    protected String[] convertCategoryListToStringArray(List<Category> categoryList) {
+    private String[] convertCategoryListToStringArray(List<Category> categoryList) {
         String[] result = new String[categoryList.size()];
 
         int count = 0;

@@ -7,6 +7,7 @@
   -->
 
 <resources>
+
     <style name="ECTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:actionBarStyle">@style/ECTheme.ActionBarStyle</item>
     </style>

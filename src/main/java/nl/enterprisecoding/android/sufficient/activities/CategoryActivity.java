@@ -139,11 +139,10 @@ public class CategoryActivity extends MainActivity {
      */
     private void addCategory(int[] colour) {
         final EditText editText = (EditText) findViewById(R.id.newCategory);
-        int[] randomColour = colour;
         String categoryName = editText.getText().toString();
         if (mCategoryColour == 0) {
-            mChosenColour = randomColour[0];
-            mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, randomColour[1], randomColour[2], randomColour[3]));
+            mChosenColour = colour[0];
+            mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, colour[1], colour[2], colour[3]));
         }
 
         if (categoryName.trim().isEmpty()) {
@@ -308,7 +307,7 @@ public class CategoryActivity extends MainActivity {
      * @param categoryList the list to convert
      * @return an array of strings containing the category titles.
      */
-    protected String[] convertCategoryListToStringArray(List<Category> categoryList) {
+    private String[] convertCategoryListToStringArray(List<Category> categoryList) {
         String[] result = new String[categoryList.size()];
 
         int count = 0;

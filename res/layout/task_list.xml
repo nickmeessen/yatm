@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-        <!--
-  ~ Copyright (c) 2013. "EnterpriseCoding"
-  ~ ("EnterpriseCoding" constitutes; Nick Meessen, Jasper Burgers, Ferry Wienholts, Breunie Ploeg & Sjors Roelofs).
-  ~
-  ~ This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
-  -->
+<!--
+~ Copyright (c) 2013. "EnterpriseCoding"
+~ ("EnterpriseCoding" constitutes; Nick Meessen, Jasper Burgers, Ferry Wienholts, Breunie Ploeg & Sjors Roelofs).
+~
+~ This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
+-->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                      android:id="@+id/mainLayout"
-                      android:layout_width="wrap_content"
-                      android:layout_height="fill_parent"
-                      android:orientation="vertical"
-                >
+              android:id="@+id/mainLayout"
+              android:layout_width="wrap_content"
+              android:layout_height="fill_parent"
+              android:orientation="vertical"
+        >
+
     <ListView
             android:id="@id/cat_list"
             android:visibility="gone"
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent" />
+            android:layout_height="fill_parent"/>
 
-                  <ExpandableListView
-                    android:id="@+id/taskList"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:divider="@color/head_bg"
-                    android:dividerHeight="0.5dp"
-                    android:choiceMode="singleChoice"
-                    xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <ExpandableListView
+            android:id="@+id/taskList"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:divider="@color/head_bg"
+            android:dividerHeight="0.5dp"
+            android:choiceMode="singleChoice"
+            xmlns:android="http://schemas.android.com/apk/res/android"/>
 
-        </LinearLayout>
+</LinearLayout>

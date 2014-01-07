@@ -8,16 +8,23 @@ public class TaskSetDateButtonClickHandler implements IButtonClickHandler {
 
     private EditTaskActivity mActivity;
 
-    public TaskSetDateButtonClickHandler() {
-    }
-
+    /**
+     * Sets current activity.
+     *
+     * @param activity the current activity.
+     */
     @Override
     public void setActivity(MainActivity activity) {
         mActivity = (EditTaskActivity) activity;
     }
 
+    /**
+     * This method will be invoked when a view is clicked.
+     *
+     * @param view The view that received the click.
+     */
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
         mActivity.showTaskSetDateDialog();
     }
 

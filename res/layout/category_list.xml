@@ -8,9 +8,10 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="fill_parent"
-             android:layout_height="wrap_content"
-             android:orientation="vertical">
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
     <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -67,9 +68,10 @@
                 android:layout_toEndOf="@id/category_colour_button"
                 android:inputType="textCapSentences|textAutoCorrect"
                 android:layout_toRightOf="@id/category_colour_button"
-                android:layout_toLeftOf="@id/catAddButton" />
+                android:layout_toLeftOf="@id/catAddButton"/>
 
     </RelativeLayout>
+
     <ListView
             android:id="@+id/cat_list"
             android:layout_width="fill_parent"
@@ -78,4 +80,4 @@
             android:divider="@color/head_bg"
             android:dividerHeight="0.5dp"
             android:background="@color/list_bg1"/>
-    </LinearLayout>
+</LinearLayout>
