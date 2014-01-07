@@ -66,18 +66,18 @@ public class CategoryActivity extends MainActivity {
             public void onClick(View v) {
                 mColorDialog = new Dialog(CategoryActivity.this);
                 mColorDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                mColorDialog.setContentView(R.layout.color_dialog);
+                mColorDialog.setContentView(R.layout.colour_dialog);
 
                 createColorButton(bgShape, R.id.color_purple_button, R.color.purple);
                 createColorButton(bgShape, R.id.color_blue_button, R.color.blue);
                 createColorButton(bgShape, R.id.color_green_button, R.color.green);
                 createColorButton(bgShape, R.id.color_orange_button, R.color.orange);
                 createColorButton(bgShape, R.id.color_red_button, R.color.red);
-                createRandomColorButton(bgShape, R.id.color_random0_button);
-                createRandomColorButton(bgShape, R.id.color_random1_button);
-                createRandomColorButton(bgShape, R.id.color_random2_button);
-                createRandomColorButton(bgShape, R.id.color_random3_button);
-                createRandomColorButton(bgShape, R.id.color_random4_button);
+                createColorButton(bgShape, R.id.color_random0_button, 0);
+                createColorButton(bgShape, R.id.color_random1_button, 0);
+                createColorButton(bgShape, R.id.color_random2_button, 0);
+                createColorButton(bgShape, R.id.color_random3_button, 0);
+                createColorButton(bgShape, R.id.color_random4_button, 0);
 
                 mColorDialog.show();
             }
@@ -141,24 +141,35 @@ public class CategoryActivity extends MainActivity {
     }
 
     /**
-     * Create a button with a predefined color.
+     * Creates a button with a certain colour within the colour choosing dialog.
      *
-     * @param bgShape  the shape that shows the color on screen.
-     * @param buttonId the id of the button to create.
-     * @param color    the color of the button to create.
+     * @param bgShape The shape that is clicked
+     * @param buttonId The id of the button that shows the colour
+     * @param inputColour The colour the button will have, 0 is a random colour
      */
-    private void createColorButton(final GradientDrawable bgShape, int buttonId, final int color) {
+    private void createColorButton(final GradientDrawable bgShape, int buttonId, final int inputColour) {
         final EditText editText = (EditText) findViewById(R.id.newCategory);
-        final Button colorButton = (Button) mColorDialog.findViewById(buttonId);
-        colorButton.setOnClickListener(new View.OnClickListener() {
+        final Button colourButton = (Button) mColorDialog.findViewById(buttonId);
+        final int[] randColour = generateRandomColor();
+
+        if (inputColour == 0) {
+            colourButton.setBackgroundColor(randColour[0]);
+        }
+
+        colourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bgShape.setColor(getResources().getColor(color));
-                mChosenColour = getResources().getColor(color);
-                int r = Color.red(mChosenColour);
-                int g = Color.green(mChosenColour);
-                int b = Color.blue(mChosenColour);
-                mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, r, g, b));
+                if (inputColour != 0) {
+                    mChosenColour = getResources().getColor(inputColour);
+                    int r = Color.red(mChosenColour);
+                    int g = Color.green(mChosenColour);
+                    int b = Color.blue(mChosenColour);
+                    mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, r, g, b));
+                    bgShape.setColor(inputColour);
+                } else {
+                    mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, randColour[1], randColour[2], randColour[3]));
+                    bgShape.setColor(randColour[0]);
+                }
                 mColorDialog.dismiss();
                 editText.requestFocus();
                 getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -167,30 +178,10 @@ public class CategoryActivity extends MainActivity {
     }
 
     /**
-     * Creates a button with a random color.
+     * Generates a random colour
      *
-     * @param bgShape  the shape that shows the color on screen.
-     * @param buttonId the id of the button to create.
-     * @todo (Breunie) merge with above method to avoid duplicate code.
+     * @return returns the random colour
      */
-    private void createRandomColorButton(final GradientDrawable bgShape, int buttonId) {
-        final EditText editText = (EditText) findViewById(R.id.newCategory);
-        final Button colorButton = (Button) mColorDialog.findViewById(buttonId);
-        final int[] color = generateRandomColor();
-        colorButton.setBackgroundColor(color[0]);
-
-        colorButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bgShape.setColor(color[0]);
-                mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, color[1], color[2], color[3]));
-                mColorDialog.dismiss();
-                editText.requestFocus();
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-            }
-        });
-    }
-
     int[] generateRandomColor() {
         int r = (int) (255 * Math.random());
         int g = (int) (255 * Math.random());
