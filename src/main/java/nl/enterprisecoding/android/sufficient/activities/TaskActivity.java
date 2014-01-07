@@ -16,9 +16,11 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
+import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * TaskActivity class
@@ -40,7 +42,7 @@ public class TaskActivity extends MainActivity {
         setContentView(R.layout.task_list);
 
         final ExpandableListView mTaskListView = (ExpandableListView) findViewById(R.id.taskList);
-        mTaskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        mTaskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() { // @todo why?
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 mSelectedTaskId = ((Task) parent.getItemAtPosition(position)).getId();
@@ -80,7 +82,7 @@ public class TaskActivity extends MainActivity {
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getTitle().equals(getResources().getString(R.string.action_edit))) {
             if (mSelectedTaskId == 0) {
-                Toast.makeText(getApplicationContext(), R.string.toast_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.toast_error, Toast.LENGTH_SHORT).show();
             } else {
                 Intent mEditTaskActivity = new Intent(this, EditTaskActivity.class);
                 mEditTaskActivity.putExtra(TASK_ID, mSelectedTaskId);
@@ -116,12 +118,21 @@ public class TaskActivity extends MainActivity {
 
     private void startEditTaskActivity() {
 
-        // @todo (Nick) instead of Category 0, get the first available category, otherwise redirect to category view.
-        Task task = mTaskManager.createTask("New Task", 0, Calendar.getInstance(), false);
+        List<Category> catList = mTaskManager.getCategories();
 
-        Intent intent = new Intent(this, EditTaskActivity.class);
-        intent.putExtra(TASK_ID, task.getId());
-        startActivity(intent);
+        if (mTaskManager.getCategories().size() == 0) {
+            Toast.makeText(this, R.string.toast_no_category, Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(this, CategoryActivity.class);
+            startActivity(intent);
+        } else {
+
+            Task task = mTaskManager.createTask("New Task", catList.get(0).getID(), Calendar.getInstance(), false);
+
+            Intent intent = new Intent(this, EditTaskActivity.class);
+            intent.putExtra(TASK_ID, task.getId());
+            startActivity(intent);
+        }
     }
 
     private void startCategoryActivity() {

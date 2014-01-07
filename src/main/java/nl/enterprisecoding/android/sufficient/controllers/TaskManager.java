@@ -218,16 +218,16 @@ public class TaskManager extends SQLiteOpenHelper {
                 cal.set(Integer.parseInt(taskDateString[0]), JANUARY, Integer.parseInt(taskDateString[2]));
                 break;
             case 2:
-                cal.set(Integer.parseInt(taskDateString[0]), Calendar.FEBRUARY, Integer.parseInt(taskDateString[2]));
+                cal.set(Integer.parseInt(taskDateString[0]), FEBRUARY, Integer.parseInt(taskDateString[2]));
                 break;
             case 3:
                 cal.set(Integer.parseInt(taskDateString[0]), MARCH, Integer.parseInt(taskDateString[2]));
                 break;
             case 4:
-                cal.set(Integer.parseInt(taskDateString[0]), Calendar.APRIL, Integer.parseInt(taskDateString[2]));
+                cal.set(Integer.parseInt(taskDateString[0]), APRIL, Integer.parseInt(taskDateString[2]));
                 break;
             case 5:
-                cal.set(Integer.parseInt(taskDateString[0]), Calendar.MAY, Integer.parseInt(taskDateString[2]));
+                cal.set(Integer.parseInt(taskDateString[0]), MAY, Integer.parseInt(taskDateString[2]));
                 break;
             case 6:
                 cal.set(Integer.parseInt(taskDateString[0]), JUNE, Integer.parseInt(taskDateString[2]));
@@ -239,16 +239,16 @@ public class TaskManager extends SQLiteOpenHelper {
                 cal.set(Integer.parseInt(taskDateString[0]), AUGUST, Integer.parseInt(taskDateString[2]));
                 break;
             case 9:
-                cal.set(Integer.parseInt(taskDateString[0]), Calendar.SEPTEMBER, Integer.parseInt(taskDateString[2]));
+                cal.set(Integer.parseInt(taskDateString[0]), SEPTEMBER, Integer.parseInt(taskDateString[2]));
                 break;
             case 10:
-                cal.set(Integer.parseInt(taskDateString[0]), Calendar.OCTOBER, Integer.parseInt(taskDateString[2]));
+                cal.set(Integer.parseInt(taskDateString[0]), OCTOBER, Integer.parseInt(taskDateString[2]));
                 break;
             case 11:
-                cal.set(Integer.parseInt(taskDateString[0]), Calendar.NOVEMBER, Integer.parseInt(taskDateString[2]));
+                cal.set(Integer.parseInt(taskDateString[0]), NOVEMBER, Integer.parseInt(taskDateString[2]));
                 break;
             case 12:
-                cal.set(Integer.parseInt(taskDateString[0]), Calendar.DECEMBER, Integer.parseInt(taskDateString[2]));
+                cal.set(Integer.parseInt(taskDateString[0]), DECEMBER, Integer.parseInt(taskDateString[2]));
                 break;
         }
 
@@ -407,14 +407,14 @@ public class TaskManager extends SQLiteOpenHelper {
         for (Category aCatArray : catArray) {
             if (aCatArray.getTitle().equals(title)) {
                 catExist = true;
-                Toast.makeText(mActivity.getApplicationContext(), R.string.toast_category_exists, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mActivity, R.string.toast_category_exists, Toast.LENGTH_SHORT).show();
                 break;
             }
         }
 
         if (!catExist) {
 //            mCategoryListAdapter.addItem(createCategory(title, colour)); // @todo (Nick) fixme
-            Toast.makeText(mActivity.getApplicationContext(), R.string.category_exists_error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(mActivity, R.string.category_exists_error, Toast.LENGTH_SHORT).show();
         }
     }
 
