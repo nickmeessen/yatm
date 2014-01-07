@@ -84,53 +84,67 @@ public class EditTaskActivity extends MainActivity {
              */
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(mActivity);
-                final DatePicker datePicker = new DatePicker(mActivity);
-
-                datePicker.setCalendarViewShown(false);
-                datePicker.init(mTaskDate.get(Calendar.YEAR), mTaskDate.get(Calendar.MONTH), mTaskDate.get(Calendar.DAY_OF_MONTH), null);
-                datePicker.setMinDate(mDateToday.getTime().getTime());
-
-                alert.setView(datePicker);
-                alert.setPositiveButton(R.string.action_change_date, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        setTaskDate(datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
-                    }
-                });
-                alert.setNegativeButton(R.string.action_discard, null);
-                alert.show();
+                createDatePickerDialog();
             }
         });
 
         mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
         mTaskImportantCheckBox.setChecked(selectedTask.isImportant());
 
-        Button updateTaskButton = (Button) findViewById(R.id.update_task_button);
-        updateTaskButton.setOnClickListener(new View.OnClickListener() {
+        Button saveTaskButton = (Button) findViewById(R.id.save_task_button);
+        saveTaskButton.setOnClickListener(new View.OnClickListener() {
             /**
-             * Handles the click for the updateTaskButton
+             * Handles the click for the saveTaskButton
              *
              * @param v The view in which the click takes place
              */
             @Override
             public void onClick(View v) {
-                boolean mDataIsValidated = true;
-                int mSelectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
-                long mSelectedCategoryId = mCategoriesArray.get(mSelectedCategoryIndex).getID();
-                if (mTaskTitleInput.getText().toString().isEmpty()) {
-                    mDataIsValidated = false;
-                    mTaskTitleInput.setBackgroundColor(getResources().getColor(R.color.red));
-                }
-
-                if (mDataIsValidated) {
-                    mTaskManager.createTask(mTaskTitleInput.getText().toString(), mSelectedCategoryId, mTaskDate, mTaskImportantCheckBox.isChecked());
-                    startTaskActivity(mSelectedCategoryId);
-                } else {
-                    Toast.makeText(mActivity, R.string.toast_invalid_data, Toast.LENGTH_SHORT).show();
-                }
+                saveTask();
             }
         });
 
+    }
+
+    private void createDatePickerDialog() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(mActivity);
+        final DatePicker datePicker = new DatePicker(mActivity);
+
+        datePicker.setCalendarViewShown(false);
+        datePicker.init(mTaskDate.get(Calendar.YEAR), mTaskDate.get(Calendar.MONTH), mTaskDate.get(Calendar.DAY_OF_MONTH), null);
+        datePicker.setMinDate(mDateToday.getTime().getTime());
+
+        alert.setView(datePicker);
+        alert.setPositiveButton(R.string.action_change_date, new DialogInterface.OnClickListener() {
+            /**
+             * Handles the click for the positive button in the calendar dialog
+             *
+             * @param dialog The dialog that is used
+             * @param whichButton The button that is clicked
+             */
+            public void onClick(DialogInterface dialog, int whichButton) {
+                setTaskDate(datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
+            }
+        });
+        alert.setNegativeButton(R.string.action_discard, null);
+        alert.show();
+    }
+
+    private void saveTask() {
+        boolean mDataIsValidated = true;
+        int mSelectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
+        long mSelectedCategoryId = mCategoriesArray.get(mSelectedCategoryIndex).getID();
+        if (mTaskTitleInput.getText().toString().isEmpty()) {
+            mDataIsValidated = false;
+            mTaskTitleInput.setBackgroundColor(getResources().getColor(R.color.red));
+        }
+
+        if (mDataIsValidated) {
+            mTaskManager.createTask(mTaskTitleInput.getText().toString(), mSelectedCategoryId, mTaskDate, mTaskImportantCheckBox.isChecked());
+            startTaskActivity(mSelectedCategoryId);
+        } else {
+            Toast.makeText(mActivity, R.string.toast_invalid_data, Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
