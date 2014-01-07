@@ -97,8 +97,8 @@ public class EditTaskActivity extends MainActivity {
         mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
         mTaskImportantCheckBox.setChecked(selectedTask.isImportant());
 
-        Button mAddTaskButton = (Button) findViewById(R.id.add_task_button);
-        mAddTaskButton.setOnClickListener(new View.OnClickListener() {
+        Button mUpdateTaskButton = (Button) findViewById(R.id.update_task_button);
+        mUpdateTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String mTaskTitle = mTaskTitleInput.getText().toString();
@@ -111,21 +111,14 @@ public class EditTaskActivity extends MainActivity {
 
                 int mSelectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
 
-                if (mSelectedCategoryIndex < 0) {
-                    Toast.makeText(getApplicationContext(), R.string.toast_no_category, Toast.LENGTH_SHORT).show();
+                long mSelectedCategoryId = mCategoriesArray.get(mSelectedCategoryIndex).getID();
 
-                    Intent intent = new Intent(mActivity, CategoryActivity.class);
-                    mActivity.startActivity(intent);
+                if (mDataIsValidated) {
+                    mTaskManager.createTask(mTaskTitle, mSelectedCategoryId, mTaskDate, mTaskImportantCheckBox.isChecked());
+                    showTaskActivity(mSelectedCategoryId);
                 } else {
-                    long mSelectedCategoryId = mCategoriesArray.get(mSelectedCategoryIndex).getID();
-
-                    if (mDataIsValidated) {
-                        mTaskManager.createTask(mTaskTitle, mSelectedCategoryId, mTaskDate, mTaskImportantCheckBox.isChecked());
-                        showTaskActivity(mSelectedCategoryId);
-                    } else {
-                        Toast mInvalidDataToast = Toast.makeText(getApplicationContext(), R.string.toast_invalid_data, Toast.LENGTH_SHORT);
-                        mInvalidDataToast.show();
-                    }
+                    Toast mInvalidDataToast = Toast.makeText(getApplicationContext(), R.string.toast_invalid_data, Toast.LENGTH_SHORT);
+                    mInvalidDataToast.show();
                 }
 
             }
