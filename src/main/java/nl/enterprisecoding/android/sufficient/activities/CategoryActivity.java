@@ -125,10 +125,11 @@ public class CategoryActivity extends MainActivity {
 
                 // @TODO (Breunie) Params aren't checked.
                 if (categoryName.equals(standardText)) {
-                    Toast.makeText(mActivity, getString(R.string.ChooseDiffName), Toast.LENGTH_SHORT).show();
+                    makeToast(getString(R.string.ChooseDiffName), false);
+                } else if(categoryName.trim().isEmpty()) {
+                    makeToast(getResources().getString(R.string.category_name_empty_error), false);
                 } else {
                     mTaskManager.checkExistingCategory(categoryName, mCategoryColour);
-                    editText.setText("");
 
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
@@ -280,5 +281,21 @@ public class CategoryActivity extends MainActivity {
         result[0] = getResources().getString(R.string.action_delete_all_tasks);
 
         return result;
+    }
+
+    /**
+     * Shows a Toast
+     *
+     * @param content The String that defines the text of the Toast
+     * @param showDuration The duration the Toast will be shown: true = long, false = short
+     */
+    private void makeToast(String content, boolean showDuration) {
+        int duration;
+        if (showDuration) {
+            duration = Toast.LENGTH_LONG;
+        } else {
+            duration = Toast.LENGTH_SHORT;
+        }
+        Toast.makeText(mActivity, content, duration).show();
     }
 }
