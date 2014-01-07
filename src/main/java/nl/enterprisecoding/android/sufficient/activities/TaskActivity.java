@@ -161,6 +161,7 @@ public class TaskActivity extends MainActivity {
 
             Intent intent = new Intent(this, CategoryActivity.class);
             startActivity(intent);
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         } else {
 
             long newTaskID = mTaskManager.createTask("New Task", catList.get(0).getID(), Calendar.getInstance(), false);
