@@ -168,7 +168,7 @@ public class CategoryActivity extends MainActivity {
                     int g = Color.green(mChosenColour);
                     int b = Color.blue(mChosenColour);
                     mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, r, g, b));
-                    bgShape.setColor(inputColour);
+                    bgShape.setColor(getResources().getColor(inputColour));
                 } else {
                     mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, randColour[1], randColour[2], randColour[3]));
                     bgShape.setColor(randColour[0]);
