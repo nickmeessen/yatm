@@ -123,6 +123,11 @@ public class EditTaskActivity extends MainActivity {
 
     }
 
+    /**
+     * Initialises the spinner which will display the available categories
+     *
+     * @param spinner The spinner which displays the categories
+     */
     private void initTaskCategorySpinner(Spinner spinner) {
         mCategoriesArray = mTaskManager.getCategories();
         mCategoriesArray.remove(0);
@@ -137,6 +142,12 @@ public class EditTaskActivity extends MainActivity {
         spinner.setAdapter(mSpinnerArrayAdapter);
     }
 
+    /**
+     * Converts the List with categories to a List with category names with the type String
+     *
+     * @param categoryList The List which holds the categories
+     * @return The String array which holds the categorie names
+     */
     private String[] convertCategoryListToStringArray(List<Category> categoryList) {
         String[] result = new String[categoryList.size()];
 
@@ -149,6 +160,12 @@ public class EditTaskActivity extends MainActivity {
         return result;
     }
 
+    /**
+     * Find the index position for the category you request by inputting an id
+     *
+     * @param categoryId The id of the category you are trying to find
+     * @return The index position of the category
+     */
     private int findIndexByCategoryId(long categoryId) {
         int index = 0;
 
@@ -164,15 +181,30 @@ public class EditTaskActivity extends MainActivity {
         return index;
     }
 
+    /**
+     * Sets the date for the task
+     *
+     * @param dayOfMonth The day in the wanted month
+     * @param month The wanted month
+     * @param year The wanted year
+     */
     private void setTaskDate(int dayOfMonth, int month, int year) {
         mTaskDate.set(year, month, dayOfMonth);
         updateDateButtonText();
     }
 
+    /**
+     * Updates the text of the date Button so it matches the selected date
+     */
     private void updateDateButtonText() {
         mTaskSetDateButton.setText(mTaskDate.get(Calendar.DAY_OF_MONTH) + "/" + (mTaskDate.get(Calendar.MONTH) + 1) + "/" + mTaskDate.get(Calendar.YEAR));
     }
 
+    /**
+     * Starts a TaskActivity for a certain category
+     *
+     * @param catId The id of the category which TaskActivity you are trying to start
+     */
     private void startTaskActivity(long catId) {
         Intent intent = new Intent(mActivity, TaskActivity.class);
 

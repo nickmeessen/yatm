@@ -260,6 +260,11 @@ public class CategoryActivity extends MainActivity {
         return true;
     }
 
+    /**
+     * Initialises the spinner which will display the available categories
+     *
+     * @param spinner The spinner which displays the categories
+     */
     private void initTaskCategorySpinner(Spinner spinner) {
         mSpringerArray = convertCategoryListToStringArray(mTaskManager.getCategories());
         ArrayAdapter<String> mSpinnerArrayAdapter = new ArrayAdapter<String>(
@@ -272,6 +277,7 @@ public class CategoryActivity extends MainActivity {
         spinner.setAdapter(mSpinnerArrayAdapter);
     }
 
+    
     private String[] convertCategoryListToStringArray(List<Category> categoryList) {
         String[] result = new String[categoryList.size()];
 
