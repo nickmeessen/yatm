@@ -51,7 +51,7 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
      * @return the size of this adapter.
      */
     public int getCount() {
-        return new ArrayList<Category>(mTaskManager.retrieveAllCategories().values()).size();
+        return new ArrayList<Category>(mTaskManager.getAllCategories().values()).size();
     }
 
     /**
@@ -61,7 +61,7 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
      * @return the category object position at the given position.
      */
     public Category getItem(int position) {
-        return new ArrayList<Category>(mTaskManager.retrieveAllCategories().values()).get(position);
+        return new ArrayList<Category>(mTaskManager.getAllCategories().values()).get(position);
     }
 
     /**
@@ -81,7 +81,7 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
      * @return the category corresponding to the given ID.
      */
     public Category getItemById(long id) {
-        return mTaskManager.retrieveAllCategories().get(id);
+        return mTaskManager.getAllCategories().get(id);
     }
 
     /**
