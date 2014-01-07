@@ -106,7 +106,8 @@ public class TaskManager extends SQLiteOpenHelper {
         catList = retrieveAllCategories();
 
         mCategoryListAdapter = new CategoryListAdapter(activity, this);
-//        mCategoryListAdapter.addItem(allCats); @todo (Nick) fixme
+//        @todo (Nick) fix, all cats shouldn't be in database so it's added at runtime, maybe it should go in DB after all?
+//        mCategoryListAdapter.addItem(allCats);
 
         // @todo remove try/catch hack
         try {
@@ -413,7 +414,8 @@ public class TaskManager extends SQLiteOpenHelper {
         }
 
         if (!catExist) {
-//            mCategoryListAdapter.addItem(createCategory(title, colour)); // @todo (Nick) fixme
+            createCategory(title, colour);
+            mCategoryListAdapter.notifyDataSetChanged();
             Toast.makeText(mActivity, R.string.category_exists_error, Toast.LENGTH_SHORT).show();
         }
     }
