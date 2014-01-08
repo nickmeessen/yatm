@@ -22,7 +22,7 @@
             android:id="@+id/task_category_colour"
             android:layout_width="8dp"
             android:layout_height="match_parent"
-            android:background="@color/blue_border"
+            android:background="@color/blue"
             android:padding="20dp"/>
 
     <TextView
@@ -37,6 +37,7 @@
             android:maxLines="1"
             android:padding="20dp"
             android:layout_centerVertical="true"
+            android:textIsSelectable="true"
             android:layout_toEndOf="@+id/task_category_colour"
             />
 

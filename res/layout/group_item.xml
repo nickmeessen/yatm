@@ -14,7 +14,6 @@
         xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
-
             android:id="@+id/groupTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,18 +26,7 @@
             android:paddingBottom="15dp"
             android:paddingLeft="20dp"
             android:layout_centerVertical="true"
-            android:layout_marginStart="25dp"/>
-
-    <ImageView
-            android:id="@+id/addTomorrow"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_action_content_new_l"
-            android:scaleType="centerInside"
-            android:layout_alignParentRight="true"
-            android:padding="5dp"
-            android:layout_centerVertical="true"
-            android:visibility="gone"
-            android:contentDescription="@string/action_add"/>
+            android:layout_marginStart="25dp"
+            android:textIsSelectable="true"/>
 
 </RelativeLayout>

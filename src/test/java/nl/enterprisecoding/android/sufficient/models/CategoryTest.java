@@ -3,7 +3,6 @@ package nl.enterprisecoding.android.sufficient.models;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
 import static org.junit.Assert.assertEquals;
@@ -23,7 +22,7 @@ public class CategoryTest {
         String title = "TestTitle";
         category.setTitle(title);
 
-        assertEquals(category.getTitle(),title);
+        assertEquals(category.getTitle(), title);
     }
 
     @Test
@@ -31,7 +30,7 @@ public class CategoryTest {
         int Colour = 50;
         category.setColour(Colour);
 
-        assertEquals(category.getColour(),Colour);
+        assertEquals(category.getColour(), Colour);
     }
 
     @Test

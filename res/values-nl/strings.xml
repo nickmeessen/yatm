@@ -54,4 +54,6 @@
     <string name="completed">Voltooid</string>
 
     <string name="all_categories">Alle Categorie&#235;n</string>
+    <string name="standard_colours">Standaard Kleuren</string>
+    <string name="random_colours">Willekeurige Kleuren</string>
 </resources>

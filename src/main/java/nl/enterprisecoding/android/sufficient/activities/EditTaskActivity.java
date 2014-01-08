@@ -24,6 +24,7 @@ import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;

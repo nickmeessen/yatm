@@ -28,13 +28,14 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/category_title_label"
-            android:id="@+id/textView"/>
+            />
 
     <EditText
             android:id="@+id/category_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:singleLine="true"/>
+            android:singleLine="true"
+            android:inputType="text"/>
 
     <TextView
             android:layout_width="wrap_content"
