@@ -10,7 +10,6 @@ package nl.enterprisecoding.android.sufficient.activities;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -23,15 +22,12 @@ import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Category;
 
-import javax.swing.plaf.ColorUIResource;
-
 /**
  * @author Breunie Ploeg
  */
 public class EditCategoryActivity extends MainActivity {
 
     private Activity mActivity = this;
-    private Dialog mColourDialog;
     private int mCategoryColour;
     private EditText mCategoryTitleInput;
     private long mSelectedCategory;
@@ -52,22 +48,24 @@ public class EditCategoryActivity extends MainActivity {
         mSelectedCategory = getIntent().getExtras().getLong("CategoryID", 0);
 
         mTaskManager = new TaskManager(this, (long) 0);
-        Category mCategory = mTaskManager.getCategoryById(mSelectedCategory);
+        Category category = mTaskManager.getCategoryById(mSelectedCategory);
         getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedCategory).getColour()));
 
         mCategoryTitleInput = (EditText) findViewById(R.id.category_title);
-        mCategoryTitleInput.setText(mCategory.getTitle());
+        mCategoryTitleInput.setText(category.getTitle());
         mCategoryTitleInput.requestFocus();
         mCategoryTitleInput.setSelection(mCategoryTitleInput.getText().length());
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        mCategoryColour = mCategory.getColour();
+        mCategoryColour = category.getColour();
+        mCategoryTitleInput.setText(category.getTitle());
+        mCategoryColour = category.getColour();
 
         Button mEditCategoryButton = (Button) findViewById(R.id.edit_category_button);
         mEditCategoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(String.valueOf(getCategoryColour()).length() > 2) {
+                if (String.valueOf(getCategoryColour()).length() > 2) {
                     mCategoryColour = getCategoryColour();
                 }
                 mTaskManager.editCategory(mCategoryTitleInput.getText().toString(), mCategoryColour, mSelectedCategory);
@@ -85,25 +83,25 @@ public class EditCategoryActivity extends MainActivity {
 
         final Button colourButton = (Button) findViewById(R.id.category_colour_button);
         final GradientDrawable bgShape = (GradientDrawable) colourButton.getBackground();
-        bgShape.setColor(mCategory.getColour());
+        bgShape.setColor(category.getColour());
 
         colourButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mColourDialog = new Dialog(EditCategoryActivity.this);
-                mColourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                mColourDialog.setContentView(R.layout.colour_dialog);
-                createColourButton(bgShape, R.id.colour_blue_button, R.color.blue, mColourDialog);
-                createColourButton(bgShape, R.id.colour_purple_button, R.color.purple, mColourDialog);
-                createColourButton(bgShape, R.id.colour_green_button, R.color.green, mColourDialog);
-                createColourButton(bgShape, R.id.colour_orange_button, R.color.orange, mColourDialog);
-                createColourButton(bgShape, R.id.color_red_button, R.color.red, mColourDialog);
-                createColourButton(bgShape, R.id.colour_random0_button, 0, mColourDialog);
-                createColourButton(bgShape, R.id.colour_random1_button, 0, mColourDialog);
-                createColourButton(bgShape, R.id.colour_random2_button, 0, mColourDialog);
-                createColourButton(bgShape, R.id.colour_random3_button, 0, mColourDialog);
-                createColourButton(bgShape, R.id.colour_random4_button, 0, mColourDialog);
-                mColourDialog.show();
+                Dialog colourDialog = new Dialog(EditCategoryActivity.this);
+                colourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                colourDialog.setContentView(R.layout.colour_dialog);
+                createColourButton(bgShape, R.id.colour_blue_button, R.color.blue, colourDialog);
+                createColourButton(bgShape, R.id.colour_purple_button, R.color.purple, colourDialog);
+                createColourButton(bgShape, R.id.colour_green_button, R.color.green, colourDialog);
+                createColourButton(bgShape, R.id.colour_orange_button, R.color.orange, colourDialog);
+                createColourButton(bgShape, R.id.color_red_button, R.color.red, colourDialog);
+                createColourButton(bgShape, R.id.colour_random0_button, 0, colourDialog);
+                createColourButton(bgShape, R.id.colour_random1_button, 0, colourDialog);
+                createColourButton(bgShape, R.id.colour_random2_button, 0, colourDialog);
+                createColourButton(bgShape, R.id.colour_random3_button, 0, colourDialog);
+                createColourButton(bgShape, R.id.colour_random4_button, 0, colourDialog);
+                colourDialog.show();
             }
         });
     }
