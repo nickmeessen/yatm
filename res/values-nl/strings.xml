@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2013. "EnterpriseCoding"
+  ~ ("EnterpriseCoding" constitutes; Nick Meessen, Jasper Burgers, Ferry Wienholts, Breunie Ploeg & Sjors Roelofs).
+  ~
+  ~ This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
+  -->
+
+<resources>
+    <string name="app_name">YATM (Sufficient)</string>
+
+    <string name="title_tasks">Taken</string>
+
+    <string name="action_add">Taak Toevoegen</string>
+    <string name="action_edit">Taak Bewerken</string>
+    <string name="action_delete">Taak Verwijderen</string>
+    <string name="action_categories">Categorie&#235;n</string>
+    <string name="action_confirm">Accepteren</string>
+    <string name="action_discard">Annuleren</string>
+    <string name="action_change_date">Datum Veranderen</string>
+    <string name="action_edit_category">Categorie Bewerken</string>
+    <string name="action_delete_category">Categorie Verwijderen</string>
+    <string name="action_delete_all_tasks">Alle taken verwijderen</string>
+    <string name="action_save_task">Taak Opslaan</string>
+    <string name="action_save_category">Categorie Opslaan</string>
+
+    <string name="task_title_label">Titel</string>
+    <string name="task_category_label">Categorie</string>
+    <string name="task_important">Belangrijk?</string>
+    <string name="task_date_label">Datum</string>
+
+    <string name="category_title_label">Titel</string>
+    <string name="category_colour_label">Kleur</string>
+
+    <string name="toast_invalid_data">Vul alle velden in!</string>
+    <string name="toast_error">Oeps, er gaat iets verkeerd..</string>
+    <string name="toast_no_category">Je moet eerst een categorie toevoegen!</string>
+
+    <string name="new_category">Nieuwe Categorie</string>
+
+    <string name="visibility">Visibility</string>
+    <string name="task_done_icon">TaskDoneIcon</string>
+
+    <string name="delete_category_text">Verplaats taken naar categorie:</string>
+
+    <string name="standard_category_name_error">Kies een andere naam!</string>
+    <string name="category_name_empty_error">Je moet een naam invullen!</string>
+    <string name="toast_category_exists">Deze categorie bestaat al</string>
+    <string name="category_added">Categorie succesvol toegevoegd</string>
+    <string name="today">Vandaag</string>
+    <string name="tomorrow">Morgen</string>
+    <string name="upcoming">Binnenkort</string>
+    <string name="choose_different_name">Kies een andere naam</string>
+    <string name="completed">Voltooid</string>
+
+    <string name="all_categories">Alle Categorie&#235;n</string>
+</resources>

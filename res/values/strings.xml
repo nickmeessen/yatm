@@ -53,4 +53,6 @@
     <string name="upcoming">Upcoming</string>
     <string name="choose_different_name">Please choose a different name</string>
     <string name="completed">Completed</string>
+
+    <string name="all_categories">All Categories</string>
 </resources>
