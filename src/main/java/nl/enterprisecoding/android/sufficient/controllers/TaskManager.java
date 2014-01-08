@@ -165,7 +165,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
      */
     private void retrieveAllTasks() {
 
-        Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, null, null, null, null, TCOLUMN_IMPORTANT + "DESC");
+        Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, null, null, null, null, TCOLUMN_IMPORTANT + " DESC");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -265,10 +265,8 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
 
     /**
      * Opens a SQLite database.
-     *
-     * @throws android.database.SQLException when database can't be opened.
      */
-    private void open() throws SQLException {
+    private void open() {
         database = getWritableDatabase();
     }
 
