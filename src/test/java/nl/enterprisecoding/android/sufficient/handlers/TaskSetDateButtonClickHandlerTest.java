@@ -1,8 +1,10 @@
-package nl.enterprisecoding.android.sufficient.activities;
+package nl.enterprisecoding.android.sufficient.handlers;
 
 import android.content.Intent;
 import android.widget.Button;
 import nl.enterprisecoding.android.sufficient.R;
+import nl.enterprisecoding.android.sufficient.activities.EditTaskActivity;
+import nl.enterprisecoding.android.sufficient.activities.TaskActivity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
