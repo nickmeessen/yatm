@@ -138,6 +138,8 @@ public class CategoryActivity extends MainActivity {
 
     /**
      * Adds a new category and checks for cases in which it isn't allowed to add a category
+     *
+     * @param defaultColour this represents the default colour a category will get when there is not a colour selected
      */
     private void addCategory(int defaultColour) {
         final EditText editText = (EditText) findViewById(R.id.newCategory);
