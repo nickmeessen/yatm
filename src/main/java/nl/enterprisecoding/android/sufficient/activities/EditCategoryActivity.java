@@ -9,20 +9,20 @@ package nl.enterprisecoding.android.sufficient.activities;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Category;
-
-import javax.swing.plaf.ColorUIResource;
 
 /**
  * @author Breunie Ploeg
@@ -30,10 +30,10 @@ import javax.swing.plaf.ColorUIResource;
 public class EditCategoryActivity extends MainActivity {
 
     private Activity mActivity = this;
-    private Dialog mColourDialog;
     private int mCategoryColour;
     private EditText mCategoryTitleInput;
     private long mSelectedCategory;
+    private Dialog mColourDialog;
 
     /**
      * Called when the activity is starting.
@@ -50,20 +50,33 @@ public class EditCategoryActivity extends MainActivity {
         mActionBar.setTitle(R.string.action_edit_category);
         mSelectedCategory = getIntent().getExtras().getLong("CategoryID", 0);
 
+        mColourDialog = new Dialog(EditCategoryActivity.this);
+        mColourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         mTaskManager = new TaskManager(this, (long) 0);
-        Category mCategory = mTaskManager.getCategoryById(mSelectedCategory);
+        final Category category = mTaskManager.getCategoryById(mSelectedCategory);
         getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedCategory).getColour()));
 
         mCategoryTitleInput = (EditText) findViewById(R.id.category_title);
-        mCategoryTitleInput.setText(mCategory.getTitle());
-        mCategoryColour = mCategory.getColour();
+        mCategoryTitleInput.setText(category.getTitle());
+        mCategoryTitleInput.requestFocus();
+        int textLength = mCategoryTitleInput.getText().length();
+        mCategoryTitleInput.setSelection(textLength);
+        openKeyboard();
+        mCategoryColour = category.getColour();
+        mCategoryColour = category.getColour();
 
         Button mEditCategoryButton = (Button) findViewById(R.id.edit_category_button);
         mEditCategoryButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Handles the click for the EditCategoryButton
+             *
+             * @param v The view in which the button is clicked
+             */
             @Override
             public void onClick(View v) {
 
-                if(String.valueOf(getCategoryColour()).length() > 2) {
+                if (String.valueOf(getCategoryColour()).length() > 2) {
                     mCategoryColour = getCategoryColour();
                 }
                 mTaskManager.editCategory(mCategoryTitleInput.getText().toString(), mCategoryColour, mSelectedCategory);
@@ -81,13 +94,16 @@ public class EditCategoryActivity extends MainActivity {
 
         final Button colourButton = (Button) findViewById(R.id.category_colour_button);
         final GradientDrawable bgShape = (GradientDrawable) colourButton.getBackground();
-        bgShape.setColor(mCategory.getColour());
+        bgShape.setColor(category.getColour());
 
         colourButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Handles the click for the colourButton
+             *
+             * @param v The view in which the button is clicked
+             */
             @Override
             public void onClick(View v) {
-                mColourDialog = new Dialog(EditCategoryActivity.this);
-                mColourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 mColourDialog.setContentView(R.layout.colour_dialog);
                 createColourButton(bgShape, R.id.colour_blue_button, R.color.blue, mColourDialog);
                 createColourButton(bgShape, R.id.colour_purple_button, R.color.purple, mColourDialog);
@@ -102,16 +118,22 @@ public class EditCategoryActivity extends MainActivity {
                 mColourDialog.show();
             }
         });
-    }
 
-    /**
-     * Create a button with a predefined inputColour.
-     *
-     * @param bgShape     the shape.
-     * @param buttonId    the button ID.
-     * @param inputColour the inputColour, can be 0 then a random inputColour will be generated.
-     */
-    protected void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog) {
-        super.createColourButton(bgShape, buttonId, inputColour, colourDialog);
+        mColourDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            /**
+             * Handles the dismiss of the colour dialog and changes the actionbar colour
+             *
+             * @param dialog The DialogInterface that it needs to listen to
+             */
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (String.valueOf(getCategoryColour()).length() > 2) {
+                    mCategoryColour = getCategoryColour();
+                } else {
+                    mCategoryColour = category.getColour();
+                }
+                mActionBar.setBackgroundDrawable(new ColorDrawable(mCategoryColour));
+            }
+        });
     }
 }

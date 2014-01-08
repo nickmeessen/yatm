@@ -15,6 +15,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.R;
@@ -96,9 +97,9 @@ public class MainActivity extends RoboActivity {
     /**
      * Creates a button with a certain colour within the colour choosing dialog.
      *
-     * @param bgShape     The shape that is clicked
-     * @param buttonId    The id of the button that shows the colour
-     * @param inputColour The colour the button will have, 0 is a random colour
+     * @param bgShape      The shape that is clicked
+     * @param buttonId     The id of the button that shows the colour
+     * @param inputColour  The colour the button will have, 0 is a random colour
      * @param colourDialog The Dialog that will display the colours
      */
     protected void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog) {
@@ -154,5 +155,12 @@ public class MainActivity extends RoboActivity {
         int color = Color.rgb(r, g, b);
 
         return new int[]{color, r, g, b};
+    }
+
+    /**
+     * Activates the android keyboard
+     */
+    protected void openKeyboard() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 }
