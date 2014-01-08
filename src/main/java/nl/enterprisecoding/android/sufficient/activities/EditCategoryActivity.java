@@ -22,6 +22,8 @@ import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Category;
 
+import javax.swing.plaf.ColorUIResource;
+
 /**
  * @author Breunie Ploeg
  */
@@ -61,6 +63,9 @@ public class EditCategoryActivity extends MainActivity {
             @Override
             public void onClick(View v) {
 
+                if(String.valueOf(getCategoryColour()).length() > 2) {
+                    mCategoryColour = getCategoryColour();
+                }
                 mTaskManager.editCategory(mCategoryTitleInput.getText().toString(), mCategoryColour, mSelectedCategory);
 
                 Intent intent = new Intent(mActivity, CategoryActivity.class);
@@ -84,16 +89,16 @@ public class EditCategoryActivity extends MainActivity {
                 mColourDialog = new Dialog(EditCategoryActivity.this);
                 mColourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 mColourDialog.setContentView(R.layout.colour_dialog);
-                createColourButton(bgShape, R.id.colour_blue_button, R.color.blue);
-                createColourButton(bgShape, R.id.colour_purple_button, R.color.purple);
-                createColourButton(bgShape, R.id.colour_green_button, R.color.green);
-                createColourButton(bgShape, R.id.colour_orange_button, R.color.orange);
-                createColourButton(bgShape, R.id.color_red_button, R.color.red);
-                createColourButton(bgShape, R.id.colour_random0_button, 0);
-                createColourButton(bgShape, R.id.colour_random1_button, 0);
-                createColourButton(bgShape, R.id.colour_random2_button, 0);
-                createColourButton(bgShape, R.id.colour_random3_button, 0);
-                createColourButton(bgShape, R.id.colour_random4_button, 0);
+                createColourButton(bgShape, R.id.colour_blue_button, R.color.blue, mColourDialog);
+                createColourButton(bgShape, R.id.colour_purple_button, R.color.purple, mColourDialog);
+                createColourButton(bgShape, R.id.colour_green_button, R.color.green, mColourDialog);
+                createColourButton(bgShape, R.id.colour_orange_button, R.color.orange, mColourDialog);
+                createColourButton(bgShape, R.id.color_red_button, R.color.red, mColourDialog);
+                createColourButton(bgShape, R.id.colour_random0_button, 0, mColourDialog);
+                createColourButton(bgShape, R.id.colour_random1_button, 0, mColourDialog);
+                createColourButton(bgShape, R.id.colour_random2_button, 0, mColourDialog);
+                createColourButton(bgShape, R.id.colour_random3_button, 0, mColourDialog);
+                createColourButton(bgShape, R.id.colour_random4_button, 0, mColourDialog);
                 mColourDialog.show();
             }
         });
@@ -106,32 +111,7 @@ public class EditCategoryActivity extends MainActivity {
      * @param buttonId    the button ID.
      * @param inputColour the inputColour, can be 0 then a random inputColour will be generated.
      */
-    private void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour) {
-        final Button colourButton = (Button) mColourDialog.findViewById(buttonId);
-        final int[] randColour = generateRandomColour();
-
-        if (inputColour != 0) {
-            colourButton.setBackgroundColor(getResources().getColor(inputColour));
-        } else {
-            colourButton.setBackgroundColor(randColour[0]);
-        }
-
-        colourButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (inputColour != 0) {
-                    int chosenColour = getResources().getColor(inputColour);
-                    int r = Color.red(chosenColour);
-                    int g = Color.green(chosenColour);
-                    int b = Color.blue(chosenColour);
-                    mCategoryColour = Color.parseColor(String.format(CategoryActivity.COLOUR_FORMAT, r, g, b));
-                    bgShape.setColor(getResources().getColor(inputColour));
-                } else {
-                    mCategoryColour = Color.parseColor(String.format(CategoryActivity.COLOUR_FORMAT, randColour[1], randColour[2], randColour[3]));
-                    bgShape.setColor(randColour[0]);
-                }
-                mColourDialog.dismiss();
-            }
-        });
+    protected void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog) {
+        super.createColourButton(bgShape, buttonId, inputColour, colourDialog);
     }
 }
