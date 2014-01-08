@@ -19,7 +19,6 @@ import android.widget.*;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -98,7 +97,6 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
      * @param tasks the list of tasks to split.
      */
     private void fillList(List<Task> tasks) {
-
         Calendar today = Calendar.getInstance();
         Calendar tomorrow = Calendar.getInstance();
         tomorrow.add(Calendar.DAY_OF_YEAR, 1);
@@ -114,7 +112,6 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         tomorrow.set(Calendar.MILLISECOND, 0);
 
         for (Task task : tasks) {
-
             if (task.isCompleted()) {
                 mCompletedList.add(task);
             } else if (task.getDate().compareTo(today) == 0 && task.getDate().before(today)) {

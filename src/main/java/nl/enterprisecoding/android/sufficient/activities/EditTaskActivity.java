@@ -32,7 +32,7 @@ import java.util.List;
 
 /**
  * EditTaskActivity class
- * From here the user can edit a task
+ * From here the user can edit and create a task
  *
  * @author Sjors Roelofs & Ferry Wienholts
  */

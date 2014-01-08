@@ -9,11 +9,9 @@ package nl.enterprisecoding.android.sufficient.controllers;
 
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
-import android.util.Log;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import nl.enterprisecoding.android.sufficient.R;
@@ -21,9 +19,6 @@ import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 import nl.enterprisecoding.android.sufficient.helpers.SQLHelper;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
