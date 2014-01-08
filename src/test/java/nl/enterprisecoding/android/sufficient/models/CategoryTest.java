@@ -6,11 +6,7 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
-import java.util.List;
-
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 
 @RunWith(RobolectricTestRunner.class)
 public class CategoryTest {
@@ -18,7 +14,7 @@ public class CategoryTest {
     private Category category;
 
     @Before
-    public void setup(){
+    public void setup() {
         category = new Category();
     }
 
@@ -39,8 +35,8 @@ public class CategoryTest {
     }
 
     @Test
-    public void test_setIDgetID() {
-        long Id = 1;
+    public void Test_setIdGetId() {
+        int Id = 1;
         category.setID(Id);
 
         assertEquals(category.getID(), Id);

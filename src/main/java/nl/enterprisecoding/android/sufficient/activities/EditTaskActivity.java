@@ -78,7 +78,7 @@ public class EditTaskActivity extends MainActivity {
 
             mTaskManager = new TaskManager(this, (long) 0);
             Task selectedTask = mTaskManager.getTask(selectedTaskID);
-            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(selectedTask.getCatId()).getColour()));
+            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(selectedTask.getCatID()).getColour()));
 
             mDateToday = Calendar.getInstance();
             mTaskDate = selectedTask.getDate();
@@ -92,7 +92,7 @@ public class EditTaskActivity extends MainActivity {
 
             initTaskCategorySpinner(mTaskCategorySpinner);
 
-            mTaskCategorySpinner.setSelection(findIndexByCategoryId(selectedTask.getCatId()));
+            mTaskCategorySpinner.setSelection(findIndexByCategoryId(selectedTask.getCatID()));
 
             mTaskSetDateButton = (Button) findViewById(R.id.task_set_date_button);
             updateDateButtonText();

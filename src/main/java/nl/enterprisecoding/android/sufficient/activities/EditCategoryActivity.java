@@ -15,6 +15,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import nl.enterprisecoding.android.sufficient.R;
@@ -51,6 +52,11 @@ public class EditCategoryActivity extends MainActivity {
         getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedCategory).getColour()));
 
         mCategoryTitleInput = (EditText) findViewById(R.id.category_title);
+        mCategoryTitleInput.setText(category.getTitle());
+        mCategoryTitleInput.requestFocus();
+        mCategoryTitleInput.setSelection(mCategoryTitleInput.getText().length());
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        mCategoryColour = category.getColour();
         mCategoryTitleInput.setText(category.getTitle());
         mCategoryColour = category.getColour();
 
