@@ -33,7 +33,6 @@ import java.util.List;
  */
 public class CategoryActivity extends MainActivity {
 
-    public static final String COLOUR_FORMAT = "#%02x%02x%02x";
 
     private Dialog mColourDialog;
     private String[] mSpringerArray;
@@ -141,7 +140,7 @@ public class CategoryActivity extends MainActivity {
         if (chosenColour == 0) {
             chosenColour = defaultColour;
         }
-        int categoryColour = Color.parseColor(String.format(COLOUR_FORMAT, Color.red(chosenColour), Color.green(chosenColour), Color.blue(chosenColour)));
+        int categoryColour = Color.parseColor(String.format("#%02x%02x%02x", Color.red(chosenColour), Color.green(chosenColour), Color.blue(chosenColour)));
 
         if (categoryName.trim().isEmpty()) {
             makeToast(getResources().getString(R.string.category_name_empty_error), false);
