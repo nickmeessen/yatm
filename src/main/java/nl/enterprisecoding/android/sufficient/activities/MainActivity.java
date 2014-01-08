@@ -15,6 +15,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.R;
@@ -154,5 +155,12 @@ public class MainActivity extends RoboActivity {
         int color = Color.rgb(r, g, b);
 
         return new int[]{color, r, g, b};
+    }
+
+    /**
+     * Activates the android keyboard
+     */
+    protected void openKeyboard() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 }

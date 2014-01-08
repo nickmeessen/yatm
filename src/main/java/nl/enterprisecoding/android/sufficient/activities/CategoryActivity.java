@@ -180,7 +180,7 @@ public class CategoryActivity extends MainActivity {
         super.createColourButton(bgShape, buttonId, inputColour, colourDialog);
         final EditText editText = (EditText) findViewById(R.id.newCategory);
         editText.requestFocus();
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        openKeyboard();
     }
 
     /**
