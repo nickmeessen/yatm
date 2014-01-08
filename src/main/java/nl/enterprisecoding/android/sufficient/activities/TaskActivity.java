@@ -53,7 +53,7 @@ public class TaskActivity extends MainActivity {
         taskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                mSelectedTaskId = ((Task) parent.getItemAtPosition(position)).getId();
+                mSelectedTaskId = ((Task) parent.getItemAtPosition(position)).getID();
                 return false;
             }
         });

@@ -32,8 +32,9 @@ import java.util.*;
 public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
 
     private SQLiteDatabase database;
-    private static final String CATEGORIES_TABLE = "categories", TASKS_TABLE = "tasks";
 
+    private static final String CATEGORIES_TABLE = "categories";
+    private static final String TASKS_TABLE = "tasks";
     private static final String DATABASE_NAME = "yatm.db";
     private static final int DATABASE_VERSION = 1;
 
@@ -55,7 +56,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
             + TASKS_TABLE + "(" + TCOLUMN_ID + SQLHelper.P_ID_AI
             + TCOLUMN_CATID + SQLHelper.INT_NOT_NULL
             + TCOLUMN_TASK + SQLHelper.TEXT_NOT_NULL
-            + TCOLUMN_DATE +  SQLHelper.TEXT_NOT_NULL
+            + TCOLUMN_DATE + SQLHelper.TEXT_NOT_NULL
             + TCOLUMN_IMPORTANT + SQLHelper.INT_NOT_NULL
             + TCOLUMN_COMPLETED + SQLHelper.INT_NOT_NULL.replace(", ", "")
             + ");";
@@ -85,8 +86,6 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
     public TaskManager(MainActivity activity, Long categoryID) {
 
         super(activity, DATABASE_NAME, null, DATABASE_VERSION);
-
-        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         open();
 
@@ -147,7 +146,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         mCategoryList.get(categoryId).addTask(newTask);
         mTaskListAdapter.notifyDataSetChanged();
 
-        return newTask.getId();
+        return newTask.getID();
     }
 
     /**
@@ -156,7 +155,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
      * @param task the task to be deleted.
      */
     public void deleteTask(Task task) {
-        long id = task.getId();
+        long id = task.getID();
         database.delete(TASKS_TABLE, TCOLUMN_ID + " = " + id, null);
         mTaskListAdapter.notifyDataSetChanged();
     }
@@ -166,13 +165,13 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
      */
     private void retrieveAllTasks() {
 
-        Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, null, null, null, null, null);
+        Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, null, null, null, null, TCOLUMN_IMPORTANT + " DESC");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             Task task = cursorToTask(cursor);
 
-            mCategoryList.get(task.getCatId()).addTask(task);
+            mCategoryList.get(task.getCatID()).addTask(task);
 
             cursor.moveToNext();
         }
@@ -192,7 +191,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         Calendar taskDate = Calendar.getInstance();
         taskDate.setTimeInMillis(cursor.getInt(cursor.getColumnIndex(TCOLUMN_DATE)));
 
-        task.setId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_ID)));
+        task.setID(cursor.getLong(cursor.getColumnIndex(TCOLUMN_ID)));
         task.setCatId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_CATID)));
         task.setTitle(cursor.getString(cursor.getColumnIndex(TCOLUMN_TASK)));
         task.setDate(taskDate);
@@ -471,7 +470,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
     private void moveTasks(Category origin, Category destination) {
         List<Task> tasks = origin.getTasks();
         for (Task t : tasks) {
-            long id = t.getId();
+            long id = t.getID();
             ContentValues values = new ContentValues();
             values.put(TCOLUMN_CATID, destination.getID());
             database.update(TASKS_TABLE, values, TCOLUMN_ID + " = " + id, null);

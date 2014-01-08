@@ -49,8 +49,10 @@ public class EditTaskActivity extends MainActivity {
     @InjectView(R.id.task_important)
     private CheckBox mTaskImportantCheckBox;
 
-    @Inject private TaskSetDateButtonClickHandler mTaskSetDateButtonClickHandler;
-    @Inject private TaskSetDateDialogButtonClickHandler mTaskSetDateDialogButtonClickHandler;
+    @Inject
+    private TaskSetDateButtonClickHandler mTaskSetDateButtonClickHandler;
+    @Inject
+    private TaskSetDateDialogButtonClickHandler mTaskSetDateDialogButtonClickHandler;
 
     private Task mSelectedTask;
     private Calendar mDateToday;
@@ -75,8 +77,12 @@ public class EditTaskActivity extends MainActivity {
             mActionBar.setTitle(R.string.action_edit);
 
             mTaskManager = new TaskManager(this, (long) 0);
+
             mSelectedTask = mTaskManager.getTask(selectedTaskID);
-            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedTask.getCatId()).getColour()));
+            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedTask.getCatID()).getColour()));
+
+//            Task selectedTask = mTaskManager.getTask(selectedTaskID);
+//            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(selectedTask.getCatID()).getColour()));
 
             mDateToday = Calendar.getInstance();
 
@@ -96,22 +102,10 @@ public class EditTaskActivity extends MainActivity {
             mTaskTitleInput.setHint(mSelectedTask.getTitle());
 
             initTaskCategorySpinner(mTaskCategorySpinner);
-            mTaskCategorySpinner.setSelection(findIndexByCategoryId(mSelectedTask.getCatId()));
+            mTaskCategorySpinner.setSelection(findIndexByCategoryId(mSelectedTask.getCatID()));
 
 //            mTaskSetDateButton = (Button) findViewById(R.id.task_set_date_button);
 //            updateDateButtonText();
-
-//            mTaskSetDateButton.setOnClickListener(new View.OnClickListener() {
-//                /**
-//                 * Handles the click for the mTaskSetDateButton
-//                 *
-//                 * @param v The view in which the click takes place
-//                 */
-//                @Override
-//                public void onClick(View v) {
-//                    createDatePickerDialog();
-//                }
-//            });
 
             mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
             mTaskImportantCheckBox.setChecked(mSelectedTask.isImportant());
@@ -131,33 +125,6 @@ public class EditTaskActivity extends MainActivity {
         }
     }
 
-//    /**
-//     * Creates a DatePicker dialog.
-//     */
-//    private void createDatePickerDialog() {
-//        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-//        final DatePicker datePicker = new DatePicker(this);
-//
-//        datePicker.setCalendarViewShown(false);
-//        datePicker.init(mTaskDate.get(Calendar.YEAR), mTaskDate.get(Calendar.MONTH), mTaskDate.get(Calendar.DAY_OF_MONTH), null);
-//        datePicker.setMinDate(mDateToday.getTime().getTime());
-//
-//        alert.setView(datePicker);
-//        alert.setPositiveButton(R.string.action_change_date, new DialogInterface.OnClickListener() {
-//            /**
-//             * Handles the click for the positive button in the calendar dialog
-//             *
-//             * @param dialog The dialog that is used
-//             * @param whichButton The button that is clicked
-//             */
-//            public void onClick(DialogInterface dialog, int whichButton) {
-//                setTaskDate(datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
-//            }
-//        });
-//        alert.setNegativeButton(R.string.action_discard, null);
-//        alert.show();
-//    }
-
     /**
      * Saves a task.
      */
@@ -167,8 +134,6 @@ public class EditTaskActivity extends MainActivity {
         long selectedCategoryID = mCategoriesArray.get(selectedCategoryIndex).getID();
         if (mTaskTitleInput.getText().toString().isEmpty()) {
             mTaskTitleInput.setText(mTaskTitleInput.getHint());
-//            validData = false;
-//            mTaskTitleInput.setBackgroundColor(getResources().getColor(R.color.red));
         }
 
         if (validData) {
