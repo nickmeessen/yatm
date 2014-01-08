@@ -33,14 +33,13 @@ import java.util.List;
  */
 public class CategoryActivity extends MainActivity {
 
-    public static final String COLOUR_FORMAT = "#%02x%02x%02x";
 
     private Dialog mColourDialog;
-    private int mChosenColour = 0;
-    private int mCategoryColour;
     private String[] mSpringerArray;
     private Spinner catInput;
     private long mSelectedCategoryId;
+    private int[] mRandomColour;
+    private GradientDrawable mBgShape;
 
     /**
      * Called when the activity is starting.
@@ -59,9 +58,8 @@ public class CategoryActivity extends MainActivity {
         mTaskManager = new TaskManager(this, (long) 0);
 
         final Button colourButton = (Button) findViewById(R.id.category_colour_button);
-        final GradientDrawable bgShape = (GradientDrawable) colourButton.getBackground();
-        final int[] randomColour = generateRandomColour();
-        bgShape.setColor(randomColour[0]);
+        mBgShape = (GradientDrawable) colourButton.getBackground();
+        generateColourShape();
 
         colourButton.setOnClickListener(new View.OnClickListener() {
 
@@ -75,7 +73,7 @@ public class CategoryActivity extends MainActivity {
                 mColourDialog = new Dialog(CategoryActivity.this);
                 mColourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 mColourDialog.setContentView(R.layout.colour_dialog);
-                addColourButtons(bgShape);
+                addColourButtons();
                 mColourDialog.show();
             }
         });
@@ -93,7 +91,7 @@ public class CategoryActivity extends MainActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    addCategory(randomColour);
+                    addCategory(mRandomColour[0]);
                 }
                 return false;
             }
@@ -108,7 +106,7 @@ public class CategoryActivity extends MainActivity {
              */
             @Override
             public void onClick(View v) {
-                addCategory(randomColour);
+                addCategory(mRandomColour[0]);
             }
         });
 
@@ -116,34 +114,36 @@ public class CategoryActivity extends MainActivity {
 
     /**
      * Adds the colour buttons to the given shape.
-     *
-     * @param bgShape the shape to use.
      */
-    private void addColourButtons(GradientDrawable bgShape) {
-        createColourButton(bgShape, R.id.colour_purple_button, R.color.purple);
-        createColourButton(bgShape, R.id.colour_blue_button, R.color.blue);
-        createColourButton(bgShape, R.id.colour_green_button, R.color.green);
-        createColourButton(bgShape, R.id.colour_orange_button, R.color.orange);
-        createColourButton(bgShape, R.id.color_red_button, R.color.red);
-        createColourButton(bgShape, R.id.colour_random0_button, 0);
-        createColourButton(bgShape, R.id.colour_random1_button, 0);
-        createColourButton(bgShape, R.id.colour_random2_button, 0);
-        createColourButton(bgShape, R.id.colour_random3_button, 0);
-        createColourButton(bgShape, R.id.colour_random4_button, 0);
+    private void addColourButtons() {
+        createColourButton(mBgShape, R.id.colour_purple_button, R.color.purple, mColourDialog);
+        createColourButton(mBgShape, R.id.colour_blue_button, R.color.blue, mColourDialog);
+        createColourButton(mBgShape, R.id.colour_green_button, R.color.green, mColourDialog);
+        createColourButton(mBgShape, R.id.colour_orange_button, R.color.orange, mColourDialog);
+        createColourButton(mBgShape, R.id.color_red_button, R.color.red, mColourDialog);
+        createColourButton(mBgShape, R.id.colour_random0_button, 0, mColourDialog);
+        createColourButton(mBgShape, R.id.colour_random1_button, 0, mColourDialog);
+        createColourButton(mBgShape, R.id.colour_random2_button, 0, mColourDialog);
+        createColourButton(mBgShape, R.id.colour_random3_button, 0, mColourDialog);
+        createColourButton(mBgShape, R.id.colour_random4_button, 0, mColourDialog);
     }
 
     /**
      * Adds a new category and checks for cases in which it isn't allowed to add a category
      *
-     * @param colour The colour that the category will use
+     * @param defaultColour this represents the default colour a category will get when there is not a colour selected
      */
-    private void addCategory(int[] colour) {
+    private void addCategory(int defaultColour) {
         final EditText editText = (EditText) findViewById(R.id.newCategory);
+        int chosenColour;
+        int categoryColour;
         String categoryName = editText.getText().toString();
-        if (mCategoryColour == 0) {
-            mChosenColour = colour[0];
-            mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, colour[1], colour[2], colour[3]));
+
+        chosenColour = getCategoryColour();
+        if(chosenColour == 0) {
+            chosenColour = defaultColour;
         }
+        categoryColour = Color.parseColor(String.format("#%02x%02x%02x", Color.red(chosenColour), Color.green(chosenColour), Color.blue(chosenColour)));
 
         if (categoryName.trim().isEmpty()) {
             makeToast(getResources().getString(R.string.category_name_empty_error), false);
@@ -152,50 +152,35 @@ public class CategoryActivity extends MainActivity {
         } else {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-            mTaskManager.createCategory(categoryName, mCategoryColour);
+            mTaskManager.createCategory(categoryName, categoryColour);
             editText.setText("");
             makeToast(getResources().getString(R.string.category_added), false);
+            generateColourShape();
         }
+    }
+
+    /**
+     * Sets a new colour for the shape which represents the category colour
+     */
+    private void generateColourShape() {
+        mRandomColour = generateRandomColour();
+        mBgShape.setColor(mRandomColour[0]);
     }
 
     /**
      * Creates a button with a certain colour within the colour choosing dialog.
      *
-     * @param bgShape     The shape that is clicked
-     * @param buttonId    The id of the button that shows the colour
-     * @param inputColour The colour the button will have, 0 is a random colour
+     * @param bgShape      The shape that is clicked
+     * @param buttonId     The id of the button that shows the colour
+     * @param inputColour  The colour the button will have, 0 is a random colour
+     * @param colourDialog The Dialog that will display the colours
      */
-    private void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour) {
+    @Override
+    protected void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog) {
+        super.createColourButton(bgShape, buttonId, inputColour, colourDialog);
         final EditText editText = (EditText) findViewById(R.id.newCategory);
-        final Button colourButton = (Button) mColourDialog.findViewById(buttonId);
-        final int[] randColour = generateRandomColour();
-
-        if (inputColour != 0) {
-            colourButton.setBackgroundColor(getResources().getColor(inputColour));
-        } else {
-            colourButton.setBackgroundColor(randColour[0]);
-        }
-
-        colourButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Handles the click for the colourButton
-             * @param v The view in which the click takes place
-             */
-            @Override
-            public void onClick(View v) {
-                if (inputColour != 0) {
-                    mChosenColour = getResources().getColor(inputColour);
-                    mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, Color.red(mChosenColour), Color.green(mChosenColour), Color.blue(mChosenColour)));
-                    bgShape.setColor(getResources().getColor(inputColour));
-                } else {
-                    mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, randColour[1], randColour[2], randColour[3]));
-                    bgShape.setColor(randColour[0]);
-                }
-                mColourDialog.dismiss();
-                editText.requestFocus();
-                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-            }
-        });
+        editText.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 
     /**
