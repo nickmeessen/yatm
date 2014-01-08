@@ -43,14 +43,12 @@
 
     <string name="delete_category_text">Verplaats taken naar categorie:</string>
 
-    <string name="standard_category_name_error">Kies een andere naam!</string>
     <string name="category_name_empty_error">Je moet een naam invullen!</string>
     <string name="toast_category_exists">Deze categorie bestaat al</string>
     <string name="category_added">Categorie succesvol toegevoegd</string>
     <string name="today">Vandaag</string>
     <string name="tomorrow">Morgen</string>
     <string name="upcoming">Binnenkort</string>
-    <string name="choose_different_name">Kies een andere naam</string>
     <string name="completed">Voltooid</string>
 
     <string name="all_categories">Alle Categorie&#235;n</string>
