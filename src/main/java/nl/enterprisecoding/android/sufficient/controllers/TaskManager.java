@@ -13,6 +13,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
+import android.util.Log;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import nl.enterprisecoding.android.sufficient.R;
@@ -21,6 +22,7 @@ import nl.enterprisecoding.android.sufficient.helpers.SQLHelper;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -40,8 +42,6 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
 
     private TaskListAdapter mTaskListAdapter;
     private CategoryListAdapter mCategoryListAdapter;
-
-    private SimpleDateFormat simpleDateFormat;
 
     private static final String TCOLUMN_ID = "_id";
     private static final String TCOLUMN_CATID = "_catId";
@@ -135,7 +135,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         values.put(TCOLUMN_IMPORTANT, important ? 1 : 0);
         values.put(TCOLUMN_CATID, categoryId);
         values.put(TCOLUMN_TASK, title);
-        values.put(TCOLUMN_DATE, simpleDateFormat.format(date.getTimeInMillis()));
+        values.put(TCOLUMN_DATE, date.getTimeInMillis());
 
         long insertId = database.insert(TASKS_TABLE, null, values);
         Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, TCOLUMN_ID + " = " + insertId, null, null, null, null);
@@ -189,7 +189,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         Task task = new Task();
 
         Calendar taskDate = Calendar.getInstance();
-        taskDate.setTimeInMillis(cursor.getInt(cursor.getColumnIndex(TCOLUMN_DATE)));
+        taskDate.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(TCOLUMN_DATE)));
 
         task.setID(cursor.getLong(cursor.getColumnIndex(TCOLUMN_ID)));
         task.setCatId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_CATID)));
@@ -258,7 +258,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         values.put(TCOLUMN_IMPORTANT, mIsImportant);
         values.put(TCOLUMN_CATID, categoryId);
         values.put(TCOLUMN_TASK, title);
-        values.put(TCOLUMN_DATE, simpleDateFormat.format(date.getTimeInMillis()));
+        values.put(TCOLUMN_DATE, date.getTimeInMillis());
 
         database.update(TASKS_TABLE, values, TCOLUMN_ID + " = " + taskID, null);
     }

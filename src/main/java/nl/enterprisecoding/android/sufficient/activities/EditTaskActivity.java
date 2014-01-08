@@ -81,17 +81,10 @@ public class EditTaskActivity extends MainActivity {
             mSelectedTask = mTaskManager.getTask(selectedTaskID);
             mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedTask.getCatID()).getColour()));
 
-//            Task selectedTask = mTaskManager.getTask(selectedTaskID);
-//            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(selectedTask.getCatID()).getColour()));
-
             mDateToday = Calendar.getInstance();
 
             mTaskDate = mSelectedTask.getDate();
-
-            Log.d("TEST",
-                    mTaskManager.getTask(selectedTaskID).getDate().get(Calendar.DAY_OF_MONTH) + "-" +
-                            mTaskManager.getTask(selectedTaskID).getDate().get(Calendar.MONTH) + "-" +
-                            mTaskManager.getTask(selectedTaskID).getDate().get(Calendar.YEAR));
+            Log.d("TEST", mTaskDate.get(Calendar.DAY_OF_MONTH) + "-" + mTaskDate.get(Calendar.MONTH) + "-" + mTaskDate.get(Calendar.YEAR));
 
             updateDateButtonText();
 
@@ -103,9 +96,6 @@ public class EditTaskActivity extends MainActivity {
 
             initTaskCategorySpinner(mTaskCategorySpinner);
             mTaskCategorySpinner.setSelection(findIndexByCategoryId(mSelectedTask.getCatID()));
-
-//            mTaskSetDateButton = (Button) findViewById(R.id.task_set_date_button);
-//            updateDateButtonText();
 
             mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
             mTaskImportantCheckBox.setChecked(mSelectedTask.isImportant());
@@ -137,7 +127,7 @@ public class EditTaskActivity extends MainActivity {
         }
 
         if (validData) {
-            mTaskManager.createTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked());
+            mTaskManager.editTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked(), false, mSelectedTask.getID());
             startTaskActivity(selectedCategoryID);
         } else {
             Toast.makeText(this, R.string.toast_invalid_data, Toast.LENGTH_SHORT).show();
@@ -201,7 +191,6 @@ public class EditTaskActivity extends MainActivity {
      */
     private void updateDateButtonText() {
         String mMonth = new DateFormatSymbols().getMonths()[mTaskDate.get(Calendar.MONTH)];
-        Log.d("TEST", mTaskDate.get(Calendar.DAY_OF_MONTH) + "-" + mMonth + "-" + mTaskDate.get(Calendar.YEAR));
         mTaskSetDateButton.setText(mTaskDate.get(Calendar.DAY_OF_MONTH) + " " + mMonth + " " + mTaskDate.get(Calendar.YEAR));
     }
 
