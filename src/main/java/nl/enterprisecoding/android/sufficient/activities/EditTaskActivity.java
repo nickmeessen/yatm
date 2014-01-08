@@ -7,12 +7,12 @@
 
 package nl.enterprisecoding.android.sufficient.activities;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.google.inject.Inject;
@@ -24,7 +24,6 @@ import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
-
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -53,6 +52,7 @@ public class EditTaskActivity extends MainActivity {
     @Inject private TaskSetDateButtonClickHandler mTaskSetDateButtonClickHandler;
     @Inject private TaskSetDateDialogButtonClickHandler mTaskSetDateDialogButtonClickHandler;
 
+    private Task mSelectedTask;
     private Calendar mDateToday;
     private Calendar mTaskDate;
     private List<Category> mCategoriesArray = new ArrayList<Category>();
@@ -72,29 +72,34 @@ public class EditTaskActivity extends MainActivity {
         long selectedTaskID = getIntent().getExtras().getLong(TaskActivity.TASK_ID, 0);
 
         if (selectedTaskID != 0) {
-
             mActionBar.setTitle(R.string.action_edit);
 
             mTaskManager = new TaskManager(this, (long) 0);
-            Task selectedTask = mTaskManager.getTask(selectedTaskID);
-            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(selectedTask.getCatId()).getColour()));
+            mSelectedTask = mTaskManager.getTask(selectedTaskID);
+            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedTask.getCatId()).getColour()));
 
             mDateToday = Calendar.getInstance();
-            mTaskDate = selectedTask.getDate();
 
-            mTaskTitleInput = (EditText) findViewById(R.id.task_title);
-            mTaskTitleInput.setHint(selectedTask.getTitle());
+            mTaskDate = mSelectedTask.getDate();
+
+            Log.d("TEST",
+                    mTaskManager.getTask(selectedTaskID).getDate().get(Calendar.DAY_OF_MONTH) + "-" +
+                            mTaskManager.getTask(selectedTaskID).getDate().get(Calendar.MONTH) + "-" +
+                            mTaskManager.getTask(selectedTaskID).getDate().get(Calendar.YEAR));
+
+            updateDateButtonText();
 
             mTaskSetDateButtonClickHandler.setActivity(this);
             mTaskSetDateButton.setOnClickListener(mTaskSetDateButtonClickHandler);
-            updateDateButtonText();
+
+            mTaskTitleInput = (EditText) findViewById(R.id.task_title);
+            mTaskTitleInput.setHint(mSelectedTask.getTitle());
 
             initTaskCategorySpinner(mTaskCategorySpinner);
+            mTaskCategorySpinner.setSelection(findIndexByCategoryId(mSelectedTask.getCatId()));
 
-            mTaskCategorySpinner.setSelection(findIndexByCategoryId(selectedTask.getCatId()));
-
-            mTaskSetDateButton = (Button) findViewById(R.id.task_set_date_button);
-            updateDateButtonText();
+//            mTaskSetDateButton = (Button) findViewById(R.id.task_set_date_button);
+//            updateDateButtonText();
 
 //            mTaskSetDateButton.setOnClickListener(new View.OnClickListener() {
 //                /**
@@ -109,7 +114,7 @@ public class EditTaskActivity extends MainActivity {
 //            });
 
             mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
-            mTaskImportantCheckBox.setChecked(selectedTask.isImportant());
+            mTaskImportantCheckBox.setChecked(mSelectedTask.isImportant());
 
             Button saveTaskButton = (Button) findViewById(R.id.save_task_button);
             saveTaskButton.setOnClickListener(new View.OnClickListener() {
@@ -126,9 +131,9 @@ public class EditTaskActivity extends MainActivity {
         }
     }
 
-    /**
-     * Creates a DatePicker dialog.
-     */
+//    /**
+//     * Creates a DatePicker dialog.
+//     */
 //    private void createDatePickerDialog() {
 //        AlertDialog.Builder alert = new AlertDialog.Builder(this);
 //        final DatePicker datePicker = new DatePicker(this);
@@ -222,7 +227,7 @@ public class EditTaskActivity extends MainActivity {
      * @param year       The wanted year
      */
     private void setTaskDate(int dayOfMonth, int month, int year) {
-        mTaskDate.set(year, month, dayOfMonth, 0, 0, 0);
+        mTaskDate.set(year, month, dayOfMonth);
         updateDateButtonText();
     }
 
@@ -230,8 +235,9 @@ public class EditTaskActivity extends MainActivity {
      * Updates the text of the date Button so it matches the selected date
      */
     private void updateDateButtonText() {
-        String month = new DateFormatSymbols().getMonths()[mTaskDate.get(Calendar.MONTH) - 1];
-        mTaskSetDateButton.setText(mTaskDate.get(Calendar.DAY_OF_MONTH) + " " + month + " " + mTaskDate.get(Calendar.YEAR));
+        String mMonth = new DateFormatSymbols().getMonths()[mTaskDate.get(Calendar.MONTH)];
+        Log.d("TEST", mTaskDate.get(Calendar.DAY_OF_MONTH) + "-" + mMonth + "-" + mTaskDate.get(Calendar.YEAR));
+        mTaskSetDateButton.setText(mTaskDate.get(Calendar.DAY_OF_MONTH) + " " + mMonth + " " + mTaskDate.get(Calendar.YEAR));
     }
 
     /**
@@ -255,6 +261,7 @@ public class EditTaskActivity extends MainActivity {
      * Shows DatePicker Dialog.
      */
     public void showTaskSetDateDialog() {
+
         mTaskSetDateDialogButtonClickHandler.setActivity(this);
 
         DatePickerDialog alert = new DatePickerDialog(this, null, mTaskDate.get(Calendar.YEAR), mTaskDate.get(Calendar.MONTH), mTaskDate.get(Calendar.DAY_OF_MONTH));

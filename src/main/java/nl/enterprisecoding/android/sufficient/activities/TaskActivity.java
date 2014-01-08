@@ -70,8 +70,6 @@ public class TaskActivity extends MainActivity {
             mActionBar.setTitle(mTaskManager.getCategoryById(mCategoryID).getTitle());
             mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mCategoryID).getColour()));
         }
-
-
     }
 
     /**
@@ -153,7 +151,6 @@ public class TaskActivity extends MainActivity {
      * Starts the "Edit Task" activity.
      */
     private void startEditTaskActivity() {
-
         List<Category> catList = mTaskManager.getCategories();
 
         if (mTaskManager.getCategories().size() == 1) {
