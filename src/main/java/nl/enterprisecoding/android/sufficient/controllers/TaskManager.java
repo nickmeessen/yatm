@@ -17,6 +17,7 @@ import android.widget.ExpandableListView;
 import android.widget.ListView;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
+import nl.enterprisecoding.android.sufficient.helpers.SQLHelper;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
 
@@ -50,14 +51,13 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
 
     private static final String[] TALL_COLUMNS = {TCOLUMN_ID, TCOLUMN_CATID, TCOLUMN_TASK, TCOLUMN_DATE, TCOLUMN_IMPORTANT, TCOLUMN_COMPLETED};
 
-    private static final String CREATE_TASKS_STATEMENT = "create table "
-            + TASKS_TABLE + "(" + TCOLUMN_ID
-            + " integer primary key autoincrement, "
-            + TCOLUMN_CATID + " integer not null, "
-            + TCOLUMN_TASK + " text not null, "
-            + TCOLUMN_DATE + " text not null, "
-            + TCOLUMN_IMPORTANT + " integer not null, "
-            + TCOLUMN_COMPLETED + " integer not null "
+    private static final String CREATE_TASKS_STATEMENT = SQLHelper.CREATE
+            + TASKS_TABLE + "(" + TCOLUMN_ID + SQLHelper.P_ID_AI
+            + TCOLUMN_CATID + SQLHelper.INT_NOT_NULL
+            + TCOLUMN_TASK + SQLHelper.TEXT_NOT_NULL
+            + TCOLUMN_DATE +  SQLHelper.TEXT_NOT_NULL
+            + TCOLUMN_IMPORTANT + SQLHelper.INT_NOT_NULL
+            + TCOLUMN_COMPLETED + SQLHelper.INT_NOT_NULL.replace(", ", "")
             + ");";
 
 
@@ -69,11 +69,12 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
     private static final String CVISIBILITY = "visible";
 
     private static final String[] CALL_COLUMNS = {CID_COLUMN, CTITLE_COLUMN, CCOLOUR_COLUMN, CVISIBILITY};
-    private static final String CREATE_CATEGORIES_STATEMENT = "create table "
-            + CATEGORIES_TABLE + "(" + CID_COLUMN
-            + " integer primary key autoincrement, " + CTITLE_COLUMN
-            + " text not null," + CCOLOUR_COLUMN + " integer not null,"
-            + CVISIBILITY + " integer not null);";
+    private static final String CREATE_CATEGORIES_STATEMENT = SQLHelper.CREATE
+            + CATEGORIES_TABLE + "(" + CID_COLUMN + SQLHelper.P_ID_AI
+            + CTITLE_COLUMN + SQLHelper.TEXT_NOT_NULL
+            + CCOLOUR_COLUMN + SQLHelper.INT_NOT_NULL
+            + CVISIBILITY + SQLHelper.INT_NOT_NULL.replace(", ", "")
+            + " );";
 
     /**
      * Constructs a new TaskManager
@@ -301,8 +302,8 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + CATEGORIES_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + TASKS_TABLE);
+        db.execSQL(SQLHelper.DESTROY + CATEGORIES_TABLE);
+        db.execSQL(SQLHelper.DESTROY + TASKS_TABLE);
         onCreate(db);
     }
 
