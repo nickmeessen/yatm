@@ -140,7 +140,7 @@ public class CategoryActivity extends MainActivity {
         String categoryName = editText.getText().toString();
 
         chosenColour = getCategoryColour();
-        if(chosenColour == 0) {
+        if (chosenColour == 0) {
             chosenColour = defaultColour;
         }
         categoryColour = Color.parseColor(String.format("#%02x%02x%02x", Color.red(chosenColour), Color.green(chosenColour), Color.blue(chosenColour)));

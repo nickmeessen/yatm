@@ -120,15 +120,4 @@ public class Category {
     public List<Task> getTasks() {
         return mTasks;
     }
-
-    /**
-     * Returns a String representing this category.
-     *
-     * @return a string representing this category.
-     */
-    @Override
-    public String toString() {
-        return "[" + getID() + "]";
-    }
-
 }
