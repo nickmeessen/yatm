@@ -24,9 +24,6 @@
     <string name="action_save_task">save task</string>
     <string name="action_save_category">save category</string>
 
-    <string name="drawer_open">draw_open</string>
-    <string name="drawer_close">draw_close</string>
-
     <string name="task_title_label">Title</string>
     <string name="task_category_label">Category</string>
     <string name="task_important">Important?</string>
@@ -44,13 +41,13 @@
     <string name="task_done_icon">TaskDoneIcon</string>
     <string name="delete_category_text">Move tasks to category:</string>
 
-    <string name="standard_category_name_error">Please choose a different name!</string>
     <string name="category_name_empty_error">You need to enter a name!</string>
     <string name="toast_category_exists">This category already exists</string>
     <string name="category_added">Category successfully added</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="upcoming">Upcoming</string>
-    <string name="choose_different_name">Please choose a different name</string>
     <string name="completed">Completed</string>
+    <string name="standard_colours">Standard Colors</string>
+    <string name="random_colours">Random Colors</string>
 </resources>

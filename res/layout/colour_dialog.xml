@@ -19,7 +19,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="2dp"
             android:gravity="center_horizontal"
-            android:text="Standard Colors"
+            android:text="@string/standard_colours"
             android:textColor="@color/category_text"/>
 
     <LinearLayout
@@ -27,37 +27,45 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="top|center"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            style="?android:attr/buttonBarStyle"
+            >
 
         <Button
                 android:id="@+id/colour_purple_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"
+                />
 
         <Button
                 android:id="@+id/colour_blue_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
                 android:id="@+id/colour_green_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
                 android:id="@+id/colour_orange_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
                 android:id="@+id/color_red_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"/>
 
     </LinearLayout>
 
@@ -67,7 +75,7 @@
             android:paddingTop="5dp"
             android:paddingBottom="2dp"
             android:gravity="center_horizontal"
-            android:text="Random Colors"
+            android:text="@string/random_colours"
             android:textColor="@color/category_text"/>
 
     <LinearLayout
@@ -81,31 +89,36 @@
                 android:id="@+id/colour_random0_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
                 android:id="@+id/colour_random1_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
                 android:id="@+id/colour_random2_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
                 android:id="@+id/colour_random3_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
                 android:id="@+id/colour_random4_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                style="?android:attr/buttonBarButtonStyle"/>
 
     </LinearLayout>
 
