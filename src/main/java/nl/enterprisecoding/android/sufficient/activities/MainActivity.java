@@ -8,10 +8,14 @@
 package nl.enterprisecoding.android.sufficient.activities;
 
 import android.app.ActionBar;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
@@ -29,6 +33,7 @@ public class MainActivity extends RoboActivity {
 
     protected TaskManager mTaskManager;
     protected ActionBar mActionBar;
+    protected int mFinalColour;
 
     /**
      * Called when the activity is starting.
@@ -86,6 +91,49 @@ public class MainActivity extends RoboActivity {
             duration = Toast.LENGTH_SHORT;
         }
         Toast.makeText(this, content, duration).show();
+    }
+
+    /**
+     * Creates a button with a certain colour within the colour choosing dialog.
+     *
+     * @param bgShape     The shape that is clicked
+     * @param buttonId    The id of the button that shows the colour
+     * @param inputColour The colour the button will have, 0 is a random colour
+     * @param colourDialog The Dialog that will display the colours
+     */
+    protected void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog) {
+        final Button colourButton = (Button) colourDialog.findViewById(buttonId);
+        final int[] randColour = generateRandomColour();
+
+        if (inputColour != 0) {
+            colourButton.setBackgroundColor(getResources().getColor(inputColour));
+        } else {
+            colourButton.setBackgroundColor(randColour[0]);
+        }
+
+        colourButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Handles the click for the colourButton
+             * @param v The view in which the click takes place
+             */
+            @Override
+            public void onClick(View v) {
+                int chosenColour;
+                if (inputColour != 0) {
+                    chosenColour = getResources().getColor(inputColour);
+                    bgShape.setColor(getResources().getColor(inputColour));
+                } else {
+                    chosenColour = randColour[0];
+                    bgShape.setColor(randColour[0]);
+                }
+                colourDialog.dismiss();
+                mFinalColour = chosenColour;
+            }
+        });
+    }
+
+    protected int getCategoryColour() {
+        return mFinalColour;
     }
 
     /**
