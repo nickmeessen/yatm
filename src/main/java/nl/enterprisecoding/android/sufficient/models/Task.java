@@ -28,7 +28,7 @@ public class Task {
      *
      * @param id new ID for this Task.
      */
-    public void setId(long id) {
+    public void setID(long id) {
         mId = id;
     }
 
@@ -37,7 +37,7 @@ public class Task {
      *
      * @return the id of this task.
      */
-    public long getId() {
+    public long getID() {
         return mId;
     }
 
@@ -56,7 +56,7 @@ public class Task {
      *
      * @return the CatId of this task.
      */
-    public long getCatId() {
+    public long getCatID() {
         return mCatId;
     }
 

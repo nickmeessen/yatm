@@ -146,7 +146,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         mCategoryList.get(categoryId).addTask(newTask);
         mTaskListAdapter.notifyDataSetChanged();
 
-        return newTask.getId();
+        return newTask.getID();
     }
 
     /**
@@ -155,7 +155,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
      * @param task the task to be deleted.
      */
     public void deleteTask(Task task) {
-        long id = task.getId();
+        long id = task.getID();
         database.delete(TASKS_TABLE, TCOLUMN_ID + " = " + id, null);
         mTaskListAdapter.notifyDataSetChanged();
     }
@@ -171,7 +171,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         while (!cursor.isAfterLast()) {
             Task task = cursorToTask(cursor);
 
-            mCategoryList.get(task.getCatId()).addTask(task);
+            mCategoryList.get(task.getCatID()).addTask(task);
 
             cursor.moveToNext();
         }
@@ -191,7 +191,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
         Calendar taskDate = Calendar.getInstance();
         taskDate.setTimeInMillis(cursor.getInt(cursor.getColumnIndex(TCOLUMN_DATE)));
 
-        task.setId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_ID)));
+        task.setID(cursor.getLong(cursor.getColumnIndex(TCOLUMN_ID)));
         task.setCatId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_CATID)));
         task.setTitle(cursor.getString(cursor.getColumnIndex(TCOLUMN_TASK)));
         task.setDate(taskDate);
@@ -470,7 +470,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
     private void moveTasks(Category origin, Category destination) {
         List<Task> tasks = origin.getTasks();
         for (Task t : tasks) {
-            long id = t.getId();
+            long id = t.getID();
             ContentValues values = new ContentValues();
             values.put(TCOLUMN_CATID, destination.getID());
             database.update(TASKS_TABLE, values, TCOLUMN_ID + " = " + id, null);

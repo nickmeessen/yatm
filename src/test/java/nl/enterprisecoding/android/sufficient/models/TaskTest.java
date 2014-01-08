@@ -3,12 +3,10 @@ package nl.enterprisecoding.android.sufficient.models;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
 import java.util.Calendar;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(RobolectricTestRunner.class)
@@ -22,11 +20,11 @@ public class TaskTest {
     }
 
     @Test
-    public void Test_setIdGetId(){
+    public void Test_setIdGetId() {
         int Id = 1;
-        task.setId(Id);
+        task.setID(Id);
 
-        assertEquals(task.getId(), Id);
+        assertEquals(task.getID(), Id);
     }
 
     @Test
@@ -34,7 +32,7 @@ public class TaskTest {
         int CatId = 3;
         task.setCatId(CatId);
 
-        assertEquals(task.getCatId(), CatId);
+        assertEquals(task.getCatID(), CatId);
     }
 
     @Test
