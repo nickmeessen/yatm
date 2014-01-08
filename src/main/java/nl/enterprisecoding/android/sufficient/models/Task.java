@@ -132,15 +132,4 @@ public class Task {
     public void setCompleted(boolean completed) {
         this.mCompleted = completed;
     }
-
-    /**
-     * Returns a String representing this task.
-     *
-     * @return a string representing this task.
-     */
-    @Override
-    public String toString() {
-        return mTitle;
-    }
-
 }

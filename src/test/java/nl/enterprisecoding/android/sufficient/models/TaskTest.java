@@ -67,12 +67,4 @@ public class TaskTest {
 
         assertEquals(task.isImportant(), completed);
     }
-
-//    @Test
-//    public void Test_toString() {
-//        String Title = "Test";
-//        task.setTitle(Title);
-//
-//        assertEquals(task.toString(), "Test");
-//    }
 }
