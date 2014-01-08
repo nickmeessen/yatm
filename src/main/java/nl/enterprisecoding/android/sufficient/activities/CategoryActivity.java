@@ -135,12 +135,15 @@ public class CategoryActivity extends MainActivity {
      */
     private void addCategory(int defaultColour) {
         final EditText editText = (EditText) findViewById(R.id.newCategory);
+        int chosenColour;
+        int categoryColour;
         String categoryName = editText.getText().toString();
-        int chosenColour = getCategoryColour();
-        if (chosenColour == 0) {
+
+        chosenColour = getCategoryColour();
+        if(chosenColour == 0) {
             chosenColour = defaultColour;
         }
-        int categoryColour = Color.parseColor(String.format("#%02x%02x%02x", Color.red(chosenColour), Color.green(chosenColour), Color.blue(chosenColour)));
+        categoryColour = Color.parseColor(String.format("#%02x%02x%02x", Color.red(chosenColour), Color.green(chosenColour), Color.blue(chosenColour)));
 
         if (categoryName.trim().isEmpty()) {
             makeToast(getResources().getString(R.string.category_name_empty_error), false);
