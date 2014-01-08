@@ -7,7 +7,6 @@
 
 package nl.enterprisecoding.android.sufficient.activities;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -50,8 +49,10 @@ public class EditTaskActivity extends MainActivity {
     @InjectView(R.id.task_important)
     private CheckBox mTaskImportantCheckBox;
 
-    @Inject private TaskSetDateButtonClickHandler mTaskSetDateButtonClickHandler;
-    @Inject private TaskSetDateDialogButtonClickHandler mTaskSetDateDialogButtonClickHandler;
+    @Inject
+    private TaskSetDateButtonClickHandler mTaskSetDateButtonClickHandler;
+    @Inject
+    private TaskSetDateDialogButtonClickHandler mTaskSetDateDialogButtonClickHandler;
 
     private Calendar mDateToday;
     private Calendar mTaskDate;
@@ -96,18 +97,6 @@ public class EditTaskActivity extends MainActivity {
             mTaskSetDateButton = (Button) findViewById(R.id.task_set_date_button);
             updateDateButtonText();
 
-//            mTaskSetDateButton.setOnClickListener(new View.OnClickListener() {
-//                /**
-//                 * Handles the click for the mTaskSetDateButton
-//                 *
-//                 * @param v The view in which the click takes place
-//                 */
-//                @Override
-//                public void onClick(View v) {
-//                    createDatePickerDialog();
-//                }
-//            });
-
             mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
             mTaskImportantCheckBox.setChecked(selectedTask.isImportant());
 
@@ -127,33 +116,6 @@ public class EditTaskActivity extends MainActivity {
     }
 
     /**
-     * Creates a DatePicker dialog.
-     */
-//    private void createDatePickerDialog() {
-//        AlertDialog.Builder alert = new AlertDialog.Builder(this);
-//        final DatePicker datePicker = new DatePicker(this);
-//
-//        datePicker.setCalendarViewShown(false);
-//        datePicker.init(mTaskDate.get(Calendar.YEAR), mTaskDate.get(Calendar.MONTH), mTaskDate.get(Calendar.DAY_OF_MONTH), null);
-//        datePicker.setMinDate(mDateToday.getTime().getTime());
-//
-//        alert.setView(datePicker);
-//        alert.setPositiveButton(R.string.action_change_date, new DialogInterface.OnClickListener() {
-//            /**
-//             * Handles the click for the positive button in the calendar dialog
-//             *
-//             * @param dialog The dialog that is used
-//             * @param whichButton The button that is clicked
-//             */
-//            public void onClick(DialogInterface dialog, int whichButton) {
-//                setTaskDate(datePicker.getDayOfMonth(), datePicker.getMonth(), datePicker.getYear());
-//            }
-//        });
-//        alert.setNegativeButton(R.string.action_discard, null);
-//        alert.show();
-//    }
-
-    /**
      * Saves a task.
      */
     private void saveTask() {
@@ -162,8 +124,6 @@ public class EditTaskActivity extends MainActivity {
         long selectedCategoryID = mCategoriesArray.get(selectedCategoryIndex).getID();
         if (mTaskTitleInput.getText().toString().isEmpty()) {
             mTaskTitleInput.setText(mTaskTitleInput.getHint());
-//            validData = false;
-//            mTaskTitleInput.setBackgroundColor(getResources().getColor(R.color.red));
         }
 
         if (validData) {

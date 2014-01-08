@@ -55,7 +55,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
             + TASKS_TABLE + "(" + TCOLUMN_ID + SQLHelper.P_ID_AI
             + TCOLUMN_CATID + SQLHelper.INT_NOT_NULL
             + TCOLUMN_TASK + SQLHelper.TEXT_NOT_NULL
-            + TCOLUMN_DATE +  SQLHelper.TEXT_NOT_NULL
+            + TCOLUMN_DATE + SQLHelper.TEXT_NOT_NULL
             + TCOLUMN_IMPORTANT + SQLHelper.INT_NOT_NULL
             + TCOLUMN_COMPLETED + SQLHelper.INT_NOT_NULL.replace(", ", "")
             + ");";
