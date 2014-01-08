@@ -265,10 +265,8 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
 
     /**
      * Opens a SQLite database.
-     *
-     * @throws android.database.SQLException when database can't be opened.
      */
-    private void open() throws SQLException {
+    private void open() {
         database = getWritableDatabase();
     }
 
