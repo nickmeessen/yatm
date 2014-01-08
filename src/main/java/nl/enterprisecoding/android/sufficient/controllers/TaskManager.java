@@ -73,6 +73,8 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
             + CVISIBILITY + SQLHelper.INT_NOT_NULL.replace(", ", "")
             + " );";
 
+    private MainActivity mActivity;
+
     /**
      * Constructs a new TaskManager
      *
@@ -82,6 +84,8 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
     public TaskManager(MainActivity activity, Long categoryID) {
 
         super(activity, DATABASE_NAME, null, DATABASE_VERSION);
+
+        mActivity = activity;
 
         open();
 
@@ -279,7 +283,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
 
         ContentValues values = new ContentValues();
         values.put(CID_COLUMN, 0);
-        values.put(CTITLE_COLUMN, "All Categories");
+        values.put(CTITLE_COLUMN, mActivity.getString(R.string.all_categories));
         values.put(CCOLOUR_COLUMN, Color.BLACK);
         values.put(CVISIBILITY, 1);
 

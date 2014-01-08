@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 
 /**
@@ -295,7 +296,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
 
         ((TextView) view.findViewById(R.id.taskText)).setText(title);
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         String currentDate = formatter.format(getChild(groupPosition, childPosition).getDate().getTimeInMillis());
 
         ((TextView) view.findViewById(R.id.taskText)).setText(getChild(groupPosition, childPosition).getTitle() + " (" + currentDate + ")");

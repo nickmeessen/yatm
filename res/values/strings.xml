@@ -50,4 +50,5 @@
     <string name="completed">Completed</string>
     <string name="standard_colours">Standard Colors</string>
     <string name="random_colours">Random Colors</string>
+    <string name="all_categories">All Categories</string>
 </resources>
