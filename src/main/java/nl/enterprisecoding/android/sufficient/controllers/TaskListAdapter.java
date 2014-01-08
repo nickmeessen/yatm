@@ -97,7 +97,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
      *
      * @param tasks the list of tasks to split.
      */
-    private void fillList(List<Task> tasks) {
+    public void fillList(List<Task> tasks) {
 
         Calendar today = Calendar.getInstance();
         Calendar tomorrow = Calendar.getInstance();
@@ -113,55 +113,18 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         tomorrow.set(Calendar.SECOND, 0);
         tomorrow.set(Calendar.MILLISECOND, 0);
 
-        List<Task> important = new ArrayList<Task>();
-        List<Task> normal = new ArrayList<Task>();
-        List<Task> restList = new ArrayList<Task>();
-
         for (Task task : tasks) {
 
             if (task.isCompleted()) {
                 mCompletedList.add(task);
-            } else if (task.isImportant()) {
-                important.add(task);
-            } else {
-                normal.add(task);
-            }
-
-        }
-
-        for (Task task : important) {
-
-            if (task.getDate().compareTo(today) == 0) {
+            } else if (task.getDate().compareTo(today) == 0 && task.getDate().before(today)) {
                 mTodayList.add(task);
             } else if (task.getDate().compareTo(tomorrow) == 0) {
                 mTomorrowList.add(task);
             } else if (task.getDate().after(tomorrow)) {
                 mUpcomingList.add(task);
-            } else {
-                restList.add(task);
             }
-
         }
-
-        for (Task task : normal) {
-
-            if (task.getDate().compareTo(today) == 0) {
-                mTodayList.add(task);
-            } else if (task.getDate().compareTo(tomorrow) == 0) {
-                mTomorrowList.add(task);
-            } else if (task.getDate().after(tomorrow)) {
-                mUpcomingList.add(task);
-            } else {
-                restList.add(task);
-            }
-
-        }
-
-        for (Task task : restList) {
-            task.setImportant(true);
-            mTodayList.add(task);
-        }
-
     }
 
     /**
@@ -335,56 +298,35 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         ((TextView) view.findViewById(R.id.taskText)).setText(title);
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-        String currentDate = formatter.format(getChild(groupPosition, childPosition).getDate().getTime());
+        String currentDate = formatter.format(getChild(groupPosition, childPosition).getDate().getTimeInMillis());
 
-        Calendar today = Calendar.getInstance();
-
-        today.set(Calendar.HOUR_OF_DAY, 0);
-        today.set(Calendar.MINUTE, 0);
-        today.set(Calendar.SECOND, 0);
-        today.set(Calendar.MILLISECOND, 0);
-
-        String due = "";
-
-        if (getChild(groupPosition, childPosition).getDate().compareTo(today) < 0) {
-            due = "(DUE) ";
-        }
-
-        ((TextView) view.findViewById(R.id.taskText)).setText(due + getChild(groupPosition, childPosition).getTitle() + " (" + currentDate + ")");
+        ((TextView) view.findViewById(R.id.taskText)).setText(getChild(groupPosition, childPosition).getTitle() + " (" + currentDate + ")");
 
         TextView taskTitle = (TextView) view.findViewById(R.id.taskText);
         ImageView taskDone = (ImageView) view.findViewById(R.id.taskDone);
 
         if (getChild(groupPosition, childPosition).isCompleted()) {
             taskDone.setImageResource(R.drawable.done);
-            taskTitle.setTypeface(Typeface.DEFAULT, Typeface.ITALIC);
+
+            if (getChild(groupPosition, childPosition).isImportant()) {
+                taskTitle.setTypeface(Typeface.DEFAULT, Typeface.BOLD_ITALIC);
+            } else {
+                taskTitle.setTypeface(Typeface.DEFAULT, Typeface.ITALIC);
+            }
             taskTitle.setPaintFlags(taskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         } else {
             taskDone.setImageResource(R.drawable.undone);
-            taskTitle.setTypeface(Typeface.DEFAULT, Typeface.NORMAL);
+            if (getChild(groupPosition, childPosition).isImportant()) {
+                taskTitle.setTypeface(Typeface.DEFAULT, Typeface.ITALIC);
+            } else {
+                taskTitle.setTypeface(Typeface.DEFAULT, Typeface.NORMAL);
+            }
             taskTitle.setPaintFlags(taskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
         }
 
         Button catColour = (Button) view.findViewById(R.id.task_category_colour);
         catColour.setBackgroundColor(mTaskManager.getCategoryById(getChild(groupPosition, childPosition).getCatId()).getColour());
-
-        if (getChild(groupPosition, childPosition).isImportant() && (getChild(groupPosition, childPosition).isCompleted())) {
-            taskTitle.setTypeface(taskTitle.getTypeface(), Typeface.BOLD_ITALIC);
-        }
-
-        if (getChild(groupPosition, childPosition).isImportant() && (!getChild(groupPosition, childPosition).isCompleted())) {
-            taskTitle.setTypeface(taskTitle.getTypeface(), Typeface.BOLD);
-        }
-
-        if (!getChild(groupPosition, childPosition).isImportant() && (!getChild(groupPosition, childPosition).isCompleted())) {
-            taskTitle.setTypeface(taskTitle.getTypeface(), Typeface.NORMAL);
-        }
-
-        if (!getChild(groupPosition, childPosition).isImportant() && (getChild(groupPosition, childPosition).isCompleted())) {
-            taskTitle.setTypeface(taskTitle.getTypeface(), Typeface.ITALIC);
-        }
-
 
         return view;
 

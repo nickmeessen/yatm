@@ -32,8 +32,9 @@ import java.util.*;
 public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
 
     private SQLiteDatabase database;
-    private static final String CATEGORIES_TABLE = "categories", TASKS_TABLE = "tasks";
 
+    private static final String CATEGORIES_TABLE = "categories";
+    private static final String TASKS_TABLE = "tasks";
     private static final String DATABASE_NAME = "yatm.db";
     private static final int DATABASE_VERSION = 1;
 
@@ -85,8 +86,6 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
     public TaskManager(MainActivity activity, Long categoryID) {
 
         super(activity, DATABASE_NAME, null, DATABASE_VERSION);
-
-        simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
         open();
 
@@ -166,7 +165,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
      */
     private void retrieveAllTasks() {
 
-        Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, null, null, null, null, null);
+        Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, null, null, null, null, TCOLUMN_IMPORTANT + "DESC");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
