@@ -23,8 +23,6 @@ import nl.enterprisecoding.android.sufficient.models.Task;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static java.util.Calendar.*;
-
 /**
  * TaskManager Class
  * <p/>
@@ -190,60 +188,13 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
 
         Task task = new Task();
 
-        String[] taskDateString = cursor.getString(cursor.getColumnIndex(TCOLUMN_DATE)).split("-");
-
-        Calendar cal = Calendar.getInstance();
-
-        switch (Integer.parseInt(taskDateString[1])) {
-            case 1:
-                cal.set(Integer.parseInt(taskDateString[0]), JANUARY, Integer.parseInt(taskDateString[2]));
-                break;
-            case 2:
-                cal.set(Integer.parseInt(taskDateString[0]), FEBRUARY, Integer.parseInt(taskDateString[2]));
-                break;
-            case 3:
-                cal.set(Integer.parseInt(taskDateString[0]), MARCH, Integer.parseInt(taskDateString[2]));
-                break;
-            case 4:
-                cal.set(Integer.parseInt(taskDateString[0]), APRIL, Integer.parseInt(taskDateString[2]));
-                break;
-            case 5:
-                cal.set(Integer.parseInt(taskDateString[0]), MAY, Integer.parseInt(taskDateString[2]));
-                break;
-            case 6:
-                cal.set(Integer.parseInt(taskDateString[0]), JUNE, Integer.parseInt(taskDateString[2]));
-                break;
-            case 7:
-                cal.set(Integer.parseInt(taskDateString[0]), JULY, Integer.parseInt(taskDateString[2]));
-                break;
-            case 8:
-                cal.set(Integer.parseInt(taskDateString[0]), AUGUST, Integer.parseInt(taskDateString[2]));
-                break;
-            case 9:
-                cal.set(Integer.parseInt(taskDateString[0]), SEPTEMBER, Integer.parseInt(taskDateString[2]));
-                break;
-            case 10:
-                cal.set(Integer.parseInt(taskDateString[0]), OCTOBER, Integer.parseInt(taskDateString[2]));
-                break;
-            case 11:
-                cal.set(Integer.parseInt(taskDateString[0]), NOVEMBER, Integer.parseInt(taskDateString[2]));
-                break;
-            case 12:
-                cal.set(Integer.parseInt(taskDateString[0]), DECEMBER, Integer.parseInt(taskDateString[2]));
-                break;
-            default:
-                throw new IllegalArgumentException("Unable to parse month.");
-        }
-
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 0);
+        Calendar taskDate = Calendar.getInstance();
+        taskDate.setTimeInMillis(cursor.getInt(cursor.getColumnIndex(TCOLUMN_DATE)));
 
         task.setId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_ID)));
         task.setCatId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_CATID)));
         task.setTitle(cursor.getString(cursor.getColumnIndex(TCOLUMN_TASK)));
-        task.setDate(cal);
+        task.setDate(taskDate);
 
         if (cursor.getInt(cursor.getColumnIndex(TCOLUMN_IMPORTANT)) == 1) {
             task.setImportant(true);

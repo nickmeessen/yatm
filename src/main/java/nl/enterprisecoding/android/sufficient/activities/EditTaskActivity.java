@@ -25,6 +25,7 @@ import nl.enterprisecoding.android.sufficient.models.Task;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -72,7 +73,7 @@ public class EditTaskActivity extends MainActivity {
 
         long selectedTaskID = getIntent().getExtras().getLong(TaskActivity.TASK_ID, 0);
 
-        if (selectedTaskID > 0) {
+        if (selectedTaskID != 0) {
 
             mActionBar.setTitle(R.string.action_edit);
 
@@ -84,7 +85,7 @@ public class EditTaskActivity extends MainActivity {
             mTaskDate = selectedTask.getDate();
 
             mTaskTitleInput = (EditText) findViewById(R.id.task_title);
-            mTaskTitleInput.setText(selectedTask.getTitle());
+            mTaskTitleInput.setHint(selectedTask.getTitle());
 
             mTaskSetDateButtonClickHandler.setActivity(this);
             mTaskSetDateButton.setOnClickListener(mTaskSetDateButtonClickHandler);
@@ -158,17 +159,18 @@ public class EditTaskActivity extends MainActivity {
      * Saves a task.
      */
     private void saveTask() {
-        boolean mDataIsValidated = true;
-        int mSelectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
-        long mSelectedCategoryId = mCategoriesArray.get(mSelectedCategoryIndex).getID();
+        boolean validData = true;
+        int selectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
+        long selectedCategoryID = mCategoriesArray.get(selectedCategoryIndex).getID();
         if (mTaskTitleInput.getText().toString().isEmpty()) {
-            mDataIsValidated = false;
-            mTaskTitleInput.setBackgroundColor(getResources().getColor(R.color.red));
+            mTaskTitleInput.setText(mTaskTitleInput.getHint());
+//            validData = false;
+//            mTaskTitleInput.setBackgroundColor(getResources().getColor(R.color.red));
         }
 
-        if (mDataIsValidated) {
-            mTaskManager.createTask(mTaskTitleInput.getText().toString(), mSelectedCategoryId, mTaskDate, mTaskImportantCheckBox.isChecked());
-            startTaskActivity(mSelectedCategoryId);
+        if (validData) {
+            mTaskManager.createTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked());
+            startTaskActivity(selectedCategoryID);
         } else {
             Toast.makeText(this, R.string.toast_invalid_data, Toast.LENGTH_SHORT).show();
         }
@@ -222,7 +224,7 @@ public class EditTaskActivity extends MainActivity {
      * @param year       The wanted year
      */
     private void setTaskDate(int dayOfMonth, int month, int year) {
-        mTaskDate.set(year, month, dayOfMonth);
+        mTaskDate.set(year, month, dayOfMonth, 0, 0, 0);
         updateDateButtonText();
     }
 
@@ -230,7 +232,8 @@ public class EditTaskActivity extends MainActivity {
      * Updates the text of the date Button so it matches the selected date
      */
     private void updateDateButtonText() {
-        mTaskSetDateButton.setText(mTaskDate.get(Calendar.DAY_OF_MONTH) + "/" + (mTaskDate.get(Calendar.MONTH) + 1) + "/" + mTaskDate.get(Calendar.YEAR));
+        String month = new DateFormatSymbols().getMonths()[mTaskDate.get(Calendar.MONTH) - 1];
+        mTaskSetDateButton.setText(mTaskDate.get(Calendar.DAY_OF_MONTH) + " " + month + " " + mTaskDate.get(Calendar.YEAR));
     }
 
     /**
