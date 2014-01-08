@@ -16,6 +16,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import nl.enterprisecoding.android.sufficient.R;
@@ -56,6 +57,9 @@ public class EditCategoryActivity extends MainActivity {
 
         mCategoryTitleInput = (EditText) findViewById(R.id.category_title);
         mCategoryTitleInput.setText(mCategory.getTitle());
+        mCategoryTitleInput.requestFocus();
+        mCategoryTitleInput.setSelection(mCategoryTitleInput.getText().length());
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         mCategoryColour = mCategory.getColour();
 
         Button mEditCategoryButton = (Button) findViewById(R.id.edit_category_button);
@@ -102,16 +106,5 @@ public class EditCategoryActivity extends MainActivity {
                 mColourDialog.show();
             }
         });
-    }
-
-    /**
-     * Create a button with a predefined inputColour.
-     *
-     * @param bgShape     the shape.
-     * @param buttonId    the button ID.
-     * @param inputColour the inputColour, can be 0 then a random inputColour will be generated.
-     */
-    protected void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog) {
-        super.createColourButton(bgShape, buttonId, inputColour, colourDialog);
     }
 }
