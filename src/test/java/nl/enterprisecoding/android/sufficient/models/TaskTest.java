@@ -8,7 +8,6 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.Calendar;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(RobolectricTestRunner.class)
@@ -69,12 +68,4 @@ public class TaskTest {
 
         assertEquals(task.isImportant(), completed);
     }
-
-//    @Test
-//    public void Test_toString() {
-//        String Title = "Test";
-//        task.setTitle(Title);
-//
-//        assertEquals(task.toString(), "Test");
-//    }
 }
