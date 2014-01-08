@@ -16,17 +16,12 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.*;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
-import android.widget.Button;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Category;
 
-import java.awt.*;
 import java.util.List;
 
 /**
@@ -41,8 +36,6 @@ public class CategoryActivity extends MainActivity {
     public static final String COLOUR_FORMAT = "#%02x%02x%02x";
 
     private Dialog mColourDialog;
-    private int mChosenColour;
-    private int mCategoryColour;
     private String[] mSpringerArray;
     private Spinner catInput;
     private long mSelectedCategoryId;
@@ -142,11 +135,11 @@ public class CategoryActivity extends MainActivity {
     private void addCategory(int defaultColour) {
         final EditText editText = (EditText) findViewById(R.id.newCategory);
         String categoryName = editText.getText().toString();
-        mChosenColour = getCategoryColour();
-        if(mChosenColour == 0) {
-            mChosenColour = defaultColour;
+        int chosenColour = getCategoryColour();
+        if (chosenColour == 0) {
+            chosenColour = defaultColour;
         }
-        mCategoryColour = Color.parseColor(String.format(COLOUR_FORMAT, Color.red(mChosenColour), Color.green(mChosenColour), Color.blue(mChosenColour)));
+        int categoryColour = Color.parseColor(String.format(COLOUR_FORMAT, Color.red(chosenColour), Color.green(chosenColour), Color.blue(chosenColour)));
 
         if (categoryName.trim().isEmpty()) {
             makeToast(getResources().getString(R.string.category_name_empty_error), false);
@@ -155,7 +148,7 @@ public class CategoryActivity extends MainActivity {
         } else {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-            mTaskManager.createCategory(categoryName, mCategoryColour);
+            mTaskManager.createCategory(categoryName, categoryColour);
             editText.setText("");
             makeToast(getResources().getString(R.string.category_added), false);
             generateColourShape();
@@ -173,9 +166,9 @@ public class CategoryActivity extends MainActivity {
     /**
      * Creates a button with a certain colour within the colour choosing dialog.
      *
-     * @param bgShape     The shape that is clicked
-     * @param buttonId    The id of the button that shows the colour
-     * @param inputColour The colour the button will have, 0 is a random colour
+     * @param bgShape      The shape that is clicked
+     * @param buttonId     The id of the button that shows the colour
+     * @param inputColour  The colour the button will have, 0 is a random colour
      * @param colourDialog The Dialog that will display the colours
      */
     @Override
