@@ -108,7 +108,7 @@
             android:choiceMode="singleChoice"
             android:divider="@color/head_bg"
             android:dividerHeight="0.5dp"
-            android:background="@color/red"
+            android:background="@color/list_bg2"
             >
 
     </ListView>
