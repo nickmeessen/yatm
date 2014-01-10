@@ -32,8 +32,12 @@ import roboguice.activity.RoboActivity;
 
 public class MainActivity extends RoboActivity {
 
+    public static final String CATEGORY_ID = "categoryID";
+
     protected TaskManager mTaskManager;
     protected ActionBar mActionBar;
+
+    protected long mCurrentCategoryID;
     protected int mFinalColour;
 
     /**
@@ -52,6 +56,10 @@ public class MainActivity extends RoboActivity {
         mActionBar.setDisplayShowHomeEnabled(false);
         mActionBar.setDisplayShowTitleEnabled(true);
         mActionBar.setDisplayUseLogoEnabled(false);
+
+        mCurrentCategoryID = getIntent().getLongExtra(CATEGORY_ID, 0);
+
+        mTaskManager = new TaskManager(this, mCurrentCategoryID);
 
     }
 
@@ -81,7 +89,7 @@ public class MainActivity extends RoboActivity {
     /**
      * Shows a Toast
      *
-     * @param content      The String that defines the text of the Toast
+     * @param content The String that defines the text of the Toast
      */
     protected void makeToast(String content) {
         Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
@@ -136,14 +144,22 @@ public class MainActivity extends RoboActivity {
      * @return returns the random colour
      */
     protected int[] generateRandomColour() {
-        int r = (int) (255 * Math.random());
-        int g = (int) (255 * Math.random());
-        int b = (int) (255 * Math.random());
-        int maxColorValue = 100;
+        int receiveMaxValue = (int) (2 * Math.random());
+        int rValue = 255;
+        int gValue = 255;
+        int bValue = 255;
 
-        if (r > maxColorValue || g > maxColorValue || b > maxColorValue) {
-            generateRandomColour();
+        if(receiveMaxValue == 0) {
+            rValue = 100;
+        } else if (receiveMaxValue == 1) {
+            gValue = 100;
+        } else {
+            bValue = 100;
         }
+
+        int r = (int) (rValue * Math.random());
+        int g = (int) (gValue * Math.random());
+        int b = (int) (bValue * Math.random());
 
         int color = Color.rgb(r, g, b);
 

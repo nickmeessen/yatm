@@ -106,13 +106,14 @@ public class EditTaskActivity extends MainActivity {
     private void saveTask() {
         boolean validData = true;
         int selectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
-        long selectedCategoryID = mTaskManager.getCategories().get(selectedCategoryIndex).getID();
+        long selectedCategoryID = mTaskManager.getCategories().get(selectedCategoryIndex).getId();
+
         if (mTaskTitleInput.getText().toString().isEmpty()) {
             mTaskTitleInput.setText(mTaskTitleInput.getHint());
         }
 
         if (validData) {
-            mTaskManager.editTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked(), false, mTaskManager.getTask(mSelectedTaskId).getID());
+            mTaskManager.updateTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked(), false, mSelectedTaskId);
             startTaskActivity(selectedCategoryID);
         } else {
             makeToast(getString(R.string.toast_invalid_data));
@@ -144,10 +145,10 @@ public class EditTaskActivity extends MainActivity {
      */
     private int findIndexByCategoryId(long categoryId) {
         int index = 0;
-
         int count = 0;
+
         for (Category cat : mTaskManager.getCategories()) {
-            if (cat.getID() == categoryId) {
+            if (cat.getId() == categoryId) {
                 index = count;
                 break;
             }

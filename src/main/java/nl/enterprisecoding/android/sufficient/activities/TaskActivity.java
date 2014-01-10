@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.R;
-import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
 
@@ -31,10 +30,8 @@ import java.util.List;
  */
 public class TaskActivity extends MainActivity {
 
-    private Long mCategoryID;
     private long mSelectedTaskId;
     public static final String TASK_ID = "taskID";
-    public static final String CATEGORY_ID = "categoryID";
 
     /**
      * Called when the activity is starting.
@@ -62,13 +59,9 @@ public class TaskActivity extends MainActivity {
 
         mActionBar.setTitle(R.string.title_tasks);
 
-        mCategoryID = getIntent().getLongExtra(CATEGORY_ID, 0);
-
-        mTaskManager = new TaskManager(this, mCategoryID);
-
-        if (mCategoryID != 0) {
-            mActionBar.setTitle(mTaskManager.getCategoryById(mCategoryID).getTitle());
-            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mCategoryID).getColour()));
+        if (mCurrentCategoryID != 0) {
+            mActionBar.setTitle(mTaskManager.getCategoryById(mCurrentCategoryID).getTitle());
+            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mCurrentCategoryID).getColour()));
         }
     }
 
@@ -100,12 +93,12 @@ public class TaskActivity extends MainActivity {
             if (mSelectedTaskId == 0) {
                 Toast.makeText(this, R.string.toast_error, Toast.LENGTH_SHORT).show();
             } else {
-                Intent mEditTaskActivity = new Intent(this, EditTaskActivity.class);
-                mEditTaskActivity.putExtra(TASK_ID, mSelectedTaskId);
-                startActivity(mEditTaskActivity);
+                Intent intent = new Intent(this, EditTaskActivity.class);
+                intent.putExtra(TASK_ID, mSelectedTaskId);
+                startActivity(intent);
             }
         } else if (item.getTitle().equals(getString(R.string.action_delete))) {
-            mTaskManager.deleteTask(mTaskManager.getTask(mSelectedTaskId));
+            mTaskManager.deleteTask(mSelectedTaskId);
         }
 
         return true;
@@ -160,7 +153,7 @@ public class TaskActivity extends MainActivity {
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         } else {
-            long newTaskID = mTaskManager.createTask("New Task", catList.get(0).getID(), Calendar.getInstance(), false);
+            long newTaskID = mTaskManager.createTask("New Task", catList.get(0).getId(), Calendar.getInstance(), false);
 
             Intent intent = new Intent(this, EditTaskActivity.class);
             intent.putExtra(TASK_ID, newTaskID);
@@ -182,7 +175,7 @@ public class TaskActivity extends MainActivity {
      */
     @Override
     public void onBackPressed() {
-        if (mCategoryID != 0) {
+        if (mCurrentCategoryID != 0) {
 
             Intent intent = new Intent(this, TaskActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

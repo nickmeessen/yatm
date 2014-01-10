@@ -72,6 +72,35 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+            android:id="@+id/all_cats"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:orientation="horizontal"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            >
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:typeface="sans"
+                android:text="@string/all_categories"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                android:textColor="@color/category_text"
+                android:clickable="false"
+                android:textIsSelectable="true"
+                android:maxLines="1"
+                android:paddingTop="25dp"
+                android:paddingBottom="25dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:layout_centerVertical="true"
+                />
+
+    </RelativeLayout>
+
     <ListView
             android:id="@+id/cat_list"
             android:layout_width="fill_parent"
@@ -79,5 +108,10 @@
             android:choiceMode="singleChoice"
             android:divider="@color/head_bg"
             android:dividerHeight="0.5dp"
-            android:background="@color/list_bg1"/>
+            android:background="@color/list_bg1"
+            >
+
+    </ListView>
+
+
 </LinearLayout>
