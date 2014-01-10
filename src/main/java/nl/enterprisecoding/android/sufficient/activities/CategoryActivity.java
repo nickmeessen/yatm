@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
@@ -68,11 +69,7 @@ public class CategoryActivity extends MainActivity {
              */
             @Override
             public void onClick(View v) {
-                mColourDialog = new Dialog(CategoryActivity.this);
-                mColourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                mColourDialog.setContentView(R.layout.colour_dialog);
-                addColourButtons();
-                mColourDialog.show();
+                createColourDialog(mBgShape);
             }
         });
 
@@ -108,22 +105,6 @@ public class CategoryActivity extends MainActivity {
             }
         });
 
-    }
-
-    /**
-     * Adds the colour buttons to the given shape.
-     */
-    private void addColourButtons() {
-        createColourButton(mBgShape, R.id.colour_purple_button, R.color.purple, mColourDialog);
-        createColourButton(mBgShape, R.id.colour_blue_button, R.color.blue, mColourDialog);
-        createColourButton(mBgShape, R.id.colour_green_button, R.color.green, mColourDialog);
-        createColourButton(mBgShape, R.id.colour_orange_button, R.color.orange, mColourDialog);
-        createColourButton(mBgShape, R.id.color_red_button, R.color.red, mColourDialog);
-        createColourButton(mBgShape, R.id.colour_random0_button, 0, mColourDialog);
-        createColourButton(mBgShape, R.id.colour_random1_button, 0, mColourDialog);
-        createColourButton(mBgShape, R.id.colour_random2_button, 0, mColourDialog);
-        createColourButton(mBgShape, R.id.colour_random3_button, 0, mColourDialog);
-        createColourButton(mBgShape, R.id.colour_random4_button, 0, mColourDialog);
     }
 
     /**
