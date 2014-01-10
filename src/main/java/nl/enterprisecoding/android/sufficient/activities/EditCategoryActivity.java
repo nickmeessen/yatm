@@ -100,18 +100,7 @@ public class EditCategoryActivity extends MainActivity {
              */
             @Override
             public void onClick(View v) {
-                mColourDialog.setContentView(R.layout.colour_dialog);
-                createColourButton(bgShape, R.id.colour_blue_button, R.color.blue, mColourDialog);
-                createColourButton(bgShape, R.id.colour_purple_button, R.color.purple, mColourDialog);
-                createColourButton(bgShape, R.id.colour_green_button, R.color.green, mColourDialog);
-                createColourButton(bgShape, R.id.colour_orange_button, R.color.orange, mColourDialog);
-                createColourButton(bgShape, R.id.color_red_button, R.color.red, mColourDialog);
-                createColourButton(bgShape, R.id.colour_random0_button, 0, mColourDialog);
-                createColourButton(bgShape, R.id.colour_random1_button, 0, mColourDialog);
-                createColourButton(bgShape, R.id.colour_random2_button, 0, mColourDialog);
-                createColourButton(bgShape, R.id.colour_random3_button, 0, mColourDialog);
-                createColourButton(bgShape, R.id.colour_random4_button, 0, mColourDialog);
-                mColourDialog.show();
+                createColourDialog(bgShape);
             }
         });
 

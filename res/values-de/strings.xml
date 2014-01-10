@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">YATM (Ausreichend)</string>
+
     <string name="title_tasks">Aufgaben</string>
 
     <string name="action_add">Aufgabe Hinzufügen</string>
@@ -28,6 +30,9 @@
     <string name="toast_no_category">Sie müssen sich zuerst Kategorie hinzufügen</string>
 
     <string name="new_category">Neue Kategorie</string>
+
+    <string name="visibility">Sichtbarkeit</string>
+    <string name="task_done_icon">TaskDoneIcon</string>
 
     <string name="delete_category_text">Bewegen Sie Aufgaben zur Kategorie:</string>
 
