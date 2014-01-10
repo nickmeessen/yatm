@@ -82,16 +82,9 @@ public class MainActivity extends RoboActivity {
      * Shows a Toast
      *
      * @param content      The String that defines the text of the Toast
-     * @param showDuration The duration the Toast will be shown: true = long, false = short
      */
-    protected void makeToast(String content, boolean showDuration) {
-        int duration;
-        if (showDuration) {
-            duration = Toast.LENGTH_LONG;
-        } else {
-            duration = Toast.LENGTH_SHORT;
-        }
-        Toast.makeText(this, content, duration).show();
+    protected void makeToast(String content) {
+        Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
     }
 
     /**

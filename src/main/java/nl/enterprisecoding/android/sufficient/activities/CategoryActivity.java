@@ -129,7 +129,6 @@ public class CategoryActivity extends MainActivity {
     /**
      * Adds a new category and checks for cases in which it isn't allowed to add a category
      *
-     * @param defaultColour this represents the default colour a category will get when there is not a colour selected
      */
     private void addCategory() {
         final EditText editText = (EditText) findViewById(R.id.newCategory);
@@ -142,15 +141,15 @@ public class CategoryActivity extends MainActivity {
         int categoryColour = Color.parseColor(String.format("#%02x%02x%02x", Color.red(chosenColour), Color.green(chosenColour), Color.blue(chosenColour)));
 
         if (categoryName.trim().isEmpty()) {
-            makeToast(getString(R.string.category_name_empty_error), false);
+            makeToast(getString(R.string.category_name_empty_error));
         } else if (mTaskManager.getCategoryByTitle(categoryName) != null) {
-            makeToast(getString(R.string.toast_category_exists), false);
+            makeToast(getString(R.string.toast_category_exists));
         } else {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
             mTaskManager.createCategory(categoryName, categoryColour);
             editText.setText("");
-            makeToast(getString(R.string.category_added), false);
+            makeToast(getString(R.string.category_added));
             generateColourShape();
         }
     }
