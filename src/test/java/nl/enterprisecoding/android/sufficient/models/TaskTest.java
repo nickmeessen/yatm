@@ -30,7 +30,7 @@ public class TaskTest {
     @Test
     public void Test_setCatIdGetCatId() {
         int CatId = 3;
-        task.setCatId(CatId);
+        task.setCategoryId(CatId);
 
         assertEquals(task.getCatId(), CatId);
     }

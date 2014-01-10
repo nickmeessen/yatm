@@ -367,7 +367,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
             task.setCompleted(true);
         }
 
-        mTaskManager.updateTask(task.getTitle(), task.getCatId(), task.getDate(), task.isImportant(), task.isCompleted(), task.getId());
+        mTaskManager.updateTask(task.getTitle(), task.getCatId(), task.isImportant(), id);
 
         notifyDataSetChanged();
 
