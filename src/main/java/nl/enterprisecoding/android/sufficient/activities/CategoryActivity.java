@@ -30,8 +30,6 @@ import nl.enterprisecoding.android.sufficient.R;
  */
 public class CategoryActivity extends MainActivity {
 
-
-    private Dialog mColourDialog;
     private String[] mSpinnerArray;
     private Spinner catInput;
     private long mSelectedCategoryId;

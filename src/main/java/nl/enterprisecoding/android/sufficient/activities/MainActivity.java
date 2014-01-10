@@ -41,6 +41,7 @@ public class MainActivity extends RoboActivity {
 
     protected long mCurrentCategoryID;
     protected int mFinalColour;
+    protected Dialog mColourDialog;
 
     /**
      * Called when the activity is starting.
@@ -175,24 +176,33 @@ public class MainActivity extends RoboActivity {
      */
     protected void createColourDialog(GradientDrawable bgShape) {
         int bgColour = getResources().getColor(R.color.action_bg);
-        Dialog colourDialog = new Dialog(this);
+        mColourDialog = new Dialog(this);
 
-        colourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        colourDialog.setContentView(R.layout.colour_dialog);
-        colourDialog.findViewById(R.id.colour_dialog).setBackgroundColor(bgColour);
+        mColourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mColourDialog.setContentView(R.layout.colour_dialog);
+        mColourDialog.findViewById(R.id.colour_dialog).setBackgroundColor(bgColour);
 
-        createColourButton(bgShape, R.id.colour_purple_button, R.color.purple, colourDialog);
-        createColourButton(bgShape, R.id.colour_blue_button, R.color.blue, colourDialog);
-        createColourButton(bgShape, R.id.colour_green_button, R.color.green, colourDialog);
-        createColourButton(bgShape, R.id.colour_orange_button, R.color.orange, colourDialog);
-        createColourButton(bgShape, R.id.color_red_button, R.color.red, colourDialog);
-        createColourButton(bgShape, R.id.colour_random0_button, 0, colourDialog);
-        createColourButton(bgShape, R.id.colour_random1_button, 0, colourDialog);
-        createColourButton(bgShape, R.id.colour_random2_button, 0, colourDialog);
-        createColourButton(bgShape, R.id.colour_random3_button, 0, colourDialog);
-        createColourButton(bgShape, R.id.colour_random4_button, 0, colourDialog);
+        createColourButton(bgShape, R.id.colour_purple_button, R.color.purple, mColourDialog);
+        createColourButton(bgShape, R.id.colour_blue_button, R.color.blue, mColourDialog);
+        createColourButton(bgShape, R.id.colour_green_button, R.color.green, mColourDialog);
+        createColourButton(bgShape, R.id.colour_orange_button, R.color.orange, mColourDialog);
+        createColourButton(bgShape, R.id.color_red_button, R.color.red, mColourDialog);
+        createColourButton(bgShape, R.id.colour_random0_button, 0, mColourDialog);
+        createColourButton(bgShape, R.id.colour_random1_button, 0, mColourDialog);
+        createColourButton(bgShape, R.id.colour_random2_button, 0, mColourDialog);
+        createColourButton(bgShape, R.id.colour_random3_button, 0, mColourDialog);
+        createColourButton(bgShape, R.id.colour_random4_button, 0, mColourDialog);
 
-        colourDialog.show();
+        mColourDialog.show();
+    }
+
+    /**
+     * Returns the colourDialog that is created by createColourDialog
+     *
+     * @return The colourDialog that is requested
+     */
+    protected Dialog getColourDialog() {
+        return mColourDialog;
     }
 
     /**
