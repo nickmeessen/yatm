@@ -30,7 +30,6 @@ public class EditCategoryActivity extends MainActivity {
     private int mCategoryColour;
     private EditText mCategoryTitleInput;
     private long mSelectedCategoryId;
-    private Dialog mColourDialog;
 
     /**
      * Called when the activity is starting.
@@ -46,9 +45,6 @@ public class EditCategoryActivity extends MainActivity {
         setContentView(R.layout.edit_category_list);
         mActionBar.setTitle(R.string.action_edit_category);
         mSelectedCategoryId = getIntent().getExtras().getLong("CategoryID", 0);
-
-        mColourDialog = new Dialog(EditCategoryActivity.this);
-        mColourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         final Category category = mTaskManager.getCategoryById(mSelectedCategoryId);
         getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedCategoryId).getColour()));
@@ -104,6 +100,7 @@ public class EditCategoryActivity extends MainActivity {
             }
         });
 
+        mColourDialog = getColourDialog();
         mColourDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             /**
              * Handles the dismiss of the colour dialog and changes the actionbar colour
