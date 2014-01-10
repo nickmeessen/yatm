@@ -147,7 +147,7 @@ public class TaskActivity extends MainActivity {
      */
     private void startEditTaskActivity() {
 
-        if (mTaskManager.getCategories().size() == 1) {
+        if (mTaskManager.getCategories().size() == 0) {
             makeToast(getString(R.string.toast_no_category));
 
             Intent intent = new Intent(this, CategoryActivity.class);
