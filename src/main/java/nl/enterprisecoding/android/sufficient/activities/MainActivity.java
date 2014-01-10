@@ -15,6 +15,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
@@ -164,6 +165,30 @@ public class MainActivity extends RoboActivity {
         int color = Color.rgb(r, g, b);
 
         return new int[]{color, r, g, b};
+    }
+
+    /**
+     * Creates a dialog which displays available colours
+     *
+     * @param bgShape The shape that will display the chosen colour
+     */
+    protected void createColourDialog(GradientDrawable bgShape) {
+        Dialog colourDialog = new Dialog(this);
+        colourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        colourDialog.setContentView(R.layout.colour_dialog);
+
+        createColourButton(bgShape, R.id.colour_purple_button, R.color.purple, colourDialog);
+        createColourButton(bgShape, R.id.colour_blue_button, R.color.blue, colourDialog);
+        createColourButton(bgShape, R.id.colour_green_button, R.color.green, colourDialog);
+        createColourButton(bgShape, R.id.colour_orange_button, R.color.orange, colourDialog);
+        createColourButton(bgShape, R.id.color_red_button, R.color.red, colourDialog);
+        createColourButton(bgShape, R.id.colour_random0_button, 0, colourDialog);
+        createColourButton(bgShape, R.id.colour_random1_button, 0, colourDialog);
+        createColourButton(bgShape, R.id.colour_random2_button, 0, colourDialog);
+        createColourButton(bgShape, R.id.colour_random3_button, 0, colourDialog);
+        createColourButton(bgShape, R.id.colour_random4_button, 0, colourDialog);
+
+        colourDialog.show();
     }
 
     /**
