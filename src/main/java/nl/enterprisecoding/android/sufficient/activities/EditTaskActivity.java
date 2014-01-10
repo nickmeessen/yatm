@@ -104,7 +104,6 @@ public class EditTaskActivity extends MainActivity {
      * Saves a task.
      */
     private void saveTask() {
-        boolean validData = true;
         int selectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
         long selectedCategoryID = mTaskManager.getCategories().get(selectedCategoryIndex).getId();
 
@@ -112,12 +111,8 @@ public class EditTaskActivity extends MainActivity {
             mTaskTitleInput.setText(mTaskTitleInput.getHint());
         }
 
-        if (validData) {
-            mTaskManager.updateTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked(), false, mSelectedTaskId);
-            startTaskActivity(selectedCategoryID);
-        } else {
-            makeToast(getString(R.string.toast_invalid_data));
-        }
+        mTaskManager.updateTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked(), false, mSelectedTaskId);
+        startTaskActivity(selectedCategoryID);
     }
 
     /**
