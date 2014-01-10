@@ -99,7 +99,7 @@ public class Category {
      * @return boolean based on if this category is visible or not.
      */
     public boolean isVisible() {
-        return (mVisible == 1);
+        return mVisible == 1;
     }
 
     /**

@@ -208,7 +208,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
      */
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return mGroups.get(groupPosition).get(childPosition).getID();
+        return mGroups.get(groupPosition).get(childPosition).getId();
     }
 
     /**
@@ -325,7 +325,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         }
 
         Button catColour = (Button) view.findViewById(R.id.task_category_colour);
-        catColour.setBackgroundColor(mTaskManager.getCategoryById(getChild(groupPosition, childPosition).getCatID()).getColour());
+        catColour.setBackgroundColor(mTaskManager.getCategoryById(getChild(groupPosition, childPosition).getCatId()).getColour());
 
         return view;
 
@@ -367,7 +367,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
             task.setCompleted(true);
         }
 
-        mTaskManager.updateTask(task.getTitle(), task.getCatID(), task.getDate(), task.isImportant(), task.isCompleted(), task.getID());
+        mTaskManager.updateTask(task.getTitle(), task.getCatId(), task.getDate(), task.isImportant(), task.isCompleted(), task.getId());
 
         notifyDataSetChanged();
 

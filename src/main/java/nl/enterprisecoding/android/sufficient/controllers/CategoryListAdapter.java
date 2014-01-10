@@ -149,5 +149,5 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
         mActivity.startActivity(intent);
         mActivity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
-    
+
 }

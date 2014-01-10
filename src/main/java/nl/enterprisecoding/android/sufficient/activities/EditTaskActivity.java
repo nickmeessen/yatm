@@ -66,8 +66,8 @@ public class EditTaskActivity extends MainActivity {
 
             mTaskManager = new TaskManager(this, (long) 0);
 
-            mSelectedTaskId = mTaskManager.getTask(selectedTaskID).getID();
-            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mTaskManager.getTask(mSelectedTaskId).getCatID()).getColour()));
+            mSelectedTaskId = mTaskManager.getTask(selectedTaskID).getId();
+            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mTaskManager.getTask(mSelectedTaskId).getCatId()).getColour()));
 
             mTaskDate = mTaskManager.getTask(mSelectedTaskId).getDate();
 
@@ -80,7 +80,8 @@ public class EditTaskActivity extends MainActivity {
             mTaskTitleInput.setHint(mTaskManager.getTask(mSelectedTaskId).getTitle());
 
             initTaskCategorySpinner(mTaskCategorySpinner);
-            mTaskCategorySpinner.setSelection(findIndexByCategoryId(mTaskManager.getTask(mSelectedTaskId).getCatID()));
+
+            mTaskCategorySpinner.setSelection(findIndexByCategoryId(mTaskManager.getTask(mSelectedTaskId).getCatId()));
 
             mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
             mTaskImportantCheckBox.setChecked(mTaskManager.getTask(mSelectedTaskId).isImportant());
