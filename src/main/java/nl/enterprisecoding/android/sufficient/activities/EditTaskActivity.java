@@ -7,8 +7,6 @@
 
 package nl.enterprisecoding.android.sufficient.activities;
 
-import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,7 +16,6 @@ import com.google.inject.Inject;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateButtonClickHandler;
-import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateDialogButtonClickHandler;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
@@ -46,11 +43,8 @@ public class EditTaskActivity extends MainActivity {
 
     @Inject
     private TaskSetDateButtonClickHandler mTaskSetDateButtonClickHandler;
-    @Inject
-    private TaskSetDateDialogButtonClickHandler mTaskSetDateDialogButtonClickHandler;
 
     private long mSelectedTaskId;
-    private Calendar mDateToday;
     private Calendar mTaskDate;
 
     /**
@@ -74,8 +68,6 @@ public class EditTaskActivity extends MainActivity {
 
             mSelectedTaskId = mTaskManager.getTask(selectedTaskID).getID();
             mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mTaskManager.getTask(mSelectedTaskId).getCatID()).getColour()));
-
-            mDateToday = Calendar.getInstance();
 
             mTaskDate = mTaskManager.getTask(mSelectedTaskId).getDate();
 
@@ -172,7 +164,7 @@ public class EditTaskActivity extends MainActivity {
      * @param month      The wanted month
      * @param year       The wanted year
      */
-    private void setTaskDate(int dayOfMonth, int month, int year) {
+    public void setTaskDate(int dayOfMonth, int month, int year) {
         mTaskDate.set(year, month, dayOfMonth);
         updateDateButtonText();
     }
@@ -202,27 +194,11 @@ public class EditTaskActivity extends MainActivity {
     }
 
     /**
-     * Shows DatePicker Dialog.
+     * Get the task date
+     * @return Calendar the task date
      */
-    public void showTaskSetDateDialog() {
-
-        mTaskSetDateDialogButtonClickHandler.setActivity(this);
-
-        DatePickerDialog alert = new DatePickerDialog(this, null, mTaskDate.get(Calendar.YEAR), mTaskDate.get(Calendar.MONTH), mTaskDate.get(Calendar.DAY_OF_MONTH));
-        alert.getDatePicker().setMinDate(mDateToday.getTime().getTime());
-
-        alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.action_change_date), mTaskSetDateDialogButtonClickHandler);
-        alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.action_discard), mTaskSetDateDialogButtonClickHandler);
-
-        alert.show();
+    public Calendar getTaskDate() {
+        return mTaskDate;
     }
 
-    /**
-     * Sets the Task date according to the date picked with the dialog.
-     *
-     * @param dialog the dialog providing the date.
-     */
-    public void setTaskDateFromDialog(DatePickerDialog dialog) {
-        setTaskDate(dialog.getDatePicker().getDayOfMonth(), dialog.getDatePicker().getMonth(), dialog.getDatePicker().getYear());
-    }
 }
