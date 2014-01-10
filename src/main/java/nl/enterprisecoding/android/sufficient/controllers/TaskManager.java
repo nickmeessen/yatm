@@ -260,8 +260,9 @@ public class TaskManager implements ITaskManager {
      */
     private void moveTasks(long originId, long destinationId) {
         List<Task> tasks = getCategoryById(originId).getTasks();
-        for (Task t : tasks) {
-            mDatabaseAdapter.updateTask(t.getTitle(), destinationId, t.getDate(), t.isImportant(), t.isCompleted(), t.getId());
+        for (Task task : tasks) {
+            task.setCategoryId(destinationId);
+            mDatabaseAdapter.updateTask(task);
         }
     }
 
@@ -279,12 +280,7 @@ public class TaskManager implements ITaskManager {
 
         category.setVisible(newVisibility);
 
-        // @todo use
-        mDatabaseAdapter.updateCategory(category.getTitle(), category.getColour(), newVisibility, category.getId());
-        // or use
-//        mDatabaseAdapter.updateCategory(category);
-        // or use
-//        mDatabaseAdapter.updateCategory(null, null, category.isVisible(), null);
+        mDatabaseAdapter.updateCategory(category);
 
         return category.isVisible();
     }
@@ -299,44 +295,52 @@ public class TaskManager implements ITaskManager {
         return mCategoryList.get(id);
     }
 
-    // @todo remove?
-
     /**
-     * Updates a category.
+     * Gets a task by it's ID.
      *
-     * @param s  the new category title
-     * @param c  the new category colour.
-     * @param i  whether the category is visible or not.
-     * @param sc the ID of the category to update
+     * @param id the id of the task to get.
+     * @return task with the id given.
      */
-    @Deprecated
-    public void updateCategory(String s, int c, int i, long sc) {
-        mDatabaseAdapter.updateCategory(s, c, i, sc);
-    }
-
-    /**
-     * Updates a task.
-     *
-     * @param s   the new title of the task to update.
-     * @param cid the new categoryID of the task to update.
-     * @param cal the new date of the task to update.
-     * @param c   wether the task is marked as important or not
-     * @param b   wether the task is marked as completed or not.
-     * @param id  the id of the task to update
-     */
-    @Deprecated
-    public void updateTask(String s, long cid, Calendar cal, boolean c, boolean b, long id) {
-        mDatabaseAdapter.updateTask(s, cid, cal, c, b, id);
-    }
-
-    /**
-     * gets a task
-     *
-     * @param id
-     * @return
-     */
-    @Deprecated
-    public Task getTask(long id) {
+    public Task getTaskById(long id) {
         return mDatabaseAdapter.getTask(id);
+    }
+
+    /**
+     * Updates a task with the given parameters.
+     *
+     * @param title the new title for this task
+     * @param categoryId the new categoryId for this task
+     * @param important whether the task is important or not
+     * @param taskId the id of the task to be updated.
+     */
+    public void updateTask(String title, long categoryId, boolean important, long taskId) {
+
+        Task task = mDatabaseAdapter.getTask(taskId);
+
+        task.setTitle(title);
+        task.setCategoryId(categoryId);
+        task.setImportant(important);
+
+        mDatabaseAdapter.updateTask(task);
+    }
+
+    /**
+     * Updates a category with the given parameters.
+     *
+     * @param title the new title for this category
+     * @param colour the new colour for this category
+     * @param visibility whether this category is visible or not
+     * @param categoryId the id of the category to be updated.
+     */
+    public void updateCategory(String title, int colour, int visibility, long categoryId) {
+
+        Category category = mDatabaseAdapter.getCategory(categoryId);
+
+        category.setTitle(title);
+        category.setColour(colour);
+        category.setVisible(visibility);
+
+        mDatabaseAdapter.updateCategory(category);
+
     }
 }

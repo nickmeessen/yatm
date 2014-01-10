@@ -41,14 +41,9 @@ public interface IDatabaseAdapter {
     /**
      * Updates a task.
      *
-     * @param title      the new title of the task to update.
-     * @param categoryId the new categoryID of the task to update.
-     * @param date       the new date of the task to update.
-     * @param important  wether the task is marked as important or not
-     * @param completed  wether the task is marked as completed or not.
-     * @param taskID     the id of the task to update
+     * @param task the task to update.
      */
-    void updateTask(String title, long categoryId, Calendar date, boolean important, boolean completed, long taskID);
+    void updateTask(Task task);
 
     /**
      * Deletes a given task
@@ -85,12 +80,9 @@ public interface IDatabaseAdapter {
     /**
      * Updates a category.
      *
-     * @param title      the new category title
-     * @param colour     the new category colour.
-     * @param visibility whether the category is visible or not.
-     * @param categoryID the ID of the category to update
+     * @param category the category to update.
      */
-    void updateCategory(String title, int colour, int visibility, Long categoryID);
+    void updateCategory(Category category);
 
     /**
      * Deletes the given category and linked tasks.

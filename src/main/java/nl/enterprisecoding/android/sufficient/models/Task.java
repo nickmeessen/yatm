@@ -46,7 +46,7 @@ public class Task {
      *
      * @param id new CatId for this Task.
      */
-    public void setCatId(long id) {
+    public void setCategoryId(long id) {
         mCatId = id;
     }
 
