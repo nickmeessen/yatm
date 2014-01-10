@@ -176,11 +176,10 @@ public class MainActivity extends RoboActivity {
     protected void createColourDialog(GradientDrawable bgShape) {
         int bgColour = getResources().getColor(R.color.action_bg);
         Dialog colourDialog = new Dialog(this);
-        View dialogView = colourDialog.findViewById(R.id.colour_dialog);
 
         colourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         colourDialog.setContentView(R.layout.colour_dialog);
-        dialogView.setBackgroundColor(bgColour);
+        colourDialog.findViewById(R.id.colour_dialog).setBackgroundColor(bgColour);
 
         createColourButton(bgShape, R.id.colour_purple_button, R.color.purple, colourDialog);
         createColourButton(bgShape, R.id.colour_blue_button, R.color.blue, colourDialog);
