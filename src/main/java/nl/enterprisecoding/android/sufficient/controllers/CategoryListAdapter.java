@@ -149,7 +149,7 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
      */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        mActivity.getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(id).getColour()));
+//        mActivity.getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(id).getColour()));
 
         Intent intent = new Intent(mActivity, TaskActivity.class);
 

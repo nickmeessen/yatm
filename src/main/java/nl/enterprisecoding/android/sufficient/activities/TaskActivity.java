@@ -79,7 +79,7 @@ public class TaskActivity extends MainActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
         if (v.getId() == R.id.taskList) {
-            String[] menuItems = getResources().getStringArray(R.array.task_context_menu);
+            String[] menuItems = getStringArray(R.array.task_context_menu);
 
             for (int i = 0; i < menuItems.length; i++) {
                 menu.add(Menu.NONE, i, i, menuItems[i]);
@@ -96,7 +96,7 @@ public class TaskActivity extends MainActivity {
      */
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        if (item.getTitle().equals(getResources().getString(R.string.action_edit))) {
+        if (item.getTitle().equals(getString(R.string.action_edit))) {
             if (mSelectedTaskId == 0) {
                 Toast.makeText(this, R.string.toast_error, Toast.LENGTH_SHORT).show();
             } else {
@@ -104,7 +104,7 @@ public class TaskActivity extends MainActivity {
                 mEditTaskActivity.putExtra(TASK_ID, mSelectedTaskId);
                 startActivity(mEditTaskActivity);
             }
-        } else if (item.getTitle().equals(getResources().getString(R.string.action_delete))) {
+        } else if (item.getTitle().equals(getString(R.string.action_delete))) {
             mTaskManager.deleteTask(mTaskManager.getTask(mSelectedTaskId));
         }
 

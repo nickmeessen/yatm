@@ -141,13 +141,11 @@ public class EditTaskActivity extends MainActivity {
      * @param spinner The spinner which displays the categories
      */
     private void initTaskCategorySpinner(Spinner spinner) {
-        mCategoriesArray = mTaskManager.getCategories();
-        mCategoriesArray.remove(0);
 
         ArrayAdapter<String> mSpinnerArrayAdapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_spinner_item,
-                convertCategoryListToStringArray(mCategoriesArray)
+                mTaskManager.getCategoriesStringArray()
         );
 
         mSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -236,23 +234,4 @@ public class EditTaskActivity extends MainActivity {
     public void setTaskDateFromDialog(DatePickerDialog dialog) {
         setTaskDate(dialog.getDatePicker().getDayOfMonth(), dialog.getDatePicker().getMonth(), dialog.getDatePicker().getYear());
     }
-
-    /**
-     * Converts a list of categories to a string array.
-     *
-     * @param categoryList the list to convert
-     * @return an array of strings containing the category titles.
-     */
-    private String[] convertCategoryListToStringArray(List<Category> categoryList) {
-        String[] result = new String[categoryList.size()];
-
-        int count = 0;
-        for (Category cat : categoryList) {
-            result[count] = cat.getTitle();
-            count++;
-        }
-
-        return result;
-    }
-
 }

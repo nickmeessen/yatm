@@ -126,7 +126,7 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
      * @param categoryId categoryID of task
      * @param date       date of task
      * @param important  task important?
-     * @return task the created task
+     * @return task the created task's ID.
      */
     public long createTask(String title, long categoryId, Calendar date, boolean important) {
         ContentValues values = new ContentValues();
@@ -399,6 +399,22 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
      */
     public List<Category> getCategories() {
         return new ArrayList<Category>(mCategoryList.values());
+    }
+
+    /**
+     * Retrieves a list of categories in the form of a string array.
+     * @return an array of strings containing the category titles.
+     */
+    public String[] getCategoriesStringArray() {
+        String[] result = new String[categoryList.size()];
+
+        int count = 0;
+        for (Category cat : categoryList) {
+            result[count] = cat.getTitle();
+            count++;
+        }
+
+        return result;
     }
 
     /**

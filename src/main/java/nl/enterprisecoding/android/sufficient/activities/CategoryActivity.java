@@ -35,7 +35,7 @@ public class CategoryActivity extends MainActivity {
 
 
     private Dialog mColourDialog;
-    private String[] mSpringerArray;
+    private String[] mSpinnerArray;
     private Spinner catInput;
     private long mSelectedCategoryId;
     private int[] mRandomColour;
@@ -91,7 +91,7 @@ public class CategoryActivity extends MainActivity {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    addCategory(mRandomColour[0]);
+                    addCategory();
                 }
                 return false;
             }
@@ -106,7 +106,7 @@ public class CategoryActivity extends MainActivity {
              */
             @Override
             public void onClick(View v) {
-                addCategory(mRandomColour[0]);
+                addCategory();
             }
         });
 
@@ -133,28 +133,26 @@ public class CategoryActivity extends MainActivity {
      *
      * @param defaultColour this represents the default colour a category will get when there is not a colour selected
      */
-    private void addCategory(int defaultColour) {
+    private void addCategory() {
         final EditText editText = (EditText) findViewById(R.id.newCategory);
-        int chosenColour;
-        int categoryColour;
         String categoryName = editText.getText().toString();
 
-        chosenColour = getCategoryColour();
+        int chosenColour = getCategoryColour();
         if (chosenColour == 0) {
-            chosenColour = defaultColour;
+            chosenColour = mRandomColour[0];
         }
-        categoryColour = Color.parseColor(String.format("#%02x%02x%02x", Color.red(chosenColour), Color.green(chosenColour), Color.blue(chosenColour)));
+        int categoryColour = Color.parseColor(String.format("#%02x%02x%02x", Color.red(chosenColour), Color.green(chosenColour), Color.blue(chosenColour)));
 
         if (categoryName.trim().isEmpty()) {
-            makeToast(getResources().getString(R.string.category_name_empty_error), false);
+            makeToast(getString(R.string.category_name_empty_error), false);
         } else if (mTaskManager.getCategoryByTitle(categoryName) != null) {
-            makeToast(getResources().getString(R.string.toast_category_exists), false);
+            makeToast(getString(R.string.toast_category_exists), false);
         } else {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
             mTaskManager.createCategory(categoryName, categoryColour);
             editText.setText("");
-            makeToast(getResources().getString(R.string.category_added), false);
+            makeToast(getString(R.string.category_added), false);
             generateColourShape();
         }
     }
@@ -190,7 +188,7 @@ public class CategoryActivity extends MainActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         if (v.getId() == R.id.cat_list && info.position != 0) {
-            String[] menuItems = getResources().getStringArray(R.array.category_context_menu);
+            String[] menuItems = getStringArray(R.array.category_context_menu);
 
             for (int i = 0; i < menuItems.length; i++) {
                 menu.add(Menu.NONE, i, i, menuItems[i]);
@@ -210,17 +208,17 @@ public class CategoryActivity extends MainActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
         mSelectedCategoryId = info.id;
-        if (item.getTitle().equals(getResources().getString(R.string.action_edit_category))) {
-            Intent mEditCategoryActivity = new Intent(this, EditCategoryActivity.class);
-            mEditCategoryActivity.putExtra("CategoryID", mSelectedCategoryId);
-            startActivity(mEditCategoryActivity);
-        } else if (item.getTitle().equals(getResources().getString(R.string.action_delete_category))) {
+        if (item.getTitle().equals(getString(R.string.action_edit_category))) {
+            Intent intent = new Intent(this, EditCategoryActivity.class);
+            intent.putExtra("CategoryID", mSelectedCategoryId);
+            startActivity(intent);
+        } else if (item.getTitle().equals(getString(R.string.action_delete_category))) {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
             catInput = new Spinner(this);
             initTaskCategorySpinner(catInput);
-            alert.setMessage(getResources().getString(R.string.delete_category_text));
+            alert.setMessage(getString(R.string.delete_category_text));
             alert.setView(catInput);
-            alert.setPositiveButton(getResources().getString(R.string.action_confirm), new DialogInterface.OnClickListener() {
+            alert.setPositiveButton(getString(R.string.action_confirm), new DialogInterface.OnClickListener() {
                 /**
                  * Handles the click for the positive button of the context menu
                  *
@@ -229,15 +227,15 @@ public class CategoryActivity extends MainActivity {
                  */
                 public void onClick(DialogInterface dialog, int whichButton) {
                     Category originCategory = mTaskManager.getCategoryById(mSelectedCategoryId);
-                    String destinationCategory = mSpringerArray[catInput.getSelectedItemPosition()];
-                    if (destinationCategory.equals(getResources().getString(R.string.action_delete_all_tasks))) {
+                    String destinationCategory = mSpinnerArray[catInput.getSelectedItemPosition()];
+                    if (destinationCategory.equals(getString(R.string.action_delete_all_tasks))) {
                         mTaskManager.deleteCategory(originCategory);
                     } else {
                         mTaskManager.deleteCategoryAndMoveTasks(originCategory, mTaskManager.getCategoryByTitle(destinationCategory));
                     }
                 }
             });
-            alert.setNegativeButton(getResources().getString(R.string.action_discard), null);
+            alert.setNegativeButton(getString(R.string.action_discard), null);
             alert.show();
         }
 
@@ -271,34 +269,16 @@ public class CategoryActivity extends MainActivity {
      * @param spinner The spinner which displays the categories
      */
     private void initTaskCategorySpinner(Spinner spinner) {
-        mSpringerArray = convertCategoryListToStringArray(mTaskManager.getCategories());
+        mSpinnerArray = mTaskManager.getCategoriesStringArray();
+        mSpinnerArray[mSpinnerArray.size() + 1] = getString(R.string.action_delete_all_tasks);
+
         ArrayAdapter<String> mSpinnerArrayAdapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_spinner_item,
-                mSpringerArray
+                mSpinnerArray
         );
 
         mSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(mSpinnerArrayAdapter);
-    }
-
-    /**
-     * Converts a list of categories to a string array.
-     *
-     * @param categoryList the list to convert
-     * @return an array of strings containing the category titles.
-     */
-    private String[] convertCategoryListToStringArray(List<Category> categoryList) {
-        String[] result = new String[categoryList.size()];
-
-        int count = 0;
-        for (Category cat : categoryList) {
-            result[count] = cat.getTitle();
-            count++;
-        }
-
-        result[0] = getResources().getString(R.string.action_delete_all_tasks);
-
-        return result;
     }
 }

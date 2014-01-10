@@ -11,10 +11,6 @@ import java.util.List;
  */
 public class TaskList {
 
-    public TaskList(List<Category> categories) {
-
-    }
-
     /**
      * Returns a task with the given task id.
      *

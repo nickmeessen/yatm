@@ -62,7 +62,6 @@ public class EditCategoryActivity extends MainActivity {
         mCategoryTitleInput.setSelection(textLength);
         openKeyboard();
         mCategoryColour = category.getColour();
-        mCategoryColour = category.getColour();
 
         Button mEditCategoryButton = (Button) findViewById(R.id.edit_category_button);
         mEditCategoryButton.setOnClickListener(new View.OnClickListener() {
