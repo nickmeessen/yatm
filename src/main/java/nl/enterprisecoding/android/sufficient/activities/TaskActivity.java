@@ -93,7 +93,7 @@ public class TaskActivity extends MainActivity {
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getTitle().equals(getString(R.string.action_edit))) {
             if (mSelectedTaskId == 0) {
-                Toast.makeText(this, R.string.toast_error, Toast.LENGTH_SHORT).show();
+                makeToast(getString(R.string.toast_error));
             } else {
                 Intent intent = new Intent(this, EditTaskActivity.class);
                 intent.putExtra(TASK_ID, mSelectedTaskId);
@@ -149,13 +149,13 @@ public class TaskActivity extends MainActivity {
         List<Category> catList = mTaskManager.getCategories();
 
         if (mTaskManager.getCategories().size() == 1) {
-            Toast.makeText(this, R.string.toast_no_category, Toast.LENGTH_SHORT).show();
+            makeToast(getString(R.string.toast_no_category));
 
             Intent intent = new Intent(this, CategoryActivity.class);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         } else {
-            long newTaskID = mTaskManager.createTask("New Task", catList.get(0).getId(), Calendar.getInstance(), false);
+            long newTaskID = mTaskManager.createTask("", mCurrentCategoryID, Calendar.getInstance(), false);
 
             Intent intent = new Intent(this, EditTaskActivity.class);
             intent.putExtra(TASK_ID, newTaskID);
