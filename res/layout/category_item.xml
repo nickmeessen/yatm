@@ -24,7 +24,7 @@
             android:textStyle="normal"
             android:textColor="@color/category_text"
             android:clickable="false"
-            android:textIsSelectable="true"
+            android:textIsSelectable="false"
             android:maxLines="1"
             android:paddingTop="25dp"
             android:paddingBottom="25dp"
