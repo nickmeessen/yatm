@@ -8,17 +8,16 @@
 package nl.enterprisecoding.android.sufficient.activities;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import nl.enterprisecoding.android.sufficient.R;
+import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Category;
 
 /**
@@ -43,6 +42,9 @@ public class EditCategoryActivity extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_category_list);
+
+        mTaskManager = new TaskManager(this, mCurrentCategoryID);
+
         mActionBar.setTitle(R.string.action_edit_category);
         mSelectedCategoryId = getIntent().getExtras().getLong("CategoryID", 0);
 

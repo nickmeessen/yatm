@@ -8,7 +8,6 @@
 package nl.enterprisecoding.android.sufficient.activities;
 
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -61,9 +60,6 @@ public class MainActivity extends RoboActivity {
         mActionBar.setDisplayUseLogoEnabled(false);
 
         mCurrentCategoryID = getIntent().getLongExtra(CATEGORY_ID, 0);
-
-        mTaskManager = new TaskManager(this, mCurrentCategoryID);
-
     }
 
     /**

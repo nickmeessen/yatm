@@ -13,8 +13,8 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.R;
+import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
 
@@ -45,6 +45,8 @@ public class TaskActivity extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.task_list);
+
+        mTaskManager = new TaskManager(this, mCurrentCategoryID);
 
         final ExpandableListView taskListView = (ExpandableListView) findViewById(R.id.taskList);
         taskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -162,6 +163,7 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
 
     /**
      * Updates a task.
+     *
      * @param task the task to update.
      */
     public void updateTask(Task task) {
@@ -334,7 +336,7 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
     /**
      * Updates a category.
      *
-     * @param category  the category to update.
+     * @param category the category to update.
      */
     public void updateCategory(Category category) {
         ContentValues values = new ContentValues();

@@ -15,11 +15,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import nl.enterprisecoding.android.sufficient.R;
+import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 
 /**
  * CategoryActivity class
@@ -48,6 +48,9 @@ public class CategoryActivity extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category_list);
+
+        mTaskManager = new TaskManager(this, mCurrentCategoryID);
+
         mActionBar.hide();
         final Button colourButton = (Button) findViewById(R.id.category_colour_button);
         mBgShape = (GradientDrawable) colourButton.getBackground();

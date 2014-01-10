@@ -61,8 +61,6 @@ public class TaskManager implements ITaskManager {
             activity.registerForContextMenu(categoryView);
         }
 
-        mDatabaseAdapter.retrieveAllTasks();
-
         mTaskListAdapter = new TaskListAdapter(activity, this, categoryID);
 
         if (tasklistView != null) {
@@ -263,10 +261,10 @@ public class TaskManager implements ITaskManager {
     /**
      * Updates a task with the given parameters.
      *
-     * @param title the new title for this task
+     * @param title      the new title for this task
      * @param categoryId the new categoryId for this task
-     * @param important whether the task is important or not
-     * @param taskId the id of the task to be updated.
+     * @param important  whether the task is important or not
+     * @param taskId     the id of the task to be updated.
      */
     public void updateTask(String title, long categoryId, boolean important, long taskId) {
 
@@ -282,8 +280,8 @@ public class TaskManager implements ITaskManager {
     /**
      * Updates a category with the given parameters.
      *
-     * @param title the new title for this category
-     * @param colour the new colour for this category
+     * @param title      the new title for this category
+     * @param colour     the new colour for this category
      * @param visibility whether this category is visible or not
      * @param categoryId the id of the category to be updated.
      */

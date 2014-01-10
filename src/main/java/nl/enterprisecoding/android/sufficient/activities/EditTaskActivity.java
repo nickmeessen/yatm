@@ -19,6 +19,7 @@ import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateButtonClickHan
 import nl.enterprisecoding.android.sufficient.models.Category;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
@@ -58,6 +59,8 @@ public class EditTaskActivity extends MainActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mTaskManager = new TaskManager(this, mCurrentCategoryID);
 
         long selectedTaskID = getIntent().getExtras().getLong(TaskActivity.TASK_ID, 0);
 
@@ -193,6 +196,7 @@ public class EditTaskActivity extends MainActivity {
 
     /**
      * Get the task date
+     *
      * @return Calendar the task date
      */
     public Calendar getTaskDate() {

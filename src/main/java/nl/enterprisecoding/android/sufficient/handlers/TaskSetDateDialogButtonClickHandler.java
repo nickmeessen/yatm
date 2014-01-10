@@ -40,7 +40,7 @@ public class TaskSetDateDialogButtonClickHandler implements IDialogButtonClickHa
     @Override
     public void onClick(DialogInterface dialog, int which) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
-            DatePickerDialog datePickerDialog = (DatePickerDialog)dialog;
+            DatePickerDialog datePickerDialog = (DatePickerDialog) dialog;
             mActivity.setTaskDate(datePickerDialog.getDatePicker().getDayOfMonth(), datePickerDialog.getDatePicker().getMonth(), datePickerDialog.getDatePicker().getYear());
         }
     }

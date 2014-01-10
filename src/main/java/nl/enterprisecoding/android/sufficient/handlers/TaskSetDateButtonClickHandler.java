@@ -14,6 +14,7 @@ import com.google.inject.Inject;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.activities.EditTaskActivity;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
+
 import java.util.Calendar;
 
 /**
