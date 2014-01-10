@@ -12,7 +12,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.google.inject.Inject;
@@ -21,13 +20,10 @@ import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateButtonClickHandler;
 import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateDialogButtonClickHandler;
 import nl.enterprisecoding.android.sufficient.models.Category;
-import nl.enterprisecoding.android.sufficient.models.Task;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
 import java.text.DateFormatSymbols;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 
 /**
@@ -36,7 +32,6 @@ import java.util.List;
  *
  * @author Sjors Roelofs & Ferry Wienholts
  */
-
 @ContentView(R.layout.edit_task_item)
 public class EditTaskActivity extends MainActivity {
 
@@ -54,10 +49,9 @@ public class EditTaskActivity extends MainActivity {
     @Inject
     private TaskSetDateDialogButtonClickHandler mTaskSetDateDialogButtonClickHandler;
 
-    private Task mSelectedTask;
+    private long mSelectedTaskId;
     private Calendar mDateToday;
     private Calendar mTaskDate;
-    private List<Category> mCategoriesArray = new ArrayList<Category>();
 
     /**
      * Called when the activity is starting.
@@ -78,13 +72,12 @@ public class EditTaskActivity extends MainActivity {
 
             mTaskManager = new TaskManager(this, (long) 0);
 
-            mSelectedTask = mTaskManager.getTask(selectedTaskID);
-            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedTask.getCatID()).getColour()));
+            mSelectedTaskId = mTaskManager.getTask(selectedTaskID).getID();
+            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mTaskManager.getTask(mSelectedTaskId).getCatID()).getColour()));
 
             mDateToday = Calendar.getInstance();
 
-            mTaskDate = mSelectedTask.getDate();
-            Log.d("TEST", mTaskDate.get(Calendar.DAY_OF_MONTH) + "-" + mTaskDate.get(Calendar.MONTH) + "-" + mTaskDate.get(Calendar.YEAR));
+            mTaskDate = mTaskManager.getTask(mSelectedTaskId).getDate();
 
             updateDateButtonText();
 
@@ -92,13 +85,13 @@ public class EditTaskActivity extends MainActivity {
             mTaskSetDateButton.setOnClickListener(mTaskSetDateButtonClickHandler);
 
             mTaskTitleInput = (EditText) findViewById(R.id.task_title);
-            mTaskTitleInput.setHint(mSelectedTask.getTitle());
+            mTaskTitleInput.setHint(mTaskManager.getTask(mSelectedTaskId).getTitle());
 
             initTaskCategorySpinner(mTaskCategorySpinner);
-            mTaskCategorySpinner.setSelection(findIndexByCategoryId(mSelectedTask.getCatID()));
+            mTaskCategorySpinner.setSelection(findIndexByCategoryId(mTaskManager.getTask(mSelectedTaskId).getCatID()));
 
             mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
-            mTaskImportantCheckBox.setChecked(mSelectedTask.isImportant());
+            mTaskImportantCheckBox.setChecked(mTaskManager.getTask(mSelectedTaskId).isImportant());
 
             Button saveTaskButton = (Button) findViewById(R.id.save_task_button);
             saveTaskButton.setOnClickListener(new View.OnClickListener() {
@@ -121,13 +114,13 @@ public class EditTaskActivity extends MainActivity {
     private void saveTask() {
         boolean validData = true;
         int selectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
-        long selectedCategoryID = mCategoriesArray.get(selectedCategoryIndex).getID();
+        long selectedCategoryID = mTaskManager.getCategories().get(selectedCategoryIndex).getID();
         if (mTaskTitleInput.getText().toString().isEmpty()) {
             mTaskTitleInput.setText(mTaskTitleInput.getHint());
         }
 
         if (validData) {
-            mTaskManager.editTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked(), false, mSelectedTask.getID());
+            mTaskManager.editTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked(), false, mTaskManager.getTask(mSelectedTaskId).getID());
             startTaskActivity(selectedCategoryID);
         } else {
             makeToast(getString(R.string.toast_invalid_data));
@@ -161,7 +154,7 @@ public class EditTaskActivity extends MainActivity {
         int index = 0;
 
         int count = 0;
-        for (Category cat : mCategoriesArray) {
+        for (Category cat : mTaskManager.getCategories()) {
             if (cat.getID() == categoryId) {
                 index = count;
                 break;
@@ -201,7 +194,6 @@ public class EditTaskActivity extends MainActivity {
         Intent intent = new Intent(this, TaskActivity.class);
 
         intent.putExtra("categoryID", catId);
-
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
