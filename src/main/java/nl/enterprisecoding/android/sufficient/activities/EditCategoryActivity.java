@@ -70,14 +70,7 @@ public class EditCategoryActivity extends MainActivity {
                 }
 
                 mTaskManager.updateCategory(mCategoryTitleInput.getText().toString(), mCategoryColour, 1, mSelectedCategoryId);
-
-                Intent intent = new Intent(mActivity, CategoryActivity.class);
-
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                mActivity.startActivity(intent);
-                mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                startCategoryActivity();
             }
 
         });
@@ -115,5 +108,13 @@ public class EditCategoryActivity extends MainActivity {
                 mActionBar.setBackgroundDrawable(new ColorDrawable(mCategoryColour));
             }
         });
+    }
+
+    private void startCategoryActivity() {
+        Intent intent = new Intent(mActivity, CategoryActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mActivity.startActivity(intent);
+        mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }
