@@ -8,14 +8,12 @@
 package nl.enterprisecoding.android.sufficient.activities;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import nl.enterprisecoding.android.sufficient.R;
@@ -29,8 +27,7 @@ public class EditCategoryActivity extends MainActivity {
     private Activity mActivity = this;
     private int mCategoryColour;
     private EditText mCategoryTitleInput;
-    private long mSelectedCategory;
-    private Dialog mColourDialog;
+    private long mSelectedCategoryId;
 
     /**
      * Called when the activity is starting.
@@ -45,13 +42,10 @@ public class EditCategoryActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_category_list);
         mActionBar.setTitle(R.string.action_edit_category);
-        mSelectedCategory = getIntent().getExtras().getLong("CategoryID", 0);
+        mSelectedCategoryId = getIntent().getExtras().getLong("CategoryID", 0);
 
-        mColourDialog = new Dialog(EditCategoryActivity.this);
-        mColourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        final Category category = mTaskManager.getCategoryById(mSelectedCategory);
-        getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedCategory).getColour()));
+        final Category category = mTaskManager.getCategoryById(mSelectedCategoryId);
+        getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedCategoryId).getColour()));
 
         mCategoryTitleInput = (EditText) findViewById(R.id.category_title);
         mCategoryTitleInput.setText(category.getTitle());
@@ -75,15 +69,8 @@ public class EditCategoryActivity extends MainActivity {
                     mCategoryColour = getCategoryColour();
                 }
 
-                mTaskManager.updateCategory(mCategoryTitleInput.getText().toString(), mCategoryColour, 1, mSelectedCategory);
-
-                Intent intent = new Intent(mActivity, CategoryActivity.class);
-
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                mActivity.startActivity(intent);
-                mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                mTaskManager.updateCategory(mCategoryTitleInput.getText().toString(), mCategoryColour, 1, mSelectedCategoryId);
+                startCategoryActivity();
             }
 
         });
@@ -104,6 +91,7 @@ public class EditCategoryActivity extends MainActivity {
             }
         });
 
+        mColourDialog = getColourDialog();
         mColourDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             /**
              * Handles the dismiss of the colour dialog and changes the actionbar colour
@@ -120,5 +108,13 @@ public class EditCategoryActivity extends MainActivity {
                 mActionBar.setBackgroundDrawable(new ColorDrawable(mCategoryColour));
             }
         });
+    }
+
+    private void startCategoryActivity() {
+        Intent intent = new Intent(mActivity, CategoryActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mActivity.startActivity(intent);
+        mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

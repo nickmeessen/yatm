@@ -39,6 +39,76 @@ public class TaskManager implements ITaskManager {
 
         mDatabaseAdapter = new SqlLiteAdapter(activity);
 
+        fillCategoryListWithData();
+
+        initializeAdapters(activity, categoryID);
+
+        InitializeViews(activity);
+    }
+
+    /**
+     * Initializes both views
+     *
+     * @param activity is passed on into specified initializing methodes
+     */
+    private void InitializeViews(MainActivity activity) {
+        initializeCategoryView(activity);
+        initializeExpandableListView(activity);
+    }
+
+    /**
+     * Initializes ExpandableListView.
+     * Sets adapter for ExpandableListView.
+     * Sets the onChildClickListener with an adapter.
+     * Expands individual groups in the taskListView.
+     *
+     * @param activity Is required to get the layout xml file from the resource map.
+     */
+    private void initializeExpandableListView(MainActivity activity) {
+        ExpandableListView tasklistView = (ExpandableListView) activity.findViewById(R.id.taskList);
+        if (tasklistView != null) {
+            tasklistView.setAdapter(mTaskListAdapter);
+            tasklistView.setOnChildClickListener(mTaskListAdapter);
+            tasklistView.expandGroup(0, true);
+            tasklistView.expandGroup(1, true);
+            tasklistView.expandGroup(2, true);
+            tasklistView.expandGroup(3, true);
+        }
+    }
+
+    /**
+     * Initializes the categoryView listView.
+     * Sets the adapter for the categoryView.
+     * Sets the onItemClickListener for CategoryView.
+     * Registers CategoryView for context menu.
+     *
+     * @param activity Is required to get the layout xml file from the resource map and to register for context menu.
+     */
+    private void initializeCategoryView(MainActivity activity) {
+        ListView categoryView = (ListView) activity.findViewById(R.id.cat_list);
+
+        if (categoryView != null) {
+            categoryView.setAdapter(mCategoryListAdapter);
+            categoryView.setOnItemClickListener(mCategoryListAdapter);
+            activity.registerForContextMenu(categoryView);
+        }
+    }
+
+    /**
+     * Initializes both adapters.
+     *
+     * @param activity The activity to initialize the adapter
+     * @param categoryID The categoryID of the category which de adapter should use.
+     */
+    private void initializeAdapters(MainActivity activity, Long categoryID) {
+        mCategoryListAdapter = new CategoryListAdapter(activity, this);
+        mTaskListAdapter = new TaskListAdapter(activity, this, categoryID);
+    }
+
+    /**
+     * Fills the mCategoryList with categories and then fills the categories with tasks.
+     */
+    private void fillCategoryListWithData() {
         mCategoryList = new TreeMap<Long, Category>();
 
         for (Category category : mDatabaseAdapter.retrieveAllCategories()) {
@@ -47,31 +117,6 @@ public class TaskManager implements ITaskManager {
 
         for (Task task : mDatabaseAdapter.retrieveAllTasks()) {
             mCategoryList.get(task.getCatId()).addTask(task);
-        }
-
-        mCategoryListAdapter = new CategoryListAdapter(activity, this);
-
-        ListView categoryView = (ListView) activity.findViewById(R.id.cat_list);
-        ExpandableListView tasklistView = (ExpandableListView) activity.findViewById(R.id.taskList);
-
-        if (categoryView != null) {
-            categoryView.setAdapter(mCategoryListAdapter);
-            categoryView.setOnItemClickListener(mCategoryListAdapter);
-
-            activity.registerForContextMenu(categoryView);
-        }
-
-        mDatabaseAdapter.retrieveAllTasks();
-
-        mTaskListAdapter = new TaskListAdapter(activity, this, categoryID);
-
-        if (tasklistView != null) {
-            tasklistView.setAdapter(mTaskListAdapter);
-            tasklistView.setOnChildClickListener(mTaskListAdapter);
-            tasklistView.expandGroup(0, true);
-            tasklistView.expandGroup(1, true);
-            tasklistView.expandGroup(2, true);
-            tasklistView.expandGroup(3, true);
         }
     }
 
@@ -215,8 +260,9 @@ public class TaskManager implements ITaskManager {
      */
     private void moveTasks(long originId, long destinationId) {
         List<Task> tasks = getCategoryById(originId).getTasks();
-        for (Task t : tasks) {
-            mDatabaseAdapter.updateTask(t.getTitle(), destinationId, t.getDate(), t.isImportant(), t.isCompleted(), t.getId());
+        for (Task task : tasks) {
+            task.setCategoryId(destinationId);
+            mDatabaseAdapter.updateTask(task);
         }
     }
 
@@ -234,12 +280,7 @@ public class TaskManager implements ITaskManager {
 
         category.setVisible(newVisibility);
 
-        // @todo use
-        mDatabaseAdapter.updateCategory(category.getTitle(), category.getColour(), newVisibility, category.getId());
-        // or use
-//        mDatabaseAdapter.updateCategory(category);
-        // or use
-//        mDatabaseAdapter.updateCategory(null, null, category.isVisible(), null);
+        mDatabaseAdapter.updateCategory(category);
 
         return category.isVisible();
     }
@@ -254,44 +295,52 @@ public class TaskManager implements ITaskManager {
         return mCategoryList.get(id);
     }
 
-    // @todo remove?
-
     /**
-     * Updates a category.
+     * Gets a task by it's ID.
      *
-     * @param s  the new category title
-     * @param c  the new category colour.
-     * @param i  whether the category is visible or not.
-     * @param sc the ID of the category to update
+     * @param id the id of the task to get.
+     * @return task with the id given.
      */
-    @Deprecated
-    public void updateCategory(String s, int c, int i, long sc) {
-        mDatabaseAdapter.updateCategory(s, c, i, sc);
-    }
-
-    /**
-     * Updates a task.
-     *
-     * @param s   the new title of the task to update.
-     * @param cid the new categoryID of the task to update.
-     * @param cal the new date of the task to update.
-     * @param c   wether the task is marked as important or not
-     * @param b   wether the task is marked as completed or not.
-     * @param id  the id of the task to update
-     */
-    @Deprecated
-    public void updateTask(String s, long cid, Calendar cal, boolean c, boolean b, long id) {
-        mDatabaseAdapter.updateTask(s, cid, cal, c, b, id);
-    }
-
-    /**
-     * gets a task
-     *
-     * @param id
-     * @return
-     */
-    @Deprecated
-    public Task getTask(long id) {
+    public Task getTaskById(long id) {
         return mDatabaseAdapter.getTask(id);
+    }
+
+    /**
+     * Updates a task with the given parameters.
+     *
+     * @param title the new title for this task
+     * @param categoryId the new categoryId for this task
+     * @param important whether the task is important or not
+     * @param taskId the id of the task to be updated.
+     */
+    public void updateTask(String title, long categoryId, boolean important, long taskId) {
+
+        Task task = mDatabaseAdapter.getTask(taskId);
+
+        task.setTitle(title);
+        task.setCategoryId(categoryId);
+        task.setImportant(important);
+
+        mDatabaseAdapter.updateTask(task);
+    }
+
+    /**
+     * Updates a category with the given parameters.
+     *
+     * @param title the new title for this category
+     * @param colour the new colour for this category
+     * @param visibility whether this category is visible or not
+     * @param categoryId the id of the category to be updated.
+     */
+    public void updateCategory(String title, int colour, int visibility, long categoryId) {
+
+        Category category = mDatabaseAdapter.getCategory(categoryId);
+
+        category.setTitle(title);
+        category.setColour(colour);
+        category.setVisible(visibility);
+
+        mDatabaseAdapter.updateCategory(category);
+
     }
 }

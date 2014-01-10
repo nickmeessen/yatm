@@ -66,10 +66,10 @@ public class EditTaskActivity extends MainActivity {
 
             mTaskManager = new TaskManager(this, (long) 0);
 
-            mSelectedTaskId = mTaskManager.getTask(selectedTaskID).getId();
-            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mTaskManager.getTask(mSelectedTaskId).getCatId()).getColour()));
+            mSelectedTaskId = mTaskManager.getTaskById(selectedTaskID).getId();
+            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mTaskManager.getTaskById(mSelectedTaskId).getCatId()).getColour()));
 
-            mTaskDate = mTaskManager.getTask(mSelectedTaskId).getDate();
+            mTaskDate = mTaskManager.getTaskById(mSelectedTaskId).getDate();
 
             updateDateButtonText();
 
@@ -77,14 +77,14 @@ public class EditTaskActivity extends MainActivity {
             mTaskSetDateButton.setOnClickListener(mTaskSetDateButtonClickHandler);
 
             mTaskTitleInput = (EditText) findViewById(R.id.task_title);
-            mTaskTitleInput.setHint(mTaskManager.getTask(mSelectedTaskId).getTitle());
+            mTaskTitleInput.setHint(mTaskManager.getTaskById(mSelectedTaskId).getTitle());
 
             initTaskCategorySpinner(mTaskCategorySpinner);
 
-            mTaskCategorySpinner.setSelection(findIndexByCategoryId(mTaskManager.getTask(mSelectedTaskId).getCatId()));
+            mTaskCategorySpinner.setSelection(findIndexByCategoryId(mTaskManager.getTaskById(mSelectedTaskId).getCatId()));
 
             mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
-            mTaskImportantCheckBox.setChecked(mTaskManager.getTask(mSelectedTaskId).isImportant());
+            mTaskImportantCheckBox.setChecked(mTaskManager.getTaskById(mSelectedTaskId).isImportant());
 
             Button saveTaskButton = (Button) findViewById(R.id.save_task_button);
             saveTaskButton.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +112,8 @@ public class EditTaskActivity extends MainActivity {
             mTaskTitleInput.setText(mTaskTitleInput.getHint());
         }
 
-        mTaskManager.updateTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked(), false, mSelectedTaskId);
+        mTaskManager.updateTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskImportantCheckBox.isChecked(), mSelectedTaskId);
+
         startTaskActivity(selectedCategoryID);
     }
 

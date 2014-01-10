@@ -13,13 +13,10 @@ import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.R;
-import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
 
 import java.util.Calendar;
-import java.util.List;
 
 /**
  * TaskActivity class
@@ -70,6 +67,8 @@ public class TaskActivity extends MainActivity {
      */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+        v.setBackgroundColor(getResources().getColor(R.color.action_bg));
 
         if (v.getId() == R.id.taskList) {
             String[] menuItems = getResources().getStringArray(R.array.task_context_menu);
@@ -144,7 +143,6 @@ public class TaskActivity extends MainActivity {
      * Starts the "Edit Task" activity.
      */
     private void startEditTaskActivity() {
-        List<Category> catList = mTaskManager.getCategories();
 
         if (mTaskManager.getCategories().size() == 1) {
             makeToast(getString(R.string.toast_no_category));
