@@ -7,8 +7,6 @@
   -->
 
 <resources>
-    <string name="app_name">YATM (Sufficient)</string>
-
     <string name="title_tasks">Taken</string>
 
     <string name="action_add">Taak Toevoegen</string>
@@ -37,9 +35,6 @@
     <string name="toast_no_category">Je moet eerst een categorie toevoegen!</string>
 
     <string name="new_category">Nieuwe Categorie</string>
-
-    <string name="visibility">Visibility</string>
-    <string name="task_done_icon">TaskDoneIcon</string>
 
     <string name="delete_category_text">Verplaats taken naar categorie:</string>
 
