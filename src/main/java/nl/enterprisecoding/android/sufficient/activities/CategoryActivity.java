@@ -188,7 +188,7 @@ public class CategoryActivity extends MainActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         if (v.getId() == R.id.cat_list && info.position != 0) {
-            String[] menuItems = getStringArray(R.array.category_context_menu);
+            String[] menuItems = getResources().getStringArray(R.array.category_context_menu);
 
             for (int i = 0; i < menuItems.length; i++) {
                 menu.add(Menu.NONE, i, i, menuItems[i]);
