@@ -130,7 +130,7 @@ public class EditTaskActivity extends MainActivity {
             mTaskManager.editTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked(), false, mSelectedTask.getID());
             startTaskActivity(selectedCategoryID);
         } else {
-            Toast.makeText(this, R.string.toast_invalid_data, Toast.LENGTH_SHORT).show();
+            makeToast(getString(R.string.toast_invalid_data));
         }
     }
 
