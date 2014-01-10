@@ -136,14 +136,22 @@ public class MainActivity extends RoboActivity {
      * @return returns the random colour
      */
     protected int[] generateRandomColour() {
-        int r = (int) (255 * Math.random());
-        int g = (int) (255 * Math.random());
-        int b = (int) (255 * Math.random());
-        int maxColorValue = 100;
+        int receiveMaxValue = (int) (2 * Math.random());
+        int rValue = 255;
+        int gValue = 255;
+        int bValue = 255;
 
-        if (r > maxColorValue || g > maxColorValue || b > maxColorValue) {
-            generateRandomColour();
+        if(receiveMaxValue == 0) {
+            rValue = 100;
+        } else if (receiveMaxValue == 1) {
+            gValue = 100;
+        } else {
+            bValue = 100;
         }
+
+        int r = (int) (rValue * Math.random());
+        int g = (int) (gValue * Math.random());
+        int b = (int) (bValue * Math.random());
 
         int color = Color.rgb(r, g, b);
 
