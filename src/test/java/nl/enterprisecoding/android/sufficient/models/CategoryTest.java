@@ -38,7 +38,7 @@ public class CategoryTest {
         int Id = 1;
         category.setID(Id);
 
-        assertEquals(category.getID(), Id);
+        assertEquals(category.getId(), Id);
     }
 
     @Test
@@ -51,9 +51,7 @@ public class CategoryTest {
 
     @Test
     public void test_setVisibleIsVisible() {
-        Boolean visible = true;
-        category.setVisible(visible);
-
-        assertEquals(category.isVisible(), visible);
+        category.setVisible(1);
+        assertEquals(category.getVisible(), 1);
     }
 }

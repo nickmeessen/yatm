@@ -16,7 +16,7 @@
     <string name="action_confirm">Accepteren</string>
     <string name="action_discard">Annuleren</string>
     <string name="action_change_date">Datum Veranderen</string>
-    <string name="action_edit_category">Categorie Bewerken</string>
+    <string id="@+id/3" name="action_edit_category">Categorie Bewerken</string>
     <string name="action_delete_category">Categorie Verwijderen</string>
     <string name="action_delete_all_tasks">Alle taken verwijderen</string>
     <string name="action_save_task">Taak Opslaan</string>

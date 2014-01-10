@@ -19,8 +19,6 @@ import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import nl.enterprisecoding.android.sufficient.R;
-import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
-import nl.enterprisecoding.android.sufficient.models.Category;
 
 /**
  * CategoryActivity class
@@ -52,9 +50,6 @@ public class CategoryActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.category_list);
         mActionBar.hide();
-
-        mTaskManager = new TaskManager(this, (long) 0);
-
         final Button colourButton = (Button) findViewById(R.id.category_colour_button);
         mBgShape = (GradientDrawable) colourButton.getBackground();
         generateColourShape();
@@ -108,6 +103,21 @@ public class CategoryActivity extends MainActivity {
             }
         });
 
+
+        View allCategoriesView = findViewById(R.id.all_cats);
+        allCategoriesView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
+
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+            }
+        });
+
     }
 
     /**
@@ -128,7 +138,6 @@ public class CategoryActivity extends MainActivity {
 
     /**
      * Adds a new category and checks for cases in which it isn't allowed to add a category
-     *
      */
     private void addCategory() {
         final EditText editText = (EditText) findViewById(R.id.newCategory);
@@ -223,12 +232,12 @@ public class CategoryActivity extends MainActivity {
                  * @param whichButton The button which is clicked
                  */
                 public void onClick(DialogInterface dialog, int whichButton) {
-                    Category originCategory = mTaskManager.getCategoryById(mSelectedCategoryId);
                     String destinationCategory = mSpinnerArray[catInput.getSelectedItemPosition()];
                     if (destinationCategory.equals(getString(R.string.action_delete_all_tasks))) {
-                        mTaskManager.deleteCategory(originCategory);
+                        mTaskManager.deleteCategory(mSelectedCategoryId);
                     } else {
-                        mTaskManager.deleteCategoryAndMoveTasks(originCategory, mTaskManager.getCategoryByTitle(destinationCategory));
+                        // @todo destinationCategory by ID?
+                        mTaskManager.deleteCategoryAndMoveTasks(mSelectedCategoryId, mTaskManager.getCategoryByTitle(destinationCategory).getId());
                     }
                 }
             });

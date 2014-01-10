@@ -19,7 +19,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import nl.enterprisecoding.android.sufficient.R;
-import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Category;
 
 /**
@@ -51,7 +50,6 @@ public class EditCategoryActivity extends MainActivity {
         mColourDialog = new Dialog(EditCategoryActivity.this);
         mColourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        mTaskManager = new TaskManager(this, (long) 0);
         final Category category = mTaskManager.getCategoryById(mSelectedCategory);
         getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedCategory).getColour()));
 
@@ -76,7 +74,8 @@ public class EditCategoryActivity extends MainActivity {
                 if (String.valueOf(getCategoryColour()).length() > 2) {
                     mCategoryColour = getCategoryColour();
                 }
-                mTaskManager.editCategory(mCategoryTitleInput.getText().toString(), mCategoryColour, mSelectedCategory);
+
+                mTaskManager.updateCategory(mCategoryTitleInput.getText().toString(), mCategoryColour, 1, mSelectedCategory);
 
                 Intent intent = new Intent(mActivity, CategoryActivity.class);
 
