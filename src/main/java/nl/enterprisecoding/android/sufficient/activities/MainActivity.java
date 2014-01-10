@@ -8,6 +8,7 @@
 package nl.enterprisecoding.android.sufficient.activities;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -173,9 +174,13 @@ public class MainActivity extends RoboActivity {
      * @param bgShape The shape that will display the chosen colour
      */
     protected void createColourDialog(GradientDrawable bgShape) {
+        int bgColour = getResources().getColor(R.color.action_bg);
         Dialog colourDialog = new Dialog(this);
+        View dialogView = colourDialog.findViewById(R.id.colour_dialog);
+
         colourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         colourDialog.setContentView(R.layout.colour_dialog);
+        dialogView.setBackgroundColor(bgColour);
 
         createColourButton(bgShape, R.id.colour_purple_button, R.color.purple, colourDialog);
         createColourButton(bgShape, R.id.colour_blue_button, R.color.blue, colourDialog);
