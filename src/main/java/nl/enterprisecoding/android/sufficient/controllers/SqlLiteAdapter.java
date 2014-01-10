@@ -14,11 +14,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * Adapter for the SQL Lite database
+ */
 public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter {
 
     private static final String CATEGORIES_TABLE = "categories";
@@ -360,4 +362,5 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
         database.delete(TASKS_TABLE, TCOLUMN_CATID + " = " + categoryId, null);
         database.delete(CATEGORIES_TABLE, CID_COLUMN + " = " + categoryId, null);
     }
+
 }

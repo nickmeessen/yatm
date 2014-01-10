@@ -12,7 +12,6 @@ import java.util.List;
 
 /**
  * Category Class
- * <p/>
  * Holds several Tasks, a Title and a Colour to represent the category.
  */
 public class Category {
@@ -127,4 +126,5 @@ public class Category {
     public List<Task> getTasks() {
         return mTasks;
     }
+
 }

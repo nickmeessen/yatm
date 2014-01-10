@@ -11,7 +11,6 @@ import java.util.Calendar;
 
 /**
  * Task Class
- * <p/>
  * Represents a Task Object.
  */
 public class Task {
@@ -132,4 +131,5 @@ public class Task {
     public void setCompleted(boolean completed) {
         this.mCompleted = completed;
     }
+
 }

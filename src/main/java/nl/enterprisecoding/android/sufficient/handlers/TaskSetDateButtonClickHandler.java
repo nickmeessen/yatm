@@ -14,7 +14,6 @@ import com.google.inject.Inject;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.activities.EditTaskActivity;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
-
 import java.util.Calendar;
 
 /**
@@ -46,7 +45,6 @@ public class TaskSetDateButtonClickHandler implements IButtonClickHandler {
      */
     @Override
     public void onClick(View view) {
-
         mTaskSetDateDialogButtonClickHandler.setActivity(mActivity);
 
         DatePickerDialog alert = new DatePickerDialog(mActivity, null, mActivity.getTaskDate().get(Calendar.YEAR), mActivity.getTaskDate().get(Calendar.MONTH), mActivity.getTaskDate().get(Calendar.DAY_OF_MONTH));
@@ -56,9 +54,6 @@ public class TaskSetDateButtonClickHandler implements IButtonClickHandler {
         alert.setButton(DialogInterface.BUTTON_NEGATIVE, mActivity.getString(R.string.action_discard), mTaskSetDateDialogButtonClickHandler);
 
         alert.show();
-
-
-//        mActivity.showTaskSetDateDialog();
     }
 
 }
