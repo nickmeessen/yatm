@@ -68,20 +68,19 @@ public class EditCategoryActivity extends MainActivity {
              */
             @Override
             public void onClick(View v) {
+                String categoryName = mCategoryTitleInput.getText().toString();
 
                 if (String.valueOf(getCategoryColour()).length() > 2) {
                     mCategoryColour = getCategoryColour();
                 }
 
-                mTaskManager.updateCategory(mCategoryTitleInput.getText().toString(), mCategoryColour, 1, mSelectedCategoryId);
-
-                Intent intent = new Intent(mActivity, CategoryActivity.class);
-
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                mActivity.startActivity(intent);
-                mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                if (categoryName.trim().isEmpty()) {
+                    makeToast(getString(R.string.category_name_empty_error));
+                } else {
+                    mTaskManager.updateCategory(categoryName, mCategoryColour, 1, mSelectedCategoryId);
+                    makeToast(getString(R.string.category_edited));
+                    startCategoryActivity();
+                }
             }
 
         });
@@ -119,5 +118,13 @@ public class EditCategoryActivity extends MainActivity {
                 mActionBar.setBackgroundDrawable(new ColorDrawable(mCategoryColour));
             }
         });
+    }
+
+    private void startCategoryActivity() {
+        Intent intent = new Intent(mActivity, CategoryActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mActivity.startActivity(intent);
+        mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

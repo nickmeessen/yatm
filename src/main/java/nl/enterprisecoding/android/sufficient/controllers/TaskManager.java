@@ -39,6 +39,76 @@ public class TaskManager implements ITaskManager {
 
         mDatabaseAdapter = new SqlLiteAdapter(activity);
 
+        fillCategoryListWithData();
+
+        initializeAdapters(activity, categoryID);
+
+        InitializeViews(activity);
+    }
+
+    /**
+     * Initializes both views
+     *
+     * @param activity is passed on into specified initializing methodes
+     */
+    private void InitializeViews(MainActivity activity) {
+        initializeCategoryView(activity);
+        initializeExpandableListView(activity);
+    }
+
+    /**
+     * Initializes ExpandableListView.
+     * Sets adapter for ExpandableListView.
+     * Sets the onChildClickListener with an adapter.
+     * Expands individual groups in the taskListView.
+     *
+     * @param activity Is required to get the layout xml file from the resource map.
+     */
+    private void initializeExpandableListView(MainActivity activity) {
+        ExpandableListView tasklistView = (ExpandableListView) activity.findViewById(R.id.taskList);
+        if (tasklistView != null) {
+            tasklistView.setAdapter(mTaskListAdapter);
+            tasklistView.setOnChildClickListener(mTaskListAdapter);
+            tasklistView.expandGroup(0, true);
+            tasklistView.expandGroup(1, true);
+            tasklistView.expandGroup(2, true);
+            tasklistView.expandGroup(3, true);
+        }
+    }
+
+    /**
+     * Initializes the categoryView listView.
+     * Sets the adapter for the categoryView.
+     * Sets the onItemClickListener for CategoryView.
+     * Registers CategoryView for context menu.
+     *
+     * @param activity Is required to get the layout xml file from the resource map and to register for context menu.
+     */
+    private void initializeCategoryView(MainActivity activity) {
+        ListView categoryView = (ListView) activity.findViewById(R.id.cat_list);
+
+        if (categoryView != null) {
+            categoryView.setAdapter(mCategoryListAdapter);
+            categoryView.setOnItemClickListener(mCategoryListAdapter);
+            activity.registerForContextMenu(categoryView);
+        }
+    }
+
+    /**
+     * Initializes both adapters.
+     *
+     * @param activity The activity to initialize the adapter
+     * @param categoryID The categoryID of the category which de adapter should use.
+     */
+    private void initializeAdapters(MainActivity activity, Long categoryID) {
+        mCategoryListAdapter = new CategoryListAdapter(activity, this);
+        mTaskListAdapter = new TaskListAdapter(activity, this, categoryID);
+    }
+
+    /**
+     * Fills the mCategoryList with categories and then fills the categories with tasks.
+     */
+    private void fillCategoryListWithData() {
         mCategoryList = new TreeMap<Long, Category>();
 
         for (Category category : mDatabaseAdapter.retrieveAllCategories()) {
@@ -47,29 +117,6 @@ public class TaskManager implements ITaskManager {
 
         for (Task task : mDatabaseAdapter.retrieveAllTasks()) {
             mCategoryList.get(task.getCatId()).addTask(task);
-        }
-
-        mCategoryListAdapter = new CategoryListAdapter(activity, this);
-
-        ListView categoryView = (ListView) activity.findViewById(R.id.cat_list);
-        ExpandableListView tasklistView = (ExpandableListView) activity.findViewById(R.id.taskList);
-
-        if (categoryView != null) {
-            categoryView.setAdapter(mCategoryListAdapter);
-            categoryView.setOnItemClickListener(mCategoryListAdapter);
-
-            activity.registerForContextMenu(categoryView);
-        }
-
-        mTaskListAdapter = new TaskListAdapter(activity, this, categoryID);
-
-        if (tasklistView != null) {
-            tasklistView.setAdapter(mTaskListAdapter);
-            tasklistView.setOnChildClickListener(mTaskListAdapter);
-            tasklistView.expandGroup(0, true);
-            tasklistView.expandGroup(1, true);
-            tasklistView.expandGroup(2, true);
-            tasklistView.expandGroup(3, true);
         }
     }
 

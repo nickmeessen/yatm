@@ -126,7 +126,6 @@ public class EditTaskActivity extends MainActivity {
      * @param spinner The spinner which displays the categories
      */
     private void initTaskCategorySpinner(Spinner spinner) {
-
         ArrayAdapter<String> mSpinnerArrayAdapter = new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_spinner_item,
@@ -166,6 +165,10 @@ public class EditTaskActivity extends MainActivity {
      * @param year       The wanted year
      */
     public void setTaskDate(int dayOfMonth, int month, int year) {
+        if(mTaskDate == null) {
+            mTaskDate = Calendar.getInstance();
+        }
+
         mTaskDate.set(year, month, dayOfMonth);
         updateDateButtonText();
     }
@@ -200,6 +203,10 @@ public class EditTaskActivity extends MainActivity {
      * @return Calendar the task date
      */
     public Calendar getTaskDate() {
+        if(mTaskDate == null) {
+            mTaskDate = Calendar.getInstance();
+        }
+
         return mTaskDate;
     }
 
