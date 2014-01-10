@@ -39,6 +39,8 @@
     <string name="category_name_empty_error">Sie müssen einen Namen eingeben!</string>
     <string name="toast_category_exists">Diese Kategorie existiert bereits!</string>
     <string name="category_added">Kategorie erfolgreich hinzugefügt</string>
+    <string name="category_edited">Kategorie erfolgreich bearbeitet</string>
+
     <string name="today">Heute</string>
     <string name="tomorrow">Morgen</string>
     <string name="upcoming">Bevorstehende</string>

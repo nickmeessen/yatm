@@ -8,12 +8,14 @@
 package nl.enterprisecoding.android.sufficient.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import nl.enterprisecoding.android.sufficient.R;
@@ -64,13 +66,19 @@ public class EditCategoryActivity extends MainActivity {
              */
             @Override
             public void onClick(View v) {
+                String categoryName = mCategoryTitleInput.getText().toString();
 
                 if (String.valueOf(getCategoryColour()).length() > 2) {
                     mCategoryColour = getCategoryColour();
                 }
 
-                mTaskManager.updateCategory(mCategoryTitleInput.getText().toString(), mCategoryColour, 1, mSelectedCategoryId);
-                startCategoryActivity();
+                if (categoryName.trim().isEmpty()) {
+                    makeToast(getString(R.string.category_name_empty_error));
+                } else {
+                    mTaskManager.updateCategory(categoryName, mCategoryColour, 1, mSelectedCategoryId);
+                    makeToast(getString(R.string.category_edited));
+                    startCategoryActivity();
+                }
             }
 
         });

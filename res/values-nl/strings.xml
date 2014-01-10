@@ -46,6 +46,8 @@
     <string name="category_name_empty_error">Je moet een naam invullen!</string>
     <string name="toast_category_exists">Deze categorie bestaat al</string>
     <string name="category_added">Categorie succesvol toegevoegd</string>
+    <string name="category_edited">Categorie succesvol bewerkt</string>
+
     <string name="today">Vandaag</string>
     <string name="tomorrow">Morgen</string>
     <string name="upcoming">Binnenkort</string>
