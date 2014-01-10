@@ -25,7 +25,6 @@ import java.util.ArrayList;
 
 /**
  * CategoryListAdapter
- * <p/>
  * An adapter class for managing the custom list views.
  */
 class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
@@ -150,4 +149,5 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
         mActivity.startActivity(intent);
         mActivity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
+
 }

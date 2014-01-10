@@ -11,7 +11,6 @@ import java.util.Calendar;
 
 /**
  * Task Class
- * <p/>
  * Represents a Task Object.
  */
 public class Task {
@@ -28,7 +27,7 @@ public class Task {
      *
      * @param id new ID for this Task.
      */
-    public void setID(long id) {
+    public void setId(long id) {
         mId = id;
     }
 
@@ -37,7 +36,7 @@ public class Task {
      *
      * @return the id of this task.
      */
-    public long getID() {
+    public long getId() {
         return mId;
     }
 
@@ -56,7 +55,7 @@ public class Task {
      *
      * @return the CatId of this task.
      */
-    public long getCatID() {
+    public long getCatId() {
         return mCatId;
     }
 
@@ -132,4 +131,5 @@ public class Task {
     public void setCompleted(boolean completed) {
         this.mCompleted = completed;
     }
+
 }

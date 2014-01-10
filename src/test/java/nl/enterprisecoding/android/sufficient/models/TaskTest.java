@@ -22,9 +22,9 @@ public class TaskTest {
     @Test
     public void Test_setIdGetId() {
         int Id = 1;
-        task.setID(Id);
+        task.setId(Id);
 
-        assertEquals(task.getID(), Id);
+        assertEquals(task.getId(), Id);
     }
 
     @Test
@@ -32,7 +32,7 @@ public class TaskTest {
         int CatId = 3;
         task.setCatId(CatId);
 
-        assertEquals(task.getCatID(), CatId);
+        assertEquals(task.getCatId(), CatId);
     }
 
     @Test

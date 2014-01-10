@@ -7,9 +7,14 @@
 
 package nl.enterprisecoding.android.sufficient.handlers;
 
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.view.View;
+import com.google.inject.Inject;
+import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.activities.EditTaskActivity;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
+import java.util.Calendar;
 
 /**
  * ClickHandler for the TaskSetDateButton.
@@ -17,6 +22,9 @@ import nl.enterprisecoding.android.sufficient.activities.MainActivity;
  * @author Sjors Roelofs
  */
 public class TaskSetDateButtonClickHandler implements IButtonClickHandler {
+
+    @Inject
+    private TaskSetDateDialogButtonClickHandler mTaskSetDateDialogButtonClickHandler;
 
     private EditTaskActivity mActivity;
 
@@ -37,7 +45,15 @@ public class TaskSetDateButtonClickHandler implements IButtonClickHandler {
      */
     @Override
     public void onClick(View view) {
-        mActivity.showTaskSetDateDialog();
+        mTaskSetDateDialogButtonClickHandler.setActivity(mActivity);
+
+        DatePickerDialog alert = new DatePickerDialog(mActivity, null, mActivity.getTaskDate().get(Calendar.YEAR), mActivity.getTaskDate().get(Calendar.MONTH), mActivity.getTaskDate().get(Calendar.DAY_OF_MONTH));
+        alert.getDatePicker().setMinDate(Calendar.getInstance().getTime().getTime());
+
+        alert.setButton(DialogInterface.BUTTON_POSITIVE, mActivity.getString(R.string.action_change_date), mTaskSetDateDialogButtonClickHandler);
+        alert.setButton(DialogInterface.BUTTON_NEGATIVE, mActivity.getString(R.string.action_discard), mTaskSetDateDialogButtonClickHandler);
+
+        alert.show();
     }
 
 }

@@ -46,7 +46,7 @@ public class TaskManager implements ITaskManager {
         }
 
         for (Task task : mDatabaseAdapter.retrieveAllTasks()) {
-            mCategoryList.get(task.getCatID()).addTask(task);
+            mCategoryList.get(task.getCatId()).addTask(task);
         }
 
         mCategoryListAdapter = new CategoryListAdapter(activity, this);
@@ -91,7 +91,7 @@ public class TaskManager implements ITaskManager {
         mCategoryList.get(categoryId).addTask(newTask);
         mTaskListAdapter.notifyDataSetChanged();
 
-        return newTask.getID();
+        return newTask.getId();
     }
 
     /**
@@ -216,7 +216,7 @@ public class TaskManager implements ITaskManager {
     private void moveTasks(long originId, long destinationId) {
         List<Task> tasks = getCategoryById(originId).getTasks();
         for (Task t : tasks) {
-            mDatabaseAdapter.updateTask(t.getTitle(), destinationId, t.getDate(), t.isImportant(), t.isCompleted(), t.getID());
+            mDatabaseAdapter.updateTask(t.getTitle(), destinationId, t.getDate(), t.isImportant(), t.isCompleted(), t.getId());
         }
     }
 
@@ -234,13 +234,11 @@ public class TaskManager implements ITaskManager {
 
         category.setVisible(newVisibility);
 
-        // fixme use
+        // @todo use
         mDatabaseAdapter.updateCategory(category.getTitle(), category.getColour(), newVisibility, category.getId());
-
-        // fixme or use
+        // or use
 //        mDatabaseAdapter.updateCategory(category);
-
-        // fixme or use
+        // or use
 //        mDatabaseAdapter.updateCategory(null, null, category.isVisible(), null);
 
         return category.isVisible();
@@ -257,14 +255,42 @@ public class TaskManager implements ITaskManager {
     }
 
     // @todo remove?
+
+    /**
+     * Updates a category.
+     *
+     * @param s  the new category title
+     * @param c  the new category colour.
+     * @param i  whether the category is visible or not.
+     * @param sc the ID of the category to update
+     */
+    @Deprecated
     public void updateCategory(String s, int c, int i, long sc) {
         mDatabaseAdapter.updateCategory(s, c, i, sc);
     }
 
+    /**
+     * Updates a task.
+     *
+     * @param s   the new title of the task to update.
+     * @param cid the new categoryID of the task to update.
+     * @param cal the new date of the task to update.
+     * @param c   wether the task is marked as important or not
+     * @param b   wether the task is marked as completed or not.
+     * @param id  the id of the task to update
+     */
+    @Deprecated
     public void updateTask(String s, long cid, Calendar cal, boolean c, boolean b, long id) {
         mDatabaseAdapter.updateTask(s, cid, cal, c, b, id);
     }
 
+    /**
+     * gets a task
+     *
+     * @param id
+     * @return
+     */
+    @Deprecated
     public Task getTask(long id) {
         return mDatabaseAdapter.getTask(id);
     }

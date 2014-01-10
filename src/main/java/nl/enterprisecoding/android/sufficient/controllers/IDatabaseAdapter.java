@@ -9,12 +9,11 @@ package nl.enterprisecoding.android.sufficient.controllers;
 
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
-
 import java.util.Calendar;
 import java.util.List;
 
-/*
-    Interface for the DatabaseAdapter
+/**
+ * Interface for the DatabaseAdapter
  */
 public interface IDatabaseAdapter {
 
@@ -60,6 +59,8 @@ public interface IDatabaseAdapter {
 
     /**
      * Retrieve all tasks and put them in the category they belong.
+     *
+     * @return a list of all tasks.
      */
     List<Task> retrieveAllTasks();
 
@@ -100,6 +101,8 @@ public interface IDatabaseAdapter {
 
     /**
      * Retrieve all categories.
+     *
+     * @return a list of all categories.
      */
     List<Category> retrieveAllCategories();
 
