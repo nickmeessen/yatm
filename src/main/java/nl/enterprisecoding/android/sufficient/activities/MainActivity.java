@@ -33,8 +33,12 @@ import roboguice.activity.RoboActivity;
 
 public class MainActivity extends RoboActivity {
 
+    public static final String CATEGORY_ID = "categoryID";
+
     protected TaskManager mTaskManager;
     protected ActionBar mActionBar;
+
+    protected long mCurrentCategoryID;
     protected int mFinalColour;
 
     /**
@@ -53,6 +57,10 @@ public class MainActivity extends RoboActivity {
         mActionBar.setDisplayShowHomeEnabled(false);
         mActionBar.setDisplayShowTitleEnabled(true);
         mActionBar.setDisplayUseLogoEnabled(false);
+
+        mCurrentCategoryID = getIntent().getLongExtra(CATEGORY_ID, 0);
+
+        mTaskManager = new TaskManager(this, mCurrentCategoryID);
 
     }
 
@@ -82,7 +90,7 @@ public class MainActivity extends RoboActivity {
     /**
      * Shows a Toast
      *
-     * @param content      The String that defines the text of the Toast
+     * @param content The String that defines the text of the Toast
      */
     protected void makeToast(String content) {
         Toast.makeText(this, content, Toast.LENGTH_SHORT).show();

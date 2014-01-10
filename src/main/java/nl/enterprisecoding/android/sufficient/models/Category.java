@@ -21,7 +21,7 @@ public class Category {
     private long mId;
     private String mTitle;
     private int mColour;
-    private boolean mVisible;
+    private int mVisible;
 
     /**
      * Constructs a new Category.
@@ -71,7 +71,7 @@ public class Category {
      *
      * @return mId the current ID
      */
-    public long getID() {
+    public long getId() {
         return mId;
     }
 
@@ -95,21 +95,28 @@ public class Category {
     }
 
     /**
-     * Gets visibility of this category.
+     * Returns if this Category is visible or not.
      *
-     * @return boolean based on if this category is visible.
+     * @return boolean based on if this category is visible or not.
      */
     public boolean isVisible() {
+        return (mVisible == 1);
+    }
+
+    /**
+     * Returns visibility of this category.
+     */
+    public int getVisible() {
         return mVisible;
     }
 
     /**
      * Sets the visibility of this category.
      *
-     * @param b the visible boolean
+     * @param i 1 if visible, or 0 if invisible.
      */
-    public void setVisible(boolean b) {
-        mVisible = b;
+    public void setVisible(int i) {
+        mVisible = i;
     }
 
     /**

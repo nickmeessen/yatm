@@ -70,17 +70,7 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
      * @return the ID of the item at the given position.
      */
     public long getItemId(int position) {
-        return getItem(position).getID();
-    }
-
-    /**
-     * Fetches a category by ID.
-     *
-     * @param id the id of the category to fetch.
-     * @return the category corresponding to the given ID.
-     */
-    public Category getItemById(long id) {
-        return mTaskManager.getAllCategories().get(id);
+        return getItem(position).getId();
     }
 
     /**
@@ -107,7 +97,7 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
         view.setBackgroundColor(getItem(position).getColour());
         final ImageView catVisibility = (ImageView) view.findViewById(R.id.catChangeVisibilityButton);
 
-        if (mSelectedCategory.getID() != 0) {
+        if (mSelectedCategory.getId() != 0) {
             updateCategoryVisibilityButton(catVisibility, mSelectedCategory.isVisible());
             catVisibility.setVisibility(View.VISIBLE);
         } else {

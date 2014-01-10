@@ -17,13 +17,13 @@ import android.view.View;
 import android.widget.*;
 import com.google.inject.Inject;
 import nl.enterprisecoding.android.sufficient.R;
-import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateButtonClickHandler;
 import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateDialogButtonClickHandler;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
+
 import java.text.DateFormatSymbols;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -76,8 +76,6 @@ public class EditTaskActivity extends MainActivity {
         if (selectedTaskID != 0) {
             mActionBar.setTitle(R.string.action_edit);
 
-            mTaskManager = new TaskManager(this, (long) 0);
-
             mSelectedTask = mTaskManager.getTask(selectedTaskID);
             mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedTask.getCatID()).getColour()));
 
@@ -121,13 +119,13 @@ public class EditTaskActivity extends MainActivity {
     private void saveTask() {
         boolean validData = true;
         int selectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
-        long selectedCategoryID = mCategoriesArray.get(selectedCategoryIndex).getID();
+        long selectedCategoryID = mCategoriesArray.get(selectedCategoryIndex).getId();
         if (mTaskTitleInput.getText().toString().isEmpty()) {
             mTaskTitleInput.setText(mTaskTitleInput.getHint());
         }
 
         if (validData) {
-            mTaskManager.editTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked(), false, mSelectedTask.getID());
+            mTaskManager.updateTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked(), false, mSelectedTask.getID());
             startTaskActivity(selectedCategoryID);
         } else {
             makeToast(getString(R.string.toast_invalid_data));
@@ -162,7 +160,7 @@ public class EditTaskActivity extends MainActivity {
 
         int count = 0;
         for (Category cat : mCategoriesArray) {
-            if (cat.getID() == categoryId) {
+            if (cat.getId() == categoryId) {
                 index = count;
                 break;
             }
