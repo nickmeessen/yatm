@@ -162,37 +162,30 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
 
     /**
      * Updates a task.
-     *
-     * @param title      the new title of the task to update.
-     * @param categoryId the new categoryID of the task to update.
-     * @param date       the new date of the task to update.
-     * @param important  wether the task is marked as important or not
-     * @param completed  wether the task is marked as completed or not.
-     * @param taskID     the id of the task to update
+     * @param task the task to update.
      */
-    public void updateTask(String title, long categoryId, Calendar date, boolean important, boolean completed, long taskID) {
-        int mIsImportant, taskIsCompleted;
-        if (important) {
-            mIsImportant = 1;
-        } else {
-            mIsImportant = 0;
+    public void updateTask(Task task) {
+
+        int isImportant = 0;
+        int isCompleted = 0;
+
+        if (task.isImportant()) {
+            isImportant = 1;
         }
 
-        if (completed) {
-            taskIsCompleted = 1;
-        } else {
-            taskIsCompleted = 0;
+        if (task.isCompleted()) {
+            isCompleted = 1;
         }
 
         ContentValues values = new ContentValues();
 
-        values.put(TCOLUMN_COMPLETED, taskIsCompleted);
-        values.put(TCOLUMN_IMPORTANT, mIsImportant);
-        values.put(TCOLUMN_CATID, categoryId);
-        values.put(TCOLUMN_TASK, title);
-        values.put(TCOLUMN_DATE, date.getTimeInMillis());
+        values.put(TCOLUMN_COMPLETED, isCompleted);
+        values.put(TCOLUMN_IMPORTANT, isImportant);
+        values.put(TCOLUMN_CATID, task.getCatId());
+        values.put(TCOLUMN_TASK, task.getTitle());
+        values.put(TCOLUMN_DATE, task.getDate().getTimeInMillis());
 
-        database.update(TASKS_TABLE, values, TCOLUMN_ID + " = " + taskID, null);
+        database.update(TASKS_TABLE, values, TCOLUMN_ID + " = " + task.getId(), null);
     }
 
     /**
@@ -239,7 +232,7 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
         taskDate.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(TCOLUMN_DATE)));
 
         task.setId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_ID)));
-        task.setCatId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_CATID)));
+        task.setCategoryId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_CATID)));
         task.setTitle(cursor.getString(cursor.getColumnIndex(TCOLUMN_TASK)));
         task.setDate(taskDate);
 
@@ -341,16 +334,14 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
     /**
      * Updates a category.
      *
-     * @param title      the new category title
-     * @param colour     the new category colour.
-     * @param categoryID the ID of the category to update
+     * @param category  the category to update.
      */
-    public void updateCategory(String title, int colour, int visibility, Long categoryID) {
+    public void updateCategory(Category category) {
         ContentValues values = new ContentValues();
-        values.put(CTITLE_COLUMN, title);
-        values.put(CCOLOUR_COLUMN, colour);
-        values.put(CVISIBILITY, visibility);
-        database.update(CATEGORIES_TABLE, values, CID_COLUMN + " = " + categoryID, null);
+        values.put(CTITLE_COLUMN, category.getTitle());
+        values.put(CCOLOUR_COLUMN, category.getColour());
+        values.put(CVISIBILITY, category.getVisible());
+        database.update(CATEGORIES_TABLE, values, CID_COLUMN + " = " + category.getId(), null);
     }
 
     /**

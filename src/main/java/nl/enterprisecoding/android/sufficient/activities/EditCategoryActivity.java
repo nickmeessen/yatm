@@ -29,8 +29,7 @@ public class EditCategoryActivity extends MainActivity {
     private Activity mActivity = this;
     private int mCategoryColour;
     private EditText mCategoryTitleInput;
-    private long mSelectedCategory;
-    private Dialog mColourDialog;
+    private long mSelectedCategoryId;
 
     /**
      * Called when the activity is starting.
@@ -45,10 +44,10 @@ public class EditCategoryActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_category_list);
         mActionBar.setTitle(R.string.action_edit_category);
-        mSelectedCategory = getIntent().getExtras().getLong("CategoryID", 0);
+        mSelectedCategoryId = getIntent().getExtras().getLong("CategoryID", 0);
 
-        final Category category = mTaskManager.getCategoryById(mSelectedCategory);
-        getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedCategory).getColour()));
+        final Category category = mTaskManager.getCategoryById(mSelectedCategoryId);
+        getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedCategoryId).getColour()));
 
         mCategoryTitleInput = (EditText) findViewById(R.id.category_title);
         mCategoryTitleInput.setText(category.getTitle());
@@ -72,7 +71,7 @@ public class EditCategoryActivity extends MainActivity {
                     mCategoryColour = getCategoryColour();
                 }
 
-                mTaskManager.updateCategory(mCategoryTitleInput.getText().toString(), mCategoryColour, 1, mSelectedCategory);
+                mTaskManager.updateCategory(mCategoryTitleInput.getText().toString(), mCategoryColour, 1, mSelectedCategoryId);
 
                 Intent intent = new Intent(mActivity, CategoryActivity.class);
 
