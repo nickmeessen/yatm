@@ -403,13 +403,14 @@ public class TaskManager extends SQLiteOpenHelper implements ITaskManager {
 
     /**
      * Retrieves a list of categories in the form of a string array.
+     *
      * @return an array of strings containing the category titles.
      */
     public String[] getCategoriesStringArray() {
-        String[] result = new String[categoryList.size()];
+        String[] result = new String[mCategoryList.size()];
 
         int count = 0;
-        for (Category cat : categoryList) {
+        for (Category cat : mCategoryList.values()) {
             result[count] = cat.getTitle();
             count++;
         }

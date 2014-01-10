@@ -22,8 +22,6 @@ import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Category;
 
-import java.util.List;
-
 /**
  * CategoryActivity class
  * <p/>
@@ -188,7 +186,7 @@ public class CategoryActivity extends MainActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
         if (v.getId() == R.id.cat_list && info.position != 0) {
-            String[] menuItems = getStringArray(R.array.category_context_menu);
+            String[] menuItems = getResources().getStringArray(R.array.category_context_menu);
 
             for (int i = 0; i < menuItems.length; i++) {
                 menu.add(Menu.NONE, i, i, menuItems[i]);
@@ -270,7 +268,7 @@ public class CategoryActivity extends MainActivity {
      */
     private void initTaskCategorySpinner(Spinner spinner) {
         mSpinnerArray = mTaskManager.getCategoriesStringArray();
-        mSpinnerArray[mSpinnerArray.size() + 1] = getString(R.string.action_delete_all_tasks);
+        mSpinnerArray[mSpinnerArray.length + 1] = getString(R.string.action_delete_all_tasks);
 
         ArrayAdapter<String> mSpinnerArrayAdapter = new ArrayAdapter<String>(
                 this,

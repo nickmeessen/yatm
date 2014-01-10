@@ -107,7 +107,7 @@ public class MainActivity extends RoboActivity {
         final int[] randColour = generateRandomColour();
 
         if (inputColour != 0) {
-            colourButton.setBackgroundColor(getColor(inputColour));
+            colourButton.setBackgroundColor(getResources().getColor(inputColour));
         } else {
             colourButton.setBackgroundColor(randColour[0]);
         }
@@ -121,8 +121,8 @@ public class MainActivity extends RoboActivity {
             public void onClick(View v) {
                 int chosenColour;
                 if (inputColour != 0) {
-                    chosenColour = getColor(inputColour);
-                    bgShape.setColor(getColor(inputColour));
+                    chosenColour = getResources().getColor(inputColour);
+                    bgShape.setColor(getResources().getColor(inputColour));
                 } else {
                     chosenColour = randColour[0];
                     bgShape.setColor(randColour[0]);
