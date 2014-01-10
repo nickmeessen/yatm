@@ -77,7 +77,7 @@ public class EditTaskActivity extends MainActivity {
             mActionBar.setTitle(R.string.action_edit);
 
             mSelectedTask = mTaskManager.getTask(selectedTaskID);
-            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedTask.getCatID()).getColour()));
+            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedTask.getCatId()).getColour()));
 
             mDateToday = Calendar.getInstance();
 
@@ -93,7 +93,7 @@ public class EditTaskActivity extends MainActivity {
             mTaskTitleInput.setHint(mSelectedTask.getTitle());
 
             initTaskCategorySpinner(mTaskCategorySpinner);
-            mTaskCategorySpinner.setSelection(findIndexByCategoryId(mSelectedTask.getCatID()));
+            mTaskCategorySpinner.setSelection(findIndexByCategoryId(mSelectedTask.getCatId()));
 
             mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
             mTaskImportantCheckBox.setChecked(mSelectedTask.isImportant());
@@ -125,7 +125,7 @@ public class EditTaskActivity extends MainActivity {
         }
 
         if (validData) {
-            mTaskManager.updateTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked(), false, mSelectedTask.getID());
+            mTaskManager.updateTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked(), false, mSelectedTask.getId());
             startTaskActivity(selectedCategoryID);
         } else {
             makeToast(getString(R.string.toast_invalid_data));

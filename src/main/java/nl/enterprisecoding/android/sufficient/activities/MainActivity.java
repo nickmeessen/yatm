@@ -149,7 +149,7 @@ public class MainActivity extends RoboActivity {
         int gValue = 255;
         int bValue = 255;
 
-        if(receiveMaxValue == 0) {
+        if (receiveMaxValue == 0) {
             rValue = 100;
         } else if (receiveMaxValue == 1) {
             gValue = 100;

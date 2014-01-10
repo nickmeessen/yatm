@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * DatabaseAdapter implementation for SQL Lite.
+ */
 public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter {
 
     private static final String CATEGORIES_TABLE = "categories";
@@ -236,7 +239,7 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
         Calendar taskDate = Calendar.getInstance();
         taskDate.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(TCOLUMN_DATE)));
 
-        task.setID(cursor.getLong(cursor.getColumnIndex(TCOLUMN_ID)));
+        task.setId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_ID)));
         task.setCatId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_CATID)));
         task.setTitle(cursor.getString(cursor.getColumnIndex(TCOLUMN_TASK)));
         task.setDate(taskDate);
