@@ -96,12 +96,8 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
         view.setBackgroundColor(getItem(position).getColour());
         final ImageView catVisibility = (ImageView) view.findViewById(R.id.catChangeVisibilityButton);
 
-        if (mSelectedCategory.getId() != 0) {
-            updateCategoryVisibilityButton(catVisibility, mSelectedCategory.isVisible());
-            catVisibility.setVisibility(View.VISIBLE);
-        } else {
-            catVisibility.setVisibility(View.GONE);
-        }
+        updateCategoryVisibilityButton(catVisibility, mSelectedCategory.isVisible());
+        catVisibility.setVisibility(View.VISIBLE);
 
         catVisibility.setOnClickListener(new View.OnClickListener() {
             @Override
