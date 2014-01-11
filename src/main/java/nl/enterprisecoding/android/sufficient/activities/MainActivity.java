@@ -33,7 +33,7 @@ import roboguice.activity.RoboActivity;
 
 public class MainActivity extends RoboActivity {
 
-    public static final String CATEGORY_ID = "categoryID";
+    private static final String CATEGORY_ID = "categoryID";
 
     protected TaskManager mTaskManager;
     protected ActionBar mActionBar;

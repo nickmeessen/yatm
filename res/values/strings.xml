@@ -32,7 +32,6 @@
     <string name="category_title_label">Title</string>
     <string name="category_colour_label">Colour</string>
 
-    <string name="toast_invalid_data">Please check all fields</string>
     <string name="toast_error">Oops, something went wrong..</string>
     <string name="toast_no_category">You need to add a category first</string>
 

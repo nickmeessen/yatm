@@ -25,7 +25,6 @@
     <string name="category_title_label">Titel</string>
     <string name="category_colour_label">Farbe</string>
 
-    <string name="toast_invalid_data">Bitte überprüfen Sie alle Felder!</string>
     <string name="toast_error">Hoppla, ist etwas schief gelaufen..</string>
     <string name="toast_no_category">Sie müssen sich zuerst Kategorie hinzufügen</string>
 

@@ -49,7 +49,7 @@ public class TaskSetDateButtonClickHandler implements IButtonClickHandler {
         mTaskSetDateDialogButtonClickHandler.setActivity(mActivity);
 
         DatePickerDialog alert = new DatePickerDialog(mActivity, null, mActivity.getTaskDate().get(Calendar.YEAR), mActivity.getTaskDate().get(Calendar.MONTH), mActivity.getTaskDate().get(Calendar.DAY_OF_MONTH));
-        alert.getDatePicker().setMinDate(Calendar.getInstance().getTime().getTime());
+        alert.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 
         alert.setButton(DialogInterface.BUTTON_POSITIVE, mActivity.getString(R.string.action_change_date), mTaskSetDateDialogButtonClickHandler);
         alert.setButton(DialogInterface.BUTTON_NEGATIVE, mActivity.getString(R.string.action_discard), mTaskSetDateDialogButtonClickHandler);

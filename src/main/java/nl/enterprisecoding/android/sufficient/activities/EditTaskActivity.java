@@ -30,7 +30,7 @@ import java.util.Calendar;
  *
  * @author Sjors Roelofs & Ferry Wienholts
  */
-@ContentView(R.layout.edit_task_item)
+@ContentView(R.layout.edit_task)
 public class EditTaskActivity extends MainActivity {
 
     @InjectView(R.id.task_title)
@@ -165,7 +165,7 @@ public class EditTaskActivity extends MainActivity {
      * @param year       The wanted year
      */
     public void setTaskDate(int dayOfMonth, int month, int year) {
-        if(mTaskDate == null) {
+        if (mTaskDate == null) {
             mTaskDate = Calendar.getInstance();
         }
 
@@ -203,7 +203,7 @@ public class EditTaskActivity extends MainActivity {
      * @return Calendar the task date
      */
     public Calendar getTaskDate() {
-        if(mTaskDate == null) {
+        if (mTaskDate == null) {
             mTaskDate = Calendar.getInstance();
         }
 

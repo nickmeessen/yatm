@@ -18,7 +18,7 @@
     <string name="action_confirm">Accepteren</string>
     <string name="action_discard">Annuleren</string>
     <string name="action_change_date">Datum Veranderen</string>
-    <string id="@+id/3" name="action_edit_category">Categorie Bewerken</string>
+    <string name="action_edit_category">Categorie Bewerken</string>
     <string name="action_delete_category">Categorie Verwijderen</string>
     <string name="action_delete_all_tasks">Alle taken verwijderen</string>
     <string name="action_save_task">Taak Opslaan</string>
@@ -32,7 +32,6 @@
     <string name="category_title_label">Titel</string>
     <string name="category_colour_label">Kleur</string>
 
-    <string name="toast_invalid_data">Vul alle velden in!</string>
     <string name="toast_error">Oeps, er gaat iets verkeerd..</string>
     <string name="toast_no_category">Je moet eerst een categorie toevoegen!</string>
 

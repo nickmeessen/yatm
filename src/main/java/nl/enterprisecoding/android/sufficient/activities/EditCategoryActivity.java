@@ -41,7 +41,7 @@ public class EditCategoryActivity extends MainActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.edit_category_list);
+        setContentView(R.layout.edit_category);
 
         mTaskManager = new TaskManager(this, mCurrentCategoryID);
 

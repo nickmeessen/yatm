@@ -43,7 +43,7 @@ public class TaskManager implements ITaskManager {
 
         initializeAdapters(activity, categoryID);
 
-        InitializeViews(activity);
+        initializeViews(activity);
     }
 
     /**
@@ -51,7 +51,7 @@ public class TaskManager implements ITaskManager {
      *
      * @param activity is passed on into specified initializing methodes
      */
-    private void InitializeViews(MainActivity activity) {
+    private void initializeViews(MainActivity activity) {
         initializeCategoryView(activity);
         initializeExpandableListView(activity);
     }
@@ -97,7 +97,7 @@ public class TaskManager implements ITaskManager {
     /**
      * Initializes both adapters.
      *
-     * @param activity The activity to initialize the adapter
+     * @param activity   The activity to initialize the adapter
      * @param categoryID The categoryID of the category which de adapter should use.
      */
     private void initializeAdapters(MainActivity activity, Long categoryID) {
@@ -133,7 +133,9 @@ public class TaskManager implements ITaskManager {
 
         Task newTask = mDatabaseAdapter.createTask(title, categoryId, date, important);
 
-        mCategoryList.get(categoryId).addTask(newTask);
+        if (categoryId != 0) {
+            mCategoryList.get(categoryId).addTask(newTask);
+        }
         mTaskListAdapter.notifyDataSetChanged();
 
         return newTask.getId();

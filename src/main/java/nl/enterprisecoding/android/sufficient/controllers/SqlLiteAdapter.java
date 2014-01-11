@@ -29,11 +29,11 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
     private static final String DATABASE_NAME = "yatm.db";
     private static final int DATABASE_VERSION = 1;
 
-    public static final String CREATE = "CREATE TABLE ";
-    public static final String DESTROY = "DROP TABLE IF EXISTS ";
-    public static final Object P_ID_AI = " integer primary key autoincrement, ";
-    public static final String INT_NOT_NULL = " integer not null, ";
-    public static final String TEXT_NOT_NULL = " text not null, ";
+    private static final String CREATE = "CREATE TABLE ";
+    private static final String DESTROY = "DROP TABLE IF EXISTS ";
+    private static final Object P_ID_AI = " integer primary key autoincrement, ";
+    private static final String INT_NOT_NULL = " integer not null, ";
+    private static final String TEXT_NOT_NULL = " text not null, ";
 
     private static final String CID_COLUMN = "_id";
     private static final String CTITLE_COLUMN = "title";
@@ -71,7 +71,7 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
     /**
      * Constructs a new SQL Lite Adapter and opens the database.
      *
-     * @param activity
+     * @param activity the activity called fromm.
      */
     public SqlLiteAdapter(MainActivity activity) {
         super(activity, DATABASE_NAME, null, DATABASE_VERSION);
