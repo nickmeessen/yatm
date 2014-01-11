@@ -132,4 +132,8 @@ public class Task {
         this.mCompleted = completed;
     }
 
+
+    public String toString() {
+        return getTitle();
+    }
 }

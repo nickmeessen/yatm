@@ -126,10 +126,10 @@ public class EditTaskActivity extends MainActivity {
      * @param spinner The spinner which displays the categories
      */
     private void initTaskCategorySpinner(Spinner spinner) {
-        ArrayAdapter<String> mSpinnerArrayAdapter = new ArrayAdapter<String>(
+        ArrayAdapter<Category> mSpinnerArrayAdapter = new ArrayAdapter<Category>(
                 this,
                 android.R.layout.simple_spinner_item,
-                mTaskManager.getCategoriesStringArray()
+                mTaskManager.getCategories()
         );
 
         mSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -185,23 +185,6 @@ public class TaskManager implements ITaskManager {
     }
 
     /**
-     * Retrieves a list of categories in the form of a string array.
-     *
-     * @return an array of strings containing the category titles.
-     */
-    public String[] getCategoriesStringArray() {
-        String[] result = new String[mCategoryList.size()];
-
-        int count = 0;
-        for (Category cat : mCategoryList.values()) {
-            result[count] = cat.getTitle();
-            count++;
-        }
-
-        return result;
-    }
-
-    /**
      * Gets all visible categories.
      *
      * @return a list of all categories that are currently visible.

@@ -127,4 +127,12 @@ public class Category {
         return mTasks;
     }
 
+    /**
+     * ToString method to show Category Title.
+     *
+     * @return a string containing this category's title.
+     */
+    public String toString() {
+        return getTitle();
+    }
 }

@@ -20,6 +20,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
+import nl.enterprisecoding.android.sufficient.models.Category;
+
+import java.util.List;
 
 /**
  * CategoryActivity class
@@ -30,7 +33,6 @@ import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
  */
 public class CategoryActivity extends MainActivity {
 
-    private String[] mSpinnerArray;
     private Spinner catInput;
     private long mSelectedCategoryId;
     private int[] mRandomColour;
@@ -214,12 +216,11 @@ public class CategoryActivity extends MainActivity {
                  * @param whichButton The button which is clicked
                  */
                 public void onClick(DialogInterface dialog, int whichButton) {
-                    String destinationCategory = mSpinnerArray[catInput.getSelectedItemPosition()];
-                    if (destinationCategory.equals(getString(R.string.action_delete_all_tasks))) {
+                    long destinationCategoryId = ((Category) catInput.getSelectedItem()).getId();
+                    if (destinationCategoryId == 0) {
                         mTaskManager.deleteCategory(mSelectedCategoryId);
                     } else {
-                        // @todo destinationCategory by ID?
-                        mTaskManager.deleteCategoryAndMoveTasks(mSelectedCategoryId, mTaskManager.getCategoryByTitle(destinationCategory).getId());
+                        mTaskManager.deleteCategoryAndMoveTasks(mSelectedCategoryId, destinationCategoryId);
                     }
                 }
             });
@@ -257,13 +258,19 @@ public class CategoryActivity extends MainActivity {
      * @param spinner The spinner which displays the categories
      */
     private void initTaskCategorySpinner(Spinner spinner) {
-        mSpinnerArray = mTaskManager.getCategoriesStringArray();
-        mSpinnerArray[mSpinnerArray.length + 1] = getString(R.string.action_delete_all_tasks);
 
-        ArrayAdapter<String> mSpinnerArrayAdapter = new ArrayAdapter<String>(
+        List<Category> spinnerArray = mTaskManager.getCategories();
+
+        Category dummyCat = new Category();
+        dummyCat.setID(0);
+        dummyCat.setTitle(getString(R.string.action_delete_all_tasks));
+
+        spinnerArray.add(dummyCat);
+
+        ArrayAdapter<Category> mSpinnerArrayAdapter = new ArrayAdapter<Category>(
                 this,
                 android.R.layout.simple_spinner_item,
-                mSpinnerArray
+                spinnerArray
         );
 
         mSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

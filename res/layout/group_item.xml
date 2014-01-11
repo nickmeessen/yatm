@@ -27,6 +27,6 @@
             android:paddingLeft="20dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="25dp"
-            android:textIsSelectable="true"/>
+            android:textIsSelectable="false"/>
 
 </RelativeLayout>

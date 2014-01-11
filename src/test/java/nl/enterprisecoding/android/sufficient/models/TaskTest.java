@@ -46,7 +46,7 @@ public class TaskTest {
     @Test
     public void Test_setDateGetDate() {
         Calendar date = Calendar.getInstance();
-        date.set(1993, 01, 20);
+        date.set(1993, Calendar.JANUARY, 20);
         task.setDate(date);
 
         assertEquals(task.getDate(), date);
