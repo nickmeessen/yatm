@@ -298,12 +298,13 @@ public class TaskManager implements ITaskManager {
      * @param important  whether the task is important or not
      * @param taskId     the id of the task to be updated.
      */
-    public void updateTask(String title, long categoryId, boolean important, long taskId) {
+    public void updateTask(String title, long categoryId, Calendar date, boolean important, long taskId) {
 
         Task task = mDatabaseAdapter.getTask(taskId);
 
         task.setTitle(title);
         task.setCategoryId(categoryId);
+        task.setDate(date);
         task.setImportant(important);
 
         mDatabaseAdapter.updateTask(task);

@@ -115,7 +115,7 @@ public class EditTaskActivity extends MainActivity {
             mTaskTitleInput.setText(mTaskTitleInput.getHint());
         }
 
-        mTaskManager.updateTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskImportantCheckBox.isChecked(), mSelectedTaskId);
+        mTaskManager.updateTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked(), mSelectedTaskId);
 
         startTaskActivity(selectedCategoryID);
     }

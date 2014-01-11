@@ -113,12 +113,13 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         tomorrow.set(Calendar.SECOND, 0);
         tomorrow.set(Calendar.MILLISECOND, 0);
 
+        // @todo date comparison doesn't work properly. compareTo is fucked?
         for (Task task : tasks) {
             if (task.isCompleted()) {
                 mCompletedList.add(task);
-            } else if (task.getDate().compareTo(today) == 0 && task.getDate().before(today)) {
+            } else if (task.getDate().compareTo(today) == 1 || task.getDate().before(today)) {
                 mTodayList.add(task);
-            } else if (task.getDate().compareTo(tomorrow) == 0) {
+            } else if (task.getDate().compareTo(tomorrow) == 1) {
                 mTomorrowList.add(task);
             } else if (task.getDate().after(tomorrow)) {
                 mUpcomingList.add(task);
@@ -367,7 +368,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
             task.setCompleted(true);
         }
 
-        mTaskManager.updateTask(task.getTitle(), task.getCatId(), task.isImportant(), id);
+        mTaskManager.updateTask(task.getTitle(), task.getCatId(), task.getDate(), task.isImportant(), id);
 
         notifyDataSetChanged();
 
