@@ -55,4 +55,5 @@
     <string name="all_categories">All Categories</string>
     <string name="standard_colours">Standard Colours</string>
     <string name="random_colours">Random Colours</string>
+    <string name="empty_task"> That thing you need to do.. </string>
 </resources>

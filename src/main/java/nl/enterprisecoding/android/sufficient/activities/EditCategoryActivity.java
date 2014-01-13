@@ -30,6 +30,8 @@ public class EditCategoryActivity extends MainActivity {
     private int mCategoryColour;
     private EditText mCategoryTitleInput;
     private long mSelectedCategoryId;
+    private GradientDrawable mBgShape;
+    private Category mCategory;
 
     /**
      * Called when the activity is starting.
@@ -49,16 +51,16 @@ public class EditCategoryActivity extends MainActivity {
         mActionBar.setTitle(R.string.action_edit_category);
         mSelectedCategoryId = getIntent().getExtras().getLong("CategoryID", 0);
 
-        final Category category = mTaskManager.getCategoryById(mSelectedCategoryId);
+        mCategory = mTaskManager.getCategoryById(mSelectedCategoryId);
         getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedCategoryId).getColour()));
 
         mCategoryTitleInput = (EditText) findViewById(R.id.category_title);
-        mCategoryTitleInput.setText(category.getTitle());
+        mCategoryTitleInput.setText(mCategory.getTitle());
         mCategoryTitleInput.requestFocus();
         int textLength = mCategoryTitleInput.getText().length();
         mCategoryTitleInput.setSelection(textLength);
         openKeyboard();
-        mCategoryColour = category.getColour();
+        mCategoryColour = mCategory.getColour();
 
         Button mEditCategoryButton = (Button) findViewById(R.id.edit_category_button);
         mEditCategoryButton.setOnClickListener(new View.OnClickListener() {
@@ -69,26 +71,14 @@ public class EditCategoryActivity extends MainActivity {
              */
             @Override
             public void onClick(View v) {
-                String categoryName = mCategoryTitleInput.getText().toString();
-
-                if (String.valueOf(getCategoryColour()).length() > 2) {
-                    mCategoryColour = getCategoryColour();
-                }
-
-                if (categoryName.trim().isEmpty()) {
-                    makeToast(getString(R.string.category_name_empty_error));
-                } else {
-                    mTaskManager.updateCategory(categoryName, mCategoryColour, 1, mSelectedCategoryId);
-                    makeToast(getString(R.string.category_edited));
-                    startCategoryActivity();
-                }
+                editCategory();
             }
 
         });
 
         final Button colourButton = (Button) findViewById(R.id.category_colour_button);
-        final GradientDrawable bgShape = (GradientDrawable) colourButton.getBackground();
-        bgShape.setColor(category.getColour());
+        mBgShape = (GradientDrawable) colourButton.getBackground();
+        mBgShape.setColor(mCategory.getColour());
 
         colourButton.setOnClickListener(new View.OnClickListener() {
             /**
@@ -96,24 +86,44 @@ public class EditCategoryActivity extends MainActivity {
              * @param v The view in which the button is clicked
              */
             public void onClick(View v) {
-                Dialog colourDialog = createColourDialog(bgShape);
-                colourDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    /**
-                     * Handles the dismiss of the colour dialog and changes the actionbar colour
-                     * @param dialog The DialogInterface that it needs to listen to
-                     */
-                    public void onDismiss(DialogInterface dialog) {
-                        if (String.valueOf(getCategoryColour()).length() > 2) {
-                            mCategoryColour = getCategoryColour();
-                        } else {
-                            mCategoryColour = category.getColour();
-                        }
-                        mActionBar.setBackgroundDrawable(new ColorDrawable(mCategoryColour));
-                    }
-                });
-                colourDialog.show();
+                createColourDialog();
             }
         });
+    }
+
+    private void editCategory() {
+        String categoryName = mCategoryTitleInput.getText().toString();
+
+        if (String.valueOf(getCategoryColour()).length() > 2) {
+            mCategoryColour = getCategoryColour();
+        }
+
+        if (categoryName.trim().isEmpty()) {
+            makeToast(getString(R.string.category_name_empty_error));
+        } else {
+            mTaskManager.updateCategory(categoryName, mCategoryColour, 1, mSelectedCategoryId);
+            makeToast(getString(R.string.category_edited));
+            startCategoryActivity();
+        }
+    }
+
+    private void createColourDialog() {
+        Dialog colourDialog = createColourDialog(mBgShape);
+        colourDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            /**
+             * Handles the dismiss of the colour dialog and changes the actionbar colour
+             * @param dialog The DialogInterface that it needs to listen to
+             */
+            public void onDismiss(DialogInterface dialog) {
+                if (String.valueOf(getCategoryColour()).length() > 2) {
+                    mCategoryColour = getCategoryColour();
+                } else {
+                    mCategoryColour = mCategory.getColour();
+                }
+                mActionBar.setBackgroundDrawable(new ColorDrawable(mCategoryColour));
+            }
+        });
+        colourDialog.show();
     }
 
     private void startCategoryActivity() {
