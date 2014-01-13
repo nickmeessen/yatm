@@ -75,9 +75,7 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      */
     public SqlLiteAdapter(Activity activity) {
         super(activity, DATABASE_NAME, null, DATABASE_VERSION);
-
         open();
-
     }
 
     /**
@@ -153,8 +151,12 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
     public Task getTask(long taskId) {
         Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, TCOLUMN_ID + " = " + taskId, null, null, null, null);
 
-        cursor.moveToFirst();
-        Task task = cursorToTask(cursor);
+        Task task = null;
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            task = cursorToTask(cursor);
+        }
+
         cursor.close();
 
         return task;
