@@ -71,8 +71,6 @@ public class TaskActivity extends MainActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
-        v.setBackgroundColor(getResources().getColor(R.color.action_bg));
-
         if (v.getId() == R.id.taskList) {
             String[] menuItems = getResources().getStringArray(R.array.task_context_menu);
 
