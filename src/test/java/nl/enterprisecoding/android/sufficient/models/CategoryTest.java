@@ -84,4 +84,13 @@ public class CategoryTest {
         assertEquals(title, category.toString());
     }
 
+    @Test
+    public void test_removeTask() {
+        for(Task task : category.getTasks()) {
+            category.removeTask(task);
+        }
+
+        assertEquals(0, category.getTasks().size());
+    }
+
 }
