@@ -82,48 +82,68 @@ public class TaskListAdapterTest {
 
     @Test
     public void test_notifyDataSetChanged() {
+        // @todo add new category and check if size has changed oid.
     }
 
     @Test
     public void test_getChildrenCount() {
-//        assertEquals(3, mTaskListAdapter.getChildrenCount(4));
-//        assertNotSame(36, mTaskListAdapter.getChildrenCount(4));
-//
-//        assertEquals(7, mTaskListAdapterSpecific.getChildrenCount(4));
-//        assertNotSame(16, mTaskListAdapterSpecific.getChildrenCount(4));
+        assertEquals(3, mTaskListAdapter.getChildrenCount(4));
+        assertNotSame(36, mTaskListAdapter.getChildrenCount(4));
 
+        assertEquals(7, mTaskListAdapterSpecific.getChildrenCount(4));
+        assertNotSame(16, mTaskListAdapterSpecific.getChildrenCount(4));
     }
 
     @Test
     public void test_getGroup() {
-//        assertEquals("Completed", mTaskListAdapter.getGroup(4));
+        assertEquals("Completed", mTaskListAdapter.getGroup(4));
 
     }
 
     @Test
     public void test_getChild() {
-        // int groupPosition, int childPosition) {
+
+        Task task = mTaskListAdapter.getChild(0, 0);
+
+        assertEquals("abc", task.getTitle());
+        assertEquals(4, task.getCatId());
+        assertEquals(11, task.getId());
+
+        assertNotSame("cba", task.getTitle());
     }
 
     @Test
     public void test_getGroupId() {
-//       assertNotNull(mTaskListAdapter.getGroupId(1));
+       assertNotNull(mTaskListAdapter.getGroupId(1));
+        assertNotNull(mTaskListAdapter.getGroupId(1));
+        assertNotNull(mTaskListAdapter.getGroupId(1));
+        assertNotNull(mTaskListAdapter.getGroupId(1));
+        assertNull(mTaskListAdapter.getGroupId(3014));
     }
 
     @Test
     public void test_getChildId() {
-        // int groupPosition, int childPosition) {
+        mTaskListAdapter.getChild(0, 0).getId();
+        assertEquals(400, mTaskListAdapter.getChild(0, 0).getId());
     }
 
 
     @Test
     public void test_getGroupView() {
-        // int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        View view = mock(View.class);
+        ViewGroup group = mock(ViewGroup.class);
+
+        assertNotNull(mTaskListAdapter.getGroupView(0, true, view, group));
+        assertNotNull(mTaskListAdapter.getGroupView(2, true, view, group));
     }
 
     @Test
     public void test_getChildView() {
-        // int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+        View view = mock(View.class);
+        ViewGroup group = mock(ViewGroup.class);
+
+        assertNotNull(mTaskListAdapter.getChildView(0, 3, true, view, group));
+        assertNotNull(mTaskListAdapter.getChildView(2, 2, true, view, group));
     }
 
     @Test
@@ -139,8 +159,7 @@ public class TaskListAdapterTest {
 
         mTaskManager.getTaskById(taskId);
 
-//        assertEquals(!initValue, mTaskManager.getTaskById(taskId).isCompleted());
-                assertEquals(initValue, mTaskManager.getTaskById(taskId).isCompleted());
+        assertEquals(!initValue, mTaskManager.getTaskById(taskId).isCompleted());
     }
 
 
