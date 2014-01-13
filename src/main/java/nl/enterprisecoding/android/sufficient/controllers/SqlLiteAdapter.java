@@ -233,6 +233,11 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
         Calendar taskDate = Calendar.getInstance();
         taskDate.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(TCOLUMN_DATE)));
 
+        taskDate.set(Calendar.HOUR_OF_DAY, 0);
+        taskDate.set(Calendar.MINUTE, 0);
+        taskDate.set(Calendar.SECOND, 0);
+        taskDate.set(Calendar.MILLISECOND, 0);
+
         task.setId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_ID)));
         task.setCategoryId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_CATID)));
         task.setTitle(cursor.getString(cursor.getColumnIndex(TCOLUMN_TASK)));

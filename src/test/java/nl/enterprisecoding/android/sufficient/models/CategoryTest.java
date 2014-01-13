@@ -4,8 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @RunWith(RobolectricTestRunner.class)
 public class CategoryTest {
@@ -13,8 +13,11 @@ public class CategoryTest {
     private Category category;
 
     @Before
-    public void setup() {
+    @Test
+    public void test_Category() {
         category = new Category();
+
+        assertNotNull(category);
     }
 
     @Test
@@ -34,7 +37,7 @@ public class CategoryTest {
     }
 
     @Test
-    public void Test_setIdGetId() {
+    public void test_setIdGetId() {
         int Id = 1;
         category.setID(Id);
 
@@ -54,4 +57,13 @@ public class CategoryTest {
         category.setVisible(1);
         assertEquals(category.getVisible(), 1);
     }
+
+    @Test
+    public void test_toString() {
+        String title = "TestTitle1";
+        category.setTitle(title);
+
+        assertEquals(category.toString(), title);
+    }
+
 }

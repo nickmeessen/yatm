@@ -62,14 +62,12 @@ public class EditTaskActivity extends MainActivity {
 
         mTaskManager = new TaskManager(this, mCurrentCategoryID);
 
-        long selectedTaskID = getIntent().getExtras().getLong(TaskActivity.TASK_ID, 0);
+        long mSelectedTaskId = getIntent().getExtras().getLong(TaskActivity.TASK_ID, 0);
 
-        if (selectedTaskID != 0) {
-            mActionBar.setTitle(R.string.action_edit);
+        if (mSelectedTaskId != 0) {
 
             mTaskManager = new TaskManager(this, (long) 0);
 
-            mSelectedTaskId = mTaskManager.getTaskById(selectedTaskID).getId();
             mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mTaskManager.getTaskById(mSelectedTaskId).getCatId()).getColour()));
 
             mTaskDate = mTaskManager.getTaskById(mSelectedTaskId).getDate();
@@ -80,7 +78,14 @@ public class EditTaskActivity extends MainActivity {
             mTaskSetDateButton.setOnClickListener(mTaskSetDateButtonClickHandler);
 
             mTaskTitleInput = (EditText) findViewById(R.id.task_title);
-            mTaskTitleInput.setHint(mTaskManager.getTaskById(mSelectedTaskId).getTitle());
+
+            if (mTaskManager.getTaskById(mSelectedTaskId).getTitle().equals("")) {
+                mActionBar.setTitle(R.string.action_add);
+                mTaskTitleInput.setHint(getString(R.string.empty_task));
+            } else {
+                mActionBar.setTitle(R.string.action_edit);
+                mTaskTitleInput.setHint(mTaskManager.getTaskById(mSelectedTaskId).getTitle());
+            }
 
             initTaskCategorySpinner(mTaskCategorySpinner);
 

@@ -55,4 +55,5 @@
     <string name="all_categories">Alle Categorie&#235;n</string>
     <string name="standard_colours">Standaard Kleuren</string>
     <string name="random_colours">Willekeurige Kleuren</string>
+    <string name="empty_task"> Dat ene wat je nog moet doen.. </string>
 </resources>

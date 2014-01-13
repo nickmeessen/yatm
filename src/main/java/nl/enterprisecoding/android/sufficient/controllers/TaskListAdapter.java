@@ -31,6 +31,8 @@ import java.util.Locale;
  * TaskListAdapter
  * <p/>
  * An adapter class for managing the custom list views.
+ *
+ * @author Nick Meessen
  */
 public class TaskListAdapter extends BaseExpandableListAdapter implements ExpandableListView.OnChildClickListener {
 
@@ -113,13 +115,13 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         tomorrow.set(Calendar.SECOND, 0);
         tomorrow.set(Calendar.MILLISECOND, 0);
 
-        // @todo date comparison doesn't work properly. compareTo is fucked?
         for (Task task : tasks) {
+
             if (task.isCompleted()) {
                 mCompletedList.add(task);
-            } else if (task.getDate().compareTo(today) == 1 || task.getDate().before(today)) {
+            } else if (task.getDate().compareTo(today) == 0 || task.getDate().before(today)) {
                 mTodayList.add(task);
-            } else if (task.getDate().compareTo(tomorrow) == 1) {
+            } else if (task.getDate().compareTo(tomorrow) == 0) {
                 mTomorrowList.add(task);
             } else if (task.getDate().after(tomorrow)) {
                 mUpcomingList.add(task);
@@ -244,11 +246,11 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         LayoutInflater layoutInflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
-//            if (getChildrenCount(groupPosition) == 0) {
-//                view = layoutInflater.inflate(R.layout.group_item_e, null);
-//            } else {
-            view = layoutInflater.inflate(R.layout.group_item, null);
-//            }
+            if (getChildrenCount(groupPosition) == 0) {
+                view = layoutInflater.inflate(R.layout.group_item_e, null);
+            } else {
+                view = layoutInflater.inflate(R.layout.group_item, null);
+            }
         }
 
         ((TextView) view.findViewById(R.id.groupTitle)).setText(getGroup(groupPosition));
@@ -341,7 +343,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
      */
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+        return true;
     }
 
 
