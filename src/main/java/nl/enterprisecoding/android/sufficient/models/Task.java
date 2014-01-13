@@ -133,6 +133,11 @@ public class Task {
     }
 
 
+    /**
+     * Returns task's title.
+     *
+     * @return the title of this task.s
+     */
     public String toString() {
         return getTitle();
     }

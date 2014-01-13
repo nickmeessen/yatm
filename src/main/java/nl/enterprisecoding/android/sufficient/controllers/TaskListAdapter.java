@@ -318,7 +318,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         } else {
             taskDone.setImageResource(R.drawable.undone);
             if (getChild(groupPosition, childPosition).isImportant()) {
-                taskTitle.setTypeface(Typeface.DEFAULT, Typeface.ITALIC);
+                taskTitle.setTypeface(Typeface.DEFAULT, Typeface.BOLD);
             } else {
                 taskTitle.setTypeface(Typeface.DEFAULT, Typeface.NORMAL);
             }
@@ -341,7 +341,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
      */
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return true;
+        return false;
     }
 
 

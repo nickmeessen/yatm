@@ -93,19 +93,15 @@ public class EditCategoryActivity extends MainActivity {
         colourButton.setOnClickListener(new View.OnClickListener() {
             /**
              * Handles the click for the colourButton
-             *
              * @param v The view in which the button is clicked
              */
-            @Override
             public void onClick(View v) {
                 Dialog colourDialog = createColourDialog(bgShape);
                 colourDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     /**
                      * Handles the dismiss of the colour dialog and changes the actionbar colour
-                     *
                      * @param dialog The DialogInterface that it needs to listen to
                      */
-                    @Override
                     public void onDismiss(DialogInterface dialog) {
                         if (String.valueOf(getCategoryColour()).length() > 2) {
                             mCategoryColour = getCategoryColour();

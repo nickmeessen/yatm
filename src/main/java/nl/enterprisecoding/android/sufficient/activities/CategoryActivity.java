@@ -259,6 +259,8 @@ public class CategoryActivity extends MainActivity {
 
         List<Category> spinnerArray = mTaskManager.getCategories();
 
+        spinnerArray.remove(mTaskManager.getCategoryById(mSelectedCategoryId));
+
         Category dummyCat = new Category();
         dummyCat.setID(0);
         dummyCat.setTitle(getString(R.string.action_delete_all_tasks));
