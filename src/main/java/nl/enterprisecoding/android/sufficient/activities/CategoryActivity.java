@@ -276,4 +276,14 @@ public class CategoryActivity extends MainActivity {
         mSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(mSpinnerArrayAdapter);
     }
+
+    /**
+     * Called when the activity has detected the user's press of the back
+     * key.
+     */
+    @Override
+    public void onBackPressed() {
+            super.onBackPressed();
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }
