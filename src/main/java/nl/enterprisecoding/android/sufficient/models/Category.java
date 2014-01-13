@@ -95,7 +95,7 @@ public class Category {
     /**
      * Removes a task from this category.
      *
-     * @param task the task to be removed rom this category.
+     * @param task the task to be removed from this category.
      */
     public void removeTask(Task task) {
         mTasks.remove(task);

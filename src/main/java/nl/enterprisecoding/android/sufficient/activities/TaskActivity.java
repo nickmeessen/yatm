@@ -105,6 +105,18 @@ public class TaskActivity extends MainActivity {
     }
 
     /**
+     * Handles the closing of the ContextMenu
+     *
+     * @param menu The menu that closes
+     */
+    @Override
+    public void onContextMenuClosed(Menu menu) {
+        super.onContextMenuClosed(menu);
+        finish();
+        startActivity(getIntent());
+    }
+
+    /**
      * Initialize the contents of the Activity's standard options menu.  You
      * should place your menu items in to <var>menu</var>.
      *
