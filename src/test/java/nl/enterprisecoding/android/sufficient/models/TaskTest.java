@@ -16,6 +16,7 @@ import org.robolectric.RobolectricTestRunner;
 import java.util.Calendar;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(RobolectricTestRunner.class)
 public class TaskTest {
@@ -67,8 +68,16 @@ public class TaskTest {
     }
 
     @Test
-    public void Test_setCompletedIsCompleted() {
+    public void test_setCompletedIsCompleted() {
         task.setCompleted(true);
         assertTrue(task.isCompleted());
+    }
+
+    @Test
+    public void test_toString() {
+        String title = Mockito.anyString();
+        task.setTitle(title);
+
+        assertEquals(title, task.toString());
     }
 }
