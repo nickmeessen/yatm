@@ -106,14 +106,30 @@ public class MainActivity extends RoboActivity {
             colourButton.setBackgroundColor(randColour[0]);
         }
 
-        mColourButtonClickHandler.setData(this, inputColour, bgShape, colourDialog, randColour);
+        mColourButtonClickHandler.setData(this, inputColour, bgShape, colourDialog, randColour[0]);
         colourButton.setOnClickListener(mColourButtonClickHandler);
     }
 
+    /**
+     * Get the category colour
+     * @return
+     */
     protected int getCategoryColour() {
         return mFinalColour;
     }
 
+    /**
+     * Get the final colour
+     * @return
+     */
+    public int getFinalColour() {
+        return mFinalColour;
+    }
+
+    /**
+     * Set the final colour
+     * @param colour
+     */
     public void setFinalColour(int colour) {
         mFinalColour = colour;
     }
@@ -123,7 +139,7 @@ public class MainActivity extends RoboActivity {
      *
      * @return returns the random colour
      */
-    protected int[] generateRandomColour() {
+    public int[] generateRandomColour() {
         int receiveMaxValue = (int) (2 * Math.random());
         int rValue = 255;
         int gValue = 255;

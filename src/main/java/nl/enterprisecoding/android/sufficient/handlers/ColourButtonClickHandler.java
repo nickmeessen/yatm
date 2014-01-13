@@ -16,9 +16,17 @@ public class ColourButtonClickHandler implements IButtonClickHandler {
     private int mInputColour;
     private GradientDrawable mBgShape;
     private Dialog mColourDialog;
-    private int[] mRandColour;
+    private int mRandColour;
 
-    public void setData(MainActivity activity, int inputColour, GradientDrawable bgShape, Dialog colourDialog, int[] randColour) {
+    /**
+     * Set data to use in the onClick
+     * @param activity
+     * @param inputColour
+     * @param bgShape
+     * @param colourDialog
+     * @param randColour
+     */
+    public void setData(MainActivity activity, int inputColour, GradientDrawable bgShape, Dialog colourDialog, int randColour) {
         setActivity(activity);
 
         mInputColour = inputColour;
@@ -27,11 +35,19 @@ public class ColourButtonClickHandler implements IButtonClickHandler {
         mRandColour = randColour;
     }
 
+    /**
+     * Set the activity
+     * @param activity the current activity.
+     */
     @Override
     public void setActivity(MainActivity activity) {
         mActivity = activity;
     }
 
+    /**
+     * onClick handler
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         int chosenColour;
@@ -40,8 +56,8 @@ public class ColourButtonClickHandler implements IButtonClickHandler {
             chosenColour = mActivity.getResources().getColor(mInputColour);
             mBgShape.setColor(mActivity.getResources().getColor(mInputColour));
         } else {
-            chosenColour = mRandColour[0];
-            mBgShape.setColor(mRandColour[0]);
+            chosenColour = mRandColour;
+            mBgShape.setColor(mRandColour);
         }
 
         mActivity.setFinalColour(chosenColour);

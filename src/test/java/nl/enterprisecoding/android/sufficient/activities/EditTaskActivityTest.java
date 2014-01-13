@@ -1,5 +1,12 @@
 package nl.enterprisecoding.android.sufficient.activities;
 
+/*
+ * Copyright (c) 2013. "EnterpriseCoding"
+ * ("EnterpriseCoding" constitutes; Nick Meessen, Jasper Burgers, Ferry Wienholts, Breunie Ploeg & Sjors Roelofs).
+ *
+ * This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
+ */
+
 import android.content.Intent;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +21,7 @@ import static junit.framework.Assert.assertEquals;
  *
  * @author Sjors Roelofs
  */
+
 @RunWith(RobolectricTestRunner.class)
 public class EditTaskActivityTest {
 
@@ -21,6 +29,7 @@ public class EditTaskActivityTest {
     private Intent mEditTaskActivityIntent;
     private Calendar currentDate;
 
+    @Test
     @Before
     public void setUp() throws Exception {
         mEditTaskActivityIntent = new Intent(new TaskActivity(), EditTaskActivity.class);
