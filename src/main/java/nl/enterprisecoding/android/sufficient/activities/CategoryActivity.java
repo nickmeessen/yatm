@@ -59,7 +59,6 @@ public class CategoryActivity extends MainActivity {
         generateColourShape();
 
         colourButton.setOnClickListener(new View.OnClickListener() {
-
             /**
              * Handles the click for the colorButton
              *

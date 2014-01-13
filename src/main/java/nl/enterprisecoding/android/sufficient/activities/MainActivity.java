@@ -182,6 +182,7 @@ public class MainActivity extends RoboActivity {
         createColourButton(bgShape, R.id.colour_random3_button, 0, colourDialog);
         createColourButton(bgShape, R.id.colour_random4_button, 0, colourDialog);
 
+        colourDialog.show();
         return colourDialog;
     }
 
