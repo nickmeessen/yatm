@@ -48,4 +48,5 @@
     <string name="all_categories">Alle Kategorien</string>
     <string name="standard_colours">Standardfarben</string>
     <string name="random_colours">Zufällige Farben</string>
+    <string name="empty_task"> Das aufgabe s.. </string>
 </resources>
