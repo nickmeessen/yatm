@@ -114,6 +114,10 @@ public class MainActivity extends RoboActivity {
         return mFinalColour;
     }
 
+    public int getFinalColour() {
+        return mFinalColour;
+    }
+
     public void setFinalColour(int colour) {
         mFinalColour = colour;
     }

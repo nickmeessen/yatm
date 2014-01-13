@@ -28,7 +28,7 @@ public class TaskTest {
     }
 
     @Test
-    public void Test_setIdGetId() {
+    public void test_setIdGetId() {
         int id = Mockito.anyInt();
         task.setId(id);
 
@@ -36,7 +36,7 @@ public class TaskTest {
     }
 
     @Test
-    public void Test_setCatIdGetCatId() {
+    public void test_setCatIdGetCatId() {
         int catId = Mockito.anyInt();
         task.setCategoryId(catId);
 
@@ -44,7 +44,7 @@ public class TaskTest {
     }
 
     @Test
-    public void Test_setTitleGetTitle() {
+    public void test_setTitleGetTitle() {
         String title = Mockito.anyString();
         task.setTitle(title);
 
@@ -52,7 +52,7 @@ public class TaskTest {
     }
 
     @Test
-    public void Test_setDateGetDate() {
+    public void test_setDateGetDate() {
         Calendar date = Calendar.getInstance();
         date.set(1993, Calendar.JANUARY, 20);
         task.setDate(date);
@@ -61,13 +61,13 @@ public class TaskTest {
     }
 
     @Test
-    public void Test_setImportantIsImportant() {
+    public void test_setImportantIsImportant() {
         task.setImportant(true);
         assertTrue(task.isImportant());
     }
 
     @Test
-    public void Test_setCompletedIsCompleted() {
+    public void test_setCompletedIsCompleted() {
         task.setImportant(true);
         assertTrue(task.isImportant());
     }
