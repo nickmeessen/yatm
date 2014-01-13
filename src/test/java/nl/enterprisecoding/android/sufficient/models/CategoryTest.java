@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.mock;
 
@@ -88,6 +89,7 @@ public class CategoryTest {
     public void test_removeTask() {
         for(Task task : category.getTasks()) {
             category.removeTask(task);
+            assertFalse(category.getTasks().contains(task));
         }
 
         assertEquals(0, category.getTasks().size());
