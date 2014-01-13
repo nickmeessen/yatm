@@ -14,13 +14,13 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
+import nl.enterprisecoding.android.sufficient.handlers.ColourButtonClickHandler;
 import roboguice.activity.RoboActivity;
 
 /**
@@ -95,39 +95,27 @@ public class MainActivity extends RoboActivity {
      * @param colourDialog The Dialog that will display the colours
      */
     protected void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog) {
+        ColourButtonClickHandler mColourButtonClickHandler = new ColourButtonClickHandler();
+
         final Button colourButton = (Button) colourDialog.findViewById(buttonId);
         final int[] randColour = generateRandomColour();
 
-        if (inputColour != 0) {
+        if(inputColour != 0) {
             colourButton.setBackgroundColor(getResources().getColor(inputColour));
         } else {
             colourButton.setBackgroundColor(randColour[0]);
         }
 
-        colourButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Handles the click for the colourButton
-             * @param v The view in which the click takes place
-             */
-            @Override
-            public void onClick(View v) {
-
-                int chosenColour;
-                if (inputColour != 0) {
-                    chosenColour = getResources().getColor(inputColour);
-                    bgShape.setColor(getResources().getColor(inputColour));
-                } else {
-                    chosenColour = randColour[0];
-                    bgShape.setColor(randColour[0]);
-                }
-                colourDialog.dismiss();
-                mFinalColour = chosenColour;
-            }
-        });
+        mColourButtonClickHandler.setData(this, inputColour, bgShape, colourDialog, randColour[0]);
+        colourButton.setOnClickListener(mColourButtonClickHandler);
     }
 
     protected int getCategoryColour() {
         return mFinalColour;
+    }
+
+    public void setFinalColour(int colour) {
+        mFinalColour = colour;
     }
 
     /**
@@ -135,7 +123,7 @@ public class MainActivity extends RoboActivity {
      *
      * @return returns the random colour
      */
-    protected int[] generateRandomColour() {
+    public int[] generateRandomColour() {
         int receiveMaxValue = (int) (2 * Math.random());
         int rValue = 255;
         int gValue = 255;
