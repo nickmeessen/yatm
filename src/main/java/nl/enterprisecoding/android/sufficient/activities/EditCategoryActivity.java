@@ -71,19 +71,7 @@ public class EditCategoryActivity extends MainActivity {
              */
             @Override
             public void onClick(View v) {
-                String categoryName = mCategoryTitleInput.getText().toString();
-
-                if (String.valueOf(getCategoryColour()).length() > 2) {
-                    mCategoryColour = getCategoryColour();
-                }
-
-                if (categoryName.trim().isEmpty()) {
-                    makeToast(getString(R.string.category_name_empty_error));
-                } else {
-                    mTaskManager.updateCategory(categoryName, mCategoryColour, 1, mSelectedCategoryId);
-                    makeToast(getString(R.string.category_edited));
-                    startCategoryActivity();
-                }
+                editCategory();
             }
 
         });
@@ -101,6 +89,22 @@ public class EditCategoryActivity extends MainActivity {
                 createColourDialog();
             }
         });
+    }
+
+    private void editCategory() {
+        String categoryName = mCategoryTitleInput.getText().toString();
+
+        if (String.valueOf(getCategoryColour()).length() > 2) {
+            mCategoryColour = getCategoryColour();
+        }
+
+        if (categoryName.trim().isEmpty()) {
+            makeToast(getString(R.string.category_name_empty_error));
+        } else {
+            mTaskManager.updateCategory(categoryName, mCategoryColour, 1, mSelectedCategoryId);
+            makeToast(getString(R.string.category_edited));
+            startCategoryActivity();
+        }
     }
 
     private void createColourDialog() {
