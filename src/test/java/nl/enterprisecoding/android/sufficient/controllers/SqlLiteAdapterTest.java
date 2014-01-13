@@ -117,9 +117,9 @@ public class SqlLiteAdapterTest {
         mAdapter.createTask("Test task 1.1", 0, Calendar.getInstance(), false);
         mAdapter.createTask("Test task 1.2", 0, Calendar.getInstance(), false);
 
-        List<Task> task = mAdapter.retrieveAllTasks();
+        List<Task> tasks = mAdapter.retrieveAllTasks();
 
-        assertTrue("expected to be greater than", task.size() > 1);
+        assertTrue("expected to be greater than", tasks.size() > 1);
     }
 
     @Test
@@ -167,14 +167,23 @@ public class SqlLiteAdapterTest {
 //
 //    @Test
 //    public void test_deleteCategory() {
-//        //@TODO: below
-//        assertEquals(true, false);
-//    }
+//        Category newCat = mAdapter.createCategory("Test category 4", Color.CYAN);
+//        long catId = newCat.getId();
 //
-//    @Test
-//    public void test_retrieveAllCategories() {
-//        //@TODO: below
-//        assertEquals(true, false);
+//        assertNotNull(mAdapter.getCategory(catId));
+//        mAdapter.deleteCategory(catId);
+//
+//        assertNull(mAdapter.getCategory(catId));
 //    }
+
+    @Test
+    public void test_retrieveAllCategories() {
+        mAdapter.createCategory("Test category 1.1", Color.GRAY);
+        mAdapter.createCategory("Test category 1.2", Color.GREEN);
+
+        List<Category> categories = mAdapter.retrieveAllCategories();
+
+        assertTrue("expected to be greater than", categories.size() > 1);
+    }
 
 }
