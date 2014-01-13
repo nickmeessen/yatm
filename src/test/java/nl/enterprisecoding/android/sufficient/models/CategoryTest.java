@@ -7,6 +7,7 @@ package nl.enterprisecoding.android.sufficient.models;
  * This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
  */
 
+import android.graphics.Color;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,26 +31,26 @@ public class CategoryTest {
 
     @Test
     public void test_setTitleGetTitle() {
-        String title = Mockito.anyString();
+        String title = "testTitle";
         category.setTitle(title);
 
-        assertEquals(category.getTitle(), title);
+        assertEquals("testTitle", category.getTitle());
     }
 
     @Test
     public void test_setColourGetColour() {
-        int colour = Mockito.anyInt();
+        int colour = Color.RED;
         category.setColour(colour);
 
-        assertEquals(category.getColour(), colour);
+        assertEquals(Color.RED, category.getColour());
     }
 
     @Test
     public void test_setIdGetId() {
-        int id = Mockito.anyInt();
+        int id = 5;
         category.setID(id);
 
-        assertEquals(category.getId(), id);
+        assertEquals(id, category.getId());
     }
 
     @Test
@@ -57,22 +58,22 @@ public class CategoryTest {
         Task task = new Task();
         category.addTask(task);
 
-        assertEquals(category.getTasks().get(0), task);
+        assertEquals(task, category.getTasks().get(0));
     }
 
     @Test
     public void test_setVisible() {
         category.setVisible(1);
-        assertEquals(category.getVisible(), 1);
+        assertEquals(1, category.getVisible());
     }
 
     @Test
     public void test_isVisible() {
         category.setVisible(0);
-        assertEquals(category.isVisible(), false);
+        assertEquals(false, category.isVisible());
 
         category.setVisible(1);
-        assertEquals(category.isVisible(), true);
+        assertEquals(true, category.isVisible());
     }
 
     @Test
@@ -80,7 +81,16 @@ public class CategoryTest {
         String title = Mockito.anyString();
         category.setTitle(title);
 
-        assertEquals(category.toString(), title);
+        assertEquals(title, category.toString());
+    }
+
+    @Test
+    public void test_removeTask() {
+        for(Task task : category.getTasks()) {
+            category.removeTask(task);
+        }
+
+        assertEquals(0, category.getTasks().size());
     }
 
 }

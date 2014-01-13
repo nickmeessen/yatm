@@ -19,7 +19,6 @@ import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateButtonClickHan
 import nl.enterprisecoding.android.sufficient.models.Category;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
-
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 

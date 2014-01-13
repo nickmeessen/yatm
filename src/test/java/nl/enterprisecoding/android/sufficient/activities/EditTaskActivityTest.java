@@ -29,6 +29,7 @@ public class EditTaskActivityTest {
     private Intent mEditTaskActivityIntent;
     private Calendar currentDate;
 
+    @Test
     @Before
     public void setUp() throws Exception {
         mEditTaskActivityIntent = new Intent(new TaskActivity(), EditTaskActivity.class);
