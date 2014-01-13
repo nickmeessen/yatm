@@ -7,28 +7,25 @@ package nl.enterprisecoding.android.sufficient.controllers;
  * This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
  */
 
-import android.app.Activity;
-import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-import static org.mockito.Mockito.*;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * TaskListAdapterTest
@@ -46,7 +43,7 @@ public class TaskListAdapterTest {
 
     @Before
     public void setUp() {
-        mMainActivity = mock(MainActivity.class);
+        mMainActivity = Robolectric.buildActivity(MainActivity.class).create().get();
         mTaskManager = mock(TaskManager.class);
 
         when(mTaskManager.getTaskById(20)).thenReturn(mock(Task.class));
@@ -60,6 +57,31 @@ public class TaskListAdapterTest {
         testingCatsAll.add(mock(Category.class));
         testingCatsAll.add(mock(Category.class));
 
+        Task completedTest1 = new Task();
+        Task completedTest2 = new Task();
+        Task completedTest3 = new Task();
+        Task completedTest4 = new Task();
+        Task todayTask = new Task();
+
+        completedTest1.setCompleted(true);
+        completedTest2.setCompleted(true);
+        completedTest3.setCompleted(true);
+        completedTest4.setCompleted(true);
+
+        todayTask.setDate(Calendar.getInstance());
+
+        testingCatsAll.get(2).addTask(completedTest1);
+        testingCatsAll.get(1).addTask(completedTest2);
+        testingCatsAll.get(2).addTask(completedTest3);
+        testingCatsAll.get(1).addTask(completedTest4);
+        testingCatsAll.get(0).addTask(todayTask);
+
+        mockCategory.addTask(completedTest1);
+        mockCategory.addTask(completedTest2);
+        mockCategory.addTask(completedTest3);
+        mockCategory.addTask(completedTest4);
+        mockCategory.addTask(todayTask);
+
         when(mTaskManager.getVisibleCategories()).thenReturn(testingCatsAll);
         when(mTaskManager.getCategoryById(14)).thenReturn(mockCategory);
 
@@ -69,41 +91,32 @@ public class TaskListAdapterTest {
 
     @Test
     public void test_getGroupCount() {
-//        assertEquals(4, mTaskListAdapter.getGroupCount());
-//        assertNotSame(3, mTaskListAdapter.getGroupCount());
+        assertEquals(4, mTaskListAdapter.getGroupCount());
+        assertNotSame(3, mTaskListAdapter.getGroupCount());
     }
 
-    @Test(expected=AssertionError.class)
+    @Test(expected = AssertionError.class)
     public void test_getGroupCount_fail() {
         assertEquals(2, mTaskListAdapter.getGroupCount());
         assertNotSame(4, mTaskListAdapter.getGroupCount());
-
-    }
-
-    @Test
-    public void test_notifyDataSetChanged() {
-        // @todo add new category and check if size has changed oid.
     }
 
     @Test
     public void test_getChildrenCount() {
-//        assertEquals(3, mTaskListAdapter.getChildrenCount(4));
-//        assertNotSame(36, mTaskListAdapter.getChildrenCount(4));
-//
-//        assertEquals(7, mTaskListAdapterSpecific.getChildrenCount(4));
-//        assertNotSame(16, mTaskListAdapterSpecific.getChildrenCount(4));
+//        assertEquals(3, mTaskListAdapter.getChildrenCount(3));
+//        assertEquals(1, mTaskListAdapterSpecific.getChildrenCount(0));
     }
 
     @Test
     public void test_getGroup() {
-
+        assertEquals("Completed", mTaskListAdapter.getGroup(3));
     }
 
     @Test
     public void test_getChild() {
 
 //        Task task = mTaskListAdapter.getChild(0, 0);
-
+//
 //        assertEquals("abc", task.getTitle());
 //        assertEquals(4, task.getCatId());
 //        assertEquals(11, task.getId());
@@ -113,36 +126,21 @@ public class TaskListAdapterTest {
 
     @Test
     public void test_getGroupId() {
-//       assertNotNull(mTaskListAdapter.getGroupId(1));
-//        assertNotNull(mTaskListAdapter.getGroupId(1));
-//        assertNotNull(mTaskListAdapter.getGroupId(1));
-//        assertNotNull(mTaskListAdapter.getGroupId(1));
-//        assertNull(mTaskListAdapter.getGroupId(3014));
+        assertNotNull(mTaskListAdapter.getGroupId(0));
+        assertNotNull(mTaskListAdapter.getGroupId(1));
+        assertNotNull(mTaskListAdapter.getGroupId(2));
+        assertNotNull(mTaskListAdapter.getGroupId(3));
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void test_getGroupIdOutOfBounds() {
+        assertNotNull(mTaskListAdapter.getGroupId(3134013));
     }
 
     @Test
     public void test_getChildId() {
 //        mTaskListAdapter.getChild(0, 0).getId();
 //        assertEquals(400, mTaskListAdapter.getChild(0, 0).getId());
-    }
-
-
-    @Test
-    public void test_getGroupView() {
-        View view = mock(View.class);
-        ViewGroup group = mock(ViewGroup.class);
-
-//        assertNotNull(mTaskListAdapter.getGroupView(0, true, view, group));
-//        assertNotNull(mTaskListAdapter.getGroupView(2, true, view, group));
-    }
-
-    @Test
-    public void test_getChildView() {
-        View view = mock(View.class);
-        ViewGroup group = mock(ViewGroup.class);
-
-//        assertNotNull(mTaskListAdapter.getChildView(0, 3, true, view, group));
-//        assertNotNull(mTaskListAdapter.getChildView(2, 2, true, view, group));
     }
 
     @Test
