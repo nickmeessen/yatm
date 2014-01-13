@@ -87,9 +87,11 @@ public class CategoryTest {
 
     @Test
     public void test_removeTask() {
-        for(Task task : category.getTasks()) {
-            category.removeTask(task);
-            assertFalse(category.getTasks().contains(task));
+        Task task = new Task();
+        category.addTask(task);
+
+        for(Task t : category.getTasks()) {
+            category.removeTask(t);
         }
 
         assertEquals(0, category.getTasks().size());
