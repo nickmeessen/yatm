@@ -34,16 +34,19 @@ public class EditTaskActivityTest {
 
     @Test
     public void test_getTaskDate() throws Exception {
-        assertEquals(currentDate, mEditTaskActivity.getTaskDate());
+        assertEquals(currentDate.get(Calendar.DAY_OF_MONTH), mEditTaskActivity.getTaskDate().get(Calendar.DAY_OF_MONTH));
+        assertEquals(currentDate.get(Calendar.MONTH), mEditTaskActivity.getTaskDate().get(Calendar.MONTH));
+        assertEquals(currentDate.get(Calendar.YEAR), mEditTaskActivity.getTaskDate().get(Calendar.YEAR));
     }
 
     @Test
     public void test_setTaskDate() throws Exception {
         currentDate.add(Calendar.DAY_OF_YEAR, 1);
-
         mEditTaskActivity.setTaskDate(currentDate.get(Calendar.DAY_OF_MONTH), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.YEAR));
 
-        assertEquals(currentDate, mEditTaskActivity.getTaskDate());
+        assertEquals(currentDate.get(Calendar.DAY_OF_MONTH), mEditTaskActivity.getTaskDate().get(Calendar.DAY_OF_MONTH));
+        assertEquals(currentDate.get(Calendar.MONTH), mEditTaskActivity.getTaskDate().get(Calendar.MONTH));
+        assertEquals(currentDate.get(Calendar.YEAR), mEditTaskActivity.getTaskDate().get(Calendar.YEAR));
     }
 
 }
