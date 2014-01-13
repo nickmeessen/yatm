@@ -36,6 +36,7 @@ public class MainActivityTest {
     public void test_onKeyUp() {
         assertTrue(mMainActivity.onKeyUp(KeyEvent.KEYCODE_MENU, null));
         assertFalse(mMainActivity.onKeyUp(KeyEvent.KEYCODE_0, null));
+        assertFalse(mMainActivity.onKeyUp(KeyEvent.KEYCODE_ALT_LEFT, null));
     }
 
     @Test
