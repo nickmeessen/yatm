@@ -3,11 +3,12 @@ package nl.enterprisecoding.android.sufficient.models;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 
 import java.util.Calendar;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @RunWith(RobolectricTestRunner.class)
 public class TaskTest {
@@ -21,26 +22,26 @@ public class TaskTest {
 
     @Test
     public void Test_setIdGetId() {
-        int Id = 1;
-        task.setId(Id);
+        int id = Mockito.anyInt();
+        task.setId(id);
 
-        assertEquals(task.getId(), Id);
+        assertEquals(task.getId(), id);
     }
 
     @Test
     public void Test_setCatIdGetCatId() {
-        int CatId = 3;
-        task.setCategoryId(CatId);
+        int catId = Mockito.anyInt();
+        task.setCategoryId(catId);
 
-        assertEquals(task.getCatId(), CatId);
+        assertEquals(task.getCatId(), catId);
     }
 
     @Test
     public void Test_setTitleGetTitle() {
-        String Title = "Test";
-        task.setTitle(Title);
+        String title = Mockito.anyString();
+        task.setTitle(title);
 
-        assertEquals(task.getTitle(), "Test");
+        assertEquals(task.getTitle(), title);
     }
 
     @Test
@@ -54,17 +55,13 @@ public class TaskTest {
 
     @Test
     public void Test_setImportantIsImportant() {
-        Boolean important = true;
-        task.setImportant(important);
-
-        assertEquals(task.isImportant(), important);
+        task.setImportant(true);
+        assertTrue(task.isImportant());
     }
 
     @Test
     public void Test_setCompletedIsCompleted() {
-        Boolean completed = true;
-        task.setImportant(completed);
-
-        assertEquals(task.isImportant(), completed);
+        task.setImportant(true);
+        assertTrue(task.isImportant());
     }
 }
