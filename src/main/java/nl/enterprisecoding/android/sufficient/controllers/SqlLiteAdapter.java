@@ -151,7 +151,6 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      * @return the task corresponding to the given ID.
      */
     public Task getTask(long taskId) {
-
         Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, TCOLUMN_ID + " = " + taskId, null, null, null, null);
 
         cursor.moveToFirst();
@@ -197,7 +196,6 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      */
     public void deleteTask(long id) {
         database.delete(TASKS_TABLE, TCOLUMN_ID + " = " + id, null);
-
     }
 
     /**
@@ -262,7 +260,7 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
     /**
      * Returns category at the placed cursor.
      *
-     * @param cursor the SQlite cursor
+     * @param cursor the SQLite cursor
      * @return the category where the cursor is placed.
      */
     private Category cursorToCategory(Cursor cursor) {

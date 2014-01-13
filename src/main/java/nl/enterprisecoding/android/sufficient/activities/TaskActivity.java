@@ -99,6 +99,8 @@ public class TaskActivity extends MainActivity {
             }
         } else if (item.getTitle().equals(getString(R.string.action_delete))) {
             mTaskManager.deleteTask(mSelectedTaskId);
+            finish();
+            startActivity(getIntent());
         }
 
         return true;

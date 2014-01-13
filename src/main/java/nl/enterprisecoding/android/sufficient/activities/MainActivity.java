@@ -110,10 +110,26 @@ public class MainActivity extends RoboActivity {
         colourButton.setOnClickListener(mColourButtonClickHandler);
     }
 
+    /**
+     * Get the category colour
+     * @return
+     */
     protected int getCategoryColour() {
         return mFinalColour;
     }
 
+    /**
+     * Get the final colour
+     * @return
+     */
+    public int getFinalColour() {
+        return mFinalColour;
+    }
+
+    /**
+     * Set the final colour
+     * @param colour
+     */
     public void setFinalColour(int colour) {
         mFinalColour = colour;
     }
