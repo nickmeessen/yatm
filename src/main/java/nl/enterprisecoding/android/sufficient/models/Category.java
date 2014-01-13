@@ -89,8 +89,16 @@ public class Category {
      * @param task the task to be added.
      */
     public void addTask(Task task) {
-
         mTasks.add(task);
+    }
+
+    /**
+     * Removes a task from this category.
+     *
+     * @param task the task to be removed rom this category.
+     */
+    public void removeTask(Task task) {
+        mTasks.remove(task);
     }
 
     /**
@@ -119,9 +127,9 @@ public class Category {
     }
 
     /**
-     * Get all mTasks of this category.
+     * Get all tasks of this category.
      *
-     * @return the list of mTasks
+     * @return the list of tasks
      */
     public List<Task> getTasks() {
         return mTasks;
@@ -135,4 +143,5 @@ public class Category {
     public String toString() {
         return getTitle();
     }
+
 }
