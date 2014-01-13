@@ -15,7 +15,6 @@ import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import java.util.Calendar;
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotSame;
 
 /**
  * Test the EditTaskActivity class
@@ -38,11 +37,6 @@ public class EditTaskActivityTest {
         mEditTaskActivity = Robolectric.buildActivity(EditTaskActivity.class).withIntent(mEditTaskActivityIntent).create().get();
 
         currentDate = Calendar.getInstance();
-
-        mEditTaskActivity.setTaskDate(currentDate.get(Calendar.DAY_OF_MONTH), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.YEAR));
-        assertEquals(currentDate.get(Calendar.DAY_OF_MONTH), mEditTaskActivity.getTaskDate().get(Calendar.DAY_OF_MONTH));
-        assertEquals(currentDate.get(Calendar.MONTH), mEditTaskActivity.getTaskDate().get(Calendar.MONTH));
-        assertEquals(currentDate.get(Calendar.YEAR), mEditTaskActivity.getTaskDate().get(Calendar.YEAR));
     }
 
     @Test
