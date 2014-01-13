@@ -13,10 +13,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.mock;
 
 @RunWith(RobolectricTestRunner.class)
 public class CategoryTest {
@@ -85,14 +87,20 @@ public class CategoryTest {
         assertEquals(title, category.toString());
     }
 
-    @Test
-    public void test_removeTask() {
-        Task task = new Task();
-        category.addTask(task);
-
+    public void removeAllTasks() {
         for(Task t : category.getTasks()) {
             category.removeTask(t);
         }
+    }
+
+    @Test
+    public void test_removeTask() {
+        removeAllTasks();
+
+        Task task = new Task();
+        category.addTask(task);
+
+        category.removeTask(task);
 
         assertEquals(0, category.getTasks().size());
     }
