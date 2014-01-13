@@ -21,6 +21,7 @@ import static junit.framework.Assert.assertEquals;
  *
  * @author Sjors Roelofs
  */
+
 @RunWith(RobolectricTestRunner.class)
 public class EditTaskActivityTest {
 
