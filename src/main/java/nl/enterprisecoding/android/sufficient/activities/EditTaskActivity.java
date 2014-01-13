@@ -62,7 +62,7 @@ public class EditTaskActivity extends MainActivity {
 
         mTaskManager = new TaskManager(this, mCurrentCategoryID);
 
-        long mSelectedTaskId = getIntent().getExtras().getLong(TaskActivity.TASK_ID, 0);
+        mSelectedTaskId = getIntent().getExtras().getLong(TaskActivity.TASK_ID, 0);
 
         if (mSelectedTaskId != 0) {
 
@@ -79,7 +79,7 @@ public class EditTaskActivity extends MainActivity {
 
             mTaskTitleInput = (EditText) findViewById(R.id.task_title);
 
-            if (mTaskManager.getTaskById(mSelectedTaskId).getTitle().equals("")) {
+            if (mTaskManager.getTaskById(mSelectedTaskId).getTitle().isEmpty()) {
                 mActionBar.setTitle(R.string.action_add);
                 mTaskTitleInput.setHint(getString(R.string.empty_task));
             } else {
