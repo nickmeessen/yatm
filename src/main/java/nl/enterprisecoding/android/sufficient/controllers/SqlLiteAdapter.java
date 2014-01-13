@@ -7,11 +7,11 @@
 
 package nl.enterprisecoding.android.sufficient.controllers;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
 
@@ -73,7 +73,7 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      *
      * @param activity the activity called fromm.
      */
-    public SqlLiteAdapter(MainActivity activity) {
+    public SqlLiteAdapter(Activity activity) {
         super(activity, DATABASE_NAME, null, DATABASE_VERSION);
 
         open();

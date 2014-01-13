@@ -100,7 +100,7 @@ public class MainActivity extends RoboActivity {
         final Button colourButton = (Button) colourDialog.findViewById(buttonId);
         final int[] randColour = generateRandomColour();
 
-        if(inputColour != 0) {
+        if (inputColour != 0) {
             colourButton.setBackgroundColor(getResources().getColor(inputColour));
         } else {
             colourButton.setBackgroundColor(randColour[0]);
@@ -112,6 +112,7 @@ public class MainActivity extends RoboActivity {
 
     /**
      * Get the category colour
+     *
      * @return
      */
     protected int getCategoryColour() {
@@ -120,6 +121,7 @@ public class MainActivity extends RoboActivity {
 
     /**
      * Get the final colour
+     *
      * @return
      */
     public int getFinalColour() {
@@ -128,6 +130,7 @@ public class MainActivity extends RoboActivity {
 
     /**
      * Set the final colour
+     *
      * @param colour
      */
     public void setFinalColour(int colour) {

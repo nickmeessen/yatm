@@ -8,7 +8,6 @@ package nl.enterprisecoding.android.sufficient.controllers;
  */
 
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
@@ -40,6 +39,7 @@ public class TaskListAdapterTest {
     TaskManager mTaskManager;
     TaskListAdapter mTaskListAdapter;
     TaskListAdapter mTaskListAdapterSpecific;
+    TaskListAdapter mTaskListAdapterEmpty;
 
     @Before
     public void setUp() {
@@ -87,6 +87,7 @@ public class TaskListAdapterTest {
 
         mTaskListAdapter = new TaskListAdapter(mMainActivity, mTaskManager, (long) 0);
         mTaskListAdapterSpecific = new TaskListAdapter(mMainActivity, mTaskManager, (long) 14);
+        mTaskListAdapterEmpty = new TaskListAdapter(mMainActivity, mTaskManager, (long) 15);
     }
 
     @Test
