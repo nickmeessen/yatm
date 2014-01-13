@@ -18,6 +18,14 @@ public class ColourButtonClickHandler implements IButtonClickHandler {
     private Dialog mColourDialog;
     private int mRandColour;
 
+    /**
+     * Set data to use in the onClick
+     * @param activity
+     * @param inputColour
+     * @param bgShape
+     * @param colourDialog
+     * @param randColour
+     */
     public void setData(MainActivity activity, int inputColour, GradientDrawable bgShape, Dialog colourDialog, int randColour) {
         setActivity(activity);
 
@@ -27,11 +35,19 @@ public class ColourButtonClickHandler implements IButtonClickHandler {
         mRandColour = randColour;
     }
 
+    /**
+     * Set the activity
+     * @param activity the current activity.
+     */
     @Override
     public void setActivity(MainActivity activity) {
         mActivity = activity;
     }
 
+    /**
+     * onClick handler
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         int chosenColour;
