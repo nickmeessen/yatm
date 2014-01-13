@@ -53,9 +53,18 @@ public class CategoryTest {
     }
 
     @Test
-    public void test_setVisibleIsVisible() {
+    public void test_setVisible() {
         category.setVisible(1);
         assertEquals(category.getVisible(), 1);
+    }
+
+    @Test
+    public void test_isVisible() {
+        category.setVisible(0);
+        assertEquals(category.isVisible(), 0);
+
+        category.setVisible(1);
+        assertEquals(category.isVisible(), 1);
     }
 
     @Test
