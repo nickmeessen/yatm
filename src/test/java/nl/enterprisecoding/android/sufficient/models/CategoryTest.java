@@ -13,7 +13,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -84,14 +83,19 @@ public class CategoryTest {
         assertEquals(title, category.toString());
     }
 
-    @Test
-    public void test_removeTask() {
-        Task task = new Task();
-        category.addTask(task);
-
-        for (Task t : category.getTasks()) {
+    public void removeAllTasks() {
+        for(Task t : category.getTasks()) {
             category.removeTask(t);
         }
+    }
+
+    @Test
+    public void test_removeTask() {
+        removeAllTasks();
+
+        Task task = new Task();
+        category.addTask(task);
+        category.removeTask(task);
 
         assertEquals(0, category.getTasks().size());
     }
