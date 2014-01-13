@@ -96,7 +96,6 @@ public class TaskListAdapterTest {
 
     @Test
     public void test_getGroup() {
-//        assertEquals("Completed", mTaskListAdapter.getGroup(4));
 
     }
 
