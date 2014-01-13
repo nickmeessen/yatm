@@ -1,13 +1,21 @@
 package nl.enterprisecoding.android.sufficient.models;
 
+/*
+ * Copyright (c) 2013. "EnterpriseCoding"
+ * ("EnterpriseCoding" constitutes; Nick Meessen, Jasper Burgers, Ferry Wienholts, Breunie Ploeg & Sjors Roelofs).
+ *
+ * This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
+ */
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 
 import java.util.Calendar;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @RunWith(RobolectricTestRunner.class)
 public class TaskTest {
@@ -20,31 +28,31 @@ public class TaskTest {
     }
 
     @Test
-    public void Test_setIdGetId() {
-        int Id = 1;
-        task.setId(Id);
+    public void test_setIdGetId() {
+        int id = Mockito.anyInt();
+        task.setId(id);
 
-        assertEquals(task.getId(), Id);
+        assertEquals(task.getId(), id);
     }
 
     @Test
-    public void Test_setCatIdGetCatId() {
-        int CatId = 3;
-        task.setCategoryId(CatId);
+    public void test_setCatIdGetCatId() {
+        int catId = Mockito.anyInt();
+        task.setCategoryId(catId);
 
-        assertEquals(task.getCatId(), CatId);
+        assertEquals(task.getCatId(), catId);
     }
 
     @Test
-    public void Test_setTitleGetTitle() {
-        String Title = "Test";
-        task.setTitle(Title);
+    public void test_setTitleGetTitle() {
+        String title = Mockito.anyString();
+        task.setTitle(title);
 
-        assertEquals(task.getTitle(), "Test");
+        assertEquals(task.getTitle(), title);
     }
 
     @Test
-    public void Test_setDateGetDate() {
+    public void test_setDateGetDate() {
         Calendar date = Calendar.getInstance();
         date.set(1993, Calendar.JANUARY, 20);
         task.setDate(date);
@@ -53,18 +61,14 @@ public class TaskTest {
     }
 
     @Test
-    public void Test_setImportantIsImportant() {
-        Boolean important = true;
-        task.setImportant(important);
-
-        assertEquals(task.isImportant(), important);
+    public void test_setImportantIsImportant() {
+        task.setImportant(true);
+        assertTrue(task.isImportant());
     }
 
     @Test
-    public void Test_setCompletedIsCompleted() {
-        Boolean completed = true;
-        task.setImportant(completed);
-
-        assertEquals(task.isImportant(), completed);
+    public void test_setCompletedIsCompleted() {
+        task.setImportant(true);
+        assertTrue(task.isImportant());
     }
 }

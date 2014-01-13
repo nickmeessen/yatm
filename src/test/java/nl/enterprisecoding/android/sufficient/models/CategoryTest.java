@@ -1,11 +1,20 @@
 package nl.enterprisecoding.android.sufficient.models;
 
+/*
+ * Copyright (c) 2013. "EnterpriseCoding"
+ * ("EnterpriseCoding" constitutes; Nick Meessen, Jasper Burgers, Ferry Wienholts, Breunie Ploeg & Sjors Roelofs).
+ *
+ * This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
+ */
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.mock;
 
 @RunWith(RobolectricTestRunner.class)
 public class CategoryTest {
@@ -16,13 +25,12 @@ public class CategoryTest {
     @Test
     public void test_Category() {
         category = new Category();
-
         assertNotNull(category);
     }
 
     @Test
     public void test_setTitleGetTitle() {
-        String title = "TestTitle";
+        String title = Mockito.anyString();
         category.setTitle(title);
 
         assertEquals(category.getTitle(), title);
@@ -30,18 +38,18 @@ public class CategoryTest {
 
     @Test
     public void test_setColourGetColour() {
-        int Colour = 50;
-        category.setColour(Colour);
+        int colour = Mockito.anyInt();
+        category.setColour(colour);
 
-        assertEquals(category.getColour(), Colour);
+        assertEquals(category.getColour(), colour);
     }
 
     @Test
     public void test_setIdGetId() {
-        int Id = 1;
-        category.setID(Id);
+        int id = Mockito.anyInt();
+        category.setID(id);
 
-        assertEquals(category.getId(), Id);
+        assertEquals(category.getId(), id);
     }
 
     @Test
@@ -69,7 +77,7 @@ public class CategoryTest {
 
     @Test
     public void test_toString() {
-        String title = "TestTitle1";
+        String title = Mockito.anyString();
         category.setTitle(title);
 
         assertEquals(category.toString(), title);
