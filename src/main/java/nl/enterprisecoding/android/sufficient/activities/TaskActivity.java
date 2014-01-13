@@ -104,6 +104,11 @@ public class TaskActivity extends MainActivity {
         return true;
     }
 
+    /**
+     * Handles the closing of the ContextMenu
+     *
+     * @param menu The menu that closes
+     */
     @Override
     public void onContextMenuClosed(Menu menu) {
         super.onContextMenuClosed(menu);
