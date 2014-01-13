@@ -283,7 +283,12 @@ public class CategoryActivity extends MainActivity {
      */
     @Override
     public void onBackPressed() {
-            super.onBackPressed();
-            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        super.onBackPressed();
+        if (mTaskManager.getCategoryById(mSelectedCategoryId) == null) {
+            Intent allIntent = new Intent(this, TaskActivity.class);
+            allIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(allIntent);
+        }
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

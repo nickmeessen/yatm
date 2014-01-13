@@ -29,17 +29,14 @@ import java.util.ArrayList;
  */
 class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClickListener {
 
-    private Activity mActivity;
     private TaskManager mTaskManager;
 
     /**
      * Constructs the adapter
      *
-     * @param activity    the calling activity
      * @param taskManager a taskmanager.
      */
-    public CategoryListAdapter(Activity activity, TaskManager taskManager) {
-        mActivity = activity;
+    public CategoryListAdapter(TaskManager taskManager) {
         mTaskManager = taskManager;
     }
 
@@ -84,7 +81,7 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
         View view = convertView;
         final Category mSelectedCategory = getItem(position);
 
-        LayoutInflater layoutInflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
             view = layoutInflater.inflate(R.layout.category_item, null);
@@ -134,14 +131,16 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Intent intent = new Intent(mActivity, TaskActivity.class);
+        Intent intent = new Intent(parent.getContext(), TaskActivity.class);
 
         intent.putExtra("categoryID", id);
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        mActivity.startActivity(intent);
-        mActivity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        parent.getContext().startActivity(intent);
+
+        Activity activity = (Activity) parent.getContext();
+        activity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

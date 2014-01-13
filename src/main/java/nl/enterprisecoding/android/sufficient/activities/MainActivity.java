@@ -25,19 +25,14 @@ import roboguice.activity.RoboActivity;
 
 /**
  * MainActivity Class
- * <p/>
  * This class is used to manage the menu anim_in the application and call several controllers.
  *
  * @author Nick Meessen
  */
-
 public class MainActivity extends RoboActivity {
-
     private static final String CATEGORY_ID = "categoryID";
-
     protected TaskManager mTaskManager;
     protected ActionBar mActionBar;
-
     protected long mCurrentCategoryID;
     protected int mFinalColour;
 
@@ -71,7 +66,6 @@ public class MainActivity extends RoboActivity {
      */
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-
         if (keyCode == KeyEvent.KEYCODE_MENU) {
 
             startActivity(new Intent(this, CategoryActivity.class));
@@ -81,7 +75,6 @@ public class MainActivity extends RoboActivity {
         }
 
         return super.onKeyUp(keyCode, event);
-
     }
 
     /**
