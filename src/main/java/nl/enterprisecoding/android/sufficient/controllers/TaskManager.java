@@ -7,10 +7,15 @@
 
 package nl.enterprisecoding.android.sufficient.controllers;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
+import nl.enterprisecoding.android.sufficient.activities.TaskActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
 
@@ -144,12 +149,12 @@ public class TaskManager implements ITaskManager {
     /**
      * Deletes a given task
      *
-     * @param taskId the id of the task to be deleted.
+     * @param taskId The id of the task to be deleted.
      */
     public void deleteTask(long taskId) {
-        mDatabaseAdapter.deleteTask(taskId);
-
         getCategoryByTaskId(taskId).removeTask(getTaskById(taskId));
+
+        mDatabaseAdapter.deleteTask(taskId);
 
         mTaskListAdapter.notifyDataSetChanged();
     }

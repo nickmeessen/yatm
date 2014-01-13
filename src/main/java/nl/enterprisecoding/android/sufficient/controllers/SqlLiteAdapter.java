@@ -11,6 +11,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
@@ -151,7 +153,6 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      * @return the task corresponding to the given ID.
      */
     public Task getTask(long taskId) {
-
         Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, TCOLUMN_ID + " = " + taskId, null, null, null, null);
 
         cursor.moveToFirst();
@@ -197,7 +198,6 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      */
     public void deleteTask(long id) {
         database.delete(TASKS_TABLE, TCOLUMN_ID + " = " + id, null);
-
     }
 
     /**
@@ -262,7 +262,7 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
     /**
      * Returns category at the placed cursor.
      *
-     * @param cursor the SQlite cursor
+     * @param cursor the SQLite cursor
      * @return the category where the cursor is placed.
      */
     private Category cursorToCategory(Cursor cursor) {
