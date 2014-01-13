@@ -34,10 +34,9 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
     /**
      * Constructs the adapter
      *
-     * @param activity    the calling activity
      * @param taskManager a taskmanager.
      */
-    public CategoryListAdapter(Activity activity, TaskManager taskManager) {
+    public CategoryListAdapter(TaskManager taskManager) {
         mTaskManager = taskManager;
     }
 
@@ -141,6 +140,7 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
 
         parent.getContext().startActivity(intent);
 
-        
+        Activity activity = (Activity) parent.getContext();
+        activity.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

@@ -101,7 +101,7 @@ public class TaskManager implements ITaskManager {
      * @param categoryID The categoryID of the category which de adapter should use.
      */
     private void initializeAdapters(MainActivity activity, Long categoryID) {
-        mCategoryListAdapter = new CategoryListAdapter(activity, this);
+        mCategoryListAdapter = new CategoryListAdapter(this);
         mTaskListAdapter = new TaskListAdapter(activity, this, categoryID);
     }
 
