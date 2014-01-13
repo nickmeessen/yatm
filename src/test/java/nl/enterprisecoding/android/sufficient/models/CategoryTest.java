@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -84,7 +85,7 @@ public class CategoryTest {
     }
 
     public void removeAllTasks() {
-        for(Task t : category.getTasks()) {
+        for (Task t : category.getTasks()) {
             category.removeTask(t);
         }
     }

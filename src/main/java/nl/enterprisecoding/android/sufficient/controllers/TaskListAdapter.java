@@ -11,7 +11,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +20,7 @@ import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 
 /**
@@ -39,8 +35,8 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
     private Activity mActivity;
 
     private List<String> mGroupTitles;
-    private SparseArray<List<Task>> mGroups;
-    private List<Task> mTodayList, mTomorrowList, mUpcomingList, mCompletedList;
+    private Map<Integer, List<Long>> mGroups;
+    private List<Long> mTodayList, mTomorrowList, mUpcomingList, mCompletedList;
     private long mCategoryId;
 
     private TaskManager mTaskManager;
@@ -60,7 +56,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         mTaskManager = taskManager;
 
         mGroupTitles = new ArrayList<String>();
-        mGroups = new SparseArray<List<Task>>();
+        mGroups = new TreeMap<Integer, List<Long>>();
 
         mGroupTitles.add(0, mActivity.getString(R.string.today));
         mGroupTitles.add(1, mActivity.getString(R.string.tomorrow));
@@ -76,10 +72,10 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
      */
     private void updateList() {
 
-        mTodayList = new ArrayList<Task>();
-        mTomorrowList = new ArrayList<Task>();
-        mUpcomingList = new ArrayList<Task>();
-        mCompletedList = new ArrayList<Task>();
+        mTodayList = new ArrayList<Long>();
+        mTomorrowList = new ArrayList<Long>();
+        mUpcomingList = new ArrayList<Long>();
+        mCompletedList = new ArrayList<Long>();
 
         mGroups.put(0, mTodayList);
         mGroups.put(1, mTomorrowList);
@@ -118,13 +114,13 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         for (Task task : tasks) {
 
             if (task.isCompleted()) {
-                mCompletedList.add(task);
+                mCompletedList.add(task.getId());
             } else if (task.getDate().compareTo(today) == 0 || task.getDate().before(today)) {
-                mTodayList.add(task);
+                mTodayList.add(task.getId());
             } else if (task.getDate().compareTo(tomorrow) == 0) {
-                mTomorrowList.add(task);
+                mTomorrowList.add(task.getId());
             } else if (task.getDate().after(tomorrow)) {
-                mUpcomingList.add(task);
+                mUpcomingList.add(task.getId());
             }
         }
     }
@@ -181,7 +177,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
      */
     @Override
     public Task getChild(int groupPosition, int childPosition) {
-        return mGroups.get(groupPosition).get(childPosition);
+        return mTaskManager.getTaskById(mGroups.get(groupPosition).get(childPosition));
     }
 
     /**
@@ -211,7 +207,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
      */
     @Override
     public long getChildId(int groupPosition, int childPosition) {
-        return mGroups.get(groupPosition).get(childPosition).getId();
+        return mGroups.get(groupPosition).get(childPosition);
     }
 
     /**
