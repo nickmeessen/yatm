@@ -12,7 +12,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.*;
@@ -35,6 +34,7 @@ public class CategoryActivity extends MainActivity {
 
     private Spinner catInput;
     private long mSelectedCategoryId;
+    private int mCategoryColour;
     private int[] mRandomColour;
     private GradientDrawable mBgShape;
 
@@ -126,11 +126,9 @@ public class CategoryActivity extends MainActivity {
         final EditText editText = (EditText) findViewById(R.id.newCategory);
         String categoryName = editText.getText().toString();
 
-        int chosenColour = getCategoryColour();
-        if (chosenColour == 0) {
-            chosenColour = mRandomColour[0];
+        if (mCategoryColour == 0) {
+            mCategoryColour = mRandomColour[0];
         }
-        int categoryColour = Color.parseColor(String.format("#%02x%02x%02x", Color.red(chosenColour), Color.green(chosenColour), Color.blue(chosenColour)));
 
         if (categoryName.trim().isEmpty()) {
             makeToast(getString(R.string.category_name_empty_error));
@@ -139,7 +137,7 @@ public class CategoryActivity extends MainActivity {
         } else {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-            mTaskManager.createCategory(categoryName, categoryColour);
+            mTaskManager.createCategory(categoryName, mCategoryColour);
             editText.setText("");
             makeToast(getString(R.string.category_added));
             generateColourShape();

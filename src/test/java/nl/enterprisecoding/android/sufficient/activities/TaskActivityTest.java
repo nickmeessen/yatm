@@ -7,20 +7,12 @@ package nl.enterprisecoding.android.sufficient.activities;
  * This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
  */
 
-import android.app.ActionBar;
-import android.view.ContextMenu;
-import android.view.Menu;
-import android.view.View;
-import nl.enterprisecoding.android.sufficient.R;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.shadows.ShadowActivity;
-
-import javax.naming.Context;
 
 import static org.junit.Assert.assertTrue;
 

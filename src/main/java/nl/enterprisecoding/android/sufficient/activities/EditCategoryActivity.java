@@ -7,7 +7,6 @@
 
 package nl.enterprisecoding.android.sufficient.activities;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,7 +25,6 @@ import nl.enterprisecoding.android.sufficient.models.Category;
  */
 public class EditCategoryActivity extends MainActivity {
 
-    private Activity mActivity = this;
     private int mCategoryColour;
     private EditText mCategoryTitleInput;
     private long mSelectedCategoryId;
@@ -93,10 +91,6 @@ public class EditCategoryActivity extends MainActivity {
     private void editCategory() {
         String categoryName = mCategoryTitleInput.getText().toString();
 
-        if (String.valueOf(getCategoryColour()).length() > 2) {
-            mCategoryColour = getCategoryColour();
-        }
-
         if (categoryName.trim().isEmpty()) {
             makeToast(getString(R.string.category_name_empty_error));
         } else {
@@ -114,9 +108,7 @@ public class EditCategoryActivity extends MainActivity {
              * @param dialog The DialogInterface that it needs to listen to
              */
             public void onDismiss(DialogInterface dialog) {
-                if (String.valueOf(getCategoryColour()).length() > 2) {
-                    mCategoryColour = getCategoryColour();
-                } else {
+                if (mCategoryColour == 0) {
                     mCategoryColour = mTaskManager.getCategoryById(mSelectedCategoryId).getColour();
                 }
                 mActionBar.setBackgroundDrawable(new ColorDrawable(mCategoryColour));
@@ -126,10 +118,10 @@ public class EditCategoryActivity extends MainActivity {
     }
 
     private void startCategoryActivity() {
-        Intent intent = new Intent(mActivity, CategoryActivity.class);
+        Intent intent = new Intent(this, CategoryActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        mActivity.startActivity(intent);
-        mActivity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }

@@ -30,11 +30,11 @@ import roboguice.activity.RoboActivity;
  * @author Nick Meessen
  */
 public class MainActivity extends RoboActivity {
+
     private static final String CATEGORY_ID = "categoryID";
     protected TaskManager mTaskManager;
     protected ActionBar mActionBar;
     protected long mCurrentCategoryID;
-    protected int mFinalColour;
 
     /**
      * Called when the activity is starting.
@@ -95,7 +95,6 @@ public class MainActivity extends RoboActivity {
      * @param colourDialog The Dialog that will display the colours
      */
     protected void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog) {
-        ColourButtonClickHandler mColourButtonClickHandler = new ColourButtonClickHandler();
 
         final Button colourButton = (Button) colourDialog.findViewById(buttonId);
         final int[] randColour = generateRandomColour();
@@ -106,35 +105,7 @@ public class MainActivity extends RoboActivity {
             colourButton.setBackgroundColor(randColour[0]);
         }
 
-        mColourButtonClickHandler.setData(this, inputColour, bgShape, colourDialog, randColour[0]);
-        colourButton.setOnClickListener(mColourButtonClickHandler);
-    }
-
-    /**
-     * Get the category colour
-     *
-     * @return
-     */
-    protected int getCategoryColour() {
-        return mFinalColour;
-    }
-
-    /**
-     * Get the final colour
-     *
-     * @return
-     */
-    public int getFinalColour() {
-        return mFinalColour;
-    }
-
-    /**
-     * Set the final colour
-     *
-     * @param colour
-     */
-    public void setFinalColour(int colour) {
-        mFinalColour = colour;
+        colourButton.setOnClickListener(new ColourButtonClickHandler(bgShape, colourDialog, inputColour, randColour[0]));
     }
 
     /**
