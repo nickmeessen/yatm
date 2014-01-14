@@ -12,7 +12,10 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+<<<<<<< HEAD
+=======
 import android.view.View;
+>>>>>>> 2afc77ac7fdc4455da381081895d7f6c039ad306
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,9 +23,17 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+<<<<<<< HEAD
+import static org.junit.Assert.assertEquals;
+
+/**
+ * Created by Breunie Ploeg on 14-1-14.
+ */
+=======
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+>>>>>>> 2afc77ac7fdc4455da381081895d7f6c039ad306
 
 @RunWith(RobolectricTestRunner.class)
 public class ColourButtonClickHandlerTest {
