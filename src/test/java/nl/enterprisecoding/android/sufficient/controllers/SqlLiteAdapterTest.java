@@ -141,40 +141,40 @@ public class SqlLiteAdapterTest {
             mAdapter.deleteCategory(newCat.getId());
         }
     }
-//
-//    @Test
-//    public void test_updateCategory() {
-//        String newCatName = "Test category 3";
-//        Category newCat = mAdapter.createCategory(newCatName, Color.CYAN);
-//        assertEquals(newCatName, newCat.getTitle());
-//
-//        String editedCatName = "Test category 3 edited";
-//        newCat.setTitle(editedCatName);
-//        int newColour = Color.MAGENTA;
-//        newCat.setColour(newColour);
-//        newCat.setVisible(0);
-//
-//        mAdapter.updateCategory(newCat);
-//
-//        assertEquals(editedCatName, mAdapter.getCategory(newCat.getId()).getTitle());
-//        assertEquals(newColour, mAdapter.getCategory(newCat.getId()).getColour());
-//        assertTrue(mAdapter.getCategory(newCat.getId()).isVisible());
-//
-//        if(newCat != null) {
-//            mAdapter.deleteCategory(newCat.getId());
-//        }
-//    }
-//
-//    @Test
-//    public void test_deleteCategory() {
-//        Category newCat = mAdapter.createCategory("Test category 4", Color.CYAN);
-//        long catId = newCat.getId();
-//
-//        assertNotNull(mAdapter.getCategory(catId));
-//        mAdapter.deleteCategory(catId);
-//
-//        assertNull(mAdapter.getCategory(catId));
-//    }
+
+    @Test
+    public void test_updateCategory() {
+        String newCatName = "Test category 3";
+        Category newCat = mAdapter.createCategory(newCatName, Color.CYAN);
+        assertEquals(newCatName, newCat.getTitle());
+
+        String editedCatName = "Test category 3 edited";
+        newCat.setTitle(editedCatName);
+        int newColour = Color.MAGENTA;
+        newCat.setColour(newColour);
+        newCat.setVisible(0);
+
+        mAdapter.updateCategory(newCat);
+
+        assertEquals(editedCatName, mAdapter.getCategory(newCat.getId()).getTitle());
+        assertEquals(newColour, mAdapter.getCategory(newCat.getId()).getColour());
+        assertFalse(mAdapter.getCategory(newCat.getId()).isVisible());
+
+        if(newCat != null) {
+            mAdapter.deleteCategory(newCat.getId());
+        }
+    }
+
+    @Test
+    public void test_deleteCategory() {
+        Category newCat = mAdapter.createCategory("Test category 4", Color.CYAN);
+        long catId = newCat.getId();
+
+        assertNotNull(mAdapter.getCategory(catId));
+        mAdapter.deleteCategory(catId);
+
+        assertNull(mAdapter.getCategory(catId));
+    }
 
     @Test
     public void test_retrieveAllCategories() {

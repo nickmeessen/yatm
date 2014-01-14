@@ -14,7 +14,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -321,17 +320,20 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
 
 
     /**
-     * Gets a task by it's ID.
+     * Gets a category by it's ID.
      *
-     * @param taskId the id of the task to retrieve.
-     * @return the task corresponding to the given ID.
+     * @param catId the id of the task to retrieve.
+     * @return the category corresponding to the given ID.
      */
     public Category getCategory(long catId) {
-
         Cursor cursor = database.query(CATEGORIES_TABLE, CALL_COLUMNS, CID_COLUMN + " = " + catId, null, null, null, null);
 
-        cursor.moveToFirst();
-        Category category = cursorToCategory(cursor);
+        Category category = null;
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            category = cursorToCategory(cursor);
+        }
+
         cursor.close();
 
         return category;
