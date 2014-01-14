@@ -20,7 +20,7 @@ public interface ITaskManager {
      * @param title  the title of the category to be created.
      * @param colour the colour for the new category.
      */
-    void createCategory(String title, int colour);
+    long createCategory(String title, int colour);
 
     /**
      * Creates a new Task and adds it to the database.

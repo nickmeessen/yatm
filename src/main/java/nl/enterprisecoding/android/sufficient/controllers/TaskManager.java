@@ -173,13 +173,15 @@ public class TaskManager implements ITaskManager {
      * @param title  the title of the category to be created.
      * @param colour the colour for the new category.
      */
-    public void createCategory(String title, int colour) {
+    public long createCategory(String title, int colour) {
 
         Category newCategory = mDatabaseAdapter.createCategory(title, colour);
 
         mCategoryList.put(newCategory.getId(), newCategory);
 
         mCategoryListAdapter.notifyDataSetChanged();
+
+        return newCategory.getId();
     }
 
     /**
