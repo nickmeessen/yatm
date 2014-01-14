@@ -7,10 +7,10 @@
 
 package nl.enterprisecoding.android.sufficient.controllers;
 
+import android.app.Activity;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import nl.enterprisecoding.android.sufficient.R;
-import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
 
@@ -35,7 +35,7 @@ public class TaskManager implements ITaskManager {
      * @param activity   the activity called from.
      * @param categoryID the current CategoryID.
      */
-    public TaskManager(MainActivity activity, Long categoryID) {
+    public TaskManager(Activity activity, Long categoryID) {
 
         mDatabaseAdapter = new SqlLiteAdapter(activity);
 
@@ -51,7 +51,7 @@ public class TaskManager implements ITaskManager {
      *
      * @param activity is passed on into specified initializing methodes
      */
-    private void initializeViews(MainActivity activity) {
+    private void initializeViews(Activity activity) {
         initializeCategoryView(activity);
         initializeExpandableListView(activity);
     }
@@ -64,7 +64,7 @@ public class TaskManager implements ITaskManager {
      *
      * @param activity Is required to get the layout xml file from the resource map.
      */
-    private void initializeExpandableListView(MainActivity activity) {
+    private void initializeExpandableListView(Activity activity) {
         ExpandableListView tasklistView = (ExpandableListView) activity.findViewById(R.id.taskList);
         if (tasklistView != null) {
             tasklistView.setAdapter(mTaskListAdapter);
@@ -84,7 +84,7 @@ public class TaskManager implements ITaskManager {
      *
      * @param activity Is required to get the layout xml file from the resource map and to register for context menu.
      */
-    private void initializeCategoryView(MainActivity activity) {
+    private void initializeCategoryView(Activity activity) {
         ListView categoryView = (ListView) activity.findViewById(R.id.cat_list);
 
         if (categoryView != null) {
@@ -100,7 +100,7 @@ public class TaskManager implements ITaskManager {
      * @param activity   The activity to initialize the adapter
      * @param categoryID The categoryID of the category which de adapter should use.
      */
-    private void initializeAdapters(MainActivity activity, Long categoryID) {
+    private void initializeAdapters(Activity activity, Long categoryID) {
         mCategoryListAdapter = new CategoryListAdapter(this);
         mTaskListAdapter = new TaskListAdapter(activity, this, categoryID);
     }

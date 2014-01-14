@@ -20,6 +20,7 @@ public class ColourButtonClickHandler implements IButtonClickHandler {
 
     /**
      * Set data to use in the onClick
+     *
      * @param activity
      * @param inputColour
      * @param bgShape
@@ -37,6 +38,7 @@ public class ColourButtonClickHandler implements IButtonClickHandler {
 
     /**
      * Set the activity
+     *
      * @param activity the current activity.
      */
     @Override
@@ -46,6 +48,7 @@ public class ColourButtonClickHandler implements IButtonClickHandler {
 
     /**
      * onClick handler
+     *
      * @param v
      */
     @Override

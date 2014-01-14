@@ -10,6 +10,8 @@ package nl.enterprisecoding.android.sufficient.controllers;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
+import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
@@ -40,10 +42,12 @@ public class TaskListAdapterTest {
     TaskManager mTaskManager;
     TaskListAdapter mTaskListAdapter;
     TaskListAdapter mTaskListAdapterSpecific;
+    TaskListAdapter mTaskListAdapterEmpty;
 
     @Before
     public void setUp() {
         mMainActivity = Robolectric.buildActivity(MainActivity.class).create().get();
+
         mTaskManager = mock(TaskManager.class);
 
         when(mTaskManager.getTaskById(20)).thenReturn(mock(Task.class));
@@ -84,9 +88,11 @@ public class TaskListAdapterTest {
 
         when(mTaskManager.getVisibleCategories()).thenReturn(testingCatsAll);
         when(mTaskManager.getCategoryById(14)).thenReturn(mockCategory);
+        when(mTaskManager.getCategoryById(15)).thenReturn(mock(Category.class));
 
         mTaskListAdapter = new TaskListAdapter(mMainActivity, mTaskManager, (long) 0);
         mTaskListAdapterSpecific = new TaskListAdapter(mMainActivity, mTaskManager, (long) 14);
+        mTaskListAdapterEmpty = new TaskListAdapter(mMainActivity, mTaskManager, (long) 15);
     }
 
     @Test
@@ -103,8 +109,8 @@ public class TaskListAdapterTest {
 
     @Test
     public void test_getChildrenCount() {
-//        assertEquals(3, mTaskListAdapter.getChildrenCount(3));
-//        assertEquals(1, mTaskListAdapterSpecific.getChildrenCount(0));
+        assertEquals(3, mTaskListAdapter.getChildrenCount(3));
+        assertEquals(1, mTaskListAdapterSpecific.getChildrenCount(0));
     }
 
     @Test
@@ -168,5 +174,29 @@ public class TaskListAdapterTest {
     @Test
     public void test_hasStableIds() {
         assertTrue(mTaskListAdapter.hasStableIds());
+    }
+
+    @Test
+    public void test_getGroupView() {
+
+        ViewGroup parentView = mock(ViewGroup.class);
+        View convertView = mock(View.class);
+
+        when(convertView.findViewById(R.id.groupTitle)).thenReturn(mock(TextView.class));
+
+        assertNotNull(mTaskListAdapter.getGroupView(0, true, null, null));
+        assertNotNull(mTaskListAdapter.getGroupView(0, true, convertView, parentView));
+
+    }
+
+    @Test
+    public void test_getChildView() {
+        ViewGroup parentView = mock(ViewGroup.class);
+        View convertView = mock(View.class);
+
+        when(convertView.findViewById(R.id.groupTitle)).thenReturn(mock(TextView.class));
+
+//        assertNotNull(mTaskListAdapter.getChildView(0, 0, true, null, null));
+//        assertNotNull(mTaskListAdapter.getChildView(0, 1, true, convertView, parentView));
     }
 }

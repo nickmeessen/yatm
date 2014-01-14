@@ -31,7 +31,6 @@ public class EditCategoryActivity extends MainActivity {
     private EditText mCategoryTitleInput;
     private long mSelectedCategoryId;
     private GradientDrawable mBgShape;
-    private Category mCategory;
 
     /**
      * Called when the activity is starting.
@@ -51,16 +50,16 @@ public class EditCategoryActivity extends MainActivity {
         mActionBar.setTitle(R.string.action_edit_category);
         mSelectedCategoryId = getIntent().getExtras().getLong("CategoryID", 0);
 
-        mCategory = mTaskManager.getCategoryById(mSelectedCategoryId);
+        Category category = mTaskManager.getCategoryById(mSelectedCategoryId);
         getActionBar().setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mSelectedCategoryId).getColour()));
 
         mCategoryTitleInput = (EditText) findViewById(R.id.category_title);
-        mCategoryTitleInput.setText(mCategory.getTitle());
+        mCategoryTitleInput.setText(category.getTitle());
         mCategoryTitleInput.requestFocus();
         int textLength = mCategoryTitleInput.getText().length();
         mCategoryTitleInput.setSelection(textLength);
         openKeyboard();
-        mCategoryColour = mCategory.getColour();
+        mCategoryColour = category.getColour();
 
         Button mEditCategoryButton = (Button) findViewById(R.id.edit_category_button);
         mEditCategoryButton.setOnClickListener(new View.OnClickListener() {
@@ -78,7 +77,7 @@ public class EditCategoryActivity extends MainActivity {
 
         final Button colourButton = (Button) findViewById(R.id.category_colour_button);
         mBgShape = (GradientDrawable) colourButton.getBackground();
-        mBgShape.setColor(mCategory.getColour());
+        mBgShape.setColor(category.getColour());
 
         colourButton.setOnClickListener(new View.OnClickListener() {
             /**
@@ -118,7 +117,7 @@ public class EditCategoryActivity extends MainActivity {
                 if (String.valueOf(getCategoryColour()).length() > 2) {
                     mCategoryColour = getCategoryColour();
                 } else {
-                    mCategoryColour = mCategory.getColour();
+                    mCategoryColour = mTaskManager.getCategoryById(mSelectedCategoryId).getColour();
                 }
                 mActionBar.setBackgroundDrawable(new ColorDrawable(mCategoryColour));
             }

@@ -15,7 +15,6 @@ import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 
 /**
  * MainActivity Test
@@ -52,7 +51,7 @@ public class MainActivityTest {
         assertNotSame(mMainActivity.generateRandomColour(), mMainActivity.generateRandomColour());
         assertNotNull(randomColours);
 
-        for(int colour : randomColours) {
+        for (int colour : randomColours) {
             assertTrue("expected to be less than", colour <= 255);
         }
     }

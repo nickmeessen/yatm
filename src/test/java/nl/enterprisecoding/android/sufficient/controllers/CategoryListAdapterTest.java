@@ -7,14 +7,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.junit.Assert.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -45,9 +44,9 @@ public class CategoryListAdapterTest {
         mockCategory.setID((long) 12);
 
         testingCatsAll.put((long) 0, mock(Category.class));
-        testingCatsAll.put((long) 1 ,mock(Category.class));
-        testingCatsAll.put((long) 2 ,mock(Category.class));
-        testingCatsAll.put((long) 3 ,mockCategory);
+        testingCatsAll.put((long) 1, mock(Category.class));
+        testingCatsAll.put((long) 2, mock(Category.class));
+        testingCatsAll.put((long) 3, mockCategory);
 
         when(mTaskManager.getAllCategories()).thenReturn(testingCatsAll);
     }

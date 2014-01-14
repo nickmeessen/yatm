@@ -12,5 +12,6 @@ import org.junit.Test;
 
 public class EditCategoryActivityTest {
     @Test
-    public void test_Test() {}
+    public void test_Test() {
+    }
 }

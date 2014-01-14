@@ -15,5 +15,6 @@ import org.robolectric.RobolectricTestRunner;
 public class IDatabaseAdapterTest {
 
     @Test
-    public void test_Test() {}
+    public void test_Test() {
+    }
 }

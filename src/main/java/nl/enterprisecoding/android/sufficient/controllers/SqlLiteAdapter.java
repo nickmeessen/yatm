@@ -7,14 +7,13 @@
 
 package nl.enterprisecoding.android.sufficient.controllers;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -73,11 +72,9 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      *
      * @param activity the activity called fromm.
      */
-    public SqlLiteAdapter(MainActivity activity) {
+    public SqlLiteAdapter(Activity activity) {
         super(activity, DATABASE_NAME, null, DATABASE_VERSION);
-
         open();
-
     }
 
     /**
@@ -153,8 +150,12 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
     public Task getTask(long taskId) {
         Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, TCOLUMN_ID + " = " + taskId, null, null, null, null);
 
-        cursor.moveToFirst();
-        Task task = cursorToTask(cursor);
+        Task task = null;
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            task = cursorToTask(cursor);
+        }
+
         cursor.close();
 
         return task;
@@ -319,17 +320,20 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
 
 
     /**
-     * Gets a task by it's ID.
+     * Gets a category by it's ID.
      *
-     * @param taskId the id of the task to retrieve.
-     * @return the task corresponding to the given ID.
+     * @param catId the id of the task to retrieve.
+     * @return the category corresponding to the given ID.
      */
-    public Category getCategory(long taskId) {
+    public Category getCategory(long catId) {
+        Cursor cursor = database.query(CATEGORIES_TABLE, CALL_COLUMNS, CID_COLUMN + " = " + catId, null, null, null, null);
 
-        Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, TCOLUMN_ID + " = " + taskId, null, null, null, null);
+        Category category = null;
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            category = cursorToCategory(cursor);
+        }
 
-        cursor.moveToFirst();
-        Category category = cursorToCategory(cursor);
         cursor.close();
 
         return category;
