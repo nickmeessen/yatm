@@ -40,9 +40,13 @@ public class MainActivityTest {
 
     @Test
     public void test_generateRandomColor() {
-        int[] randomColours = mMainActivity.generateRandomColour();
-
         assertNotSame(mMainActivity.generateRandomColour(), mMainActivity.generateRandomColour());
+        assertNotSame(mMainActivity.generateRandomColour(), mMainActivity.generateRandomColour());
+        assertNotSame(mMainActivity.generateRandomColour(), mMainActivity.generateRandomColour());
+        assertNotSame(mMainActivity.generateRandomColour(), mMainActivity.generateRandomColour());
+        assertNotSame(mMainActivity.generateRandomColour(), mMainActivity.generateRandomColour());
+
+        int[] randomColours = mMainActivity.generateRandomColour();
         assertNotNull(randomColours);
 
         for (int colour : randomColours) {
