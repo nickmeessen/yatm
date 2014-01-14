@@ -33,15 +33,33 @@ public class TaskSetDateDialogButtonClickHandlerTest {
     }
 
     @Test
-    public void test_onClick() {
+    public void test_onClickPositive() {
 
-        Calendar testDate1 = Calendar.getInstance();
-        Calendar testDate2 = Calendar.getInstance();
+        Calendar testDate = Calendar.getInstance();
         DatePickerDialog dialog = mock(DatePickerDialog.class);
         DatePicker datePicker = mock(DatePicker.class);
 
-        testDate1.set(2014, Calendar.JANUARY, 1, 0, 0, 0);
-        testDate2.set(2015, Calendar.FEBRUARY, 2, 0, 0, 0);
+        testDate.set(2015, Calendar.FEBRUARY, 2, 0, 0, 0);
+
+        when(dialog.getDatePicker()).thenReturn(datePicker);
+        when(datePicker.getYear()).thenReturn(2015);
+        when(datePicker.getMonth()).thenReturn(Calendar.FEBRUARY);
+        when(datePicker.getDayOfMonth()).thenReturn(2);
+
+        mClickHandler.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+
+        assertEquals(testDate, mTaskDate);
+
+    }
+
+    @Test
+    public void test_onClickNegative() {
+
+        Calendar testDate = Calendar.getInstance();
+        DatePickerDialog dialog = mock(DatePickerDialog.class);
+        DatePicker datePicker = mock(DatePicker.class);
+
+        testDate.set(2014, Calendar.JANUARY, 1, 0, 0, 0);
 
         when(dialog.getDatePicker()).thenReturn(datePicker);
         when(datePicker.getYear()).thenReturn(2015);
@@ -50,11 +68,6 @@ public class TaskSetDateDialogButtonClickHandlerTest {
 
         mClickHandler.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
 
-        assertEquals(testDate1, mTaskDate);
-
-        mClickHandler.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
-
-        assertEquals(testDate2, mTaskDate);
-
+        assertEquals(testDate, mTaskDate);
     }
 }
