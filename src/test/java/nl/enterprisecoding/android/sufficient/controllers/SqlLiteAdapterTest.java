@@ -8,23 +8,13 @@ package nl.enterprisecoding.android.sufficient.controllers;
  */
 
 import android.app.Activity;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
-import nl.enterprisecoding.android.sufficient.activities.EditTaskActivity;
-import nl.enterprisecoding.android.sufficient.activities.TaskActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.annotation.Config;
-import org.robolectric.shadows.ShadowSQLiteOpenHelper;
-import org.robolectric.util.SQLite;
-import roboguice.activity.RoboActivity;
 import java.util.Calendar;
 import java.util.List;
 import static org.junit.Assert.*;
