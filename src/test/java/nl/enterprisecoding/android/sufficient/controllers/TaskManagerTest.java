@@ -9,10 +9,8 @@ package nl.enterprisecoding.android.sufficient.controllers;
 
 import android.content.Intent;
 import nl.enterprisecoding.android.sufficient.activities.EditTaskActivity;
-import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 import nl.enterprisecoding.android.sufficient.activities.TaskActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
-import nl.enterprisecoding.android.sufficient.models.Task;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,7 +21,6 @@ import roboguice.activity.RoboActivity;
 import java.util.Calendar;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
 
 @RunWith(RobolectricTestRunner.class)
 public class TaskManagerTest {
@@ -32,7 +29,7 @@ public class TaskManagerTest {
     Calendar date;
 
     @Before
-    public void setup(){
+    public void setup() {
         Intent editTaskActivityIntent = new Intent(new TaskActivity(), EditTaskActivity.class);
         editTaskActivityIntent.putExtra(TaskActivity.TASK_ID, 0);
         RoboActivity editTaskActivity = Robolectric.buildActivity(EditTaskActivity.class).withIntent(editTaskActivityIntent).create().get();
@@ -45,7 +42,9 @@ public class TaskManagerTest {
         date = Calendar.getInstance();
         date.set(1993, 01, 20);
 
-    };
+    }
+
+    ;
 
     @Test
     public void test_createTask() {
