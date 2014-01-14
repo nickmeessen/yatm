@@ -78,7 +78,7 @@ public class CategoryTest {
 
     @Test
     public void test_toString() {
-        String title = Mockito.anyString();
+        String title = "CategoryTitle";
         category.setTitle(title);
 
         assertEquals(title, category.toString());
