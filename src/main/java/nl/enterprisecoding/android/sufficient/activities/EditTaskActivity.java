@@ -7,15 +7,16 @@
 
 package nl.enterprisecoding.android.sufficient.activities;
 
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
-import com.google.inject.Inject;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
-import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateButtonClickHandler;
+import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateDialogButtonClickHandler;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
@@ -41,9 +42,6 @@ public class EditTaskActivity extends MainActivity {
     private Button mTaskSetDateButton;
     @InjectView(R.id.task_important)
     private CheckBox mTaskImportantCheckBox;
-
-    @Inject
-    private TaskSetDateButtonClickHandler mTaskSetDateButtonClickHandler;
 
     private long mSelectedTaskId;
     private Calendar mTaskDate;
@@ -74,8 +72,25 @@ public class EditTaskActivity extends MainActivity {
 
             updateDateButtonText();
 
-            mTaskSetDateButtonClickHandler.setActivity(this);
-            mTaskSetDateButton.setOnClickListener(mTaskSetDateButtonClickHandler);
+            mTaskSetDateButton.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * This method will be invoked when a view is clicked.
+                 * @param view The view that received the click.
+                 */
+                @Override
+                public void onClick(View view) {
+
+                    DatePickerDialog alert = new DatePickerDialog(view.getContext(), null, getTaskDate().get(Calendar.YEAR), getTaskDate().get(Calendar.MONTH), getTaskDate().get(Calendar.DAY_OF_MONTH));
+                    alert.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
+                    TaskSetDateDialogButtonClickHandler taskSetDateDialogButtonClickHandler = new TaskSetDateDialogButtonClickHandler(getTaskDate());
+
+                    alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.action_change_date), taskSetDateDialogButtonClickHandler);
+                    alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.action_discard), taskSetDateDialogButtonClickHandler);
+
+                    alert.show();
+                }
+            });
 
             mTaskTitleInput = (EditText) findViewById(R.id.task_title);
 
