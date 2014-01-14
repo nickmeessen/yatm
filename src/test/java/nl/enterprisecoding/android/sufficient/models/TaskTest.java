@@ -10,7 +10,6 @@ package nl.enterprisecoding.android.sufficient.models;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 
 import java.util.Calendar;
@@ -30,7 +29,7 @@ public class TaskTest {
 
     @Test
     public void test_setIdGetId() {
-        int id = Mockito.anyInt();
+        int id = 3;
         task.setId(id);
 
         assertEquals(id, task.getId());
@@ -38,7 +37,7 @@ public class TaskTest {
 
     @Test
     public void test_setCatIdGetCatId() {
-        int catId = Mockito.anyInt();
+        int catId = 6;
         task.setCategoryId(catId);
 
         assertEquals(catId, task.getCatId());
@@ -46,7 +45,7 @@ public class TaskTest {
 
     @Test
     public void test_setTitleGetTitle() {
-        String title = Mockito.anyString();
+        String title = "Yolo";
         task.setTitle(title);
 
         assertEquals(title, task.getTitle());
@@ -75,7 +74,7 @@ public class TaskTest {
 
     @Test
     public void test_toString() {
-        String title = Mockito.anyString();
+        String title = "test";
         task.setTitle(title);
 
         assertEquals(title, task.toString());

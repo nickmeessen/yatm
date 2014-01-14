@@ -21,14 +21,12 @@ import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
-import javax.annotation.Resource;
-
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(RobolectricTestRunner.class)
-    public class ColourButtonClickHandlerTest {
+public class ColourButtonClickHandlerTest {
 
     private ColourButtonClickHandler mColourButtonClickHandler1;
     private ColourButtonClickHandler mColourButtonClickHandler2;
