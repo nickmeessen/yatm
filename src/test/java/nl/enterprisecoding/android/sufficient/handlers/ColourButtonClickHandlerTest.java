@@ -33,14 +33,13 @@ public class ColourButtonClickHandlerTest {
 
     @Before
     public void setUp() {
-        mColourButtonClickHandler = new ColourButtonClickHandler();
         mMainActivity = Robolectric.buildActivity(MainActivity.class).create().get();
         mColourDialog = new Dialog(mMainActivity.getApplicationContext(), 0);
     }
 
     @Test
-    public void test_setData() {
-        mColourButtonClickHandler.setData(mMainActivity, mInputColour, mBgShape, mColourDialog, mRandColour);
+    public void test_ColourButtonClickHandler() {
+        mColourButtonClickHandler = new ColourButtonClickHandler(mBgShape, mColourDialog, mInputColour, mRandColour);
 
         assertEquals(mInputColour, mColourButtonClickHandler.getInputColour());
         assertEquals(mBgShape, mColourButtonClickHandler.getBgShape());
@@ -48,11 +47,5 @@ public class ColourButtonClickHandlerTest {
         assertEquals(mRandColour, mColourButtonClickHandler.getRandColour());
     }
 
-    @Test
-    public void test_setActivity() {
-        mColourButtonClickHandler.setActivity(mMainActivity);
-
-        assertEquals(mMainActivity, mColourButtonClickHandler.getActivity());
-    }
 
 }
