@@ -15,7 +15,6 @@ import nl.enterprisecoding.android.sufficient.R;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.shadows.ShadowActivity;
@@ -34,7 +33,7 @@ public class TaskActivityTest {
     @Before
     public void setUp() {
 
-        Intent intent = new Intent(new TaskActivity(), EditTaskActivity.class);
+        Intent intent = new Intent(new TaskActivity(), TaskActivity.class);
         intent.putExtra(MainActivity.CATEGORY_ID, 3);
 
         mTaskActivity1 = Robolectric.buildActivity(TaskActivity.class).withIntent(intent).create().get();
@@ -54,7 +53,7 @@ public class TaskActivityTest {
     }
 
     @Test
-    public void test_onCreateContextMenu() {
+    public void test_onCreateContextMenu1() {
 
         ContextMenu menu = mock(ContextMenu.class);
         View view = mock(View.class);
@@ -67,6 +66,21 @@ public class TaskActivityTest {
     }
 
     @Test
+    public void test_onCreateContextMenu2() {
+
+        ContextMenu menu = mock(ContextMenu.class);
+        View view = mock(View.class);
+        ContextMenu.ContextMenuInfo menuInfo = mock(ContextMenu.ContextMenuInfo.class);
+
+        when(view.getId()).thenReturn(R.id.catText);
+
+        mTaskActivity1.onCreateContextMenu(menu, view, menuInfo);
+
+    }
+
+
+
+    @Test
     public void test_onContextItemSelected1() {
 
         MenuItem menuItem = mock(MenuItem.class);
@@ -74,6 +88,19 @@ public class TaskActivityTest {
         when(menuItem.getTitle()).thenReturn(mTaskActivity1.getString(R.string.action_edit));
 
         assertTrue(mTaskActivity1.onContextItemSelected(menuItem));
+        assertTrue(mTaskActivity2.onContextItemSelected(menuItem));
+
+    }
+
+    @Test
+    public void test_onContextItemSelected2() {
+
+        MenuItem menuItem = mock(MenuItem.class);
+
+        when(menuItem.getTitle()).thenReturn(mTaskActivity1.getString(R.string.toast_no_category));
+
+        assertTrue(mTaskActivity1.onContextItemSelected(menuItem));
+        assertTrue(mTaskActivity2.onContextItemSelected(menuItem));
 
     }
 
