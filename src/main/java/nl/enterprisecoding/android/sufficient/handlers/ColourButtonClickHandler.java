@@ -31,7 +31,6 @@ public class ColourButtonClickHandler implements View.OnClickListener {
         mRandColour = randColour;
     }
 
-
     /**
      * onClick handler
      *
