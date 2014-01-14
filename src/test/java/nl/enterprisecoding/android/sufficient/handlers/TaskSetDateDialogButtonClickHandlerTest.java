@@ -40,6 +40,8 @@ public class TaskSetDateDialogButtonClickHandlerTest {
         DatePicker datePicker = mock(DatePicker.class);
 
         testDate.set(2015, Calendar.FEBRUARY, 2, 0, 0, 0);
+        testDate.set(Calendar.MILLISECOND, 0);
+
 
         when(dialog.getDatePicker()).thenReturn(datePicker);
         when(datePicker.getYear()).thenReturn(2015);
@@ -47,6 +49,8 @@ public class TaskSetDateDialogButtonClickHandlerTest {
         when(datePicker.getDayOfMonth()).thenReturn(2);
 
         mClickHandler.onClick(dialog, DialogInterface.BUTTON_POSITIVE);
+
+        mTaskDate.set(Calendar.MILLISECOND, 0);
 
         assertEquals(testDate, mTaskDate);
 
@@ -60,6 +64,7 @@ public class TaskSetDateDialogButtonClickHandlerTest {
         DatePicker datePicker = mock(DatePicker.class);
 
         testDate.set(2014, Calendar.JANUARY, 1, 0, 0, 0);
+        testDate.set(Calendar.MILLISECOND, 0);
 
         when(dialog.getDatePicker()).thenReturn(datePicker);
         when(datePicker.getYear()).thenReturn(2015);
@@ -67,6 +72,7 @@ public class TaskSetDateDialogButtonClickHandlerTest {
         when(datePicker.getDayOfMonth()).thenReturn(2);
 
         mClickHandler.onClick(dialog, DialogInterface.BUTTON_NEGATIVE);
+        mTaskDate.set(Calendar.MILLISECOND, 0);
 
         assertEquals(testDate, mTaskDate);
     }
