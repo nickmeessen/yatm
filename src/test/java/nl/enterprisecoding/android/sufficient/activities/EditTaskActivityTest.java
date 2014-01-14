@@ -28,13 +28,12 @@ import static junit.framework.Assert.assertEquals;
 public class EditTaskActivityTest {
 
     private EditTaskActivity mEditTaskActivity;
-    private Intent mEditTaskActivityIntent;
     private Calendar currentDate;
 
     @Test
     @Before
     public void setUp() throws Exception {
-        mEditTaskActivityIntent = new Intent(new TaskActivity(), EditTaskActivity.class);
+        Intent mEditTaskActivityIntent = new Intent(new TaskActivity(), EditTaskActivity.class);
         mEditTaskActivityIntent.putExtra(TaskActivity.TASK_ID, 0);
         mEditTaskActivity = Robolectric.buildActivity(EditTaskActivity.class).withIntent(mEditTaskActivityIntent).create().get();
 

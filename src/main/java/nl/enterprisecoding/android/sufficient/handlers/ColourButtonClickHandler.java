@@ -1,5 +1,6 @@
 package nl.enterprisecoding.android.sufficient.handlers;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
@@ -10,9 +11,9 @@ import nl.enterprisecoding.android.sufficient.activities.MainActivity;
  *
  * @author Sjors Roelofs
  */
-public class ColourButtonClickHandler implements IButtonClickHandler {
+public class ColourButtonClickHandler implements View.OnClickListener {
 
-    private MainActivity mActivity;
+    private Activity mActivity;
     private int mInputColour;
     private GradientDrawable mBgShape;
     private Dialog mColourDialog;
@@ -27,23 +28,12 @@ public class ColourButtonClickHandler implements IButtonClickHandler {
      * @param colourDialog
      * @param randColour
      */
-    public void setData(MainActivity activity, int inputColour, GradientDrawable bgShape, Dialog colourDialog, int randColour) {
-        setActivity(activity);
-
+    public void setData(Activity activity, int inputColour, GradientDrawable bgShape, Dialog colourDialog, int randColour) {
+        mActivity = activity;
         mInputColour = inputColour;
         mBgShape = bgShape;
         mColourDialog = colourDialog;
         mRandColour = randColour;
-    }
-
-    /**
-     * Set the activity
-     *
-     * @param activity the current activity.
-     */
-    @Override
-    public void setActivity(MainActivity activity) {
-        mActivity = activity;
     }
 
     /**
@@ -63,7 +53,7 @@ public class ColourButtonClickHandler implements IButtonClickHandler {
             mBgShape.setColor(mRandColour);
         }
 
-        mActivity.setFinalColour(chosenColour);
+        ((MainActivity) mActivity).setFinalColour(chosenColour);
         mColourDialog.dismiss();
     }
 

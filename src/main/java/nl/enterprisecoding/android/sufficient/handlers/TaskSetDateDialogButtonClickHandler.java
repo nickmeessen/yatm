@@ -8,27 +8,23 @@
 package nl.enterprisecoding.android.sufficient.handlers;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
-import nl.enterprisecoding.android.sufficient.activities.EditTaskActivity;
-import nl.enterprisecoding.android.sufficient.activities.MainActivity;
+import android.widget.DatePicker;
+
+import java.util.Calendar;
 
 /**
  * ClickHandler for the TaskSetDateDialogButton.
  *
  * @author Sjors Roelofs
  */
-public class TaskSetDateDialogButtonClickHandler implements IDialogButtonClickHandler {
+public class TaskSetDateDialogButtonClickHandler implements Dialog.OnClickListener {
 
-    private EditTaskActivity mActivity;
+    Calendar mTaskDate;
 
-    /**
-     * Sets current activity.
-     *
-     * @param activity the current activity.
-     */
-    @Override
-    public void setActivity(MainActivity activity) {
-        mActivity = (EditTaskActivity) activity;
+    public TaskSetDateDialogButtonClickHandler(Calendar taskDate) {
+        mTaskDate = taskDate;
     }
 
     /**
@@ -40,9 +36,8 @@ public class TaskSetDateDialogButtonClickHandler implements IDialogButtonClickHa
     @Override
     public void onClick(DialogInterface dialog, int which) {
         if (which == DialogInterface.BUTTON_POSITIVE) {
-            DatePickerDialog datePickerDialog = (DatePickerDialog) dialog;
-            mActivity.setTaskDate(datePickerDialog.getDatePicker().getDayOfMonth(), datePickerDialog.getDatePicker().getMonth(), datePickerDialog.getDatePicker().getYear());
+            DatePicker datePicker = ((DatePickerDialog) dialog).getDatePicker();
+            mTaskDate.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());
         }
     }
-
 }

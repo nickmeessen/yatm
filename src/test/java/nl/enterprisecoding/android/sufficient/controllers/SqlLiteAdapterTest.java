@@ -8,24 +8,17 @@ package nl.enterprisecoding.android.sufficient.controllers;
  */
 
 import android.app.Activity;
-import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
-import nl.enterprisecoding.android.sufficient.activities.EditTaskActivity;
-import nl.enterprisecoding.android.sufficient.activities.TaskActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.shadows.ShadowSQLiteOpenHelper;
-import org.robolectric.util.SQLite;
-import roboguice.activity.RoboActivity;
+
 import java.util.Calendar;
 import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -60,7 +53,7 @@ public class SqlLiteAdapterTest {
         assertNotNull(newTask);
         assertFalse(newTask.isImportant());
 
-        if(newTask != null) {
+        if (newTask != null) {
             mAdapter.deleteTask(newTask.getId());
         }
     }
@@ -71,7 +64,7 @@ public class SqlLiteAdapterTest {
         assertNotNull(newTask);
         assertTrue(newTask.isImportant());
 
-        if(newTask != null) {
+        if (newTask != null) {
             mAdapter.deleteTask(newTask.getId());
         }
     }
@@ -83,7 +76,7 @@ public class SqlLiteAdapterTest {
 
         assertFalse(newTask.isCompleted());
 
-        if(newTask != null) {
+        if (newTask != null) {
             mAdapter.deleteTask(newTask.getId());
         }
     }
@@ -96,7 +89,7 @@ public class SqlLiteAdapterTest {
         newTask.setCompleted(true);
         assertTrue(newTask.isCompleted());
 
-        if(newTask != null) {
+        if (newTask != null) {
             mAdapter.deleteTask(newTask.getId());
         }
     }
@@ -106,7 +99,7 @@ public class SqlLiteAdapterTest {
         Task newTask = mAdapter.createTask("Test task 2", 0, Calendar.getInstance(), false);
         assertNotNull(mAdapter.getTask(newTask.getId()));
 
-        if(newTask != null) {
+        if (newTask != null) {
             mAdapter.deleteTask(newTask.getId());
         }
     }
@@ -134,7 +127,7 @@ public class SqlLiteAdapterTest {
         assertEquals(newDate.get(Calendar.YEAR), mAdapter.getTask(newTask.getId()).getDate().get(Calendar.YEAR));
         assertTrue(mAdapter.getTask(newTask.getId()).isImportant());
 
-        if(newTask != null) {
+        if (newTask != null) {
             mAdapter.deleteTask(newTask.getId());
         }
     }
@@ -151,7 +144,7 @@ public class SqlLiteAdapterTest {
 
         assertFalse(mAdapter.getTask(newTask.getId()).isImportant());
 
-        if(newTask != null) {
+        if (newTask != null) {
             mAdapter.deleteTask(newTask.getId());
         }
     }
@@ -172,7 +165,7 @@ public class SqlLiteAdapterTest {
 
         assertFalse(mAdapter.getTask(newTask.getId()).isCompleted());
 
-        if(newTask != null) {
+        if (newTask != null) {
             mAdapter.deleteTask(newTask.getId());
         }
     }
@@ -203,7 +196,7 @@ public class SqlLiteAdapterTest {
         Category newCat = mAdapter.createCategory("Test category", Color.BLUE);
         assertNotNull(newCat);
 
-        if(newCat != null) {
+        if (newCat != null) {
             mAdapter.deleteCategory(newCat.getId());
         }
     }
@@ -213,7 +206,7 @@ public class SqlLiteAdapterTest {
         Category newCat = mAdapter.createCategory("Test category 2", Color.GREEN);
         assertNotNull(mAdapter.getCategory(newCat.getId()));
 
-        if(newCat != null) {
+        if (newCat != null) {
             mAdapter.deleteCategory(newCat.getId());
         }
     }
@@ -236,7 +229,7 @@ public class SqlLiteAdapterTest {
         assertEquals(newColour, mAdapter.getCategory(newCat.getId()).getColour());
         assertFalse(mAdapter.getCategory(newCat.getId()).isVisible());
 
-        if(newCat != null) {
+        if (newCat != null) {
             mAdapter.deleteCategory(newCat.getId());
         }
     }

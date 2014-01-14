@@ -5,7 +5,7 @@
 
     <groupId>nl.enterprisecoding.android.sufficient</groupId>
     <artifactId>sufficient</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>20140101</version>
     <packaging>apk</packaging>
     <name>Sufficient ToDo</name>
     <description>Android Test App (Sufficient) - Yet another ToDo Manager.</description>
