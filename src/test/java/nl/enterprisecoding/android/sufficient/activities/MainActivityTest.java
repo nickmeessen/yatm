@@ -7,7 +7,6 @@ package nl.enterprisecoding.android.sufficient.activities;
  * This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
  */
 
-import android.graphics.Color;
 import android.view.KeyEvent;
 import org.junit.Before;
 import org.junit.Test;

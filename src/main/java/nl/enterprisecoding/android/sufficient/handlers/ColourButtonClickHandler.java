@@ -1,6 +1,5 @@
 package nl.enterprisecoding.android.sufficient.handlers;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
@@ -48,41 +47,4 @@ public class ColourButtonClickHandler implements View.OnClickListener {
 
         mColourDialog.dismiss();
     }
-
-    /**
-     * Retrieves the input colour
-     *
-     * @return The requested input colour of type int
-     */
-    public int getInputColour() {
-        return mInputColour;
-    }
-
-    /**
-     * Retrieves the bgShape
-     *
-     * @return The requested bgShape of type GradientDrawable
-     */
-    public GradientDrawable getBgShape() {
-        return mBgShape;
-    }
-
-    /**
-     * Retrieves the colour dialog
-     *
-     * @return The requested colour dialog of type Dialog
-     */
-    public Dialog getColourDialog() {
-        return mColourDialog;
-    }
-
-    /**
-     * Retrieves the random colour
-     *
-     * @return The requested random colour of type int
-     */
-    public int getRandColour() {
-        return mRandColour;
-    }
-
 }

@@ -21,10 +21,11 @@ import java.util.Calendar;
  */
 public class TaskSetDateDialogButtonClickHandler implements Dialog.OnClickListener {
 
-    Calendar mTaskDate;
+    private Calendar mTaskDate;
 
     /**
      * Construct a new ClickHandler
+     *
      * @param taskDate the date for this click handler.
      */
     public TaskSetDateDialogButtonClickHandler(Calendar taskDate) {
