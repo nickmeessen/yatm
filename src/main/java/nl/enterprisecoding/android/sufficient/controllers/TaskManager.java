@@ -284,7 +284,7 @@ public class TaskManager implements ITaskManager {
      * @return the category coressponding to the ID.
      */
     public Category getCategoryById(long id) {
-        return mCategoryList.get(id);
+        return mDatabaseAdapter.getCategory(id);
     }
 
     /**

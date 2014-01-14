@@ -21,6 +21,9 @@ import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
+/**
+ * Created by Breunie Ploeg on 14-1-14.
+ */
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -63,6 +66,5 @@ public class ColourButtonClickHandlerTest {
 
         assertFalse(mColourDialog.isShowing());
     }
-
 
 }

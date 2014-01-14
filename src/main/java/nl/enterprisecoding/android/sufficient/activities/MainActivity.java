@@ -143,7 +143,7 @@ public class MainActivity extends RoboActivity {
      */
     protected Dialog createColourDialog(GradientDrawable bgShape) {
         int bgColour = getResources().getColor(R.color.action_bg);
-        Dialog colourDialog = new Dialog(this);
+        Dialog colourDialog = new Dialog(getApplicationContext());
 
         colourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         colourDialog.setContentView(R.layout.colour_dialog);
