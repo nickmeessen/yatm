@@ -15,6 +15,58 @@ import org.robolectric.RobolectricTestRunner;
 public class TaskManagerTest {
 
     @Test
-    public void test_Test() {
+    public void test_createTask() {
+    }
+
+    @Test
+    public void test_deleteTask() {
+    }
+
+    @Test
+    public void test_getAllCategories() {
+    }
+
+    @Test
+    public void test_createCategory() {
+    }
+
+    @Test
+    public void test_getCategories() {
+    }
+
+    @Test
+    public void test_getVisibleCategories() {
+    }
+
+    @Test
+    public void test_getCategoryByTitle() {
+    }
+
+    @Test
+    public void test_deleteCategoryAndMoveTasks() {
+    }
+
+    @Test
+    public void test_deleteCategory() {
+    }
+
+    @Test
+    public void test_switchCategoryVisibility() {
+    }
+
+    @Test
+    public void test_getCategoryById() {
+    }
+
+    @Test
+    public void test_getTaskById() {
+    }
+
+    @Test
+    public void test_updateTask() {
+    }
+
+    @Test
+    public void test_updateCategory() {
     }
 }
