@@ -7,7 +7,10 @@ package nl.enterprisecoding.android.sufficient.controllers;
  * This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
  */
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import nl.enterprisecoding.android.sufficient.activities.EditTaskActivity;
 import nl.enterprisecoding.android.sufficient.activities.TaskActivity;
@@ -18,6 +21,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.shadows.ShadowSQLiteOpenHelper;
+import org.robolectric.util.SQLite;
 import roboguice.activity.RoboActivity;
 import java.util.Calendar;
 import java.util.List;
@@ -34,29 +39,62 @@ public class SqlLiteAdapterTest {
     @Test
     @Before
     public void test_SqlLiteAdapter() {
-        Intent editTaskActivityIntent = new Intent(new TaskActivity(), EditTaskActivity.class);
-        editTaskActivityIntent.putExtra(TaskActivity.TASK_ID, 0);
-        RoboActivity editTaskActivity = Robolectric.buildActivity(EditTaskActivity.class).withIntent(editTaskActivityIntent).create().get();
-
-        mAdapter = new SqlLiteAdapter(editTaskActivity);
+        mAdapter = new SqlLiteAdapter(new Activity());
     }
 
 //    @Test
-//    public void test_onCreate() {
-//        //@TODO: below
-//        assertEquals(true, false);
+//    public void test_onUpgradeCurrentVersion() {
+//        ShadowSQLiteOpenHelper dbh = new ShadowSQLiteOpenHelper();
+//        SQLiteDatabase db = dbh.getWritableDatabase();
+//        mAdapter.onUpgrade(db, 1, 1);
 //    }
-//
+
 //    @Test
-//    public void test_onUpgrade() {
-//        //@TODO: below
-//        assertEquals(true, false);
+//    public void test_onUpgradeNewerVersion() {
+//
 //    }
 
     @Test
-    public void test_createTask() {
+    public void test_createTaskNotImportant() {
         Task newTask = mAdapter.createTask("Test task", 0, Calendar.getInstance(), false);
         assertNotNull(newTask);
+        assertFalse(newTask.isImportant());
+
+        if(newTask != null) {
+            mAdapter.deleteTask(newTask.getId());
+        }
+    }
+
+    @Test
+    public void test_createTaskImportant() {
+        Task newTask = mAdapter.createTask("Test task", 0, Calendar.getInstance(), true);
+        assertNotNull(newTask);
+        assertTrue(newTask.isImportant());
+
+        if(newTask != null) {
+            mAdapter.deleteTask(newTask.getId());
+        }
+    }
+
+    @Test
+    public void test_taskNotCompleted() {
+        Task newTask = mAdapter.createTask("Test task", 0, Calendar.getInstance(), false);
+        assertNotNull(newTask);
+
+        assertFalse(newTask.isCompleted());
+
+        if(newTask != null) {
+            mAdapter.deleteTask(newTask.getId());
+        }
+    }
+
+    @Test
+    public void test_taskCompleted() {
+        Task newTask = mAdapter.createTask("Test task", 0, Calendar.getInstance(), false);
+        assertNotNull(newTask);
+
+        newTask.setCompleted(true);
+        assertTrue(newTask.isCompleted());
 
         if(newTask != null) {
             mAdapter.deleteTask(newTask.getId());
@@ -95,6 +133,44 @@ public class SqlLiteAdapterTest {
         assertEquals(newDate.get(Calendar.MONTH), mAdapter.getTask(newTask.getId()).getDate().get(Calendar.MONTH));
         assertEquals(newDate.get(Calendar.YEAR), mAdapter.getTask(newTask.getId()).getDate().get(Calendar.YEAR));
         assertTrue(mAdapter.getTask(newTask.getId()).isImportant());
+
+        if(newTask != null) {
+            mAdapter.deleteTask(newTask.getId());
+        }
+    }
+
+    @Test
+    public void test_updateTaskNotImportant() {
+        String newTaskName = "Test task 2";
+        Task newTask = mAdapter.createTask(newTaskName, 0, Calendar.getInstance(), true);
+        assertEquals(newTaskName, newTask.getTitle());
+
+        newTask.setImportant(false);
+
+        mAdapter.updateTask(newTask);
+
+        assertFalse(mAdapter.getTask(newTask.getId()).isImportant());
+
+        if(newTask != null) {
+            mAdapter.deleteTask(newTask.getId());
+        }
+    }
+
+    @Test
+    public void test_updateTaskCompleted() {
+        String newTaskName = "Test task 2";
+        Task newTask = mAdapter.createTask(newTaskName, 0, Calendar.getInstance(), true);
+        assertEquals(newTaskName, newTask.getTitle());
+
+        newTask.setCompleted(true);
+        mAdapter.updateTask(newTask);
+
+        assertTrue(mAdapter.getTask(newTask.getId()).isCompleted());
+
+        newTask.setCompleted(false);
+        mAdapter.updateTask(newTask);
+
+        assertFalse(mAdapter.getTask(newTask.getId()).isCompleted());
 
         if(newTask != null) {
             mAdapter.deleteTask(newTask.getId());

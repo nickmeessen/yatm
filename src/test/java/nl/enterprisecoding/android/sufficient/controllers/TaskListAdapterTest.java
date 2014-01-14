@@ -7,9 +7,12 @@ package nl.enterprisecoding.android.sufficient.controllers;
  * This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
  */
 
+import android.graphics.Color;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
@@ -48,47 +51,75 @@ public class TaskListAdapterTest {
     public void setUp() {
         mMainActivity = Robolectric.buildActivity(MainActivity.class).create().get();
 
-        mTaskManager = mock(TaskManager.class);
-
-        when(mTaskManager.getTaskById(20)).thenReturn(mock(Task.class));
-
         List<Category> testingCatsAll = new ArrayList<Category>();
 
-        Category mockCategory = mock(Category.class);
-        mockCategory.setID(14);
+        Category mockCategory1 = new Category();
+        mockCategory1.setID((long) 5);
 
-        testingCatsAll.add(mock(Category.class));
-        testingCatsAll.add(mock(Category.class));
-        testingCatsAll.add(mock(Category.class));
+        Category mockCategory2 = new Category();
+        mockCategory2.setID((long) 14);
 
-        Task completedTest1 = new Task();
-        Task completedTest2 = new Task();
-        Task completedTest3 = new Task();
-        Task completedTest4 = new Task();
+        Category mockEmptyCategory = new Category();
+        mockEmptyCategory.setID((long) 15);
+
+        testingCatsAll.add(mockCategory1);
+        testingCatsAll.add(mockCategory2);
+        testingCatsAll.add(mockEmptyCategory);
+
+        Task beforeTask = new Task();
         Task todayTask = new Task();
+        Task tomorrowTask = new Task();
+        Task upcomingTask = new Task();
+        Task importantTask = new Task();
+        Task completedTest = new Task();
 
-        completedTest1.setCompleted(true);
-        completedTest2.setCompleted(true);
-        completedTest3.setCompleted(true);
-        completedTest4.setCompleted(true);
+        completedTest.setId((long) 11);
+        completedTest.setCategoryId((long) 4);
+        completedTest.setTitle("abc");
 
         todayTask.setDate(Calendar.getInstance());
 
-        testingCatsAll.get(2).addTask(completedTest1);
-        testingCatsAll.get(1).addTask(completedTest2);
-        testingCatsAll.get(2).addTask(completedTest3);
-        testingCatsAll.get(1).addTask(completedTest4);
-        testingCatsAll.get(0).addTask(todayTask);
+        beforeTask.setId((long) 43);
+        tomorrowTask.setId((long) 35);
+        importantTask.setId((long) 15);
+        upcomingTask.setId((long) 830);
+        completedTest.setId((long) 3);
 
-        mockCategory.addTask(completedTest1);
-        mockCategory.addTask(completedTest2);
-        mockCategory.addTask(completedTest3);
-        mockCategory.addTask(completedTest4);
-        mockCategory.addTask(todayTask);
+        Calendar before = Calendar.getInstance();
+        before.setTimeInMillis(before.getTimeInMillis() - 100000);
+
+        Calendar tomorrow = Calendar.getInstance();
+        tomorrow.add(Calendar.DAY_OF_YEAR, 1);
+
+        Calendar upcoming = Calendar.getInstance();
+        upcoming.add(Calendar.DAY_OF_YEAR, 10);
+
+        beforeTask.setDate(before);
+        tomorrowTask.setDate(tomorrow);
+        upcomingTask.setDate(upcoming);
+        importantTask.setDate(tomorrow);
+
+        completedTest.setCompleted(true);
+        importantTask.setImportant(true);
+
+        testingCatsAll.get(2).addTask(completedTest);
+        testingCatsAll.get(0).addTask(importantTask);
+        testingCatsAll.get(2).addTask(upcomingTask);
+        testingCatsAll.get(1).addTask(tomorrowTask);
+        testingCatsAll.get(0).addTask(todayTask);
+        testingCatsAll.get(1).addTask(beforeTask);
+
+        mTaskManager = mock(TaskManager.class);
+
+        when(mTaskManager.getTaskById((long) 11)).thenReturn(todayTask);
+        when(mTaskManager.getTaskById((long) 35)).thenReturn(tomorrowTask);
+        when(mTaskManager.getTaskById((long) 830)).thenReturn(upcomingTask);
+        when(mTaskManager.getTaskById((long) 15)).thenReturn(importantTask);
+        when(mTaskManager.getTaskById((long) 3)).thenReturn(completedTest);
 
         when(mTaskManager.getVisibleCategories()).thenReturn(testingCatsAll);
-        when(mTaskManager.getCategoryById(14)).thenReturn(mockCategory);
-        when(mTaskManager.getCategoryById(15)).thenReturn(mock(Category.class));
+        when(mTaskManager.getCategoryById((long) 14)).thenReturn(mockCategory1);
+        when(mTaskManager.getCategoryById((long) 15)).thenReturn(mockEmptyCategory);
 
         mTaskListAdapter = new TaskListAdapter(mMainActivity, mTaskManager, (long) 0);
         mTaskListAdapterSpecific = new TaskListAdapter(mMainActivity, mTaskManager, (long) 14);
@@ -109,8 +140,9 @@ public class TaskListAdapterTest {
 
     @Test
     public void test_getChildrenCount() {
-        assertEquals(3, mTaskListAdapter.getChildrenCount(3));
-        assertEquals(1, mTaskListAdapterSpecific.getChildrenCount(0));
+        assertEquals(3, mTaskListAdapter.getChildrenCount(2));
+        assertEquals(1, mTaskListAdapterSpecific.getChildrenCount(2));
+        assertEquals(0, mTaskListAdapterSpecific.getChildrenCount(1));
     }
 
     @Test
@@ -121,13 +153,13 @@ public class TaskListAdapterTest {
     @Test
     public void test_getChild() {
 
-//        Task task = mTaskListAdapter.getChild(0, 0);
-//
-//        assertEquals("abc", task.getTitle());
-//        assertEquals(4, task.getCatId());
-//        assertEquals(11, task.getId());
-//
-//        assertNotSame("cba", task.getTitle());
+        Task task = mTaskListAdapter.getChild(3, 0);
+
+        assertEquals("abc", task.getTitle());
+        assertEquals(4, task.getCatId());
+        assertEquals(3, task.getId());
+
+        assertNotSame("cba", task.getTitle());
     }
 
     @Test
@@ -145,30 +177,26 @@ public class TaskListAdapterTest {
 
     @Test
     public void test_getChildId() {
-//        mTaskListAdapter.getChild(0, 0).getId();
-//        assertEquals(400, mTaskListAdapter.getChild(0, 0).getId());
+        assertEquals(35, mTaskListAdapter.getChild(2, 1).getId());
     }
 
     @Test
     public void test_onChildClick() {
 
-        long taskId = 20;
-        boolean initValue = mTaskManager.getTaskById(taskId).isCompleted();
+        long taskId = 35;
 
         ExpandableListView parent = mock(ExpandableListView.class);
         View view = mock(View.class);
 
-//        mTaskListAdapter.onChildClick(parent, view, 0, 0, taskId);
+        mTaskListAdapter.onChildClick(parent, view, 2, 1, taskId);
 
-        mTaskManager.getTaskById(taskId);
-
-        assertEquals(initValue, mTaskManager.getTaskById(taskId).isCompleted());
+        assertTrue(mTaskManager.getTaskById(taskId).isCompleted());
     }
 
 
     @Test
     public void test_isChildSelectable() {
-        assertTrue(mTaskListAdapter.isChildSelectable(0, 0));
+        assertTrue(mTaskListAdapter.isChildSelectable(2, 1));
     }
 
     @Test
@@ -194,9 +222,16 @@ public class TaskListAdapterTest {
         ViewGroup parentView = mock(ViewGroup.class);
         View convertView = mock(View.class);
 
-        when(convertView.findViewById(R.id.groupTitle)).thenReturn(mock(TextView.class));
+        Category mockCategory = mock(Category.class);
 
-//        assertNotNull(mTaskListAdapter.getChildView(0, 0, true, null, null));
-//        assertNotNull(mTaskListAdapter.getChildView(0, 1, true, convertView, parentView));
+        when(mTaskManager.getCategoryById(0)).thenReturn(mockCategory);
+        when(mockCategory.getColour()).thenReturn(Color.BLACK);
+        when(convertView.findViewById(R.id.groupTitle)).thenReturn(mock(TextView.class));
+        when(convertView.findViewById(R.id.task_category_colour)).thenReturn(mock(Button.class));
+        when(convertView.findViewById(R.id.taskText)).thenReturn(mock(TextView.class));
+        when(convertView.findViewById(R.id.taskDone)).thenReturn(mock(ImageView.class));
+
+        assertNotNull(mTaskListAdapter.getChildView(2, 0, true, null, null));
+        assertNotNull(mTaskListAdapter.getChildView(2, 0, true, convertView, parentView));
     }
 }
