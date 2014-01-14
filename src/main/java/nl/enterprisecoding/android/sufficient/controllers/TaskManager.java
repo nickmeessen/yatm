@@ -10,6 +10,7 @@ package nl.enterprisecoding.android.sufficient.controllers;
 import android.app.Activity;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import com.google.inject.Inject;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
