@@ -23,6 +23,10 @@ public class TaskSetDateDialogButtonClickHandler implements Dialog.OnClickListen
 
     Calendar mTaskDate;
 
+    /**
+     * Construct a new ClickHandler
+     * @param taskDate the date for this click handler.
+     */
     public TaskSetDateDialogButtonClickHandler(Calendar taskDate) {
         mTaskDate = taskDate;
     }
