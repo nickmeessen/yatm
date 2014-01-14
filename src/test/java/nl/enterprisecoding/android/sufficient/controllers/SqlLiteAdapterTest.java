@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowSQLiteOpenHelper;
 import org.robolectric.util.SQLite;
 import roboguice.activity.RoboActivity;
@@ -41,18 +42,6 @@ public class SqlLiteAdapterTest {
     public void test_SqlLiteAdapter() {
         mAdapter = new SqlLiteAdapter(new Activity());
     }
-
-//    @Test
-//    public void test_onUpgradeCurrentVersion() {
-//        ShadowSQLiteOpenHelper dbh = new ShadowSQLiteOpenHelper();
-//        SQLiteDatabase db = dbh.getWritableDatabase();
-//        mAdapter.onUpgrade(db, 1, 1);
-//    }
-
-//    @Test
-//    public void test_onUpgradeNewerVersion() {
-//
-//    }
 
     @Test
     public void test_createTaskNotImportant() {
