@@ -140,6 +140,44 @@ public class SqlLiteAdapterTest {
     }
 
     @Test
+    public void test_updateTaskNotImportant() {
+        String newTaskName = "Test task 2";
+        Task newTask = mAdapter.createTask(newTaskName, 0, Calendar.getInstance(), true);
+        assertEquals(newTaskName, newTask.getTitle());
+
+        newTask.setImportant(false);
+
+        mAdapter.updateTask(newTask);
+
+        assertFalse(mAdapter.getTask(newTask.getId()).isImportant());
+
+        if(newTask != null) {
+            mAdapter.deleteTask(newTask.getId());
+        }
+    }
+
+    @Test
+    public void test_updateTaskCompleted() {
+        String newTaskName = "Test task 2";
+        Task newTask = mAdapter.createTask(newTaskName, 0, Calendar.getInstance(), true);
+        assertEquals(newTaskName, newTask.getTitle());
+
+        newTask.setCompleted(true);
+        mAdapter.updateTask(newTask);
+
+        assertTrue(mAdapter.getTask(newTask.getId()).isCompleted());
+
+        newTask.setCompleted(false);
+        mAdapter.updateTask(newTask);
+
+        assertFalse(mAdapter.getTask(newTask.getId()).isCompleted());
+
+        if(newTask != null) {
+            mAdapter.deleteTask(newTask.getId());
+        }
+    }
+
+    @Test
     public void test_deleteTask() {
         Task newTask = mAdapter.createTask("Test task 3", 0, Calendar.getInstance(), false);
         long taskId = newTask.getId();
