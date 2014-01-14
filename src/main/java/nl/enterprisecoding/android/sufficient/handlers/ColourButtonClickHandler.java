@@ -10,9 +10,8 @@ import nl.enterprisecoding.android.sufficient.activities.MainActivity;
  *
  * @author Sjors Roelofs
  */
-public class ColourButtonClickHandler implements IButtonClickHandler {
+public class ColourButtonClickHandler extends MainActivity implements IButtonClickHandler {
 
-    private MainActivity mActivity;
     private int mInputColour;
     private GradientDrawable mBgShape;
     private Dialog mColourDialog;
@@ -28,7 +27,7 @@ public class ColourButtonClickHandler implements IButtonClickHandler {
      * @param randColour
      */
     public void setData(MainActivity activity, int inputColour, GradientDrawable bgShape, Dialog colourDialog, int randColour) {
-        setActivity(activity);
+        //setActivity(activity);
 
         mInputColour = inputColour;
         mBgShape = bgShape;
@@ -43,7 +42,7 @@ public class ColourButtonClickHandler implements IButtonClickHandler {
      */
     @Override
     public void setActivity(MainActivity activity) {
-        mActivity = activity;
+
     }
 
     /**
@@ -56,14 +55,14 @@ public class ColourButtonClickHandler implements IButtonClickHandler {
         int chosenColour;
 
         if (mInputColour != 0) {
-            chosenColour = mActivity.getResources().getColor(mInputColour);
-            mBgShape.setColor(mActivity.getResources().getColor(mInputColour));
+            chosenColour = getResources().getColor(mInputColour);
+            mBgShape.setColor(getResources().getColor(mInputColour));
         } else {
             chosenColour = mRandColour;
             mBgShape.setColor(mRandColour);
         }
 
-        mActivity.setFinalColour(chosenColour);
+        setFinalColour(chosenColour);
         mColourDialog.dismiss();
     }
 
