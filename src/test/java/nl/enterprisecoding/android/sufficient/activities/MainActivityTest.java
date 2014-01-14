@@ -39,12 +39,6 @@ public class MainActivityTest {
     }
 
     @Test
-    public void test_setGetFinalColour() {
-        mMainActivity.setFinalColour(Color.BLUE);
-        assertEquals(Color.BLUE, mMainActivity.getFinalColour());
-    }
-
-    @Test
     public void test_generateRandomColor() {
         int[] randomColours = mMainActivity.generateRandomColour();
 

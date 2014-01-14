@@ -15,7 +15,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
-
 import java.util.Calendar;
 import java.util.List;
 
@@ -34,18 +33,6 @@ public class SqlLiteAdapterTest {
     public void test_SqlLiteAdapter() {
         mAdapter = new SqlLiteAdapter(new Activity());
     }
-
-//    @Test
-//    public void test_onUpgradeCurrentVersion() {
-//        ShadowSQLiteOpenHelper dbh = new ShadowSQLiteOpenHelper();
-//        SQLiteDatabase db = dbh.getWritableDatabase();
-//        mAdapter.onUpgrade(db, 1, 1);
-//    }
-
-//    @Test
-//    public void test_onUpgradeNewerVersion() {
-//
-//    }
 
     @Test
     public void test_createTaskNotImportant() {
