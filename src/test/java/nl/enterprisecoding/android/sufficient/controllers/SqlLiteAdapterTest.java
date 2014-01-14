@@ -132,15 +132,15 @@ public class SqlLiteAdapterTest {
         }
     }
 
-//    @Test
-//    public void test_getCategory() {
-//        Category newCat = mAdapter.createCategory("Test category 2", Color.GREEN);
-//        assertNotNull(mAdapter.getCategory(newCat.getId()));
-//
-//        if(newCat != null) {
-//            mAdapter.deleteCategory(newCat.getId());
-//        }
-//    }
+    @Test
+    public void test_getCategory() {
+        Category newCat = mAdapter.createCategory("Test category 2", Color.GREEN);
+        assertNotNull(mAdapter.getCategory(newCat.getId()));
+
+        if(newCat != null) {
+            mAdapter.deleteCategory(newCat.getId());
+        }
+    }
 //
 //    @Test
 //    public void test_updateCategory() {

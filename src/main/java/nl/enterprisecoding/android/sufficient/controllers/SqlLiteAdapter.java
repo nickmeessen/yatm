@@ -326,9 +326,9 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      * @param taskId the id of the task to retrieve.
      * @return the task corresponding to the given ID.
      */
-    public Category getCategory(long taskId) {
+    public Category getCategory(long catId) {
 
-        Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, TCOLUMN_ID + " = " + taskId, null, null, null, null);
+        Cursor cursor = database.query(CATEGORIES_TABLE, CALL_COLUMNS, CID_COLUMN + " = " + catId, null, null, null, null);
 
         cursor.moveToFirst();
         Category category = cursorToCategory(cursor);
