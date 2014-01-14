@@ -36,6 +36,11 @@ public class MainActivity extends RoboActivity {
     protected ActionBar mActionBar;
     protected long mCurrentCategoryID;
 
+    private GradientDrawable mBgShape;
+    private int mButtonId;
+    private int mInputColour;
+    private Dialog mColourDialog;
+
     /**
      * Called when the activity is starting.
      *
@@ -96,16 +101,21 @@ public class MainActivity extends RoboActivity {
      */
     protected void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog) {
 
-        final Button colourButton = (Button) colourDialog.findViewById(buttonId);
+        mBgShape = bgShape;
+        mButtonId = buttonId;
+        mInputColour = inputColour;
+        mColourDialog = colourDialog;
+
+        final Button colourButton = (Button) mColourDialog.findViewById(mButtonId);
         final int[] randColour = generateRandomColour();
 
         if (inputColour != 0) {
-            colourButton.setBackgroundColor(getResources().getColor(inputColour));
+            colourButton.setBackgroundColor(getResources().getColor(mInputColour));
         } else {
             colourButton.setBackgroundColor(randColour[0]);
         }
 
-        colourButton.setOnClickListener(new ColourButtonClickHandler(bgShape, colourDialog, inputColour, randColour[0]));
+        colourButton.setOnClickListener(new ColourButtonClickHandler(mBgShape, mColourDialog, mInputColour, randColour[0]));
     }
 
     /**
@@ -143,7 +153,7 @@ public class MainActivity extends RoboActivity {
      */
     protected Dialog createColourDialog(GradientDrawable bgShape) {
         int bgColour = getResources().getColor(R.color.action_bg);
-        Dialog colourDialog = new Dialog(this);
+        Dialog colourDialog = new Dialog(getApplicationContext());
 
         colourDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         colourDialog.setContentView(R.layout.colour_dialog);

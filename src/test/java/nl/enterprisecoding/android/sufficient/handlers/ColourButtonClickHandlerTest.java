@@ -2,19 +2,13 @@ package nl.enterprisecoding.android.sufficient.handlers;
 
 import android.app.Dialog;
 import android.graphics.drawable.GradientDrawable;
-import android.view.View;
-import nl.enterprisecoding.android.sufficient.R;
-import nl.enterprisecoding.android.sufficient.activities.CategoryActivity;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.shadows.ShadowActivity;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Breunie Ploeg on 14-1-14.

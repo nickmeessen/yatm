@@ -7,14 +7,23 @@ package nl.enterprisecoding.android.sufficient.activities;
  * This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
  */
 
-import android.graphics.Color;
+import android.app.Dialog;
+import android.graphics.drawable.GradientDrawable;
 import android.view.KeyEvent;
+import android.widget.Button;
+import android.widget.Toast;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-
+import org.robolectric.shadows.ShadowActivity;
+import org.robolectric.shadows.ShadowHandler;
+import org.robolectric.shadows.ShadowToast;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * MainActivity Test
@@ -25,10 +34,12 @@ import static org.junit.Assert.*;
 public class MainActivityTest {
 
     private MainActivity mMainActivity;
+    private MainTest mMainTest;
 
     @Before
     public void setUp() {
-        mMainActivity = new MainActivity();
+        mMainActivity = Robolectric.buildActivity(MainActivity.class).create().get();
+        mMainTest = new MainTest();
     }
 
     @Test
@@ -52,6 +63,42 @@ public class MainActivityTest {
         for (int colour : randomColours) {
             assertTrue("expected to be less than", colour <= 255);
         }
+    }
+
+    @Test
+    public void test_makeToast() {
+        String input = "Test toast";
+        mMainTest.makeToast(input);
+
+        ShadowHandler.idleMainLooper();
+        String output = ShadowToast.getTextOfLatestToast();
+        int expectedLength = Toast.LENGTH_SHORT;
+        int actualLength = ShadowToast.getLatestToast().getDuration();
+
+        assertEquals(expectedLength, actualLength);
+        assertEquals(input, output);
+    }
+
+    @Test
+    public void test_createColourDialog() {
+        GradientDrawable bgShape = new GradientDrawable();
+        Dialog colourDialog = mMainTest.createColourDialog(bgShape);
+
+        assertTrue(colourDialog != null);
+    }
+
+    class MainTest extends MainActivity {
+
+        @Override
+        public void makeToast(String content) {
+            super.makeToast(content);
+        }
+
+        @Override
+        public Dialog createColourDialog(GradientDrawable bgShape) {
+            return super.createColourDialog(bgShape);
+        }
+
     }
 
 }
