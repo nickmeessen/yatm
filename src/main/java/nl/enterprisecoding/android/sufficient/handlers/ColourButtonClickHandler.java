@@ -50,15 +50,6 @@ public class ColourButtonClickHandler implements View.OnClickListener {
     }
 
     /**
-     * Retrieves the activity
-     *
-     * @return The requested activity
-     */
-    public Activity getActivity() {
-        return mActivity;
-    }
-
-    /**
      * Retrieves the input colour
      *
      * @return The requested input colour of type int
