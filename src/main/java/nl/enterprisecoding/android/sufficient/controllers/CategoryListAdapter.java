@@ -18,6 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import nl.enterprisecoding.android.sufficient.R;
+import nl.enterprisecoding.android.sufficient.activities.TaskActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 
 import java.util.ArrayList;
@@ -130,7 +131,7 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Intent intent = new Intent(Intent.ACTION_MAIN);
+        Intent intent = new Intent(parent.getContext(), TaskActivity.class);
 
         intent.putExtra("categoryID", id);
 
