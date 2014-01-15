@@ -62,66 +62,64 @@ public class EditTaskActivity extends MainActivity {
 
         mSelectedTaskId = getIntent().getExtras().getLong(TaskActivity.TASK_ID, 0);
 
-        if (mSelectedTaskId != 0) {
+        mTaskManager = new TaskManager(this, (long) 0);
 
-            mTaskManager = new TaskManager(this, (long) 0);
+        mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mTaskManager.getTaskById(mSelectedTaskId).getCatId()).getColour()));
 
-            mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mTaskManager.getTaskById(mSelectedTaskId).getCatId()).getColour()));
+        mTaskDate = mTaskManager.getTaskById(mSelectedTaskId).getDate();
 
-            mTaskDate = mTaskManager.getTaskById(mSelectedTaskId).getDate();
+        updateDateButtonText();
 
-            updateDateButtonText();
+        mTaskSetDateButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * This method will be invoked when a view is clicked.
+             * @param view The view that received the click.
+             */
+            @Override
+            public void onClick(View view) {
 
-            mTaskSetDateButton.setOnClickListener(new View.OnClickListener() {
-                /**
-                 * This method will be invoked when a view is clicked.
-                 * @param view The view that received the click.
-                 */
-                @Override
-                public void onClick(View view) {
+                DatePickerDialog alert = new DatePickerDialog(view.getContext(), null, mTaskDate.get(Calendar.YEAR), mTaskDate.get(Calendar.MONTH), mTaskDate.get(Calendar.DAY_OF_MONTH));
+                alert.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
 
-                    DatePickerDialog alert = new DatePickerDialog(view.getContext(), null, getTaskDate().get(Calendar.YEAR), getTaskDate().get(Calendar.MONTH), getTaskDate().get(Calendar.DAY_OF_MONTH));
-                    alert.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+                TaskSetDateDialogButtonClickHandler taskSetDateDialogButtonClickHandler = new TaskSetDateDialogButtonClickHandler(mTaskDate);
 
-                    TaskSetDateDialogButtonClickHandler taskSetDateDialogButtonClickHandler = new TaskSetDateDialogButtonClickHandler(getTaskDate());
+                alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.action_change_date), taskSetDateDialogButtonClickHandler);
+                alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.action_discard), taskSetDateDialogButtonClickHandler);
 
-                    alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.action_change_date), taskSetDateDialogButtonClickHandler);
-                    alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.action_discard), taskSetDateDialogButtonClickHandler);
-
-                    alert.show();
-                }
-            });
-
-            mTaskTitleInput = (EditText) findViewById(R.id.task_title);
-
-            if (mTaskManager.getTaskById(mSelectedTaskId).getTitle().isEmpty()) {
-                mActionBar.setTitle(R.string.action_add);
-                mTaskTitleInput.setHint(getString(R.string.empty_task));
-            } else {
-                mActionBar.setTitle(R.string.action_edit);
-                mTaskTitleInput.setHint(mTaskManager.getTaskById(mSelectedTaskId).getTitle());
+                alert.show();
             }
+        });
 
-            initTaskCategorySpinner(mTaskCategorySpinner);
+        mTaskTitleInput = (EditText) findViewById(R.id.task_title);
 
-            mTaskCategorySpinner.setSelection(findIndexByCategoryId(mTaskManager.getTaskById(mSelectedTaskId).getCatId()));
-
-            mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
-            mTaskImportantCheckBox.setChecked(mTaskManager.getTaskById(mSelectedTaskId).isImportant());
-
-            Button saveTaskButton = (Button) findViewById(R.id.save_task_button);
-            saveTaskButton.setOnClickListener(new View.OnClickListener() {
-                /**
-                 * Handles the click for the saveTaskButton
-                 *
-                 * @param v The view in which the click takes place
-                 */
-                @Override
-                public void onClick(View v) {
-                    saveTask();
-                }
-            });
+        if (mTaskManager.getTaskById(mSelectedTaskId).getTitle().isEmpty()) {
+            mActionBar.setTitle(R.string.action_add);
+            mTaskTitleInput.setHint(getString(R.string.empty_task));
+        } else {
+            mActionBar.setTitle(R.string.action_edit);
+            mTaskTitleInput.setHint(mTaskManager.getTaskById(mSelectedTaskId).getTitle());
         }
+
+        initTaskCategorySpinner(mTaskCategorySpinner);
+
+        mTaskCategorySpinner.setSelection(findIndexByCategoryId(mTaskManager.getTaskById(mSelectedTaskId).getCatId()));
+
+        mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
+        mTaskImportantCheckBox.setChecked(mTaskManager.getTaskById(mSelectedTaskId).isImportant());
+
+        Button saveTaskButton = (Button) findViewById(R.id.save_task_button);
+        saveTaskButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Handles the click for the saveTaskButton
+             *
+             * @param v The view in which the click takes place
+             */
+            @Override
+            public void onClick(View v) {
+                saveTask();
+            }
+        });
+
     }
 
     /**
@@ -185,10 +183,6 @@ public class EditTaskActivity extends MainActivity {
      * @param year       The wanted year
      */
     public void setTaskDate(int dayOfMonth, int month, int year) {
-        if (mTaskDate == null) {
-            mTaskDate = Calendar.getInstance();
-        }
-
         mTaskDate.set(year, month, dayOfMonth);
         updateDateButtonText();
     }
@@ -215,19 +209,6 @@ public class EditTaskActivity extends MainActivity {
 
         startActivity(intent);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-    }
-
-    /**
-     * Get the task date
-     *
-     * @return Calendar the task date
-     */
-    public Calendar getTaskDate() {
-        if (mTaskDate == null) {
-            mTaskDate = Calendar.getInstance();
-        }
-
-        return mTaskDate;
     }
 
 }

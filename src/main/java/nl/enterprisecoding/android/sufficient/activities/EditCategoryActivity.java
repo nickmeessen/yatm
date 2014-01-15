@@ -90,14 +90,9 @@ public class EditCategoryActivity extends MainActivity {
 
     private void editCategory() {
         String categoryName = mCategoryTitleInput.getText().toString();
-
-        if (categoryName.trim().isEmpty()) {
-            makeToast(getString(R.string.category_name_empty_error));
-        } else {
-            mTaskManager.updateCategory(categoryName, mCategoryColour, 1, mSelectedCategoryId);
-            makeToast(getString(R.string.category_edited));
-            startCategoryActivity();
-        }
+        mTaskManager.updateCategory(categoryName, mCategoryColour, 1, mSelectedCategoryId);
+        makeToast(getString(R.string.category_edited));
+        startCategoryActivity();
     }
 
     private void createColourDialog() {
@@ -108,9 +103,7 @@ public class EditCategoryActivity extends MainActivity {
              * @param dialog The DialogInterface that it needs to listen to
              */
             public void onDismiss(DialogInterface dialog) {
-                if (mCategoryColour == 0) {
-                    mCategoryColour = mTaskManager.getCategoryById(mSelectedCategoryId).getColour();
-                }
+                mCategoryColour = mTaskManager.getCategoryById(mSelectedCategoryId).getColour();
                 mActionBar.setBackgroundDrawable(new ColorDrawable(mCategoryColour));
             }
         });

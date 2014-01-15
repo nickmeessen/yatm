@@ -47,7 +47,7 @@ public class TaskManagerTest {
     @Test
     public void test_createTask() {
         long catId = mTaskManager.createCategory("setupCategory2", 125);
-        assertEquals(1, mTaskManager.createTask("Task",catId, date, true));
+        assertEquals(1, mTaskManager.createTask("Task", catId, date, true));
     }
 
     @Test
@@ -120,7 +120,7 @@ public class TaskManagerTest {
         assertEquals(category1Id, mTaskManager.getTaskById(task1Id).getCatId());
         assertEquals(category1Id, mTaskManager.getTaskById(task2Id).getCatId());
 
-        mTaskManager.deleteCategoryAndMoveTasks(category1Id,category2Id);
+        mTaskManager.deleteCategoryAndMoveTasks(category1Id, category2Id);
 
         mTaskManager.getCategoryById(category2Id).getTasks();
         assertNull(mTaskManager.getCategoryById(category1Id));

@@ -33,6 +33,7 @@ public class SqlLiteAdapterTest {
     @Before
     public void test_SqlLiteAdapter() {
         mAdapter = new SqlLiteAdapter(new Activity());
+        mAdapter.onUpgrade(mAdapter.getReadableDatabase(), 1, 1);
     }
 
     @Test

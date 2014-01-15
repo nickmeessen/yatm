@@ -5,13 +5,13 @@ import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import nl.enterprisecoding.android.sufficient.R;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.shadows.ShadowActivity;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -89,13 +89,15 @@ public class CategoryActivityTest {
     }
 
 
-
     @Test
     public void test_onContextItemSelected1() {
 
         MenuItem menuItem = mock(MenuItem.class);
 
         when(menuItem.getTitle()).thenReturn(mCategoryActivity1.getString(R.string.action_edit));
+        AdapterView.AdapterContextMenuInfo menuInfo = mock(AdapterView.AdapterContextMenuInfo.class);
+        when(menuItem.getMenuInfo()).thenReturn(menuInfo);
+        menuInfo.id = 0;
 
         assertTrue(mCategoryActivity1.onContextItemSelected(menuItem));
         assertTrue(mCategoryActivity2.onContextItemSelected(menuItem));
@@ -108,6 +110,9 @@ public class CategoryActivityTest {
         MenuItem menuItem = mock(MenuItem.class);
 
         when(menuItem.getTitle()).thenReturn(mCategoryActivity1.getString(R.string.toast_no_category));
+        AdapterView.AdapterContextMenuInfo menuInfo = mock(AdapterView.AdapterContextMenuInfo.class);
+        when(menuItem.getMenuInfo()).thenReturn(menuInfo);
+        menuInfo.id = 0;
 
         assertTrue(mCategoryActivity1.onContextItemSelected(menuItem));
         assertTrue(mCategoryActivity2.onContextItemSelected(menuItem));
