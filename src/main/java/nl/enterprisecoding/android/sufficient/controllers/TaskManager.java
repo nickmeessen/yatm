@@ -286,7 +286,13 @@ public class TaskManager implements ITaskManager {
      * @return the category coressponding to the ID.
      */
     public Category getCategoryById(long id) {
-        return mDatabaseAdapter.getCategory(id);
+        for (Category c : mCategoryList.values()) {
+            if (c.getId() == id) {
+                return c;
+            }
+        }
+
+        return null;
     }
 
     /**
