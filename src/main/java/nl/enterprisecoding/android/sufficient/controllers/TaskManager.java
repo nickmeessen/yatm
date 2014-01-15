@@ -133,9 +133,8 @@ public class TaskManager implements ITaskManager {
 
         Task newTask = mDatabaseAdapter.createTask(title, categoryId, date, important);
 
-        if (categoryId != 0) {
-            mCategoryList.get(categoryId).addTask(newTask);
-        }
+        mCategoryList.get(categoryId).addTask(newTask);
+
         mTaskListAdapter.notifyDataSetChanged();
 
         return newTask.getId();

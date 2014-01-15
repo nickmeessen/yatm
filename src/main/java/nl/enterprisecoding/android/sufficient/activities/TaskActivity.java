@@ -90,13 +90,9 @@ public class TaskActivity extends MainActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getTitle().equals(getString(R.string.action_edit))) {
-            if (mSelectedTaskId == 0) {
-                makeToast(getString(R.string.toast_error));
-            } else {
-                Intent intent = new Intent(this, EditTaskActivity.class);
-                intent.putExtra(TASK_ID, mSelectedTaskId);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(this, EditTaskActivity.class);
+            intent.putExtra(TASK_ID, mSelectedTaskId);
+            startActivity(intent);
         } else if (item.getTitle().equals(getString(R.string.action_delete))) {
             mTaskManager.deleteTask(mSelectedTaskId);
             finish();
@@ -158,9 +154,9 @@ public class TaskActivity extends MainActivity {
             long newTaskID;
 
             if (mCurrentCategoryID != 0) {
-                newTaskID = mTaskManager.createTask("", mCurrentCategoryID, Calendar.getInstance(), false);
+                newTaskID = mTaskManager.createTask(getString(R.string.empty_task), mCurrentCategoryID, Calendar.getInstance(), false);
             } else {
-                newTaskID = mTaskManager.createTask("", mTaskManager.getCategories().get(0).getId(), Calendar.getInstance(), false);
+                newTaskID = mTaskManager.createTask(getString(R.string.empty_task), mTaskManager.getCategories().get(0).getId(), Calendar.getInstance(), false);
             }
 
             Intent intent = new Intent(this, EditTaskActivity.class);

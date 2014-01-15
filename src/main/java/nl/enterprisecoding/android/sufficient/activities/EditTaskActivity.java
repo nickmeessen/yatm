@@ -10,7 +10,6 @@ package nl.enterprisecoding.android.sufficient.activities;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
@@ -72,17 +71,10 @@ public class EditTaskActivity extends MainActivity implements View.OnClickListen
 
         mTaskTitleInput = (EditText) findViewById(R.id.task_title);
 
-        if (mTaskManager.getTaskById(mSelectedTaskId).getTitle().isEmpty()) {
-            mActionBar.setTitle(R.string.action_add);
-            mTaskTitleInput.setHint(getString(R.string.empty_task));
-        } else {
-            mActionBar.setTitle(R.string.action_edit);
-            mTaskTitleInput.setHint(mTaskManager.getTaskById(mSelectedTaskId).getTitle());
-        }
+        mActionBar.setTitle(R.string.action_edit);
+        mTaskTitleInput.setHint(mTaskManager.getTaskById(mSelectedTaskId).getTitle());
 
         initTaskCategorySpinner(mTaskCategorySpinner);
-
-        mTaskCategorySpinner.setSelection(findIndexByCategoryId(mTaskManager.getTaskById(mSelectedTaskId).getCatId()));
 
         mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
         mTaskImportantCheckBox.setChecked(mTaskManager.getTaskById(mSelectedTaskId).isImportant());
@@ -93,6 +85,7 @@ public class EditTaskActivity extends MainActivity implements View.OnClickListen
 
     /**
      * This method will be invoked when a view is clicked.
+     *
      * @param view The view that received the click.
      */
     @Override
@@ -141,39 +134,6 @@ public class EditTaskActivity extends MainActivity implements View.OnClickListen
 
         mSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(mSpinnerArrayAdapter);
-    }
-
-    /**
-     * Find the index position for the category you request by inputting an id
-     *
-     * @param categoryId The id of the category you are trying to find
-     * @return The index position of the category
-     */
-    private int findIndexByCategoryId(long categoryId) {
-        int index = 0;
-        int count = 0;
-
-        for (Category cat : mTaskManager.getCategories()) {
-            if (cat.getId() == categoryId) {
-                index = count;
-                break;
-            }
-            count++;
-        }
-
-        return index;
-    }
-
-    /**
-     * Sets the date for the task
-     *
-     * @param dayOfMonth The day in the wanted month
-     * @param month      The wanted month
-     * @param year       The wanted year
-     */
-    public void setTaskDate(int dayOfMonth, int month, int year) {
-        mTaskDate.set(year, month, dayOfMonth);
-        updateDateButtonText();
     }
 
     /**
