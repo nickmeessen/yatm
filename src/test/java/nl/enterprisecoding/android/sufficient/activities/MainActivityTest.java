@@ -10,7 +10,9 @@ package nl.enterprisecoding.android.sufficient.activities;
 import android.app.Dialog;
 import android.graphics.drawable.GradientDrawable;
 import android.view.KeyEvent;
+import android.widget.Button;
 import android.widget.Toast;
+import nl.enterprisecoding.android.sufficient.R;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +22,8 @@ import org.robolectric.shadows.ShadowHandler;
 import org.robolectric.shadows.ShadowToast;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 /**
  * MainActivity Test
@@ -75,15 +79,34 @@ public class MainActivityTest {
         assertEquals(input, output);
     }
 
-//    @Test
-//    public void test_createColourDialog() {
-//        GradientDrawable bgShape = new GradientDrawable();
-//        Dialog colourDialog = mMainTest.createColourDialog(bgShape);
-//
-//        assertNotNull(colourDialog);
-//    }
+    @Test
+    public void test_createColourDialog() {
+        GradientDrawable mDrawable = mock(GradientDrawable.class);
+        mMainActivity.createColourDialog(mDrawable);
+
+        assertNotNull(mMainActivity.createColourDialog(mDrawable));
+    }
+
+    @Test
+    public void test_openKeyboard(){
+        mMainActivity.openKeyboard();
+    };
+
+    @Test
+    public void test_createColourButton(){
+        GradientDrawable mDrawable = mock(GradientDrawable.class);
+        Dialog colourDialog = mock(Dialog.class);
+        Button button = mock(Button.class);
+        when(colourDialog.findViewById(0)).thenReturn(button);
+        mMainActivity.createColourButton(mDrawable, 0, 0, colourDialog);
+        mMainActivity.createColourButton(mDrawable, 0, R.color.blue, colourDialog);
+
+    };
 
     class MainTest extends MainActivity {
+
+        public MainTest(){
+        };
 
         @Override
         public void makeToast(String content) {
@@ -93,6 +116,15 @@ public class MainActivityTest {
         @Override
         public Dialog createColourDialog(GradientDrawable bgShape) {
             return super.createColourDialog(bgShape);
+        }
+
+        @Override
+        public void openKeyboard(){
+            super.openKeyboard();
+        }
+        @Override
+        public void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog){
+            super.createColourButton(bgShape, buttonId, inputColour, colourDialog);
         }
 
     }

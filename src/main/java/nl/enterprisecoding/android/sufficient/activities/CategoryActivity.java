@@ -21,6 +21,7 @@ import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Category;
 
+import java.awt.event.KeyListener;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ import java.util.List;
  *
  * @author Breunie Ploeg
  */
-public class CategoryActivity extends MainActivity {
+public class CategoryActivity extends MainActivity implements View.OnKeyListener, View.OnClickListener {
 
     private Spinner catInput;
     private long mSelectedCategoryId;
@@ -58,55 +59,31 @@ public class CategoryActivity extends MainActivity {
         mBgShape = (GradientDrawable) colourButton.getBackground();
         generateColourShape();
 
-        colourButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Handles the click for the colorButton
-             *
-             * @param v The view in which the click should perform it's action
-             */
-            @Override
-            public void onClick(View v) {
-                createColourDialog(mBgShape);
-            }
-        });
+        colourButton.setOnClickListener(this);
 
         final EditText editText = (EditText) findViewById(R.id.newCategory);
-        editText.setOnKeyListener(new View.OnKeyListener() {
-            /**
-             * Handles the enter button for adding a category
-             *
-             * @param v The view in which the action is performed
-             * @param keyCode The keycode for the key that is pressed
-             * @param event The event that contains the action
-             * @return Always returns false
-             */
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    addCategory();
-                }
-                return false;
-            }
-        });
+        editText.setOnKeyListener(this);
 
         final View addButton = findViewById(R.id.catAddButton);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Handles the click for the addButton
-             *
-             * @param v The view in which the click takes place
-             */
-            @Override
-            public void onClick(View v) {
-                addCategory();
-            }
-        });
-
+        addButton.setOnClickListener(this);
 
         View allCategoriesView = findViewById(R.id.all_cats);
-        allCategoriesView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        allCategoriesView.setOnClickListener(this);
+
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.newCategory : createColourDialog(mBgShape); break;
+            case R.id.catAddButton : addCategory(); break;
+            case R.id.all_cats :
                 Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
 
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -114,9 +91,24 @@ public class CategoryActivity extends MainActivity {
 
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-            }
-        });
+                break;
+        };
+    }
 
+    /**
+     * Handles the enter button for adding a category
+     *
+     * @param v The view in which the action is performed
+     * @param keyCode The keycode for the key that is pressed
+     * @param event The event that contains the action
+     * @return Always returns false
+     */
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+            addCategory();
+        }
+        return false;
     }
 
     /**
@@ -130,18 +122,13 @@ public class CategoryActivity extends MainActivity {
             mCategoryColour = mRandomColour[0];
         }
 
-        if (categoryName.trim().isEmpty()) {
-            makeToast(getString(R.string.category_name_empty_error));
-        } else if (mTaskManager.getCategoryByTitle(categoryName) != null) {
-            makeToast(getString(R.string.toast_category_exists));
-        } else {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
             mTaskManager.createCategory(categoryName, mCategoryColour);
             editText.setText("");
             makeToast(getString(R.string.category_added));
             generateColourShape();
-        }
+
     }
 
     /**

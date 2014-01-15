@@ -94,7 +94,7 @@ public class CategoryActivityTest {
 
         MenuItem menuItem = mock(MenuItem.class);
 
-        when(menuItem.getTitle()).thenReturn(mCategoryActivity1.getString(R.string.action_edit));
+        when(menuItem.getTitle()).thenReturn(mCategoryActivity1.getString(R.string.action_edit_category));
         AdapterView.AdapterContextMenuInfo menuInfo = mock(AdapterView.AdapterContextMenuInfo.class);
         when(menuItem.getMenuInfo()).thenReturn(menuInfo);
         menuInfo.id = 0;
@@ -110,6 +110,21 @@ public class CategoryActivityTest {
         MenuItem menuItem = mock(MenuItem.class);
 
         when(menuItem.getTitle()).thenReturn(mCategoryActivity1.getString(R.string.toast_no_category));
+        AdapterView.AdapterContextMenuInfo menuInfo = mock(AdapterView.AdapterContextMenuInfo.class);
+        when(menuItem.getMenuInfo()).thenReturn(menuInfo);
+        menuInfo.id = 0;
+
+        assertTrue(mCategoryActivity1.onContextItemSelected(menuItem));
+        assertTrue(mCategoryActivity2.onContextItemSelected(menuItem));
+
+    }
+
+    @Test
+    public void test_onContextItemSelected3() {
+
+        MenuItem menuItem = mock(MenuItem.class);
+
+        when(menuItem.getTitle()).thenReturn(mCategoryActivity1.getString(R.string.action_delete_category));
         AdapterView.AdapterContextMenuInfo menuInfo = mock(AdapterView.AdapterContextMenuInfo.class);
         when(menuItem.getMenuInfo()).thenReturn(menuInfo);
         menuInfo.id = 0;
