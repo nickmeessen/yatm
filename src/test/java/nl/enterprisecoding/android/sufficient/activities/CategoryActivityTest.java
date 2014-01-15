@@ -12,8 +12,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
-import org.robolectric.shadows.ShadowActivity;
-import roboguice.activity.RoboActivity;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -92,7 +90,6 @@ public class CategoryActivityTest {
     }
 
 
-
     @Test
     public void test_onContextItemSelected1() {
 
@@ -100,7 +97,7 @@ public class CategoryActivityTest {
         AdapterView.AdapterContextMenuInfo menuInfo = mock(AdapterView.AdapterContextMenuInfo.class);
         when(menuItem.getMenuInfo()).thenReturn(menuInfo);
         menuInfo.id = 0;
-        
+
         when(menuItem.getTitle()).thenReturn(mCategoryActivity1.getString(R.string.action_edit_category));
 
         assertTrue(mCategoryActivity1.onContextItemSelected(menuItem));
@@ -114,7 +111,7 @@ public class CategoryActivityTest {
         MenuItem menuItem = mock(MenuItem.class);
         AdapterView.AdapterContextMenuInfo menuInfo = mock(AdapterView.AdapterContextMenuInfo.class);
         when(menuItem.getMenuInfo()).thenReturn(menuInfo);
-        menuInfo.id = 0;
+        menuInfo.id = 1;
 
         when(menuItem.getTitle()).thenReturn(mCategoryActivity1.getString(R.string.action_delete_category));
 
