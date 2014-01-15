@@ -1,6 +1,5 @@
 package nl.enterprisecoding.android.sufficient.controllers;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.*;
-
-import static org.mockito.Matchers.*;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -94,8 +92,6 @@ public class CategoryListAdapterTest {
 
         assertNotNull(mCatListAdapter.getView(3, view, parent));
         assertNotNull(mCatListAdapter.getView(3, null, parent));
-
-
 
 
     }

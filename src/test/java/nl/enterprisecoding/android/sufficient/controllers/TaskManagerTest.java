@@ -50,7 +50,7 @@ public class TaskManagerTest {
 
     @Test
     public void test_createTask() {
-        assertEquals(1, mTaskManager.createTask("Task",(long) 1, date, true));
+        assertEquals(1, mTaskManager.createTask("Task", (long) 1, date, true));
     }
 
     @Test
@@ -163,7 +163,7 @@ public class TaskManagerTest {
         long taskNewCatId = 2L;
         Calendar taskNewDate = Calendar.getInstance();
         taskNewDate.set(1993, 7, 29);
-        Boolean taskNewImportant =  false;
+        Boolean taskNewImportant = false;
 
         mTaskManager.createTask("CreateNewTask", 1L, date, true);
         Task actual = mTaskManager.getTaskById(1L);

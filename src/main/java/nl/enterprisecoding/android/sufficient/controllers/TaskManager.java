@@ -335,7 +335,7 @@ public class TaskManager implements ITaskManager {
      */
     public void updateCategory(String title, int colour, int visibility, long categoryId) {
 
-        Category category = mDatabaseAdapter.getCategory(categoryId);
+        Category category = getCategoryById(categoryId);
 
         category.setTitle(title);
         category.setColour(colour);
