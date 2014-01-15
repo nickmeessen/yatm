@@ -14,13 +14,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.*;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
-import nl.enterprisecoding.android.sufficient.handlers.ColourButtonClickHandler;
 import nl.enterprisecoding.android.sufficient.models.Category;
 
 import java.util.List;
@@ -39,7 +37,6 @@ public class CategoryActivity extends MainActivity {
     private int mCategoryColour;
     private int[] mRandomColour;
     private GradientDrawable mBgShape;
-    private ColourButtonClickHandler mColourButtonClickHandler;
 
     /**
      * Called when the activity is starting.

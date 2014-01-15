@@ -4,9 +4,6 @@ import android.app.Dialog;
 import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
-import nl.enterprisecoding.android.sufficient.activities.CategoryActivity;
-import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 
 /**
  * ClickHandler for the Colour button
@@ -57,6 +54,7 @@ public class ColourButtonClickHandler implements View.OnClickListener {
             mCategoryColour = mRandColour;
         }
 
+        Log.d("CATEGORY_COLOUR", mCategoryColour + "");
         mColourDialog.dismiss();
     }
 }
