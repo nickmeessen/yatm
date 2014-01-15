@@ -133,4 +133,51 @@ public class CategoryActivityTest {
         assertTrue(mCategoryActivity2.onContextItemSelected(menuItem));
 
     }
+
+
+    @Test
+    public void test_onKey() {
+
+        int keyCode = KeyEvent.KEYCODE_ENTER;
+        KeyEvent keyEvent = mock(KeyEvent.class);
+        when(keyEvent.getAction()).thenReturn(KeyEvent.ACTION_DOWN);
+
+        mCategoryActivity1.onKey(mock(View.class), keyCode, keyEvent);
+
+        keyCode = KeyEvent.KEYCODE_ENTER;
+        keyEvent = mock(KeyEvent.class);
+        when(keyEvent.getAction()).thenReturn(KeyEvent.ACTION_DOWN);
+
+        mCategoryActivity1.onKey(mock(View.class), keyCode, keyEvent);
+
+        keyCode = KeyEvent.KEYCODE_SHIFT_RIGHT;
+        keyEvent = mock(KeyEvent.class);
+        when(keyEvent.getAction()).thenReturn(KeyEvent.ACTION_UP);
+
+        mCategoryActivity1.onKey(mock(View.class), keyCode, keyEvent);
+
+        keyCode = KeyEvent.KEYCODE_SHIFT_RIGHT;
+        keyEvent = mock(KeyEvent.class);
+        when(keyEvent.getAction()).thenReturn(KeyEvent.ACTION_UP);
+
+        mCategoryActivity1.onKey(mock(View.class), keyCode, keyEvent);
+    }
+
+    @Test
+    public void test_OnClick() {
+
+        View view = mock(View.class);
+
+        when(view.getId()).thenReturn(R.id.newCategory);
+        mCategoryActivity1.onClick(view);
+
+        when(view.getId()).thenReturn(R.id.catAddButton);
+        mCategoryActivity1.onClick(view);
+
+        when(view.getId()).thenReturn(R.id.all_cats);
+        mCategoryActivity1.onClick(view);
+
+        when(view.getId()).thenReturn(R.id.catChangeVisibilityButton);
+        mCategoryActivity1.onClick(view);
+    }
 }

@@ -21,7 +21,6 @@ import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Category;
 
-import java.awt.event.KeyListener;
 import java.util.List;
 
 /**
@@ -81,26 +80,31 @@ public class CategoryActivity extends MainActivity implements View.OnKeyListener
     public void onClick(View v) {
 
         switch (v.getId()) {
-            case R.id.newCategory : createColourDialog(mBgShape); break;
-            case R.id.catAddButton : addCategory(); break;
-            case R.id.all_cats :
+            case R.id.newCategory:
+                createColourDialog(mBgShape);
+                break;
+            case R.id.catAddButton:
+                addCategory();
+                break;
+            case R.id.all_cats:
                 Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
-
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 break;
-        };
+            default:
+                new Intent(getApplicationContext(), TaskActivity.class);
+                break;
+        }
     }
 
     /**
      * Handles the enter button for adding a category
      *
-     * @param v The view in which the action is performed
+     * @param v       The view in which the action is performed
      * @param keyCode The keycode for the key that is pressed
-     * @param event The event that contains the action
+     * @param event   The event that contains the action
      * @return Always returns false
      */
     @Override
@@ -122,12 +126,12 @@ public class CategoryActivity extends MainActivity implements View.OnKeyListener
             mCategoryColour = mRandomColour[0];
         }
 
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-            mTaskManager.createCategory(categoryName, mCategoryColour);
-            editText.setText("");
-            makeToast(getString(R.string.category_added));
-            generateColourShape();
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        mTaskManager.createCategory(categoryName, mCategoryColour);
+        editText.setText("");
+        makeToast(getString(R.string.category_added));
+        generateColourShape();
 
     }
 

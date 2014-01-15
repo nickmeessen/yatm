@@ -88,12 +88,12 @@ public class MainActivityTest {
     }
 
     @Test
-    public void test_openKeyboard(){
+    public void test_openKeyboard() {
         mMainActivity.openKeyboard();
-    };
+    }
 
     @Test
-    public void test_createColourButton(){
+    public void test_createColourButton() {
         GradientDrawable mDrawable = mock(GradientDrawable.class);
         Dialog colourDialog = mock(Dialog.class);
         Button button = mock(Button.class);
@@ -101,12 +101,12 @@ public class MainActivityTest {
         mMainActivity.createColourButton(mDrawable, 0, 0, colourDialog);
         mMainActivity.createColourButton(mDrawable, 0, R.color.blue, colourDialog);
 
-    };
+    }
 
     class MainTest extends MainActivity {
 
-        public MainTest(){
-        };
+        public MainTest() {
+        }
 
         @Override
         public void makeToast(String content) {
@@ -119,11 +119,12 @@ public class MainActivityTest {
         }
 
         @Override
-        public void openKeyboard(){
+        public void openKeyboard() {
             super.openKeyboard();
         }
+
         @Override
-        public void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog){
+        public void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog) {
             super.createColourButton(bgShape, buttonId, inputColour, colourDialog);
         }
 

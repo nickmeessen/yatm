@@ -16,8 +16,6 @@ import org.robolectric.RobolectricTestRunner;
 
 import java.util.Calendar;
 
-import static junit.framework.Assert.assertEquals;
-
 /**
  * Test the EditTaskActivity class
  *

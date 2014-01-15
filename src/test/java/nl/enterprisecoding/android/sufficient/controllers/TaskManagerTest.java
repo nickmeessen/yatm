@@ -8,7 +8,6 @@ package nl.enterprisecoding.android.sufficient.controllers;
  */
 
 import android.content.Intent;
-import nl.enterprisecoding.android.sufficient.activities.EditTaskActivity;
 import nl.enterprisecoding.android.sufficient.activities.TaskActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;

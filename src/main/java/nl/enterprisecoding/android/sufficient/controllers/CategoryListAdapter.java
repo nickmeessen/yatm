@@ -18,7 +18,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import nl.enterprisecoding.android.sufficient.R;
-import nl.enterprisecoding.android.sufficient.activities.TaskActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 
 import java.util.ArrayList;
