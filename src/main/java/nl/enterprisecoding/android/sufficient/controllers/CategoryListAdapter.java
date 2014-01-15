@@ -131,7 +131,7 @@ class CategoryListAdapter extends BaseAdapter implements AdapterView.OnItemClick
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Intent intent = new Intent(parent.getContext(), TaskActivity.class);
+        Intent intent = new Intent();
 
         intent.putExtra("categoryID", id);
 

@@ -33,9 +33,9 @@ public class TaskManagerTest {
 
     @Before
     public void setup() {
-        Intent editTaskActivityIntent = new Intent(new TaskActivity(), EditTaskActivity.class);
-        editTaskActivityIntent.putExtra(TaskActivity.TASK_ID, 0);
-        RoboActivity editTaskActivity = Robolectric.buildActivity(EditTaskActivity.class).withIntent(editTaskActivityIntent).create().get();
+        Intent intent = new Intent(new TaskActivity(), TaskActivity.class);
+        intent.putExtra(TaskActivity.TASK_ID, 0);
+        RoboActivity editTaskActivity = Robolectric.buildActivity(TaskActivity.class).withIntent(intent).create().get();
 
         mTaskManager = new TaskManager(editTaskActivity, (long) 0);
 
