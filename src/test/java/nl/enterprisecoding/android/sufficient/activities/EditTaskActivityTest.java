@@ -35,7 +35,6 @@ public class EditTaskActivityTest {
     @Before
     public void setUp() throws Exception {
         Intent mEditTaskActivityIntent = new Intent(new TaskActivity(), EditTaskActivity.class);
-        mEditTaskActivityIntent.putExtra(TaskActivity.TASK_ID, 0);
         mEditTaskActivity = Robolectric.buildActivity(EditTaskActivity.class).withIntent(mEditTaskActivityIntent).create().get();
 
         Intent mEditTaskActivityIntent2 = new Intent(new TaskActivity(), EditTaskActivity.class);

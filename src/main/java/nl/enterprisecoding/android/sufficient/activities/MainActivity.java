@@ -9,11 +9,11 @@ package nl.enterprisecoding.android.sufficient.activities;
 
 import android.app.ActionBar;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
@@ -36,7 +36,6 @@ public class MainActivity extends RoboActivity {
     protected TaskManager mTaskManager;
     protected ActionBar mActionBar;
     protected long mCurrentCategoryID;
-    private int mCategoryColour;
 
     /**
      * Called when the activity is starting.
@@ -98,11 +97,8 @@ public class MainActivity extends RoboActivity {
      */
     protected void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog) {
 
-        ColourButtonClickHandler colourButtonClickHandler = new ColourButtonClickHandler();
         final Button colourButton = (Button) colourDialog.findViewById(buttonId);
         final int[] randColour = generateRandomColour();
-
-        colourButton.setOnClickListener(colourButtonClickHandler);
 
         if (inputColour != 0) {
             colourButton.setBackgroundColor(getResources().getColor(inputColour));
@@ -110,12 +106,7 @@ public class MainActivity extends RoboActivity {
             colourButton.setBackgroundColor(randColour[0]);
         }
 
-        colourButtonClickHandler.setData(bgShape, colourDialog, inputColour, randColour[0], mCategoryColour);
-    }
-
-    public int getCategoryColour() {
-        Log.d("INT_COLOUR", mCategoryColour + "");
-        return mCategoryColour;
+        colourButton.setOnClickListener(new ColourButtonClickHandler(bgShape, colourDialog, inputColour, randColour[0]));
     }
 
     /**

@@ -2,7 +2,6 @@ package nl.enterprisecoding.android.sufficient.handlers;
 
 import android.app.Dialog;
 import android.graphics.drawable.GradientDrawable;
-import android.util.Log;
 import android.view.View;
 
 /**
@@ -16,26 +15,20 @@ public class ColourButtonClickHandler implements View.OnClickListener {
     private GradientDrawable mBgShape;
     private Dialog mColourDialog;
     private int mRandColour;
-    private int mCategoryColour;
-
-    public ColourButtonClickHandler() {
-
-    }
 
     /**
-     * Sets data for the onClick
+     * Set data to use in the onClick
      *
+     * @param inputColour
      * @param bgShape
      * @param colourDialog
-     * @param inputColour
      * @param randColour
      */
-    public void setData(GradientDrawable bgShape, Dialog colourDialog, int inputColour, int randColour, int finalColour) {
+    public ColourButtonClickHandler(GradientDrawable bgShape, Dialog colourDialog, int inputColour, int randColour) {
         mInputColour = inputColour;
         mBgShape = bgShape;
         mColourDialog = colourDialog;
         mRandColour = randColour;
-        mCategoryColour = finalColour;
     }
 
     /**
@@ -48,10 +41,8 @@ public class ColourButtonClickHandler implements View.OnClickListener {
 
         if (mInputColour != 0) {
             mBgShape.setColor(v.getContext().getResources().getColor(mInputColour));
-            mCategoryColour = v.getContext().getResources().getColor(mInputColour);
         } else {
             mBgShape.setColor(mRandColour);
-            mCategoryColour = mRandColour;
         }
 
         Log.d("CATEGORY_COLOUR", mCategoryColour + "");

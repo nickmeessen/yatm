@@ -126,8 +126,6 @@ public class CategoryActivity extends MainActivity {
         final EditText editText = (EditText) findViewById(R.id.newCategory);
         String categoryName = editText.getText().toString();
 
-        mCategoryColour = getCategoryColour();
-
         if (mCategoryColour == 0) {
             mCategoryColour = mRandomColour[0];
         }
@@ -144,10 +142,6 @@ public class CategoryActivity extends MainActivity {
             makeToast(getString(R.string.category_added));
             generateColourShape();
         }
-    }
-
-    public void setCategoryColour(int colour) {
-        mCategoryColour = colour;
     }
 
     /**

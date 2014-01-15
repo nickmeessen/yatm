@@ -37,7 +37,6 @@ public class ColourButtonClickHandlerTest {
 
     private GradientDrawable mBgShape;
     private Dialog mColourDialog;
-    private int mCategoryColour;
 
     @Before
     public void setUp() {
@@ -47,10 +46,8 @@ public class ColourButtonClickHandlerTest {
         mBgShape = new GradientDrawable();
         mColourDialog = new Dialog(activity, 0);
 
-        mColourButtonClickHandler1 = new ColourButtonClickHandler();
-        mColourButtonClickHandler1.setData(mBgShape, mColourDialog, 0, 1, mCategoryColour);
-        mColourButtonClickHandler2 = new ColourButtonClickHandler();
-        mColourButtonClickHandler2.setData(mBgShape, mColourDialog, 1, 0, mCategoryColour);
+        mColourButtonClickHandler1 = new ColourButtonClickHandler(mBgShape, mColourDialog, 0, 1);
+        mColourButtonClickHandler2 = new ColourButtonClickHandler(mBgShape, mColourDialog, 1, 0);
 
     }
 

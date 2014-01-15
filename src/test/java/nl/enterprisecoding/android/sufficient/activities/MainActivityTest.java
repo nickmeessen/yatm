@@ -8,9 +8,15 @@ package nl.enterprisecoding.android.sufficient.activities;
  */
 
 import android.app.Dialog;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
+import android.test.IsolatedContext;
+import android.test.RenamingDelegatingContext;
+import android.test.mock.MockContext;
 import android.view.KeyEvent;
 import android.widget.Toast;
+import com.google.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
