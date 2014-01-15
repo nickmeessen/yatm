@@ -16,12 +16,14 @@ import android.test.IsolatedContext;
 import android.test.RenamingDelegatingContext;
 import android.test.mock.MockContext;
 import android.view.ContextMenu;
+
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import com.google.inject.Inject;
 import nl.enterprisecoding.android.sufficient.R;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
