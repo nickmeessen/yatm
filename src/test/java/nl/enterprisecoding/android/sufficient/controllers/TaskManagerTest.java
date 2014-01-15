@@ -169,7 +169,7 @@ public class TaskManagerTest {
         String taskNewTitle = "UpdateTask";
         Calendar taskNewDate = Calendar.getInstance();
         taskNewDate.set(1993, 7, 29);
-        Boolean taskNewImportant =  false;
+        Boolean taskNewImportant = false;
 
         long taskId = mTaskManager.createTask("CreateNewTask", cat1Id, date, true);
         Task actual = mTaskManager.getTaskById(taskId);
