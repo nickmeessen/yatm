@@ -110,13 +110,7 @@ public class EditTaskActivity extends MainActivity implements View.OnClickListen
     private void saveTask() {
         int selectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
         long selectedCategoryID = mTaskManager.getCategories().get(selectedCategoryIndex).getId();
-
-        if (mTaskTitleInput.getText().toString().isEmpty()) {
-            mTaskTitleInput.setText(mTaskTitleInput.getHint());
-        }
-
         mTaskManager.updateTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked(), mSelectedTaskId);
-
         startTaskActivity(selectedCategoryID);
     }
 
