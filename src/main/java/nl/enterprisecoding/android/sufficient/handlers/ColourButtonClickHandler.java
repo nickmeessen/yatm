@@ -45,7 +45,6 @@ public class ColourButtonClickHandler implements View.OnClickListener {
             mBgShape.setColor(mRandColour);
         }
 
-        Log.d("CATEGORY_COLOUR", mCategoryColour + "");
         mColourDialog.dismiss();
     }
 }
