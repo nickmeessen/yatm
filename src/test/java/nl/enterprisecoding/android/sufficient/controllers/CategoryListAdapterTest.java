@@ -1,5 +1,12 @@
 package nl.enterprisecoding.android.sufficient.controllers;
 
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.activities.MainActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import org.junit.Before;
@@ -10,8 +17,9 @@ import org.robolectric.RobolectricTestRunner;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.*;
+
+import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -36,12 +44,12 @@ public class CategoryListAdapterTest {
 
         mMainActivity = mock(MainActivity.class);
         mTaskManager = mock(TaskManager.class);
-        mCatListAdapter = new CategoryListAdapter(mTaskManager);
 
         Map<Long, Category> testingCatsAll = new HashMap<Long, Category>();
 
         mockCategory = new Category();
         mockCategory.setID((long) 12);
+        mockCategory.setVisible(0);
 
         testingCatsAll.put((long) 0, mock(Category.class));
         testingCatsAll.put((long) 1, mock(Category.class));
@@ -49,6 +57,9 @@ public class CategoryListAdapterTest {
         testingCatsAll.put((long) 3, mockCategory);
 
         when(mTaskManager.getAllCategories()).thenReturn(testingCatsAll);
+
+        mCatListAdapter = new CategoryListAdapter(mTaskManager);
+
     }
 
     @Test
@@ -66,5 +77,26 @@ public class CategoryListAdapterTest {
     @Test
     public void test_getItemId() {
         assertEquals(12, mCatListAdapter.getItemId(3));
+    }
+
+    @Test
+    public void test_getView() {
+
+        LayoutInflater layoutInflater = mock(LayoutInflater.class);
+        ViewGroup parent = mock(ViewGroup.class);
+        View view = mock(View.class);
+
+        when(parent.getContext()).thenReturn(mMainActivity);
+        when(mMainActivity.getSystemService(anyString())).thenReturn(layoutInflater);
+        when(layoutInflater.inflate(R.layout.category_item, null)).thenReturn(view);
+        when(view.findViewById(R.id.catText)).thenReturn(mock(TextView.class));
+        when(view.findViewById(R.id.catChangeVisibilityButton)).thenReturn(mock(ImageView.class));
+
+        assertNotNull(mCatListAdapter.getView(3, view, parent));
+        assertNotNull(mCatListAdapter.getView(3, null, parent));
+
+
+
+
     }
 }

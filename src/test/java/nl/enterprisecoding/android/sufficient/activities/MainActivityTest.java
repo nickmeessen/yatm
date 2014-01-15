@@ -83,6 +83,7 @@ public class MainActivityTest {
         assertTrue(colourDialog != null);
     }
 
+
     class MainTest extends MainActivity {
 
         @Override

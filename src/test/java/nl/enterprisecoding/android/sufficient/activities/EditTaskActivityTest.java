@@ -28,6 +28,7 @@ import static junit.framework.Assert.assertEquals;
 public class EditTaskActivityTest {
 
     private EditTaskActivity mEditTaskActivity;
+    private EditTaskActivity mEditTaskActivity2;
     private Calendar currentDate;
 
     @Test
@@ -36,6 +37,10 @@ public class EditTaskActivityTest {
         Intent mEditTaskActivityIntent = new Intent(new TaskActivity(), EditTaskActivity.class);
         mEditTaskActivityIntent.putExtra(TaskActivity.TASK_ID, 0);
         mEditTaskActivity = Robolectric.buildActivity(EditTaskActivity.class).withIntent(mEditTaskActivityIntent).create().get();
+
+        Intent mEditTaskActivityIntent2 = new Intent(new TaskActivity(), EditTaskActivity.class);
+        mEditTaskActivityIntent2.putExtra(TaskActivity.TASK_ID, 2);
+        mEditTaskActivity2 = Robolectric.buildActivity(EditTaskActivity.class).withIntent(mEditTaskActivityIntent2).create().get();
 
         currentDate = Calendar.getInstance();
     }
@@ -48,6 +53,13 @@ public class EditTaskActivityTest {
     }
 
     @Test
+    public void test_getTaskDateDifferentId() throws Exception {
+        assertEquals(currentDate.get(Calendar.DAY_OF_MONTH), mEditTaskActivity2.getTaskDate().get(Calendar.DAY_OF_MONTH));
+        assertEquals(currentDate.get(Calendar.MONTH), mEditTaskActivity2.getTaskDate().get(Calendar.MONTH));
+        assertEquals(currentDate.get(Calendar.YEAR), mEditTaskActivity2.getTaskDate().get(Calendar.YEAR));
+    }
+
+    @Test
     public void test_setTaskDate() throws Exception {
         currentDate.add(Calendar.DAY_OF_YEAR, 1);
         mEditTaskActivity.setTaskDate(currentDate.get(Calendar.DAY_OF_MONTH), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.YEAR));
@@ -55,6 +67,16 @@ public class EditTaskActivityTest {
         assertEquals(currentDate.get(Calendar.DAY_OF_MONTH), mEditTaskActivity.getTaskDate().get(Calendar.DAY_OF_MONTH));
         assertEquals(currentDate.get(Calendar.MONTH), mEditTaskActivity.getTaskDate().get(Calendar.MONTH));
         assertEquals(currentDate.get(Calendar.YEAR), mEditTaskActivity.getTaskDate().get(Calendar.YEAR));
+    }
+
+    @Test
+    public void test_setTaskDateDifferentId() throws Exception {
+        currentDate.add(Calendar.DAY_OF_YEAR, 1);
+        mEditTaskActivity2.setTaskDate(currentDate.get(Calendar.DAY_OF_MONTH), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.YEAR));
+
+        assertEquals(currentDate.get(Calendar.DAY_OF_MONTH), mEditTaskActivity2.getTaskDate().get(Calendar.DAY_OF_MONTH));
+        assertEquals(currentDate.get(Calendar.MONTH), mEditTaskActivity2.getTaskDate().get(Calendar.MONTH));
+        assertEquals(currentDate.get(Calendar.YEAR), mEditTaskActivity2.getTaskDate().get(Calendar.YEAR));
     }
 
 }
