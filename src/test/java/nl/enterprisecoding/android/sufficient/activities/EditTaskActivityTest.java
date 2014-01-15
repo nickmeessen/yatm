@@ -29,9 +29,8 @@ public class EditTaskActivityTest {
     private EditTaskActivity mEditTaskActivity2;
     private Calendar currentDate;
 
-    @Test
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         Intent mEditTaskActivityIntent = new Intent(new TaskActivity(), EditTaskActivity.class);
         mEditTaskActivityIntent.putExtra(TaskActivity.TASK_ID, 0);
         mEditTaskActivity = Robolectric.buildActivity(EditTaskActivity.class).withIntent(mEditTaskActivityIntent).create().get();

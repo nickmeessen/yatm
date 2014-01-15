@@ -87,11 +87,7 @@ public class CategoryActivity extends MainActivity implements View.OnKeyListener
                 addCategory();
                 break;
             case R.id.all_cats:
-                Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+                startTaskActivity();
                 break;
             default:
                 new Intent(getApplicationContext(), TaskActivity.class);
@@ -277,6 +273,17 @@ public class CategoryActivity extends MainActivity implements View.OnKeyListener
             allIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(allIntent);
         }
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+    /**
+     * Starts the TaskActivity.
+     */
+    private void startTaskActivity() {
+        Intent intent = new Intent(getApplicationContext(), TaskActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 }

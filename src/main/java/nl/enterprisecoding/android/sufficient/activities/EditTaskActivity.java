@@ -32,7 +32,7 @@ import java.util.Calendar;
  * @author Sjors Roelofs & Ferry Wienholts
  */
 @ContentView(R.layout.edit_task)
-public class EditTaskActivity extends MainActivity {
+public class EditTaskActivity extends MainActivity implements View.OnClickListener {
 
     @InjectView(R.id.task_title)
     private EditText mTaskTitleInput;
@@ -64,31 +64,11 @@ public class EditTaskActivity extends MainActivity {
 
         mTaskManager = new TaskManager(this, (long) 0);
 
-        mActionBar.setBackgroundDrawable(new ColorDrawable(mTaskManager.getCategoryById(mTaskManager.getTaskById(mSelectedTaskId).getCatId()).getColour()));
-
         mTaskDate = mTaskManager.getTaskById(mSelectedTaskId).getDate();
 
         updateDateButtonText();
 
-        mTaskSetDateButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * This method will be invoked when a view is clicked.
-             * @param view The view that received the click.
-             */
-            @Override
-            public void onClick(View view) {
-
-                DatePickerDialog alert = new DatePickerDialog(view.getContext(), null, mTaskDate.get(Calendar.YEAR), mTaskDate.get(Calendar.MONTH), mTaskDate.get(Calendar.DAY_OF_MONTH));
-                alert.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
-
-                TaskSetDateDialogButtonClickHandler taskSetDateDialogButtonClickHandler = new TaskSetDateDialogButtonClickHandler(mTaskDate);
-
-                alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.action_change_date), taskSetDateDialogButtonClickHandler);
-                alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.action_discard), taskSetDateDialogButtonClickHandler);
-
-                alert.show();
-            }
-        });
+        mTaskSetDateButton.setOnClickListener(this);
 
         mTaskTitleInput = (EditText) findViewById(R.id.task_title);
 
@@ -108,18 +88,27 @@ public class EditTaskActivity extends MainActivity {
         mTaskImportantCheckBox.setChecked(mTaskManager.getTaskById(mSelectedTaskId).isImportant());
 
         Button saveTaskButton = (Button) findViewById(R.id.save_task_button);
-        saveTaskButton.setOnClickListener(new View.OnClickListener() {
-            /**
-             * Handles the click for the saveTaskButton
-             *
-             * @param v The view in which the click takes place
-             */
-            @Override
-            public void onClick(View v) {
-                saveTask();
-            }
-        });
+        saveTaskButton.setOnClickListener(this);
+    }
 
+    /**
+     * This method will be invoked when a view is clicked.
+     * @param view The view that received the click.
+     */
+    @Override
+    public void onClick(View view) {
+
+        if (view.getId() == R.id.save_task_button) {
+            saveTask();
+        } else {
+            DatePickerDialog alert = new DatePickerDialog(view.getContext(), null, mTaskDate.get(Calendar.YEAR), mTaskDate.get(Calendar.MONTH), mTaskDate.get(Calendar.DAY_OF_MONTH));
+            alert.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
+
+            TaskSetDateDialogButtonClickHandler taskSetDateDialogButtonClickHandler = new TaskSetDateDialogButtonClickHandler(mTaskDate);
+            alert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.action_change_date), taskSetDateDialogButtonClickHandler);
+            alert.setButton(DialogInterface.BUTTON_NEGATIVE, getString(R.string.action_discard), taskSetDateDialogButtonClickHandler);
+            alert.show();
+        }
     }
 
     /**
