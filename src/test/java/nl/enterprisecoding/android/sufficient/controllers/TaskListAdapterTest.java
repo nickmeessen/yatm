@@ -119,8 +119,9 @@ public class TaskListAdapterTest {
         when(mTaskManager.getTaskById((long) 3)).thenReturn(completedTest);
 
         when(mTaskManager.getVisibleCategories()).thenReturn(testingCatsAll);
-        when(mTaskManager.getCategoryById((long) 14)).thenReturn(mockCategory1);
+        when(mTaskManager.getCategoryById((long) 14)).thenReturn(mockCategory2);
         when(mTaskManager.getCategoryById((long) 15)).thenReturn(mockEmptyCategory);
+        when(mTaskManager.getCategoryById((long) 5)).thenReturn(mockCategory1);
 
         mTaskListAdapter = new TaskListAdapter(mMainActivity, mTaskManager, (long) 0);
         mTaskListAdapter1 = new TaskListAdapter(mMainActivity, mTaskManager, (long) 5);
