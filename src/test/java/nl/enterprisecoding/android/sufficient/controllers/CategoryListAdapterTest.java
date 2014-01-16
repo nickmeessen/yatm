@@ -36,6 +36,7 @@ public class CategoryListAdapterTest {
     TaskManager mTaskManager;
     MainActivity mMainActivity;
     Category mockCategory;
+    Category mockCategory2;
 
     @Before
     public void setUp() {
@@ -48,10 +49,15 @@ public class CategoryListAdapterTest {
         mockCategory.setID((long) 12);
         mockCategory.setVisible(0);
 
+        mockCategory2 = new Category();
+        mockCategory2.setID((long) 88);
+        mockCategory2.setVisible(1);
+
         testingCatsAll.put((long) 0, mock(Category.class));
         testingCatsAll.put((long) 1, mock(Category.class));
         testingCatsAll.put((long) 2, mock(Category.class));
         testingCatsAll.put((long) 3, mockCategory);
+        testingCatsAll.put((long) 4, mockCategory2);
 
         when(mTaskManager.getAllCategories()).thenReturn(testingCatsAll);
 
@@ -90,5 +96,8 @@ public class CategoryListAdapterTest {
 
         assertNotNull(mCatListAdapter.getView(3, view, parent));
         assertNotNull(mCatListAdapter.getView(3, null, parent));
+
+        assertNotNull(mCatListAdapter.getView(4, view, parent));
+        assertNotNull(mCatListAdapter.getView(4, null, parent));
     }
 }
