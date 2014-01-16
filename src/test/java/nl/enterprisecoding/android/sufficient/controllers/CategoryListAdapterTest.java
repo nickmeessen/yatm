@@ -67,7 +67,7 @@ public class CategoryListAdapterTest {
 
     @Test
     public void test_getCount() {
-        assertEquals(4, mCatListAdapter.getCount());
+        assertEquals(5, mCatListAdapter.getCount());
         assertNotSame(8, mCatListAdapter.getCount());
     }
 
