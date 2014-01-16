@@ -8,6 +8,7 @@ package nl.enterprisecoding.android.sufficient.controllers;
  */
 
 import android.content.Intent;
+import nl.enterprisecoding.android.sufficient.activities.EditTaskActivity;
 import nl.enterprisecoding.android.sufficient.activities.TaskActivity;
 import nl.enterprisecoding.android.sufficient.models.Category;
 import nl.enterprisecoding.android.sufficient.models.Task;
@@ -17,11 +18,9 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import roboguice.activity.RoboActivity;
-
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
-
 import static org.junit.Assert.*;
 
 @RunWith(RobolectricTestRunner.class)
@@ -40,7 +39,15 @@ public class TaskManagerTest {
 
         date = Calendar.getInstance();
         date.set(1993, 01, 20);
+    }
 
+    @Test
+    public void test_TaskManagerActivityWithoutCategoryList() {
+        Intent intent = new Intent(new EditTaskActivity(), EditTaskActivity.class);
+        RoboActivity editTaskActivity = Robolectric.buildActivity(TaskActivity.class).withIntent(intent).create().get();
+        TaskManager mTaskManager = new TaskManager(editTaskActivity, (long) 0);
+
+        assertNotNull(mTaskManager);
     }
 
     @Test

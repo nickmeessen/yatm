@@ -36,7 +36,6 @@ public class TaskManager implements ITaskManager {
      * @param categoryID the current CategoryID.
      */
     public TaskManager(Activity activity, Long categoryID) {
-
         mDatabaseAdapter = new SqlLiteAdapter(activity);
 
         fillCategoryListWithData();

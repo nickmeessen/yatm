@@ -39,7 +39,6 @@ public class CategoryListAdapterTest {
 
     @Before
     public void setUp() {
-
         mMainActivity = mock(MainActivity.class);
         mTaskManager = mock(TaskManager.class);
 
@@ -79,7 +78,6 @@ public class CategoryListAdapterTest {
 
     @Test
     public void test_getView() {
-
         LayoutInflater layoutInflater = mock(LayoutInflater.class);
         ViewGroup parent = mock(ViewGroup.class);
         View view = mock(View.class);
@@ -92,7 +90,5 @@ public class CategoryListAdapterTest {
 
         assertNotNull(mCatListAdapter.getView(3, view, parent));
         assertNotNull(mCatListAdapter.getView(3, null, parent));
-
-
     }
 }
