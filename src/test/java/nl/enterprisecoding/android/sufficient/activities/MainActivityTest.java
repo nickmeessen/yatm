@@ -36,6 +36,10 @@ public class MainActivityTest {
     private MainActivity mMainActivity;
     private MainTest mMainTest;
 
+    public MainActivityTest() {
+        // Here you go, Jenkins :)
+    }
+
     @Before
     public void setUp() {
         mMainActivity = Robolectric.buildActivity(MainActivity.class).create().get();
@@ -103,9 +107,11 @@ public class MainActivityTest {
 
     }
 
+    @RunWith(RobolectricTestRunner.class)
     class MainTest extends MainActivity {
 
         public MainTest() {
+            // Here you go, Jenkins :)
         }
 
         @Override
