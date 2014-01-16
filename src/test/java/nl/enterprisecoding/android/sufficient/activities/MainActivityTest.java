@@ -31,19 +31,13 @@ import static org.mockito.Mockito.when;
  * @author Sjors Roelofs
  */
 @RunWith(RobolectricTestRunner.class)
-public class MainActivityTest {
+public class MainActivityTest extends MainActivity {
 
     private MainActivity mMainActivity;
-    private MainTest mMainTest;
-
-    public MainActivityTest() {
-        // Here you go, Jenkins :)
-    }
 
     @Before
     public void setUp() {
         mMainActivity = Robolectric.buildActivity(MainActivity.class).create().get();
-        mMainTest = new MainTest();
     }
 
     @Test
@@ -72,7 +66,7 @@ public class MainActivityTest {
     @Test
     public void test_makeToast() {
         String input = "Test toast";
-        mMainTest.makeToast(input);
+        makeToast(input);
 
         ShadowHandler.idleMainLooper();
         String output = ShadowToast.getTextOfLatestToast();
@@ -107,33 +101,24 @@ public class MainActivityTest {
 
     }
 
-    @RunWith(RobolectricTestRunner.class)
-    class MainTest extends MainActivity {
+    @Override
+    public void makeToast(String content) {
+        super.makeToast(content);
+    }
 
-        public MainTest() {
-            // Here you go, Jenkins :)
-        }
+    @Override
+    public Dialog createColourDialog(GradientDrawable bgShape) {
+        return super.createColourDialog(bgShape);
+    }
 
-        @Override
-        public void makeToast(String content) {
-            super.makeToast(content);
-        }
+    @Override
+    public void openKeyboard() {
+        super.openKeyboard();
+    }
 
-        @Override
-        public Dialog createColourDialog(GradientDrawable bgShape) {
-            return super.createColourDialog(bgShape);
-        }
-
-        @Override
-        public void openKeyboard() {
-            super.openKeyboard();
-        }
-
-        @Override
-        public void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog) {
-            super.createColourButton(bgShape, buttonId, inputColour, colourDialog);
-        }
-
+    @Override
+    public void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog) {
+        super.createColourButton(bgShape, buttonId, inputColour, colourDialog);
     }
 
 }

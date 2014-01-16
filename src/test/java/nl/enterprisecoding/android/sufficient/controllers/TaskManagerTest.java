@@ -110,6 +110,7 @@ public class TaskManagerTest {
         assertNotNull(mTaskManager.getCategoryByTitle(catTitle));
         assertTrue(mTaskManager.getCategoryByTitle(catTitle) instanceof Category);
         assertTrue(mTaskManager.getCategoryByTitle(catTitle).getTitle().equals(catTitle));
+        assertNull(mTaskManager.getCategoryByTitle("aCategoryThatDoesntExists"));
     }
 
 
