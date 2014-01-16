@@ -185,12 +185,16 @@ public class TaskListAdapterTest {
 
     @Test
     public void test_onChildClick() {
-
         long taskId = 35;
 
         ExpandableListView parent = mock(ExpandableListView.class);
         View view = mock(View.class);
 
+        mTaskListAdapter.onChildClick(parent, view, 2, 1, taskId);
+
+        assertTrue(mTaskManager.getTaskById(taskId).isCompleted());
+
+        mTaskManager.getTaskById(taskId).setCompleted(true);
         mTaskListAdapter.onChildClick(parent, view, 2, 1, taskId);
 
         assertTrue(mTaskManager.getTaskById(taskId).isCompleted());
