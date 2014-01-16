@@ -95,13 +95,18 @@ public class TaskManagerTest {
     @Test
     public void test_getVisibleCategories() {
         long cat1Id = mTaskManager.createCategory("TestCategory1", 125);
+        long cat2Id = mTaskManager.createCategory("TestCategory2", 125);
+        mTaskManager.getCategoryById(cat2Id).setVisible(0);
+
         assertEquals(1, mTaskManager.getCategoryById(cat1Id).getVisible());
+        assertEquals(1, mTaskManager.getVisibleCategories().size());
     }
 
     @Test
     public void test_getCategoryByTitle() {
         String catTitle = "Shopping";
         mTaskManager.createCategory(catTitle, 125);
+
         assertNotNull(mTaskManager.getCategoryByTitle(catTitle));
         assertTrue(mTaskManager.getCategoryByTitle(catTitle) instanceof Category);
         assertTrue(mTaskManager.getCategoryByTitle(catTitle).getTitle().equals(catTitle));
@@ -142,6 +147,15 @@ public class TaskManagerTest {
         assertTrue(mTaskManager.getCategoryById(catId).isVisible());
         mTaskManager.switchCategoryVisibility(mTaskManager.getCategoryById(catId));
         assertFalse(mTaskManager.getCategoryById(catId).isVisible());
+    }
+
+    @Test
+    public void test_switchCategoryVisibilityNotVisible() {
+        long catId = mTaskManager.createCategory("switchingVisabilityCategory2", 125);
+        mTaskManager.getCategoryById(catId).setVisible(0);
+        assertFalse(mTaskManager.getCategoryById(catId).isVisible());
+        mTaskManager.switchCategoryVisibility(mTaskManager.getCategoryById(catId));
+        assertTrue(mTaskManager.getCategoryById(catId).isVisible());
     }
 
     @Test
