@@ -44,6 +44,7 @@ public class TaskListAdapterTest {
     MainActivity mMainActivity;
     TaskManager mTaskManager;
     TaskListAdapter mTaskListAdapter;
+    TaskListAdapter mTaskListAdapter1;
     TaskListAdapter mTaskListAdapterSpecific;
     TaskListAdapter mTaskListAdapterEmpty;
 
@@ -122,6 +123,7 @@ public class TaskListAdapterTest {
         when(mTaskManager.getCategoryById((long) 15)).thenReturn(mockEmptyCategory);
 
         mTaskListAdapter = new TaskListAdapter(mMainActivity, mTaskManager, (long) 0);
+        mTaskListAdapter1 = new TaskListAdapter(mMainActivity, mTaskManager, (long) 5);
         mTaskListAdapterSpecific = new TaskListAdapter(mMainActivity, mTaskManager, (long) 14);
         mTaskListAdapterEmpty = new TaskListAdapter(mMainActivity, mTaskManager, (long) 15);
     }
@@ -193,7 +195,6 @@ public class TaskListAdapterTest {
         assertTrue(mTaskManager.getTaskById(taskId).isCompleted());
     }
 
-
     @Test
     public void test_isChildSelectable() {
         assertTrue(mTaskListAdapter.isChildSelectable(2, 1));
@@ -206,7 +207,6 @@ public class TaskListAdapterTest {
 
     @Test
     public void test_getGroupView() {
-
         ViewGroup parentView = mock(ViewGroup.class);
         View convertView = mock(View.class);
 
@@ -214,7 +214,6 @@ public class TaskListAdapterTest {
 
         assertNotNull(mTaskListAdapter.getGroupView(0, true, null, null));
         assertNotNull(mTaskListAdapter.getGroupView(0, true, convertView, parentView));
-
     }
 
     @Test
@@ -234,4 +233,5 @@ public class TaskListAdapterTest {
         assertNotNull(mTaskListAdapter.getChildView(2, 0, true, null, null));
         assertNotNull(mTaskListAdapter.getChildView(2, 0, true, convertView, parentView));
     }
+
 }

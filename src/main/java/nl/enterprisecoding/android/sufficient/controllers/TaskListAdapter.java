@@ -112,7 +112,6 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         tomorrow.set(Calendar.MILLISECOND, 0);
 
         for (Task task : tasks) {
-
             if (task.isCompleted()) {
                 mCompletedList.add(task.getId());
             } else if (task.getDate().compareTo(today) == 0 || task.getDate().before(today)) {
