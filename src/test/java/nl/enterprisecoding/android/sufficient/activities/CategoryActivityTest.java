@@ -33,7 +33,6 @@ public class CategoryActivityTest {
 
     @Before
     public void setUp() {
-
         Intent intent = new Intent(new CategoryActivity(), CategoryActivity.class);
         intent.putExtra(MainActivity.CATEGORY_ID, 3);
 
@@ -61,10 +60,21 @@ public class CategoryActivityTest {
         assertTrue(mCategoryActivity2.isFinishing());
     }
 
+    @Test
+    public void test_onBackPressed3() {
+        MenuItem menuItem = mock(MenuItem.class);
+
+        when(menuItem.getTitle()).thenReturn(mCategoryActivity2.getString(R.string.toast_no_category));
+        AdapterView.AdapterContextMenuInfo menuInfo = mock(AdapterView.AdapterContextMenuInfo.class);
+        when(menuItem.getMenuInfo()).thenReturn(menuInfo);
+        menuInfo.id = 0;
+
+        mCategoryActivity2.onBackPressed();
+        assertTrue(mCategoryActivity2.isFinishing());
+    }
 
     @Test
     public void test_onCreateContextMenu1() {
-
         ContextMenu menu = mock(ContextMenu.class);
         View view = mock(View.class);
         ContextMenu.ContextMenuInfo menuInfo = mock(ContextMenu.ContextMenuInfo.class);
@@ -72,12 +82,10 @@ public class CategoryActivityTest {
         when(view.getId()).thenReturn(R.id.cat_list);
 
         mCategoryActivity1.onCreateContextMenu(menu, view, menuInfo);
-
     }
 
     @Test
     public void test_onCreateContextMenu2() {
-
         ContextMenu menu = mock(ContextMenu.class);
         View view = mock(View.class);
         ContextMenu.ContextMenuInfo menuInfo = mock(ContextMenu.ContextMenuInfo.class);
@@ -85,13 +93,11 @@ public class CategoryActivityTest {
         when(view.getId()).thenReturn(R.id.catText);
 
         mCategoryActivity1.onCreateContextMenu(menu, view, menuInfo);
-
     }
 
 
     @Test
     public void test_onContextItemSelected1() {
-
         MenuItem menuItem = mock(MenuItem.class);
 
         when(menuItem.getTitle()).thenReturn(mCategoryActivity1.getString(R.string.action_edit_category));
@@ -101,12 +107,10 @@ public class CategoryActivityTest {
 
         assertTrue(mCategoryActivity1.onContextItemSelected(menuItem));
         assertTrue(mCategoryActivity2.onContextItemSelected(menuItem));
-
     }
 
     @Test
     public void test_onContextItemSelected2() {
-
         MenuItem menuItem = mock(MenuItem.class);
 
         when(menuItem.getTitle()).thenReturn(mCategoryActivity1.getString(R.string.toast_no_category));
@@ -116,12 +120,10 @@ public class CategoryActivityTest {
 
         assertTrue(mCategoryActivity1.onContextItemSelected(menuItem));
         assertTrue(mCategoryActivity2.onContextItemSelected(menuItem));
-
     }
 
     @Test
     public void test_onContextItemSelected3() {
-
         MenuItem menuItem = mock(MenuItem.class);
 
         when(menuItem.getTitle()).thenReturn(mCategoryActivity1.getString(R.string.action_delete_category));
@@ -131,13 +133,11 @@ public class CategoryActivityTest {
 
         assertTrue(mCategoryActivity1.onContextItemSelected(menuItem));
         assertTrue(mCategoryActivity2.onContextItemSelected(menuItem));
-
     }
 
 
     @Test
     public void test_onKey() {
-
         int keyCode = KeyEvent.KEYCODE_ENTER;
         KeyEvent keyEvent = mock(KeyEvent.class);
         when(keyEvent.getAction()).thenReturn(KeyEvent.ACTION_DOWN);
@@ -160,12 +160,12 @@ public class CategoryActivityTest {
         keyEvent = mock(KeyEvent.class);
         when(keyEvent.getAction()).thenReturn(KeyEvent.ACTION_UP);
 
-        mCategoryActivity1.onKey(mock(View.class), keyCode, keyEvent);
+        assertFalse(mCategoryActivity1.onKey(mock(View.class), keyCode, keyEvent));
+        assertFalse(mCategoryActivity1.onKey(mock(View.class), KeyEvent.KEYCODE_ALT_LEFT, keyEvent));
     }
 
     @Test
-    public void test_OnClick() {
-
+    public void test_onClick() {
         View view = mock(View.class);
 
         when(view.getId()).thenReturn(R.id.newCategory);
@@ -180,4 +180,5 @@ public class CategoryActivityTest {
         when(view.getId()).thenReturn(R.id.catChangeVisibilityButton);
         mCategoryActivity1.onClick(view);
     }
+
 }
