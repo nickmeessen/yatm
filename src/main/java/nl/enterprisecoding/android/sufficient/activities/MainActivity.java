@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
@@ -159,6 +160,7 @@ public class MainActivity extends RoboActivity {
         createColourButton(bgShape, R.id.colour_random3_button, 0, colourDialog);
         createColourButton(bgShape, R.id.colour_random4_button, 0, colourDialog);
 
+        Log.d("colour_dialog", "open");
         colourDialog.show();
         return colourDialog;
     }

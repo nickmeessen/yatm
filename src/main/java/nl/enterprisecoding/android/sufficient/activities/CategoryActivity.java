@@ -57,7 +57,15 @@ public class CategoryActivity extends MainActivity implements View.OnKeyListener
         mBgShape = (GradientDrawable) colourButton.getBackground();
         generateColourShape();
 
-        colourButton.setOnClickListener(this);
+        colourButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Handles the click for the colourButton
+             * @param v The view in which the button is clicked
+             */
+            public void onClick(View v) {
+                createColourDialog(mBgShape);
+            }
+        });
 
         final EditText editText = (EditText) findViewById(R.id.newCategory);
         editText.setOnKeyListener(this);
