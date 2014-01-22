@@ -59,7 +59,8 @@ public class EditTaskActivity extends MainActivity implements View.OnClickListen
 
         mTaskManager = new TaskManager(this, mCurrentCategoryID);
 
-        mSelectedTaskId = getIntent().getExtras().getLong(TaskActivity.TASK_ID, 0);
+        mSelectedTaskId = getIntent().getExtras().getLong(TaskActivity.sTaskId, 0);
+        boolean editTask = getIntent().getExtras().getBoolean(TaskActivity.sEditTask, false);
 
         mTaskManager = new TaskManager(this, (long) 0);
 
@@ -71,7 +72,13 @@ public class EditTaskActivity extends MainActivity implements View.OnClickListen
 
         mTaskTitleInput = (EditText) findViewById(R.id.task_title);
 
-        mActionBar.setTitle(R.string.action_edit);
+        if(editTask) {
+            mActionBar.setTitle(R.string.action_edit);
+        }
+        else {
+            mActionBar.setTitle(R.string.action_add);
+        }
+
         mTaskTitleInput.setHint(mTaskManager.getTaskById(mSelectedTaskId).getTitle());
 
         initTaskCategorySpinner(mTaskCategorySpinner);
