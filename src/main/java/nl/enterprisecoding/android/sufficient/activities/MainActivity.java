@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -22,7 +21,6 @@ import android.widget.Button;
 import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
-import nl.enterprisecoding.android.sufficient.handlers.ColourButtonClickHandler;
 import roboguice.activity.RoboActivity;
 
 /**
@@ -120,7 +118,6 @@ public class MainActivity extends RoboActivity {
                 colourDialog.dismiss();
             }
         });
-        //colourButton.setOnClickListener(new ColourButtonClickHandler(bgShape, colourDialog, inputColour, randColour[0]));
     }
 
     /**
