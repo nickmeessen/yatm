@@ -74,12 +74,12 @@ public class EditTaskActivity extends MainActivity implements View.OnClickListen
 
         if(editTask) {
             mActionBar.setTitle(R.string.action_edit);
+            mTaskTitleInput.setText(mTaskManager.getTaskById(mSelectedTaskId).getTitle());
         }
         else {
             mActionBar.setTitle(R.string.action_add);
+            mTaskTitleInput.setHint(mTaskManager.getTaskById(mSelectedTaskId).getTitle());
         }
-
-        mTaskTitleInput.setHint(mTaskManager.getTaskById(mSelectedTaskId).getTitle());
 
         initTaskCategorySpinner(mTaskCategorySpinner);
 

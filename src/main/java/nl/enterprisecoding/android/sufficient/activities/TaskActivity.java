@@ -21,7 +21,6 @@ import java.util.Calendar;
 
 /**
  * TaskActivity class
- * <p/>
  * From here a user could execute various actions on tasks.
  *
  * @author Nick Meessen
