@@ -149,7 +149,7 @@ public class TaskManager implements ITaskManager {
 
         mDatabaseAdapter.deleteTask(taskId);
 
-        mTaskListAdapter.notifyDataSetChanged();
+        //mTaskListAdapter.notifyDataSetChanged();
     }
 
     private Category getCategoryByTaskId(long taskId) {
