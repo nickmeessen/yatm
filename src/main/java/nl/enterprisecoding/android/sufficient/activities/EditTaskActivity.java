@@ -59,8 +59,8 @@ public class EditTaskActivity extends MainActivity implements View.OnClickListen
 
         mTaskManager = new TaskManager(this, mCurrentCategoryID);
 
-        mSelectedTaskId = getIntent().getExtras().getLong(TaskActivity.TASK_ID, 0);
-        boolean editTask = getIntent().getExtras().getBoolean(TaskActivity.EDIT_TASK, false);
+        mSelectedTaskId = getIntent().getExtras().getLong(TaskActivity.sTaskId, 0);
+        boolean editTask = getIntent().getExtras().getBoolean(TaskActivity.sEditTask, false);
 
         mTaskManager = new TaskManager(this, (long) 0);
 

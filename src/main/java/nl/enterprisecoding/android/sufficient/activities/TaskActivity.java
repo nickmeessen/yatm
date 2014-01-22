@@ -29,12 +29,8 @@ import java.util.Calendar;
 public class TaskActivity extends MainActivity {
 
     private long mSelectedTaskId;
-<<<<<<< HEAD
-    public static final String TASK_ID = "taskID";
-    public static final String EDIT_TASK = "editTask";
-=======
+    public static final String sEditTask = "editTask";
     public static final String sTaskId = "taskID";
->>>>>>> dbda02faaa27e7ea9a6ce38b01d88a3970dfab78
 
     /**
      * Called when the activity is starting.
@@ -96,8 +92,8 @@ public class TaskActivity extends MainActivity {
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getTitle().equals(getString(R.string.action_edit))) {
             Intent intent = new Intent(this, EditTaskActivity.class);
-            intent.putExtra(TASK_ID, mSelectedTaskId);
-            intent.putExtra(EDIT_TASK, true);
+            intent.putExtra(sTaskId, mSelectedTaskId);
+            intent.putExtra(sEditTask, true);
             startActivity(intent);
         } else if (item.getTitle().equals(getString(R.string.action_delete))) {
             mTaskManager.deleteTask(mSelectedTaskId);
