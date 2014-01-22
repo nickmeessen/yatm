@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2013. "EnterpriseCoding"
+  ~ ("EnterpriseCoding" constitutes; Nick Meessen, Jasper Burgers, Ferry Wienholts, Breunie Ploeg & Sjors Roelofs).
+  ~
+  ~ This content is released under the MIT License. A copy of this license should be included with the project otherwise can be found at http://opensource.org/licenses/MIT
+  -->
+
+<resources>
+    <string name="app_name">YATM</string>
+
+    <string name="title_tasks">Uppgifter</string>
+
+    <string name="action_add">Ny Uppgift</string>
+    <string name="action_edit">Redigera Uppgift</string>
+    <string name="action_delete">Ta Bort</string>
+    <string name="action_categories">Kategorier</string>
+    <string name="action_confirm">Bekräfta</string>
+    <string name="action_discard">Bekräfta</string>
+    <string name="action_change_date">Ändra Datum</string>
+    <string name="action_edit_category">Ändra Kategori</string>
+    <string name="action_delete_category">Ta Bort Kategori</string>
+    <string name="action_delete_all_tasks">Ta Bort Alla Uppgifter</string>
+    <string name="action_save_task">Spara Uppgift</string>
+    <string name="action_save_category">Spara Kategori</string>
+
+    <string name="task_title_label">Titel</string>
+    <string name="task_category_label">Kategori</string>
+    <string name="task_important">Viktig?</string>
+    <string name="task_date_label">Datum</string>
+
+    <string name="category_title_label">Titel</string>
+    <string name="category_colour_label">Färg</string>
+
+    <string name="toast_error">Oj, gick något fel…</string>
+    <string name="toast_no_category">Du måste lägga till en kategori först</string>
+
+    <string name="new_category">Ny Kategori</string>
+
+    <string name="visibility">Visibility</string>
+    <string name="task_done_icon">TaskDoneIcon</string>
+
+    <string name="delete_category_text">Flytta uppgifter till kategori:</string>
+
+    <string name="category_name_empty_error">Du måste fylla I ett namn!</string>
+    <string name="toast_category_exists">Denna kategori finns redan!</string>
+    <string name="category_added">Kategori tillagd.</string>
+    <string name="category_edited">Kategori redigerad</string>
+
+    <string name="today">Idag</string>
+    <string name="tomorrow">Imorgon</string>
+    <string name="upcoming">Kommande</string>
+    <string name="completed">Avklarat</string>
+
+    <string name="all_categories">Alla Kategorier</string>
+    <string name="standard_colours">Standardfärger</string>
+    <string name="random_colours">Slumpmässiga Färger</string>
+    <string name="empty_task">Den sak som du behöver göra..</string>
+</resources>
