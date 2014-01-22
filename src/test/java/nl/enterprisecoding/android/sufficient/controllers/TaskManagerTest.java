@@ -200,7 +200,7 @@ public class TaskManagerTest {
         assertNotSame(taskNewCatId, actual.getCatId());
         assertNotSame(taskNewImportant, actual.isImportant());
 
-        mTaskManager.updateTask(taskNewTitle, taskNewCatId, taskNewDate, taskNewImportant, cat1Id);
+        mTaskManager.updateTask(taskNewTitle, taskNewCatId, taskNewDate, taskNewImportant, false, cat1Id);
         actual = mTaskManager.getTaskById(taskId);
         assertEquals(taskNewTitle, actual.getTitle());
         assertEquals(taskNewCatId, actual.getCatId());
