@@ -28,6 +28,7 @@ import java.util.Calendar;
 public class TaskActivity extends MainActivity {
 
     private long mSelectedTaskId;
+    public static final String TASK_ID = "taskID";
     public static final String sEditTask = "editTask";
     public static final String sTaskId = "taskID";
 
@@ -91,6 +92,7 @@ public class TaskActivity extends MainActivity {
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getTitle().equals(getString(R.string.action_edit))) {
             Intent intent = new Intent(this, EditTaskActivity.class);
+            intent.putExtra(TASK_ID, mSelectedTaskId);
             intent.putExtra(sTaskId, mSelectedTaskId);
             intent.putExtra(sEditTask, true);
             startActivity(intent);
@@ -163,7 +165,7 @@ public class TaskActivity extends MainActivity {
             }
 
             Intent intent = new Intent(this, EditTaskActivity.class);
-            intent.putExtra(sTaskId, newTaskID);
+            intent.putExtra(TASK_ID, newTaskID);
             startActivity(intent);
         }
     }
