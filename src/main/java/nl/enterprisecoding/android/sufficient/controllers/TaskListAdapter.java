@@ -353,7 +353,6 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
      */
     @Override
     public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-
         Task task = getChild(groupPosition, childPosition);
 
         if (task.isCompleted()) {
