@@ -30,6 +30,7 @@ public class TaskActivity extends MainActivity {
 
     private long mSelectedTaskId;
     public static final String TASK_ID = "taskID";
+    public static final String EDIT_TASK = "editTask";
 
     /**
      * Called when the activity is starting.
@@ -92,6 +93,7 @@ public class TaskActivity extends MainActivity {
         if (item.getTitle().equals(getString(R.string.action_edit))) {
             Intent intent = new Intent(this, EditTaskActivity.class);
             intent.putExtra(TASK_ID, mSelectedTaskId);
+            intent.putExtra(EDIT_TASK, true);
             startActivity(intent);
         } else if (item.getTitle().equals(getString(R.string.action_delete))) {
             mTaskManager.deleteTask(mSelectedTaskId);
