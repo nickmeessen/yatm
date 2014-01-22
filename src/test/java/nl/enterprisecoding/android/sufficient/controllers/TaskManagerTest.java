@@ -18,9 +18,11 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import roboguice.activity.RoboActivity;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+
 import static org.junit.Assert.*;
 
 @RunWith(RobolectricTestRunner.class)
@@ -32,7 +34,7 @@ public class TaskManagerTest {
     @Before
     public void setup() {
         Intent intent = new Intent(new TaskActivity(), TaskActivity.class);
-        intent.putExtra(TaskActivity.TASK_ID, 0);
+        intent.putExtra(TaskActivity.sTaskId, 0);
         RoboActivity editTaskActivity = Robolectric.buildActivity(TaskActivity.class).withIntent(intent).create().get();
 
         mTaskManager = new TaskManager(editTaskActivity, (long) 0);

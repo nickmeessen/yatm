@@ -34,7 +34,7 @@ public class TaskActivityTest {
     public void setUp() {
 
         Intent intent = new Intent(new TaskActivity(), TaskActivity.class);
-        intent.putExtra(MainActivity.CATEGORY_ID, 3);
+        intent.putExtra(MainActivity.sCategoryId, 3);
 
         mTaskActivity1 = Robolectric.buildActivity(TaskActivity.class).withIntent(intent).create().get();
         mTaskActivity2 = Robolectric.buildActivity(TaskActivity.class).create().get();

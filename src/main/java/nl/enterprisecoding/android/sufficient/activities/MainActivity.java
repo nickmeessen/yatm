@@ -31,7 +31,7 @@ import roboguice.activity.RoboActivity;
  */
 public class MainActivity extends RoboActivity {
 
-    public static final String CATEGORY_ID = "categoryID";
+    public static final String sCategoryId = "categoryID";
     protected TaskManager mTaskManager;
     protected ActionBar mActionBar;
     protected long mCurrentCategoryID;
@@ -53,7 +53,7 @@ public class MainActivity extends RoboActivity {
         mActionBar.setDisplayShowTitleEnabled(true);
         mActionBar.setDisplayUseLogoEnabled(false);
 
-        mCurrentCategoryID = getIntent().getLongExtra(CATEGORY_ID, 0);
+        mCurrentCategoryID = getIntent().getLongExtra(sCategoryId, 0);
     }
 
     /**
