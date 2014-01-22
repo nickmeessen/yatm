@@ -24,49 +24,49 @@ import java.util.List;
  */
 public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter {
 
-    private static final String CATEGORIES_TABLE = "categories";
-    private static final String TASKS_TABLE = "tasks";
-    private static final String DATABASE_NAME = "yatm.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final String sCategoriesTable = "categories";
+    private static final String sTasksTable = "tasks";
+    private static final String sDatabaseName = "yatm.db";
+    private static final int sDatabaseVersion = 1;
 
-    private static final String CREATE = "CREATE TABLE ";
-    private static final String DESTROY = "DROP TABLE IF EXISTS ";
-    private static final Object P_ID_AI = " integer primary key autoincrement, ";
-    private static final String INT_NOT_NULL = " integer not null, ";
-    private static final String TEXT_NOT_NULL = " text not null, ";
+    private static final String sCreateTable = "CREATE TABLE ";
+    private static final String sDestroyTable = "DROP TABLE IF EXISTS ";
+    private static final Object sPrimaryKey = " integer primary key autoincrement, ";
+    private static final String sIntNotNull = " integer not null, ";
+    private static final String sTextNotNull = " text not null, ";
 
-    private static final String CID_COLUMN = "_id";
-    private static final String CTITLE_COLUMN = "title";
-    private static final String CCOLOUR_COLUMN = "colour";
-    private static final String CVISIBILITY = "visible";
+    private static final String sCidColumn = "_id";
+    private static final String sTitleColumn = "title";
+    private static final String sColourColumn = "colour";
+    private static final String sVisible = "visible";
 
-    private static final String[] CALL_COLUMNS = {CID_COLUMN, CTITLE_COLUMN, CCOLOUR_COLUMN, CVISIBILITY};
-    private static final String CREATE_CATEGORIES_STATEMENT = CREATE
-            + CATEGORIES_TABLE + "(" + CID_COLUMN + P_ID_AI
-            + CTITLE_COLUMN + TEXT_NOT_NULL
-            + CCOLOUR_COLUMN + INT_NOT_NULL
-            + CVISIBILITY + INT_NOT_NULL.replace(", ", "")
+    private static final String[] sCategoryColumns = {sCidColumn, sTitleColumn, sColourColumn, sVisible};
+    private static final String sCreateCategoriesStatement = sCreateTable
+            + sCategoriesTable + "(" + sCidColumn + sPrimaryKey
+            + sTitleColumn + sTextNotNull
+            + sColourColumn + sIntNotNull
+            + sVisible + sIntNotNull.replace(", ", "")
             + " );";
 
-    private static final String TCOLUMN_ID = "_id";
-    private static final String TCOLUMN_CATID = "_catId";
-    private static final String TCOLUMN_TASK = "task";
-    private static final String TCOLUMN_DATE = "date";
-    private static final String TCOLUMN_IMPORTANT = "important";
-    private static final String TCOLUMN_COMPLETED = "completed";
+    private static final String sTaskIdColumn = "_id";
+    private static final String sTaskCatIdColumn = "_catId";
+    private static final String sTaskColumn = "task";
+    private static final String sTaskDateColumn = "date";
+    private static final String sTaskImportantColumn = "important";
+    private static final String sTaskCompletedColumn = "completed";
 
-    private static final String[] TALL_COLUMNS = {TCOLUMN_ID, TCOLUMN_CATID, TCOLUMN_TASK, TCOLUMN_DATE, TCOLUMN_IMPORTANT, TCOLUMN_COMPLETED};
+    private static final String[] sTaskAllColumns = {sTaskIdColumn, sTaskCatIdColumn, sTaskColumn, sTaskDateColumn, sTaskImportantColumn, sTaskCompletedColumn};
 
-    private static final String CREATE_TASKS_STATEMENT = CREATE
-            + TASKS_TABLE + "(" + TCOLUMN_ID + P_ID_AI
-            + TCOLUMN_CATID + INT_NOT_NULL
-            + TCOLUMN_TASK + TEXT_NOT_NULL
-            + TCOLUMN_DATE + TEXT_NOT_NULL
-            + TCOLUMN_IMPORTANT + INT_NOT_NULL
-            + TCOLUMN_COMPLETED + INT_NOT_NULL.replace(", ", "")
+    private static final String sCreateTasksStatement = sCreateTable
+            + sTasksTable + "(" + sTaskIdColumn + sPrimaryKey
+            + sTaskCatIdColumn + sIntNotNull
+            + sTaskColumn + sTextNotNull
+            + sTaskDateColumn + sTextNotNull
+            + sTaskImportantColumn + sIntNotNull
+            + sTaskCompletedColumn + sIntNotNull.replace(", ", "")
             + ");";
 
-    private SQLiteDatabase database;
+    private SQLiteDatabase mDatabase;
 
     /**
      * Constructs a new SQL Lite Adapter and opens the database.
@@ -74,7 +74,7 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      * @param activity the activity called fromm.
      */
     public SqlLiteAdapter(Activity activity) {
-        super(activity, DATABASE_NAME, null, DATABASE_VERSION);
+        super(activity, sDatabaseName, null, sDatabaseVersion);
         open();
     }
 
@@ -82,7 +82,7 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      * Opens a SQLite database.
      */
     private void open() {
-        database = getWritableDatabase();
+        mDatabase = getWritableDatabase();
     }
 
 
@@ -94,8 +94,8 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_TASKS_STATEMENT);
-        db.execSQL(CREATE_CATEGORIES_STATEMENT);
+        db.execSQL(sCreateTasksStatement);
+        db.execSQL(sCreateCategoriesStatement);
     }
 
     /**
@@ -107,8 +107,8 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(DESTROY + CATEGORIES_TABLE);
-        db.execSQL(DESTROY + TASKS_TABLE);
+        db.execSQL(sDestroyTable + sCategoriesTable);
+        db.execSQL(sDestroyTable + sTasksTable);
         onCreate(db);
     }
 
@@ -124,14 +124,14 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
     public Task createTask(String title, long categoryId, Calendar date, boolean important) {
         ContentValues values = new ContentValues();
 
-        values.put(TCOLUMN_COMPLETED, 0);
-        values.put(TCOLUMN_IMPORTANT, important ? 1 : 0);
-        values.put(TCOLUMN_CATID, categoryId);
-        values.put(TCOLUMN_TASK, title);
-        values.put(TCOLUMN_DATE, date.getTimeInMillis());
+        values.put(sTaskCompletedColumn, 0);
+        values.put(sTaskImportantColumn, important ? 1 : 0);
+        values.put(sTaskCatIdColumn, categoryId);
+        values.put(sTaskColumn, title);
+        values.put(sTaskDateColumn, date.getTimeInMillis());
 
-        long insertId = database.insert(TASKS_TABLE, null, values);
-        Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, TCOLUMN_ID + " = " + insertId, null, null, null, null);
+        long insertId = mDatabase.insert(sTasksTable, null, values);
+        Cursor cursor = mDatabase.query(sTasksTable, sTaskAllColumns, sTaskIdColumn + " = " + insertId, null, null, null, null);
         cursor.moveToFirst();
 
         Task newTask = cursorToTask(cursor);
@@ -149,7 +149,7 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      * @return the task corresponding to the given ID.
      */
     public Task getTask(long taskId) {
-        Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, TCOLUMN_ID + " = " + taskId, null, null, null, null);
+        Cursor cursor = mDatabase.query(sTasksTable, sTaskAllColumns, sTaskIdColumn + " = " + taskId, null, null, null, null);
 
         Task task = null;
         if (cursor.getCount() > 0) {
@@ -182,13 +182,13 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
 
         ContentValues values = new ContentValues();
 
-        values.put(TCOLUMN_COMPLETED, isCompleted);
-        values.put(TCOLUMN_IMPORTANT, isImportant);
-        values.put(TCOLUMN_CATID, task.getCatId());
-        values.put(TCOLUMN_TASK, task.getTitle());
-        values.put(TCOLUMN_DATE, task.getDate().getTimeInMillis());
+        values.put(sTaskCompletedColumn, isCompleted);
+        values.put(sTaskImportantColumn, isImportant);
+        values.put(sTaskCatIdColumn, task.getCatId());
+        values.put(sTaskColumn, task.getTitle());
+        values.put(sTaskDateColumn, task.getDate().getTimeInMillis());
 
-        database.update(TASKS_TABLE, values, TCOLUMN_ID + " = " + task.getId(), null);
+        mDatabase.update(sTasksTable, values, sTaskIdColumn + " = " + task.getId(), null);
     }
 
     /**
@@ -197,7 +197,7 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      * @param id the id of the task to be deleted.
      */
     public void deleteTask(long id) {
-        database.delete(TASKS_TABLE, TCOLUMN_ID + " = " + id, null);
+        mDatabase.delete(sTasksTable, sTaskIdColumn + " = " + id, null);
     }
 
     /**
@@ -207,7 +207,7 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
 
         List<Task> taskList = new ArrayList<Task>();
 
-        Cursor cursor = database.query(TASKS_TABLE, TALL_COLUMNS, null, null, null, null, TCOLUMN_IMPORTANT + " DESC");
+        Cursor cursor = mDatabase.query(sTasksTable, sTaskAllColumns, null, null, null, null, sTaskImportantColumn + " DESC");
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -231,25 +231,25 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
         Task task = new Task();
 
         Calendar taskDate = Calendar.getInstance();
-        taskDate.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(TCOLUMN_DATE)));
+        taskDate.setTimeInMillis(cursor.getLong(cursor.getColumnIndex(sTaskDateColumn)));
 
         taskDate.set(Calendar.HOUR_OF_DAY, 0);
         taskDate.set(Calendar.MINUTE, 0);
         taskDate.set(Calendar.SECOND, 0);
         taskDate.set(Calendar.MILLISECOND, 0);
 
-        task.setId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_ID)));
-        task.setCategoryId(cursor.getLong(cursor.getColumnIndex(TCOLUMN_CATID)));
-        task.setTitle(cursor.getString(cursor.getColumnIndex(TCOLUMN_TASK)));
+        task.setId(cursor.getLong(cursor.getColumnIndex(sTaskIdColumn)));
+        task.setCategoryId(cursor.getLong(cursor.getColumnIndex(sTaskCatIdColumn)));
+        task.setTitle(cursor.getString(cursor.getColumnIndex(sTaskColumn)));
         task.setDate(taskDate);
 
-        if (cursor.getInt(cursor.getColumnIndex(TCOLUMN_IMPORTANT)) == 1) {
+        if (cursor.getInt(cursor.getColumnIndex(sTaskImportantColumn)) == 1) {
             task.setImportant(true);
         } else {
             task.setImportant(false);
         }
 
-        if (cursor.getInt(cursor.getColumnIndex(TCOLUMN_COMPLETED)) == 1) {
+        if (cursor.getInt(cursor.getColumnIndex(sTaskCompletedColumn)) == 1) {
             task.setCompleted(true);
         } else {
             task.setCompleted(false);
@@ -284,7 +284,7 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
 
         List<Category> categoryList = new ArrayList<Category>();
 
-        Cursor cursor = database.query(CATEGORIES_TABLE, CALL_COLUMNS, null, null, null, null, null);
+        Cursor cursor = mDatabase.query(sCategoriesTable, sCategoryColumns, null, null, null, null, null);
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
@@ -304,12 +304,12 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      */
     public Category createCategory(String title, int colour) {
         ContentValues values = new ContentValues();
-        values.put(CTITLE_COLUMN, title);
-        values.put(CCOLOUR_COLUMN, colour);
-        values.put(CVISIBILITY, 1);
+        values.put(sTitleColumn, title);
+        values.put(sColourColumn, colour);
+        values.put(sVisible, 1);
 
-        long insertId = database.insert(CATEGORIES_TABLE, null, values);
-        Cursor cursor = database.query(CATEGORIES_TABLE, CALL_COLUMNS, CID_COLUMN + " = " + insertId, null, null, null, null);
+        long insertId = mDatabase.insert(sCategoriesTable, null, values);
+        Cursor cursor = mDatabase.query(sCategoriesTable, sCategoryColumns, sCidColumn + " = " + insertId, null, null, null, null);
         cursor.moveToFirst();
 
         Category newCategory = cursorToCategory(cursor);
@@ -327,7 +327,7 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      * @return the category corresponding to the given ID.
      */
     public Category getCategory(long catId) {
-        Cursor cursor = database.query(CATEGORIES_TABLE, CALL_COLUMNS, CID_COLUMN + " = " + catId, null, null, null, null);
+        Cursor cursor = mDatabase.query(sCategoriesTable, sCategoryColumns, sCidColumn + " = " + catId, null, null, null, null);
 
         Category category = null;
         if (cursor.getCount() > 0) {
@@ -348,10 +348,10 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      */
     public void updateCategory(Category category) {
         ContentValues values = new ContentValues();
-        values.put(CTITLE_COLUMN, category.getTitle());
-        values.put(CCOLOUR_COLUMN, category.getColour());
-        values.put(CVISIBILITY, category.getVisible());
-        database.update(CATEGORIES_TABLE, values, CID_COLUMN + " = " + category.getId(), null);
+        values.put(sTitleColumn, category.getTitle());
+        values.put(sColourColumn, category.getColour());
+        values.put(sVisible, category.getVisible());
+        mDatabase.update(sCategoriesTable, values, sCidColumn + " = " + category.getId(), null);
     }
 
     /**
@@ -360,8 +360,8 @@ public class SqlLiteAdapter extends SQLiteOpenHelper implements IDatabaseAdapter
      * @param categoryId the category to delete.
      */
     public void deleteCategory(long categoryId) {
-        database.delete(TASKS_TABLE, TCOLUMN_CATID + " = " + categoryId, null);
-        database.delete(CATEGORIES_TABLE, CID_COLUMN + " = " + categoryId, null);
+        mDatabase.delete(sTasksTable, sTaskCatIdColumn + " = " + categoryId, null);
+        mDatabase.delete(sCategoriesTable, sCidColumn + " = " + categoryId, null);
     }
 
 }

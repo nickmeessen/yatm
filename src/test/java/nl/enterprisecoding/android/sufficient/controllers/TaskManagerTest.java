@@ -18,9 +18,11 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import roboguice.activity.RoboActivity;
+
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+
 import static org.junit.Assert.*;
 
 @RunWith(RobolectricTestRunner.class)
@@ -198,7 +200,7 @@ public class TaskManagerTest {
         assertNotSame(taskNewCatId, actual.getCatId());
         assertNotSame(taskNewImportant, actual.isImportant());
 
-        mTaskManager.updateTask(taskNewTitle, taskNewCatId, taskNewDate, taskNewImportant, cat1Id);
+        mTaskManager.updateTask(taskNewTitle, taskNewCatId, taskNewDate, taskNewImportant, false, cat1Id);
         actual = mTaskManager.getTaskById(taskId);
         assertEquals(taskNewTitle, actual.getTitle());
         assertEquals(taskNewCatId, actual.getCatId());

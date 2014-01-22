@@ -20,63 +20,63 @@ import static org.junit.Assert.assertTrue;
 @RunWith(RobolectricTestRunner.class)
 public class TaskTest {
 
-    private Task task;
+    private Task mTask;
 
     @Before
     public void setup() {
-        task = new Task();
+        mTask = new Task();
     }
 
     @Test
     public void test_setIdGetId() {
         int id = 3;
-        task.setId(id);
+        mTask.setId(id);
 
-        assertEquals(id, task.getId());
+        assertEquals(id, mTask.getId());
     }
 
     @Test
     public void test_setCatIdGetCatId() {
         int catId = 6;
-        task.setCategoryId(catId);
+        mTask.setCategoryId(catId);
 
-        assertEquals(catId, task.getCatId());
+        assertEquals(catId, mTask.getCatId());
     }
 
     @Test
     public void test_setTitleGetTitle() {
         String title = "Yolo";
-        task.setTitle(title);
+        mTask.setTitle(title);
 
-        assertEquals(title, task.getTitle());
+        assertEquals(title, mTask.getTitle());
     }
 
     @Test
     public void test_setDateGetDate() {
         Calendar date = Calendar.getInstance();
         date.set(1993, Calendar.JANUARY, 20);
-        task.setDate(date);
+        mTask.setDate(date);
 
-        assertEquals(date, task.getDate());
+        assertEquals(date, mTask.getDate());
     }
 
     @Test
     public void test_setImportantIsImportant() {
-        task.setImportant(true);
-        assertTrue(task.isImportant());
+        mTask.setImportant(true);
+        assertTrue(mTask.isImportant());
     }
 
     @Test
     public void test_setCompletedIsCompleted() {
-        task.setCompleted(true);
-        assertTrue(task.isCompleted());
+        mTask.setCompleted(true);
+        assertTrue(mTask.isCompleted());
     }
 
     @Test
     public void test_toString() {
         String title = "test";
-        task.setTitle(title);
+        mTask.setTitle(title);
 
-        assertEquals(title, task.toString());
+        assertEquals(title, mTask.toString());
     }
 }

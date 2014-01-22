@@ -19,10 +19,8 @@ import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateDialogButtonCl
 import nl.enterprisecoding.android.sufficient.models.Category;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
-
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
-
 
 /**
  * EditTaskActivity class
@@ -59,7 +57,8 @@ public class EditTaskActivity extends MainActivity implements View.OnClickListen
 
         mTaskManager = new TaskManager(this, mCurrentCategoryID);
 
-        mSelectedTaskId = getIntent().getExtras().getLong(TaskActivity.TASK_ID, 0);
+        mSelectedTaskId = getIntent().getExtras().getLong(TaskActivity.sTaskId, 0);
+        boolean editTask = getIntent().getExtras().getBoolean(TaskActivity.sEditTask, false);
 
         mTaskManager = new TaskManager(this, (long) 0);
 
@@ -71,8 +70,14 @@ public class EditTaskActivity extends MainActivity implements View.OnClickListen
 
         mTaskTitleInput = (EditText) findViewById(R.id.task_title);
 
-        mActionBar.setTitle(R.string.action_edit);
-        mTaskTitleInput.setHint(mTaskManager.getTaskById(mSelectedTaskId).getTitle());
+        if(editTask) {
+            mActionBar.setTitle(R.string.action_edit);
+            mTaskTitleInput.setText(mTaskManager.getTaskById(mSelectedTaskId).getTitle());
+        }
+        else {
+            mActionBar.setTitle(R.string.action_add);
+            mTaskTitleInput.setHint(mTaskManager.getTaskById(mSelectedTaskId).getTitle());
+        }
 
         initTaskCategorySpinner(mTaskCategorySpinner);
 
@@ -90,7 +95,6 @@ public class EditTaskActivity extends MainActivity implements View.OnClickListen
      */
     @Override
     public void onClick(View view) {
-
         if (view.getId() == R.id.save_task_button) {
             saveTask();
         } else {
@@ -110,7 +114,13 @@ public class EditTaskActivity extends MainActivity implements View.OnClickListen
     private void saveTask() {
         int selectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
         long selectedCategoryID = mTaskManager.getCategories().get(selectedCategoryIndex).getId();
-        mTaskManager.updateTask(mTaskTitleInput.getText().toString(), selectedCategoryID, mTaskDate, mTaskImportantCheckBox.isChecked(), mSelectedTaskId);
+        mTaskManager.updateTask(
+                mTaskTitleInput.getText().toString(),
+                selectedCategoryID,
+                mTaskDate,
+                mTaskImportantCheckBox.isChecked(),
+                mTaskManager.getTaskById(mSelectedTaskId).isCompleted(),
+                mSelectedTaskId);
         startTaskActivity(selectedCategoryID);
     }
 

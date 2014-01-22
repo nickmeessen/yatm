@@ -17,12 +17,10 @@ import android.widget.ExpandableListView;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Task;
-
 import java.util.Calendar;
 
 /**
  * TaskActivity class
- * <p/>
  * From here a user could execute various actions on tasks.
  *
  * @author Nick Meessen
@@ -31,6 +29,8 @@ public class TaskActivity extends MainActivity {
 
     private long mSelectedTaskId;
     public static final String TASK_ID = "taskID";
+    public static final String sEditTask = "editTask";
+    public static final String sTaskId = "taskID";
 
     /**
      * Called when the activity is starting.
@@ -71,7 +71,6 @@ public class TaskActivity extends MainActivity {
      */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-
         if (v.getId() == R.id.taskList) {
             String[] menuItems = getResources().getStringArray(R.array.task_context_menu);
 
@@ -93,11 +92,15 @@ public class TaskActivity extends MainActivity {
         if (item.getTitle().equals(getString(R.string.action_edit))) {
             Intent intent = new Intent(this, EditTaskActivity.class);
             intent.putExtra(TASK_ID, mSelectedTaskId);
+            intent.putExtra(sTaskId, mSelectedTaskId);
+            intent.putExtra(sEditTask, true);
             startActivity(intent);
         } else if (item.getTitle().equals(getString(R.string.action_delete))) {
             mTaskManager.deleteTask(mSelectedTaskId);
             finish();
             startActivity(getIntent());
+        } else {
+            return false;
         }
 
         return true;
@@ -143,7 +146,6 @@ public class TaskActivity extends MainActivity {
      * Starts the "Edit Task" activity.
      */
     private void startEditTaskActivity() {
-
         if (mTaskManager.getCategories().size() == 0) {
             makeToast(getString(R.string.toast_no_category));
 
@@ -181,13 +183,11 @@ public class TaskActivity extends MainActivity {
     @Override
     public void onBackPressed() {
         if (mCurrentCategoryID != 0) {
-
             Intent intent = new Intent(this, TaskActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-
         } else {
             super.onBackPressed();
         }
