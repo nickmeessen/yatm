@@ -25,7 +25,6 @@ import java.util.List;
 
 /**
  * CategoryActivity class
- * <p/>
  * From here a user could execute various actions on categories.
  *
  * @author Breunie Ploeg
@@ -68,7 +67,6 @@ public class CategoryActivity extends MainActivity implements View.OnKeyListener
 
         View allCategoriesView = findViewById(R.id.all_cats);
         allCategoriesView.setOnClickListener(this);
-
     }
 
     /**
@@ -78,7 +76,6 @@ public class CategoryActivity extends MainActivity implements View.OnKeyListener
      */
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
             case R.id.newCategory:
                 createColourDialog(mBgShape);
@@ -224,9 +221,7 @@ public class CategoryActivity extends MainActivity implements View.OnKeyListener
      * this event and it should continue to be propagated.
      */
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-
-        if (keyCode == KeyEvent.KEYCODE_MENU) {
-
+        if(keyCode == KeyEvent.KEYCODE_MENU) {
             startActivity(new Intent(this, TaskActivity.class));
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 
@@ -242,7 +237,6 @@ public class CategoryActivity extends MainActivity implements View.OnKeyListener
      * @param spinner The spinner which displays the categories
      */
     private void initTaskCategorySpinner(Spinner spinner) {
-
         List<Category> spinnerArray = mTaskManager.getCategories();
 
         spinnerArray.remove(mTaskManager.getCategoryById(mSelectedCategoryId));

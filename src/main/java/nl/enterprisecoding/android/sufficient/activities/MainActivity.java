@@ -95,7 +95,6 @@ public class MainActivity extends RoboActivity {
      * @param colourDialog The Dialog that will display the colours
      */
     protected void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog) {
-
         final Button colourButton = (Button) colourDialog.findViewById(buttonId);
         final int[] randColour = generateRandomColour();
 

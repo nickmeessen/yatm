@@ -19,10 +19,8 @@ import nl.enterprisecoding.android.sufficient.handlers.TaskSetDateDialogButtonCl
 import nl.enterprisecoding.android.sufficient.models.Category;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectView;
-
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
-
 
 /**
  * EditTaskActivity class
@@ -97,7 +95,6 @@ public class EditTaskActivity extends MainActivity implements View.OnClickListen
      */
     @Override
     public void onClick(View view) {
-
         if (view.getId() == R.id.save_task_button) {
             saveTask();
         } else {
