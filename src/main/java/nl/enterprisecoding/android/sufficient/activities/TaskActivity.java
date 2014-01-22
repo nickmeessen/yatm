@@ -16,6 +16,7 @@ import android.widget.ExpandableListView;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Task;
+
 import java.util.Calendar;
 
 /**
