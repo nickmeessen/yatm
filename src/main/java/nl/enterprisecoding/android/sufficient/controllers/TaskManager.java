@@ -150,7 +150,7 @@ public class TaskManager implements ITaskManager {
 
         mDatabaseAdapter.deleteTask(taskId);
 
-        mTaskListAdapter.notifyDataSetChanged();
+        //mTaskListAdapter.notifyDataSetChanged();
     }
 
     private Category getCategoryByTaskId(long taskId) {
@@ -312,7 +312,7 @@ public class TaskManager implements ITaskManager {
      * @param important  whether the task is important or not
      * @param taskId     the id of the task to be updated.
      */
-    public void updateTask(String title, long categoryId, Calendar date, boolean important, long taskId) {
+    public void updateTask(String title, long categoryId, Calendar date, boolean important, boolean completed, long taskId) {
 
         Task task = mDatabaseAdapter.getTask(taskId);
 
@@ -320,6 +320,7 @@ public class TaskManager implements ITaskManager {
         task.setCategoryId(categoryId);
         task.setDate(date);
         task.setImportant(important);
+        task.setCompleted(completed);
 
         mDatabaseAdapter.updateTask(task);
     }

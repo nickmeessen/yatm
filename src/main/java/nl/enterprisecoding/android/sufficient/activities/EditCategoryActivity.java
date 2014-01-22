@@ -103,7 +103,7 @@ public class EditCategoryActivity extends MainActivity {
              * @param dialog The DialogInterface that it needs to listen to
              */
             public void onDismiss(DialogInterface dialog) {
-                mCategoryColour = mTaskManager.getCategoryById(mSelectedCategoryId).getColour();
+                mCategoryColour = getCategoryColour();
                 mActionBar.setBackgroundDrawable(new ColorDrawable(mCategoryColour));
             }
         });
@@ -117,4 +117,5 @@ public class EditCategoryActivity extends MainActivity {
         startActivity(intent);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
+
 }

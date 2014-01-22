@@ -14,13 +14,13 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
-import nl.enterprisecoding.android.sufficient.handlers.ColourButtonClickHandler;
 import roboguice.activity.RoboActivity;
 
 /**
@@ -35,6 +35,7 @@ public class MainActivity extends RoboActivity {
     protected TaskManager mTaskManager;
     protected ActionBar mActionBar;
     protected long mCurrentCategoryID;
+    private int mCategoryColour = 0;
 
     /**
      * Called when the activity is starting.
@@ -95,7 +96,6 @@ public class MainActivity extends RoboActivity {
      * @param colourDialog The Dialog that will display the colours
      */
     protected void createColourButton(final GradientDrawable bgShape, int buttonId, final int inputColour, final Dialog colourDialog) {
-
         final Button colourButton = (Button) colourDialog.findViewById(buttonId);
         final int[] randColour = generateRandomColour();
 
@@ -105,7 +105,37 @@ public class MainActivity extends RoboActivity {
             colourButton.setBackgroundColor(randColour[0]);
         }
 
-        colourButton.setOnClickListener(new ColourButtonClickHandler(bgShape, colourDialog, inputColour, randColour[0]));
+        colourButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (inputColour != 0) {
+                    bgShape.setColor(getResources().getColor(inputColour));
+                    mCategoryColour = getResources().getColor(inputColour);
+                } else {
+                    bgShape.setColor(randColour[0]);
+                    mCategoryColour = randColour[0];
+                }
+                colourDialog.dismiss();
+            }
+        });
+    }
+
+    /**
+     * Gets the category colour
+     *
+     * @return The current category colour
+     */
+    protected int getCategoryColour() {
+        return mCategoryColour;
+    }
+
+    /**
+     * Sets the category colour
+     *
+     * @param colour The colour that the variable needs to be set to
+     */
+    protected void setCategoryColour(int colour) {
+        mCategoryColour = colour;
     }
 
     /**
