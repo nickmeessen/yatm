@@ -122,6 +122,7 @@ public class CategoryActivity extends MainActivity implements View.OnKeyListener
     private void addCategory() {
         final EditText editText = (EditText) findViewById(R.id.newCategory);
         String categoryName = editText.getText().toString();
+        mCategoryColour = getCategoryColour();
 
         if (mCategoryColour == 0) {
             mCategoryColour = mRandomColour[0];
@@ -142,6 +143,7 @@ public class CategoryActivity extends MainActivity implements View.OnKeyListener
     private void generateColourShape() {
         mRandomColour = generateRandomColour();
         mBgShape.setColor(mRandomColour[0]);
+        setCategoryColour(mRandomColour[0]);
     }
 
     /**

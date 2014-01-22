@@ -15,6 +15,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -36,6 +37,7 @@ public class MainActivity extends RoboActivity {
     protected TaskManager mTaskManager;
     protected ActionBar mActionBar;
     protected long mCurrentCategoryID;
+    private int mCategoryColour = 0;
 
     /**
      * Called when the activity is starting.
@@ -105,7 +107,38 @@ public class MainActivity extends RoboActivity {
             colourButton.setBackgroundColor(randColour[0]);
         }
 
-        colourButton.setOnClickListener(new ColourButtonClickHandler(bgShape, colourDialog, inputColour, randColour[0]));
+        colourButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (inputColour != 0) {
+                    bgShape.setColor(getResources().getColor(inputColour));
+                    mCategoryColour = getResources().getColor(inputColour);
+                } else {
+                    bgShape.setColor(randColour[0]);
+                    mCategoryColour = randColour[0];
+                }
+                colourDialog.dismiss();
+            }
+        });
+        //colourButton.setOnClickListener(new ColourButtonClickHandler(bgShape, colourDialog, inputColour, randColour[0]));
+    }
+
+    /**
+     * Gets the category colour
+     *
+     * @return The current category colour
+     */
+    protected int getCategoryColour() {
+        return mCategoryColour;
+    }
+
+    /**
+     * Sets the category colour
+     *
+     * @param colour The colour that the variable needs to be set to
+     */
+    protected void setCategoryColour(int colour) {
+        mCategoryColour = colour;
     }
 
     /**
@@ -160,7 +193,6 @@ public class MainActivity extends RoboActivity {
         createColourButton(bgShape, R.id.colour_random3_button, 0, colourDialog);
         createColourButton(bgShape, R.id.colour_random4_button, 0, colourDialog);
 
-        Log.d("colour_dialog", "open");
         colourDialog.show();
         return colourDialog;
     }
