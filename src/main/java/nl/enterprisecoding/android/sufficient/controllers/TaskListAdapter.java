@@ -242,11 +242,7 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         LayoutInflater layoutInflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
-            if (getChildrenCount(groupPosition) == 0) {
-                view = layoutInflater.inflate(R.layout.group_item_e, null);
-            } else {
                 view = layoutInflater.inflate(R.layout.group_item, null);
-            }
         }
 
         ((TextView) view.findViewById(R.id.groupTitle)).setText(getGroup(groupPosition));
