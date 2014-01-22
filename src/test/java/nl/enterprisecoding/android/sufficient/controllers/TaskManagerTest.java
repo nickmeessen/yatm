@@ -40,7 +40,7 @@ public class TaskManagerTest {
         mTaskManager = new TaskManager(editTaskActivity, (long) 0);
 
         date = Calendar.getInstance();
-        date.set(1993, 01, 20);
+        date.set(1993, Calendar.JANUARY, 20);
     }
 
     @Test
@@ -130,7 +130,6 @@ public class TaskManagerTest {
         long task2Id = mTaskManager.createTask("CreateTask2", category1Id, date, true);
         long task1Id = mTaskManager.createTask("CreateTask1", category1Id, date, true);
 
-        Map<Long, Category> actual = mTaskManager.getAllCategories();
         assertEquals(category1Id, mTaskManager.getTaskById(task1Id).getCatId());
         assertEquals(category1Id, mTaskManager.getTaskById(task2Id).getCatId());
 
@@ -191,7 +190,7 @@ public class TaskManagerTest {
         long taskNewCatId = mTaskManager.createCategory("secondCategory", 125);
         String taskNewTitle = "UpdateTask";
         Calendar taskNewDate = Calendar.getInstance();
-        taskNewDate.set(1993, 7, 29);
+        taskNewDate.set(1993, Calendar.JULY, 29);
         Boolean taskNewImportant = false;
 
         long taskId = mTaskManager.createTask("CreateNewTask", cat1Id, date, true);

@@ -231,7 +231,7 @@ public class CategoryActivity extends MainActivity implements View.OnKeyListener
      * this event and it should continue to be propagated.
      */
     public boolean onKeyUp(int keyCode, KeyEvent event) {
-        if(keyCode == KeyEvent.KEYCODE_MENU) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
             startActivity(new Intent(this, TaskActivity.class));
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 
