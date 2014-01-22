@@ -29,7 +29,7 @@ import java.util.Calendar;
 public class TaskActivity extends MainActivity {
 
     private long mSelectedTaskId;
-    public static final String sTaskId = "taskID";
+    public static final String TASK_ID = "taskID";
 
     /**
      * Called when the activity is starting.
@@ -91,7 +91,7 @@ public class TaskActivity extends MainActivity {
     public boolean onContextItemSelected(MenuItem item) {
         if (item.getTitle().equals(getString(R.string.action_edit))) {
             Intent intent = new Intent(this, EditTaskActivity.class);
-            intent.putExtra(sTaskId, mSelectedTaskId);
+            intent.putExtra(TASK_ID, mSelectedTaskId);
             startActivity(intent);
         } else if (item.getTitle().equals(getString(R.string.action_delete))) {
             mTaskManager.deleteTask(mSelectedTaskId);
@@ -162,7 +162,7 @@ public class TaskActivity extends MainActivity {
             }
 
             Intent intent = new Intent(this, EditTaskActivity.class);
-            intent.putExtra(sTaskId, newTaskID);
+            intent.putExtra(TASK_ID, newTaskID);
             startActivity(intent);
         }
     }
