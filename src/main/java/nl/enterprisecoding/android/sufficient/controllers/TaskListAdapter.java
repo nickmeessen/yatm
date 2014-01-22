@@ -14,6 +14,7 @@ import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.*;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.models.Category;

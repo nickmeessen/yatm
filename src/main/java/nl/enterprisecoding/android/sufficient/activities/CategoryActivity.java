@@ -208,6 +208,8 @@ public class CategoryActivity extends MainActivity implements View.OnKeyListener
             });
             alert.setNegativeButton(getString(R.string.action_discard), null);
             alert.show();
+        } else {
+            return false;
         }
 
         return true;

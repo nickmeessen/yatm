@@ -19,73 +19,73 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(RobolectricTestRunner.class)
 public class CategoryTest {
 
-    private Category category;
+    private Category mCategory;
 
     @Before
     @Test
     public void test_Category() {
-        category = new Category();
-        assertNotNull(category);
+        mCategory = new Category();
+        assertNotNull(mCategory);
     }
 
     @Test
     public void test_setTitleGetTitle() {
         String title = "testTitle";
-        category.setTitle(title);
+        mCategory.setTitle(title);
 
-        assertEquals("testTitle", category.getTitle());
+        assertEquals("testTitle", mCategory.getTitle());
     }
 
     @Test
     public void test_setColourGetColour() {
         int colour = Color.RED;
-        category.setColour(colour);
+        mCategory.setColour(colour);
 
-        assertEquals(Color.RED, category.getColour());
+        assertEquals(Color.RED, mCategory.getColour());
     }
 
     @Test
     public void test_setIdGetId() {
         int id = 5;
-        category.setID(id);
+        mCategory.setID(id);
 
-        assertEquals(id, category.getId());
+        assertEquals(id, mCategory.getId());
     }
 
     @Test
     public void test_addTaskGetTasks() {
         Task task = new Task();
-        category.addTask(task);
+        mCategory.addTask(task);
 
-        assertEquals(task, category.getTasks().get(0));
+        assertEquals(task, mCategory.getTasks().get(0));
     }
 
     @Test
     public void test_setVisible() {
-        category.setVisible(1);
-        assertEquals(1, category.getVisible());
+        mCategory.setVisible(1);
+        assertEquals(1, mCategory.getVisible());
     }
 
     @Test
     public void test_isVisible() {
-        category.setVisible(0);
-        assertEquals(false, category.isVisible());
+        mCategory.setVisible(0);
+        assertEquals(false, mCategory.isVisible());
 
-        category.setVisible(1);
-        assertEquals(true, category.isVisible());
+        mCategory.setVisible(1);
+        assertEquals(true, mCategory.isVisible());
     }
 
     @Test
     public void test_toString() {
         String title = "CategoryTitle";
-        category.setTitle(title);
+        mCategory.setTitle(title);
 
-        assertEquals(title, category.toString());
+        assertEquals(title, mCategory.toString());
     }
 
     public void removeAllTasks() {
-        for (Task t : category.getTasks()) {
-            category.removeTask(t);
+        for (Task t : mCategory.getTasks()) {
+            mCategory.removeTask(t);
         }
     }
 
@@ -94,10 +94,10 @@ public class CategoryTest {
         removeAllTasks();
 
         Task task = new Task();
-        category.addTask(task);
-        category.removeTask(task);
+        mCategory.addTask(task);
+        mCategory.removeTask(task);
 
-        assertEquals(0, category.getTasks().size());
+        assertEquals(0, mCategory.getTasks().size());
     }
 
 }
