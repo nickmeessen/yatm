@@ -16,12 +16,10 @@ import android.widget.ExpandableListView;
 import nl.enterprisecoding.android.sufficient.R;
 import nl.enterprisecoding.android.sufficient.controllers.TaskManager;
 import nl.enterprisecoding.android.sufficient.models.Task;
-
 import java.util.Calendar;
 
 /**
  * TaskActivity class
- * <p/>
  * From here a user could execute various actions on tasks.
  *
  * @author Nick Meessen
@@ -72,7 +70,6 @@ public class TaskActivity extends MainActivity {
      */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-
         if (v.getId() == R.id.taskList) {
             String[] menuItems = getResources().getStringArray(R.array.task_context_menu);
 
@@ -148,7 +145,6 @@ public class TaskActivity extends MainActivity {
      * Starts the "Edit Task" activity.
      */
     private void startEditTaskActivity() {
-
         if (mTaskManager.getCategories().size() == 0) {
             makeToast(getString(R.string.toast_no_category));
 
@@ -186,13 +182,11 @@ public class TaskActivity extends MainActivity {
     @Override
     public void onBackPressed() {
         if (mCurrentCategoryID != 0) {
-
             Intent intent = new Intent(this, TaskActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             startActivity(intent);
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-
         } else {
             super.onBackPressed();
         }
