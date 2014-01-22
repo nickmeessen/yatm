@@ -10,7 +10,6 @@ package nl.enterprisecoding.android.sufficient.activities;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.*;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
