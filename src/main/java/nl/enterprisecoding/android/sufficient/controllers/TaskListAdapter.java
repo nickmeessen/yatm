@@ -337,7 +337,6 @@ public class TaskListAdapter extends BaseExpandableListAdapter implements Expand
         return true;
     }
 
-
     /**
      * Callback method to be invoked when a child in this expandable list has
      * been clicked.
