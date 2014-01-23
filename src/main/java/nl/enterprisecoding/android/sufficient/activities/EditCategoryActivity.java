@@ -90,9 +90,14 @@ public class EditCategoryActivity extends MainActivity {
 
     private void editCategory() {
         String categoryName = mCategoryTitleInput.getText().toString();
-        mTaskManager.updateCategory(categoryName, mCategoryColour, 1, mSelectedCategoryId);
-        makeToast(getString(R.string.category_edited));
-        startCategoryActivity();
+
+        if(!categoryName.equals("")) {
+            mTaskManager.updateCategory(categoryName, mCategoryColour, 1, mSelectedCategoryId);
+            makeToast(getString(R.string.category_edited));
+            startCategoryActivity();
+        } else {
+            makeToast(getString(R.string.category_name_empty_error));
+        }
     }
 
     private void createColourDialog() {
