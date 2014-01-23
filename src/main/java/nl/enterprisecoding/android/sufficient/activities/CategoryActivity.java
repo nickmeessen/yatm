@@ -122,18 +122,23 @@ public class CategoryActivity extends MainActivity implements View.OnKeyListener
     private void addCategory() {
         final EditText editText = (EditText) findViewById(R.id.newCategory);
         String categoryName = editText.getText().toString();
-        mCategoryColour = getCategoryColour();
 
-        if (mCategoryColour == 0) {
-            mCategoryColour = mRandomColour[0];
+        if(!categoryName.equals("")) {
+            mCategoryColour = getCategoryColour();
+
+            if (mCategoryColour == 0) {
+                mCategoryColour = mRandomColour[0];
+            }
+
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+            mTaskManager.createCategory(categoryName, mCategoryColour);
+            editText.setText("");
+            makeToast(getString(R.string.category_added));
+            generateColourShape();
+        } else {
+            makeToast(getString(R.string.category_name_empty_error));
         }
-
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-        mTaskManager.createCategory(categoryName, mCategoryColour);
-        editText.setText("");
-        makeToast(getString(R.string.category_added));
-        generateColourShape();
 
     }
 
