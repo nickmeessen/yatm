@@ -8,13 +8,13 @@ For a school project we were asked to build a simple Android application, this a
 
 And one version that rebels against all above rules. Starting out with a hack-up job of a simple ToDo application, we started refactoring all the _bad smells_ out of this version, eventually ending up with this simple application.
 
-It is developed for, and tested on Android 4.3. We can't guarantee any compatibility with future versions. The software is provided as is, you can install it from the app store here : [Google Play Store - YATM](https://play.googe.com)
+It is developed for, and tested on Android 4.3. We can't guarantee any compatibility with future versions. The software is provided as is, you can install it from the app store here : [Google Play Store - YATM](https://play.google.com/store/apps/details?id=nl.enterprisecoding.android.sufficient)
 
 Screenshots
 =========
-[https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot1.png](https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot1.png =160x)
-[https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot2.png](https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot2.png =160x)
-[https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot3.png](https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot3.png =160x)
+![](https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot1.png =160x)
+![](https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot2.png =160x)
+![](https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot3.png =160x)
 
 Compiling/Installing
 =========
