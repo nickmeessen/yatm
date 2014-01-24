@@ -49,7 +49,7 @@ public class TaskManager implements ITaskManager {
     /**
      * Initializes both views
      *
-     * @param activity is passed on into specified initializing methodes
+     * @param activity is passed on into specified initializing methods
      */
     private void initializeViews(Activity activity) {
         initializeCategoryView(activity);
@@ -149,8 +149,6 @@ public class TaskManager implements ITaskManager {
         getCategoryByTaskId(taskId).removeTask(getTaskById(taskId));
 
         mDatabaseAdapter.deleteTask(taskId);
-
-        //mTaskListAdapter.notifyDataSetChanged();
     }
 
     private Category getCategoryByTaskId(long taskId) {
@@ -205,22 +203,6 @@ public class TaskManager implements ITaskManager {
             }
         }
         return mVisibleCategories;
-    }
-
-    /**
-     * Retrieves a Category by it's Title.
-     *
-     * @param categoryTitle the category title to search for
-     * @return the found category, or null when not found.
-     */
-    public Category getCategoryByTitle(String categoryTitle) {
-        for (Category c : mCategoryList.values()) {
-            if (c.getTitle().equals(categoryTitle)) {
-                return c;
-            }
-        }
-
-        return null;
     }
 
     /**
@@ -282,7 +264,7 @@ public class TaskManager implements ITaskManager {
      * Gets a Category by it's ID.
      *
      * @param id the id of the category to get.
-     * @return the category coressponding to the ID.
+     * @return the category corresponding to the ID.
      */
     public Category getCategoryById(long id) {
         for (Category c : mCategoryList.values()) {

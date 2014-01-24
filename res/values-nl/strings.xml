@@ -32,7 +32,6 @@
     <string name="category_title_label">Titel</string>
     <string name="category_colour_label">Kleur</string>
 
-    <string name="toast_error">Oeps, er gaat iets verkeerd..</string>
     <string name="toast_no_category">Je moet eerst een categorie toevoegen!</string>
 
     <string name="new_category">Nieuwe Categorie</string>
@@ -43,7 +42,6 @@
     <string name="delete_category_text">Verplaats taken naar categorie:</string>
 
     <string name="category_name_empty_error">Je moet een naam invullen!</string>
-    <string name="toast_category_exists">Deze categorie bestaat al</string>
     <string name="category_added">Categorie succesvol toegevoegd</string>
     <string name="category_edited">Categorie succesvol bewerkt</string>
 

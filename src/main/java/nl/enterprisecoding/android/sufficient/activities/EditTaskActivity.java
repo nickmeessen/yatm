@@ -71,21 +71,43 @@ public class EditTaskActivity extends MainActivity implements View.OnClickListen
 
         mTaskTitleInput = (EditText) findViewById(R.id.task_title);
 
+        initTaskCategorySpinner(mTaskCategorySpinner);
+
         if (editTask) {
             mActionBar.setTitle(R.string.action_edit);
             mTaskTitleInput.setText(mTaskManager.getTaskById(mSelectedTaskId).getTitle());
+            mTaskCategorySpinner.setSelection(findCategoryIndexById(mTaskManager.getTaskById(mSelectedTaskId).getCatId()));
         } else {
             mActionBar.setTitle(R.string.action_add);
             mTaskTitleInput.setHint(mTaskManager.getTaskById(mSelectedTaskId).getTitle());
         }
 
-        initTaskCategorySpinner(mTaskCategorySpinner);
+
 
         mTaskImportantCheckBox = (CheckBox) findViewById(R.id.task_important);
         mTaskImportantCheckBox.setChecked(mTaskManager.getTaskById(mSelectedTaskId).isImportant());
 
         Button saveTaskButton = (Button) findViewById(R.id.save_task_button);
         saveTaskButton.setOnClickListener(this);
+    }
+
+    /**
+     * Finds a category index by it's ID.
+     *
+     * @param catId the index to be looked up.
+     * @return the index of the given category ID.
+     */
+    private int findCategoryIndexById(long catId) {
+
+        int index = 0;
+
+        for (int i = 0; i < mTaskCategorySpinner.getCount(); i++){
+            if (((Category) mTaskCategorySpinner.getItemAtPosition(i)).getId() == catId) {
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 
     /**
@@ -115,7 +137,7 @@ public class EditTaskActivity extends MainActivity implements View.OnClickListen
         int selectedCategoryIndex = mTaskCategorySpinner.getSelectedItemPosition();
         long selectedCategoryID = mTaskManager.getCategories().get(selectedCategoryIndex).getId();
 
-        if(!mTaskTitleInput.getText().toString().equals("")) {
+        if (!mTaskTitleInput.getText().toString().equals("")) {
             mTaskManager.updateTask(
                     mTaskTitleInput.getText().toString(),
                     selectedCategoryID,
@@ -135,14 +157,15 @@ public class EditTaskActivity extends MainActivity implements View.OnClickListen
      * @param spinner The spinner which displays the categories
      */
     private void initTaskCategorySpinner(Spinner spinner) {
-        ArrayAdapter<Category> mSpinnerArrayAdapter = new ArrayAdapter<Category>(
+        ArrayAdapter<Category> arrayAdapter = new ArrayAdapter<Category>(
                 this,
                 android.R.layout.simple_spinner_item,
                 mTaskManager.getCategories()
         );
 
-        mSpinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(mSpinnerArrayAdapter);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(arrayAdapter);
+
     }
 
     /**

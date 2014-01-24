@@ -51,10 +51,10 @@ public class TaskActivity extends MainActivity {
         taskListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if(parent.getItemAtPosition(position) instanceof Task){
+                if (parent.getItemAtPosition(position) instanceof Task) {
                     mSelectedTaskId = ((Task) parent.getItemAtPosition(position)).getId();
                 }
-               return false;
+                return false;
             }
         });
 
@@ -75,14 +75,14 @@ public class TaskActivity extends MainActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.ExpandableListContextMenuInfo) menuInfo;
         int type = ExpandableListView.getPackedPositionType(info.packedPosition);
-        if(type == 1){
-                if (v.getId() == R.id.taskList) {
-                    String[] menuItems = getResources().getStringArray(R.array.task_context_menu);
+        if (type == 1) {
+            if (v.getId() == R.id.taskList) {
+                String[] menuItems = getResources().getStringArray(R.array.task_context_menu);
 
-                    for (int i = 0; i < menuItems.length; i++) {
-                        menu.add(Menu.NONE, i, i, menuItems[i]);
-                    }
+                for (int i = 0; i < menuItems.length; i++) {
+                    menu.add(Menu.NONE, i, i, menuItems[i]);
                 }
+            }
         }
     }
 

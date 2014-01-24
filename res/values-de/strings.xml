@@ -25,7 +25,6 @@
     <string name="category_title_label">Titel</string>
     <string name="category_colour_label">Farbe</string>
 
-    <string name="toast_error">Hoppla, ist etwas schief gelaufen..</string>
     <string name="toast_no_category">Sie müssen sich zuerst Kategorie hinzufügen</string>
 
     <string name="new_category">Neue Kategorie</string>
@@ -36,7 +35,6 @@
     <string name="delete_category_text">Bewegen Sie Aufgaben zur Kategorie:</string>
 
     <string name="category_name_empty_error">Sie müssen einen Namen eingeben!</string>
-    <string name="toast_category_exists">Diese Kategorie existiert bereits!</string>
     <string name="category_added">Kategorie erfolgreich hinzugefügt</string>
     <string name="category_edited">Kategorie erfolgreich bearbeitet</string>
 

@@ -68,16 +68,6 @@ public interface IDatabaseAdapter {
      */
     Category createCategory(String title, int colour);
 
-
-    /**
-     * Gets a task by it's ID.
-     *
-     * @param taskId the id of the task to retrieve.
-     * @return the task corresponding to the given ID.
-     */
-    Category getCategory(long taskId);
-
-
     /**
      * Updates a category.
      *

@@ -123,7 +123,7 @@ public class CategoryActivity extends MainActivity implements View.OnKeyListener
         final EditText editText = (EditText) findViewById(R.id.newCategory);
         String categoryName = editText.getText().toString();
 
-        if(!categoryName.equals("")) {
+        if (!categoryName.equals("")) {
             mCategoryColour = getCategoryColour();
 
             if (mCategoryColour == 0) {

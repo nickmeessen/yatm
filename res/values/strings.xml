@@ -32,7 +32,6 @@
     <string name="category_title_label">Title</string>
     <string name="category_colour_label">Colour</string>
 
-    <string name="toast_error">Oops, something went wrong..</string>
     <string name="toast_no_category">You need to add a category first</string>
 
     <string name="new_category">New Category</string>
@@ -43,7 +42,6 @@
     <string name="delete_category_text">Move tasks to category:</string>
 
     <string name="category_name_empty_error">You need to enter a title!</string>
-    <string name="toast_category_exists">This category already exists!</string>
     <string name="category_added">Category successfully added</string>
     <string name="category_edited">Category successfully edited</string>
 

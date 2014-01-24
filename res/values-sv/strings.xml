@@ -32,7 +32,6 @@
     <string name="category_title_label">Titel</string>
     <string name="category_colour_label">Färg</string>
 
-    <string name="toast_error">Oj, gick något fel…</string>
     <string name="toast_no_category">Du måste lägga till en kategori först</string>
 
     <string name="new_category">Ny Kategori</string>
@@ -43,7 +42,6 @@
     <string name="delete_category_text">Flytta uppgifter till kategori:</string>
 
     <string name="category_name_empty_error">Du måste fylla I ett namn!</string>
-    <string name="toast_category_exists">Denna kategori finns redan!</string>
     <string name="category_added">Kategori tillagd.</string>
     <string name="category_edited">Kategori redigerad</string>
 

@@ -91,7 +91,7 @@ public class EditCategoryActivity extends MainActivity {
     private void editCategory() {
         String categoryName = mCategoryTitleInput.getText().toString();
 
-        if(!categoryName.equals("")) {
+        if (!categoryName.equals("")) {
             mTaskManager.updateCategory(categoryName, mCategoryColour, 1, mSelectedCategoryId);
             makeToast(getString(R.string.category_edited));
             startCategoryActivity();
