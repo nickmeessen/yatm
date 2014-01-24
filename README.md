@@ -12,9 +12,9 @@ It is developed for, and tested on Android 4.3. We can't guarantee any compatibi
 
 Screenshots
 =========
-![](https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot1.png =160x)
-![](https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot2.png =160x)
-![](https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot3.png =160x)
+<a href="https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot1.png" target="_blank"><img src="https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot1.png" style="width: 160px; border: 1px #CCC solid;"></a>
+<a href="https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot2.png" target="_blank"><img src="https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot2.png" style="width: 160px; border: 1px #CCC solid;"></a>
+<a href="https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot3.png" target="_blank"><img src="https://raw2.github.com/enterprisecoding/yatm/gh-pages/images/screenshot3.png" style="width: 160px; border: 1px #CCC solid;"></a>
 
 Compiling/Installing
 =========
